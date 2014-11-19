@@ -47,6 +47,7 @@
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Vector.cs" />
     <Compile Include="PlanetsForm.cs">
       <SubType>Form</SubType>
     </Compile>

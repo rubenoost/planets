@@ -10,10 +10,9 @@ namespace Planets.Model
     abstract class GameObject
     {
 
-        protected double x;
-        protected double y;
+        protected Vector location;
 
-        protected double[] DV;
+        protected Vector DV;
 
         protected double mass;
 
