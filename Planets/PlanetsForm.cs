@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Planets.Controller;
 
@@ -20,6 +21,7 @@ namespace Planets
 
         }
 
+        #region Logo test stuff
         private void button1_Click(object sender, EventArgs e)
         {
             pictureBox1.Visible = true;
