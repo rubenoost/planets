@@ -17,6 +17,7 @@ namespace Planets
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new PlanetsForm());
+
         }
     }
 }
