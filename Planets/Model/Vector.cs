@@ -1,10 +1,10 @@
 ﻿namespace Planets.Model
 {
-    public class Vector
+    public struct Vector
     {
-        public double X { get; private set; }
+        public readonly double X;
 
-        public double Y { get; private set; }
+        public readonly double Y;
 
         public Vector(double x = 0, double y = 0)
         {
