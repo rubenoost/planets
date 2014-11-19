@@ -46,8 +46,10 @@
   <ItemGroup>
     <Compile Include="Controller\GameEngine.cs" />
     <Compile Include="Controller\MainEngine.cs" />
+    <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Playfield.cs" />
     <Compile Include="Model\Vector.cs" />
     <Compile Include="PlanetsForm.cs">
       <SubType>Form</SubType>
@@ -96,9 +98,7 @@
   <ItemGroup>
     <None Include="Resources\logotest.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\Subcontrollers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
