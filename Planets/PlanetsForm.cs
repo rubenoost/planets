@@ -19,5 +19,17 @@ namespace Planets
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Visible = true;
+            this.pictureBox1.Image = global::Planets.Properties.Resources.LogoFinal;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Visible = true;
+            this.pictureBox1.Image = global::Planets.Properties.Resources.LogoFinal_Inv;
+        }
     }
 }
