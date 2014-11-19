@@ -5,11 +5,11 @@ namespace Planets.Model
     public abstract class GameObject
     {
 
-        protected Vector Location;
+        public Vector Location;
 
-        protected Vector DV;
+        public Vector DV;
 
-        protected double Mass;
+        public double Mass;
 
         public GameObject(double x, double y, double dx, double dy, double mass) : this(new Vector(x, y), new Vector(dx, dy), mass)
         {
@@ -22,8 +22,5 @@ namespace Planets.Model
             DV = velocity;
             Mass = mass;
         }
-
-        public abstract void Draw(Graphics g);
-
     }
 }

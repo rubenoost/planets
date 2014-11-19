@@ -1,5 +1,6 @@
 ﻿using Planets.Model;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Planets.View
@@ -18,8 +19,12 @@ namespace Planets.View
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
+            Graphics g = e.Graphics;
+ 
+            foreach(GameObject obj in field.GameObjects)
+            {
+                
+            }
 
         }
 
