@@ -19,6 +19,8 @@ namespace Planets.Controller
         private int MouseY;
 
 		private bool running;
+        private Thread GameThread;
+
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
             this.HostEngine = HostEngine;
@@ -28,6 +30,8 @@ namespace Planets.Controller
             this.HostForm.MouseDown += Form_MouseDown;
 
 			running = false;
+            GameThread = new Thread(GameLoop);
+            GameThread.Start();
         }
 
         private void Form_Click(object sender, EventArgs e)
@@ -43,33 +47,37 @@ namespace Planets.Controller
 
 		public void Start()
 		{
-			this.running = true;
+            this.running = true;
 		}
 
         public void GameLoop()
         {
-			Stopwatch timer = new Stopwatch();
-			timer.Start();
+            DateTime LoopBegin = DateTime.Now;
+            TimeSpan DeltaT;
 
-			double lastTime = timer.Elapsed.TotalMilliseconds;
-			double delta = 0;
-			double unproccessedTime = 0;
+            int loopcount = 0;
 
-			while (running) {
-				double startTime = timer.Elapsed.TotalMilliseconds;
-				double passedTime = startTime - lastTime;
-				lastTime = startTime;
+            while (true)
+            {
+                while (running)
+                {
 
-				unproccessedTime += passedTime / 10000;
+                    if(loopcount > 0)
+                    {
+                        DeltaT = DateTime.Now - LoopBegin;
+                    }
 
-				while (unproccessedTime > 60) {
-					unproccessedTime -= 60;
+                    LoopBegin = DateTime.Now;
 
-					// Update shizzle hier..
-				}
-			}
+                    // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
 
-			timer.Stop();
+                    // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
+
+                    loopcount++;
+                }
+                loopcount = 0;
+                Thread.Sleep(50);
+            }
         }
     }
 }

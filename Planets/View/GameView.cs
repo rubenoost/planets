@@ -7,9 +7,8 @@ namespace Planets.View
         public GameView()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
         }
-
-
 
     }
 }
