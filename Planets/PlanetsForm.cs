@@ -38,5 +38,7 @@ namespace Planets
         {
             pictureBox1.Visible = false;
         }
+
+        #endregion
     }
 }
