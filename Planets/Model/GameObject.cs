@@ -21,7 +21,6 @@ namespace Planets.Model
         {
 
         }
-        // test
 
         protected abstract void Draw(Graphics g){ }
 
