@@ -6,7 +6,7 @@ namespace Planets.Model
     {
         public IEnumerable<GameObject> GameObjects
         {
-            get { yield return new Player(10, 10, new Vector(1, 1), 300); }
+            get { yield return new Player(10, 10, 1, 1, 300); }
         }
     }
 }
