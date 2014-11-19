@@ -34,7 +34,10 @@ namespace Planets.Controller
 
         public void GameLoop()
         {
+            while(true)
+            {
 
+            }
         }
     }
 }
