@@ -21,5 +21,10 @@ namespace Planets
             InitializeComponent();
             engine = new MainEngine(this);
         }
+
+        private void PlanetsForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
