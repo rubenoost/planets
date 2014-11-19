@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\MainEngine.cs" />
+    <Compile Include="Model\GameObject.cs" />
+    <Compile Include="Model\Player.cs" />
     <Compile Include="PlanetsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,7 +78,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
