@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Planets.Controller;
 
-namespace Planets
+namespace Planets.View
 {
-    public partial class PlanetsForm : Form
+    public partial class GameView : UserControl
     {
-
-        MainEngine engine;
-
-        public PlanetsForm()
+        public GameView()
         {
             InitializeComponent();
-            engine = new MainEngine(this);
         }
+
+
+
     }
 }

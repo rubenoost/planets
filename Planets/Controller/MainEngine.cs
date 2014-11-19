@@ -11,10 +11,12 @@ namespace Planets.Controller
     {
 
         private PlanetsForm host;
+        private GameEngine GameEngine;
 
         public MainEngine(PlanetsForm host)
         {
             this.host = host;
+            GameEngine = new GameEngine(this, this.host);
         }
 
         public void SetView(UserControl uc)
@@ -22,7 +24,5 @@ namespace Planets.Controller
             this.host.Controls.Clear();
             this.host.Controls.Add(uc);
         }
-
-
     }
 }
