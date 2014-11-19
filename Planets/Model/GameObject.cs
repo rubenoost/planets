@@ -22,7 +22,7 @@ namespace Planets.Model
 
         }
 
-        protected abstract void Draw(Graphics g){ }
+        public abstract void Draw(Graphics g);
 
     }
 }
