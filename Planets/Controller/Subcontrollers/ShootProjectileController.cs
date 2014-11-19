@@ -27,6 +27,10 @@ namespace Planets.Controller.Subcontrollers
         /// <param name="listenControl">The control to listen on for clicks.</param>
         public ShootProjectileController(Playfield pf, GameView listenControl)
         {
+            // Save variables
+            InternalPlayfield = pf;
+            InternalControl = listenControl;
+
             // Register event handlers
             listenControl.Click += ClickCallback;
         }
