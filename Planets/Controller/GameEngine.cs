@@ -53,7 +53,7 @@ namespace Planets.Controller
         public void GameLoop()
         {
             DateTime LoopBegin = DateTime.Now;
-            TimeSpan DeltaT;
+            TimeSpan DeltaT = new TimeSpan(1000/60);
 
             int loopcount = 0;
 
@@ -70,10 +70,15 @@ namespace Planets.Controller
                     LoopBegin = DateTime.Now;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
+					if (DeltaT.Milliseconds >= 1000 / 60) 
+					{
+						Thread.Sleep(1);	
+					}
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
-                    loopcount++;
+					// Update shizzle hier.
+					HostForm.Invalidate();
                 }
                 loopcount = 0;
                 Thread.Sleep(50);
