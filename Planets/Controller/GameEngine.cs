@@ -6,18 +6,28 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Planets.View;
+using Planets.Model;
 
 namespace Planets.Controller
 {
     class GameEngine
     {
-
+        // Hosts
         private MainEngine HostEngine;
         private PlanetsForm HostForm;
 
+        // Views
+        private GameView GameView;
+
+        // Model Data
+        private Playfield field;
+
+        // Mouse Variables
         private int MouseX;
         private int MouseY;
 
+        // Variables
 		private bool running;
         private Thread GameThread;
 
@@ -25,9 +35,12 @@ namespace Planets.Controller
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
+            this.field = new Playfield();
 
             this.HostForm.Click += Form_Click;
             this.HostForm.MouseDown += Form_MouseDown;
+
+            this.GameView = new GameView(this.field);
 
 			running = false;
             GameThread = new Thread(GameLoop);
@@ -78,7 +91,7 @@ namespace Planets.Controller
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
 					// Update shizzle hier.
-					HostForm.Invalidate();
+					GameView.Invalidate();
                 }
                 loopcount = 0;
                 Thread.Sleep(50);
