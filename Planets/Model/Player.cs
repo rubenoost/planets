@@ -17,7 +17,7 @@ namespace Planets.Model
 
         public override void Draw(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Blue), (float)x, (float)y, Utils.CalcRadius(mass), Utils.CalcRadius(mass));
+            g.FillEllipse(new SolidBrush(Color.Blue), (float)location.X, (float)location.Y, Utils.CalcRadius(mass), Utils.CalcRadius(mass));
         }
 
     }

@@ -6,7 +6,7 @@
 
         public double Y { get; private set; }
 
-        public Vector(double x, double y)
+        public Vector(double x = 0, double y = 0)
         {
             X = x;
             Y = y;
