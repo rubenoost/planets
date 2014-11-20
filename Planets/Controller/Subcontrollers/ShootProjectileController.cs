@@ -82,7 +82,7 @@ namespace Planets.Controller.Subcontrollers
             O.mass = O.mass - P.mass;
 
             //set the velocity of the new player
-            O.DV = O.DV - P.DV * Math.Sqrt(P.mass / O.mass);
+            O.DV = O.DV - temp1 * Math.Sqrt(P.mass / O.mass);
 
             //Set projectile location
             P.Location = O.Location + temp1.ScaleToLength(O.radius + P.radius);
