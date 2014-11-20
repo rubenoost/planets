@@ -70,9 +70,9 @@ namespace Planets.Controller
                 while (running)
                 {
 
-                    
+
                     DeltaT = DateTime.Now - LoopBegin;
-                    
+
 
                     LoopBegin = DateTime.Now;
 
@@ -95,7 +95,7 @@ namespace Planets.Controller
                             if (!FieldYCollission(newLoc, obj.radius))
                                 obj.InvertObjectY();
 
-                            for (int j = 0; j < this.field.GameObjects.Count; j++)
+                            for (int j = i + 1; j < this.field.GameObjects.Count; j++)
                             {
                                 GameObject SecondObj = this.field.GameObjects[j];
                                 if (SecondObj == null) continue;
@@ -130,12 +130,17 @@ namespace Planets.Controller
 
         private void CheckObjectCollission(GameObject CurObj, GameObject CheckObj)
         {
-            if(CurObj.IntersectsWith(CheckObj))
+            if (CurObj.IntersectsWith(CheckObj))
             {
-                var temp1 = CheckObj.DV.ScaleToLength(CurObj.DV.Length());
-                var temp2 = CurObj.DV.ScaleToLength(CheckObj.DV.Length());
-                CurObj.DV = temp1;
-                CheckObj.DV = temp2;
+                Vector i = (CheckObj.Location - CurObj.Location).ScaleToLength((CheckObj.DV - CurObj.DV).Length());
+                double totalMass = CheckObj.mass + CurObj.mass;
+                Vector i2 = CheckObj.DV + i * (2.0 * CurObj.mass / totalMass);
+                Vector i3 = CurObj.DV - i * (CheckObj.mass / totalMass);
+
+                CheckObj.Location = CurObj.Location + i.ScaleToLength(CheckObj.radius + CurObj.radius + 1); // TODO Remove hack
+
+                CheckObj.DV = i2;
+                CurObj.DV = i3;
             }
         }
     }

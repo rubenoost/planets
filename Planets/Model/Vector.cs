@@ -108,6 +108,11 @@ namespace Planets.Model
         {
             return new Vector(p.X, p.Y);
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0},{1}", X.ToString(), Y.ToString());
+        }
     }
 
 }
