@@ -97,6 +97,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ROCmbwF.jpg" />
+    <None Include="Resources\Pluto.png" />
     <None Include="Resources\testy.jpg" />
     <None Include="Resources\stripes.png" />
     <None Include="Resources\star_PNG1597.png" />

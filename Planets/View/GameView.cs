@@ -24,7 +24,7 @@ namespace Planets.View
         /// <summary>
         /// Buffer bitmap
         /// </summary>
-        private Bitmap b = new Bitmap(Properties.Resources.LogoFinal_Inv, new Size(1920, 1080));
+        private Bitmap b = new Bitmap(Properties.Resources.Background, new Size(1920, 1080));
 
 
         public GameView(Playfield field)
@@ -55,10 +55,8 @@ namespace Planets.View
                 }
                 else
                 {
-                    Brush brush2 = new LinearGradientBrush(new Point(0, 0), new Point(1920, 1080), Color.GreenYellow, Color.Red);
-                    g.FillEllipse(brush2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
-                    Brush brush = new LinearGradientBrush(new Point(0, 1080), new Point(1920, 0), Color.Magenta, Color.Blue);
-                    g.FillEllipse(brush, (float)obj.Location.X - radius / 2, (float)obj.Location.Y - radius / 2, length / 2, length / 2);
+                    Image newImage = Planets.Properties.Resources.Pluto;
+                    g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
 
                 }
             }
