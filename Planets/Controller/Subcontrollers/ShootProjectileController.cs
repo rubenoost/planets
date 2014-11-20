@@ -43,7 +43,7 @@ namespace Planets.Controller.Subcontrollers
         /// <param name="e"></param>
         public void Clicked(Point p)
         {
-            MessageBox.Show(p.ToString());
+            Vector C = new Vector();
         }
     }
 }
