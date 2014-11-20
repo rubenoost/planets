@@ -37,8 +37,9 @@ namespace Planets.View
             // Maak teken functie
             foreach(GameObject obj in field.GameObjects)
             {
-                float radius = (float) obj.radius * 2;
-                g.FillEllipse(brush, (float)obj.Location.X - radius, (float)obj.Location.Y-radius, radius, radius);
+                float radius = (float) obj.radius;
+                float length = radius*2;
+                g.FillEllipse(brush, (float)obj.Location.X - radius, (float)obj.Location.Y-radius, length, length);
             }
         }
 
