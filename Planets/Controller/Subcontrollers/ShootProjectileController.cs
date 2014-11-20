@@ -65,8 +65,8 @@ namespace Planets.Controller.Subcontrollers
             //Location click
             Vector Lc = p;
 
-            //Projectile being shooted
-            GameObject P = new GameObject(0, 0, 0, 0, 0);
+            //Projectile being shot
+            GameObject P = new GameObject(0, 0, 0, 0, 0, true);
 
             //Player
             GameObject O = InternalPlayfield.CurrentPlayer;
@@ -93,7 +93,6 @@ namespace Planets.Controller.Subcontrollers
             // Reset if too low
             if (O.mass < 25)
             {
-
                 InternalPlayfield.GameObjects.Clear();
                 InternalPlayfield.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
             }

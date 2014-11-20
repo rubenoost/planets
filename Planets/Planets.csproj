@@ -47,6 +47,7 @@
     <Compile Include="Controller\GameEngine.cs" />
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
+    <Compile Include="Model\BlackHole.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
