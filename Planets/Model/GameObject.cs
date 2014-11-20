@@ -11,6 +11,13 @@ namespace Planets.Model
 
         public double mass;
 
+        public double radius {
+            get
+            {
+                return System.Math.Sqrt(mass);
+            } 
+        }
+
         public GameObject(double x, double y, double dx, double dy, double mass) : this(new Vector(x, y), new Vector(dx, dy), mass)
         {
 

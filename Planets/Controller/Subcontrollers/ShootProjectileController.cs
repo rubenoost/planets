@@ -43,7 +43,52 @@ namespace Planets.Controller.Subcontrollers
         /// <param name="e"></param>
         public void Clicked(Point p)
         {
-            Vector C = new Vector();
+
+            //formules
+            //mN = mO - mP
+            //vN = vO - vpmPmN
+            //lN = lO
+            //mP = 0.05 * mO
+            //vp = vO + vp'
+            //lp = lN + vPvP(rN + rP)
+
+            //mass player.
+            double Mo = InternalPlayfield.CurrentPlayer.mass;
+
+            //Velocity player
+            Vector Vo = InternalPlayfield.CurrentPlayer.DV;
+
+            //Location player
+            Vector Lo = InternalPlayfield.CurrentPlayer.Location;
+
+            //Location click
+            Vector Lc = p;
+
+            //Projectile being shooted
+            GameObject P = new GameObject(0,0,0,0,0);
+
+            //Player
+            GameObject O = InternalPlayfield.CurrentPlayer;
+
+            //set the mass of the projectile
+            P.mass = 0.05 * O.mass;
+
+            //set velocity projectile
+            Vector temp1 = Lc - Lo;
+            temp1 = temp1.ScaleToLength(5.0);
+            P.DV = Vo + temp1;
+
+            //Set mass of the player
+            O.mass = O.mass - P.mass;
+
+            //set the velocity of the new player
+            O.DV = O.DV - P.DV * Math.Sqrt(P.mass / O.mass);
+
+            //Set projectile location
+            P.Location = O.Location + P.DV.ScaleToLength(O.radius + P.radius);
+
+            InternalPlayfield.GameObjects.Add(P);
+
         }
     }
 }
