@@ -48,7 +48,7 @@ namespace Planets.Controller
             this.HostForm = HostForm;
             this.field = new Playfield();
 
-            this.field.CurrentPlayer = new Player(100, 200, 0, 0, Utils.StartMass);
+            this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
             this.GameView = new GameView(this.field);
 
             // Create new ShootProjectileController

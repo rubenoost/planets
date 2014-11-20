@@ -85,7 +85,7 @@ namespace Planets.Controller.Subcontrollers
             O.DV = O.DV - P.DV * Math.Sqrt(P.mass / O.mass);
 
             //Set projectile location
-            P.Location = O.Location + P.DV.ScaleToLength(O.radius + P.radius);
+            P.Location = O.Location + temp1.ScaleToLength(O.radius + P.radius);
 
             InternalPlayfield.GameObjects.Add(P);
 

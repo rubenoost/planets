@@ -14,7 +14,7 @@ namespace Planets.Model
         public double radius {
             get
             {
-                return System.Math.Sqrt(mass);
+                return 5 * System.Math.Sqrt(mass);
             } 
         }
 
