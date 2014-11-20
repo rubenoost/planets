@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Planets.Controller
 {
@@ -18,7 +19,7 @@ namespace Planets.Controller
 
         public void SetView(UserControl uc)
         {
-            uc.Size = this.host.Size;
+            uc.Size = new Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height);
             this.host.Controls.Clear();
             this.host.Controls.Add(uc);
         }
