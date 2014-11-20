@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Planets.Model
 {
@@ -33,7 +34,7 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public Vector ScaleToLength(double newLength)
         {
-            return Normal() * newLength;
+            return Normal()*newLength;
         }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public Vector Normal()
         {
-            return this / Length();
+            return this/Length();
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Planets.Model
         /// <returns><code>Math.sqrt(X * X + Y * Y)</code></returns>
         public double Length()
         {
-            return Math.Sqrt(X * X + Y * Y);
+            return Math.Sqrt(X*X + Y*Y);
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public static Vector operator *(Vector v1, double scalar)
         {
-            return new Vector(v1.X * scalar, v1.Y * scalar);
+            return new Vector(v1.X*scalar, v1.Y*scalar);
         }
 
         /// <summary>
@@ -95,7 +96,18 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public static Vector operator /(Vector v1, double scalar)
         {
-            return new Vector(v1.X / scalar, v1.Y / scalar);
+            return new Vector(v1.X/scalar, v1.Y/scalar);
+        }
+
+        /// <summary>
+        /// Converts point to Vector.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static implicit operator Vector(Point p)
+        {
+            return new Vector(p.X, p.Y);
         }
     }
+
 }

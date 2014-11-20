@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Planets.Controller.Subcontrollers;
 using Planets.View;
 using Planets.Model;
 using System.Runtime.InteropServices;
@@ -18,21 +19,24 @@ namespace Planets.Controller
         [DllImport("user32.dll")]
         static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
 
-    // Hosts
+        // Hosts
         private MainEngine HostEngine;
         private PlanetsForm HostForm;
 
-    // Views
+        // Views
         private GameView GameView;
 
-    // Model Data
+        // Controllers
+        private ShootProjectileController spc;
+
+        // Model Data
         private Playfield field;
 
         // Mouse Variables
         private int MouseX;
         private int MouseY;
 
-    // Variables
+        // Variables
 		private bool running;
         private Thread GameThread;
         private Thread InputThread;
@@ -43,11 +47,11 @@ namespace Planets.Controller
             this.HostForm = HostForm;
             this.field = new Playfield();
 
-            this.HostForm.Click += Form_Click;
-            this.HostForm.MouseDown += Form_MouseDown;
-
             this.field.GameObjects.Add(new Player(100, 200, 0, 0, Utils.StartMass));
             this.GameView = new GameView(this.field);
+
+            // Create new ShootProjectileController
+            spc = new ShootProjectileController(field, GameView);
 
             this.HostEngine.SetView(GameView);
 
@@ -58,16 +62,6 @@ namespace Planets.Controller
             InputThread.Start();
         }
 
-        private void Form_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form_MouseDown(object sender, MouseEventArgs e)
-        {
-            MouseX = e.X;
-            MouseY = e.Y;
-        }
 
 		public void Start()
 		{
