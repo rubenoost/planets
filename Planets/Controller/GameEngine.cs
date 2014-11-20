@@ -82,6 +82,8 @@ namespace Planets.Controller
                         Thread.Sleep(1);
                     }
 
+                    // Check every obj for field limits
+
                     for (int i = 0; i < field.GameObjects.Count; i++)
                     {
                         GameObject obj = field.GameObjects[i];
