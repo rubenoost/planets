@@ -8,26 +8,31 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Planets.View;
 using Planets.Model;
+using System.Runtime.InteropServices;
 
 namespace Planets.Controller
 {
     class GameEngine
     {
-        // Hosts
+    // GetAsyncKeyState -> Input
+        [DllImport("user32.dll")]
+        static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
+
+    // Hosts
         private MainEngine HostEngine;
         private PlanetsForm HostForm;
 
-        // Views
+    // Views
         private GameView GameView;
 
-        // Model Data
+    // Model Data
         private Playfield field;
 
-        // Mouse Variables
+    // Mouse Variables
         private int MouseX;
         private int MouseY;
 
-        // Variables
+    // Variables
 		private bool running;
         private Thread GameThread;
 
@@ -99,6 +104,11 @@ namespace Planets.Controller
                 loopcount = 0;
                 Thread.Sleep(50);
             }
+        }
+
+        private void InputLoop()
+        {
+            
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Planets.Model
 {
-    public abstract class GameObject
+    public class GameObject
     {
 
         public Vector Location;
