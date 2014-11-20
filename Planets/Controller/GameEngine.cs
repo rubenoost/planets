@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Planets.Controller
 {
     class GameEngine
     {
-    // GetAsyncKeyState -> Input
+        // GetAsyncKeyState -> Input
         [DllImport("user32.dll")]
         static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
 
@@ -37,7 +38,7 @@ namespace Planets.Controller
         private int MouseY;
 
         // Variables
-		private bool running;
+        private bool running;
         private Thread GameThread;
         private Thread InputThread;
 
@@ -47,7 +48,7 @@ namespace Planets.Controller
             this.HostForm = HostForm;
             this.field = new Playfield();
 
-            this.field.GameObjects.Add(new Player(100, 200, 0, 0, Utils.StartMass));
+            this.field.CurrentPlayer = new Player(100, 200, 0, 0, Utils.StartMass);
             this.GameView = new GameView(this.field);
 
             // Create new ShootProjectileController
@@ -55,7 +56,7 @@ namespace Planets.Controller
 
             this.HostEngine.SetView(GameView);
 
-			running = false;
+            running = false;
             GameThread = new Thread(GameLoop);
             InputThread = new Thread(InputLoop);
             GameThread.Start();
@@ -63,15 +64,15 @@ namespace Planets.Controller
         }
 
 
-		public void Start()
-		{
+        public void Start()
+        {
             this.running = true;
-		}
+        }
 
         public void GameLoop()
         {
             DateTime LoopBegin = DateTime.Now;
-            TimeSpan DeltaT = new TimeSpan(1000/60);
+            TimeSpan DeltaT = new TimeSpan(1000 / 60);
 
             int loopcount = 0;
 
@@ -80,7 +81,7 @@ namespace Planets.Controller
                 while (running)
                 {
 
-                    if(loopcount > 0)
+                    if (loopcount > 0)
                     {
                         DeltaT = DateTime.Now - LoopBegin;
                     }
@@ -88,13 +89,14 @@ namespace Planets.Controller
                     LoopBegin = DateTime.Now;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-					if (DeltaT.Milliseconds > 1000 / 60) 
-					{
-						Thread.Sleep(1);	
-					}
-
-                    foreach (GameObject obj in this.field.GameObjects)
+                    if (DeltaT.Milliseconds > 1000 / 60)
                     {
+                        Thread.Sleep(1);
+                    }
+
+                    for (int i = 0; i < field.GameObjects.Count; i++)
+                    {
+                        GameObject obj = field.GameObjects[i];
                         Vector newLoc = obj.CalcNewLocation();
                         if (!CheckXCollision(newLoc))
                             obj.InvertObjectX();
@@ -106,8 +108,8 @@ namespace Planets.Controller
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
-					// Update shizzle hier.
-					GameView.Invalidate();
+                    // Update shizzle hier.
+                    GameView.Invalidate();
                 }
                 loopcount = 0;
                 Thread.Sleep(1);
@@ -127,14 +129,14 @@ namespace Planets.Controller
         // Tijdelijke inputloop
         private void InputLoop()
         {
-            while(true)
+            while (true)
             {
-                Player player = (Player)this.field.GameObjects[0];
-                if(GetAsyncKeyState(Keys.W))        // Input Up
+                Player player = (Player)this.field.CurrentPlayer;
+                if (GetAsyncKeyState(Keys.W))        // Input Up
                 {
                     player.ShootBall(Direction.up);
                 }
-                if(GetAsyncKeyState(Keys.A))        // Input Left
+                if (GetAsyncKeyState(Keys.A))        // Input Left
                 {
                     player.ShootBall(Direction.left);
                 }
