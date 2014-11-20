@@ -41,8 +41,7 @@ namespace Planets.Model
 
             this.mass -= 5;
 
-            if(this.DV.X < 10 && this.DV.Y < 10)
-                this.DV += BallDV;
+            this.DV += BallDV;
         }
     }
 }
