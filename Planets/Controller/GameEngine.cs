@@ -83,19 +83,20 @@ namespace Planets.Controller
                     }
 
                     // Check every obj for field limits
+                    
+                        for (int i = 0; i < field.GameObjects.Count; i++)
+                        {
+                            GameObject obj = field.GameObjects[i];
+                            if (obj == null) continue; // TODO Remove hack
+                            Vector newLoc = obj.CalcNewLocation();
+                            if (!CheckXCollision(newLoc, obj.radius))
+                                obj.InvertObjectX();
+                            if (!CheckYCollision(newLoc, obj.radius))
+                                obj.InvertObjectY();
 
-                    for (int i = 0; i < field.GameObjects.Count; i++)
-                    {
-                        GameObject obj = field.GameObjects[i];
-                        if (obj == null) continue; // TODO Remove hack
-                        Vector newLoc = obj.CalcNewLocation();
-                        if (!CheckXCollision(newLoc, obj.radius))
-                            obj.InvertObjectX();
-                        if (!CheckYCollision(newLoc, obj.radius))
-                            obj.InvertObjectY();
-
-                        obj.UpdateLocation();
-                    }
+                            obj.UpdateLocation();
+                        }
+                    
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 

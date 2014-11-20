@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Planets.Model
 {
@@ -48,6 +49,11 @@ namespace Planets.Model
         public Vector CalcNewLocation()
         {
             return this.Location + this.DV / 4000;
+        }
+
+        public Boolean IntersectsWith(GameObject go)
+        {
+            return (this.Location - go.Location).Length() < (this.radius + go.radius);
         }
     }
 }
