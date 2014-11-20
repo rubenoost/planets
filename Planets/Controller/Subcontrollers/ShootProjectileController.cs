@@ -42,7 +42,7 @@ namespace Planets.Controller.Subcontrollers
         /// <param name="e"></param>
         private void ClickCallback(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

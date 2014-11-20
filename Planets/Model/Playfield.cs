@@ -4,6 +4,8 @@ namespace Planets.Model
 {
     public class Playfield
     {
+        internal Player CurrentPlayer { get; set; }
+
         public List<GameObject> GameObjects;
 
         public Playfield()
