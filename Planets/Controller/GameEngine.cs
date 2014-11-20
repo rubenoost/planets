@@ -131,24 +131,7 @@ namespace Planets.Controller
 
         private void CheckObjectCollission(GameObject CurObj, GameObject CheckObj)
         {
-            Vector CurNewLoc = CurObj.CalcNewLocation();
-            Vector CheckNewLoc = CheckObj.CalcNewLocation();
-
-            double CurRadius = Utils.CalcRadius(CurObj.mass);
-            double CheckRadius = Utils.CalcRadius(CheckObj.mass);
-
-            int CurX = Convert.ToInt32(CurNewLoc.X - CurRadius);
-            int CurY = Convert.ToInt32(CurNewLoc.Y - CurRadius);
-            int CurWidth = Convert.ToInt32(CurRadius * 2);
-
-            int CheckX = Convert.ToInt32(CheckNewLoc.X - CheckRadius);
-            int CheckY = Convert.ToInt32(CheckNewLoc.Y - CheckRadius);
-            int CheckWidth = Convert.ToInt32(CheckRadius * 2);
-
-            Rectangle CurRec = new Rectangle(CurX, CurY, CurWidth, CurWidth);
-            Rectangle CheckRec = new Rectangle(CheckX, CheckY, CheckWidth, CheckWidth);
-
-            if(CurRec.IntersectsWith(CheckRec))
+            if(CurObj.IntersectsWith(CheckObj))
             {
                 if (CurObj.DV.X > 0 && CheckObj.DV.X > 0)
                 {
