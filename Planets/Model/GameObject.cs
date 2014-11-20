@@ -47,19 +47,33 @@ namespace Planets.Model
             this.DV = new Vector(this.DV.X, this.DV.Y * -1);
         }
 
-        public void UpdateLocation()
+        public void UpdateLocation(double ms)
         {
-            this.Location += this.DV / 4000;
+            Location = CalcNewLocation(ms);
         }
 
-        public Vector CalcNewLocation()
+        public Vector CalcNewLocation(double ms)
         {
-            return this.Location + this.DV / 4000;
+            return Location + DV * ms / 1000.0f;
         }
 
-        public Boolean IntersectsWith(GameObject go)
+        public bool IntersectsWith(GameObject go)
         {
-            return (this.Location - go.Location).Length() < (this.radius + go.radius);
+            if (!DoLinesOverlap(Location.X, radius*2, go.Location.X, go.radius*2) &&
+                !DoLinesOverlap(Location.Y, radius*2, go.Location.Y, go.radius*2))
+            {
+                return false;
+                
+            }
+            return (Location - go.Location).Length() < (radius + go.radius);
+            
+        }
+
+        public static bool DoLinesOverlap(double x1, double width1, double x2, double width2)
+        {
+            if (x1 >= x2)
+                return (x2 + width2) > x1;
+            return (x1 + width1) > x2;
         }
     }
 }

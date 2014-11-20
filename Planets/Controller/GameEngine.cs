@@ -40,7 +40,6 @@ namespace Planets.Controller
             this.HostForm = HostForm;
             this.field = new Playfield();
             this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
-            this.field.GameObjects.Add(new BlackHole(new Vector(100, 100), new Vector(0, 0), 10, 1));
 
             this.GameView = new GameView(this.field);
 
@@ -71,43 +70,43 @@ namespace Planets.Controller
                 while (running)
                 {
 
-                    if (loopcount > 0)
-                    {
-                        DeltaT = DateTime.Now - LoopBegin;
-                    }
+                    
+                    DeltaT = DateTime.Now - LoopBegin;
+                    
 
                     LoopBegin = DateTime.Now;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-                    if (DeltaT.Milliseconds > 1000 / 60)
+                    while (DeltaT.Milliseconds > 1000 / 60)
                     {
                         Thread.Sleep(1);
                     }
 
                     // Check every obj for field limits
-
-                    for (int i = 0; i < field.GameObjects.Count; i++)
+                    lock (field.GameObjects)
                     {
-                        GameObject obj = field.GameObjects[i];
-                        if (obj == null) continue; // TODO Remove hack
-                        Vector newLoc = obj.CalcNewLocation();
-                        if (!FieldXCollission(newLoc, obj.radius))
-                            obj.InvertObjectX();
-                        if (!FieldYCollission(newLoc, obj.radius))
-                            obj.InvertObjectY();
-
-                        for(int j = 0; j < this.field.GameObjects.Count; j++)
+                        for (int i = 0; i < field.GameObjects.Count; i++)
                         {
-                            GameObject SecondObj = this.field.GameObjects[j];
+                            GameObject obj = field.GameObjects[i];
+                            if (obj == null) continue; // TODO Remove hack
+                            Vector newLoc = obj.CalcNewLocation(DeltaT.TotalMilliseconds);
+                            if (!FieldXCollission(newLoc, obj.radius))
+                                obj.InvertObjectX();
+                            if (!FieldYCollission(newLoc, obj.radius))
+                                obj.InvertObjectY();
 
-                            if (obj == SecondObj)
-                                continue;
+                            for (int j = 0; j < this.field.GameObjects.Count; j++)
+                            {
+                                GameObject SecondObj = this.field.GameObjects[j];
+                                if (SecondObj == null) continue;
+                                if (obj == SecondObj)
+                                    continue;
 
-                            CheckObjectCollission(obj, SecondObj);
+                                CheckObjectCollission(obj, SecondObj);
+                            }
+                            obj.UpdateLocation(DeltaT.TotalMilliseconds);
                         }
-                        obj.UpdateLocation();
                     }
-
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
@@ -133,17 +132,10 @@ namespace Planets.Controller
         {
             if(CurObj.IntersectsWith(CheckObj))
             {
-                if (CurObj.DV.X > 0 && CheckObj.DV.X > 0)
-                {
-                    CurObj.InvertObjectY();
-                    CheckObj.InvertObjectY();
-                }
-
-                if(CurObj.DV.Y > 0 && CheckObj.DV.Y > 0)
-                {
-                    CurObj.InvertObjectX();
-                    CheckObj.InvertObjectX();
-                }
+                var temp1 = CheckObj.DV.ScaleToLength(CurObj.DV.Length());
+                var temp2 = CurObj.DV.ScaleToLength(CheckObj.DV.Length());
+                CurObj.DV = temp1;
+                CheckObj.DV = temp2;
             }
         }
     }

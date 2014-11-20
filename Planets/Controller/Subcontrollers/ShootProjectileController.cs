@@ -34,7 +34,7 @@ namespace Planets.Controller.Subcontrollers
             InternalControl = listenControl;
 
             // Register event handlers
-            listenControl.MouseClick += delegate(object sender, MouseEventArgs args) {Clicked(args.Location);};
+            listenControl.MouseClick += delegate(object sender, MouseEventArgs args) { Clicked(args.Location); };
         }
 
         /// <summary>
@@ -44,57 +44,59 @@ namespace Planets.Controller.Subcontrollers
         /// <param name="e"></param>
         public void Clicked(Point p)
         {
-
-            //formules
-            //mN = mO - mP
-            //vN = vO - vpmPmN
-            //lN = lO
-            //mP = 0.05 * mO
-            //vp = vO + vp'
-            //lp = lN + vPvP(rN + rP)
-
-            //mass player.
-            double Mo = InternalPlayfield.CurrentPlayer.mass;
-
-            //Velocity player
-            Vector Vo = InternalPlayfield.CurrentPlayer.DV;
-
-            //Location player
-            Vector Lo = InternalPlayfield.CurrentPlayer.Location;
-
-            //Location click
-            Vector Lc = p;
-
-            //Projectile being shot
-            GameObject P = new GameObject(0, 0, 0, 0, 0, true);
-
-            //Player
-            GameObject O = InternalPlayfield.CurrentPlayer;
-
-            //set the mass of the projectile
-            P.mass = 0.05*O.mass;
-
-            //set velocity projectile
-            Vector temp1 = Lc - Lo;
-            temp1 = temp1.ScaleToLength(5.0);
-            P.DV = Vo + temp1;
-
-            //Set mass of the player
-            O.mass = O.mass - P.mass;
-
-            //set the velocity of the new player
-            O.DV = O.DV - temp1*Math.Sqrt(P.mass/O.mass);
-
-            //Set projectile location
-            P.Location = O.Location + temp1.ScaleToLength(O.radius + P.radius);
-
-            InternalPlayfield.GameObjects.Add(P);
-
-            // Reset if too low
-            if (O.mass < 25)
+            lock (InternalPlayfield)
             {
-                InternalPlayfield.GameObjects.Clear();
-                InternalPlayfield.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
+                //formules
+                //mN = mO - mP
+                //vN = vO - vpmPmN
+                //lN = lO
+                //mP = 0.05 * mO
+                //vp = vO + vp'
+                //lp = lN + vPvP(rN + rP)
+
+                //mass player.
+                double Mo = InternalPlayfield.CurrentPlayer.mass;
+
+                //Velocity player
+                Vector Vo = InternalPlayfield.CurrentPlayer.DV;
+
+                //Location player
+                Vector Lo = InternalPlayfield.CurrentPlayer.Location;
+
+                //Location click
+                Vector Lc = p;
+
+                //Projectile being shot
+                GameObject P = new GameObject(0, 0, 0, 0, 0, true);
+
+                //Player
+                GameObject O = InternalPlayfield.CurrentPlayer;
+
+                //set the mass of the projectile
+                P.mass = 0.05 * O.mass;
+
+                //set velocity projectile
+                Vector temp1 = Lc - Lo;
+                temp1 = temp1.ScaleToLength(100.0);
+                P.DV = Vo + temp1;
+
+                //Set mass of the player
+                O.mass = O.mass - P.mass;
+
+                //set the velocity of the new player
+                O.DV = O.DV - temp1 * Math.Sqrt(P.mass / O.mass);
+
+                //Set projectile location
+                P.Location = O.Location + temp1.ScaleToLength(O.radius + P.radius + 10);
+
+                InternalPlayfield.GameObjects.Add(P);
+
+                // Reset if too low
+                if (O.mass < 25)
+                {
+                    InternalPlayfield.GameObjects.Clear();
+                    InternalPlayfield.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
+                }
             }
         }
     }
