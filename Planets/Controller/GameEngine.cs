@@ -133,7 +133,7 @@ namespace Planets.Controller
             {
                 Vector i = (CheckObj.Location - CurObj.Location).ScaleToLength((CheckObj.DV - CurObj.DV).Length());
                 double totalMass = CheckObj.mass + CurObj.mass;
-                Vector i2 = CheckObj.DV + i * (2.0 * CurObj.mass / totalMass);
+                Vector i2 = CheckObj.DV + i * (2.0 * CurObj.mass / totalMass); //zorgt ervoor dat ballen uiteindelijk wel heel snel gaan (1.2 zou beter zijn)
                 Vector i3 = CurObj.DV - i * (CheckObj.mass / totalMass);
 
                 CheckObj.Location = CurObj.Location + i.ScaleToLength(CheckObj.radius + CurObj.radius + 1); // TODO Remove hack
