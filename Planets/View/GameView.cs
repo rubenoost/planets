@@ -26,6 +26,11 @@ namespace Planets.View
         /// </summary>
         private Bitmap b = new Bitmap(Properties.Resources.Background, new Size(1920, 1080));
 
+        /// <summary>
+        /// Main user character image
+        /// </summary>
+        private Image newImage = Planets.Properties.Resources.Pluto;
+
 
         public GameView(Playfield field)
         {
@@ -55,9 +60,7 @@ namespace Planets.View
                 }
                 else
                 {
-                    Image newImage = Planets.Properties.Resources.Pluto;
                     g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
-
                 }
             }
         }
