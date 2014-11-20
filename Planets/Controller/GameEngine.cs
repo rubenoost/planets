@@ -38,8 +38,9 @@ namespace Planets.Controller
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
             this.field = new Playfield();
-
             this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
+            this.field.GameObjects.Add(new BlackHole(new Vector(100, 100), new Vector(0, 0), 10, 1));
+            
             this.GameView = new GameView(this.field);
 
             // Create new ShootProjectileController

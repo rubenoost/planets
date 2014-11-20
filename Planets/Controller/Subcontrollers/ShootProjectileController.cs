@@ -65,8 +65,8 @@ namespace Planets.Controller.Subcontrollers
             //Location click
             Vector Lc = p;
 
-            //Projectile being shooted
-            GameObject P = new GameObject(0, 0, 0, 0, 0);
+            //Projectile being shot
+            GameObject P = new GameObject(0, 0, 0, 0, 0, true);
 
             //Player
             GameObject O = InternalPlayfield.CurrentPlayer;

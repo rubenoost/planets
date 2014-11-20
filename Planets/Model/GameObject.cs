@@ -18,16 +18,22 @@ namespace Planets.Model
             } 
         }
 
-        public GameObject(double x, double y, double dx, double dy, double mass) : this(new Vector(x, y), new Vector(dx, dy), mass)
+        public bool IsAffectedByBlackHole {
+            get;
+            private set;
+        }
+
+        public GameObject(double x, double y, double dx, double dy, double mass, bool blackhole) : this(new Vector(x, y), new Vector(dx, dy), mass, false)
         {
 
         }
 
-        public GameObject(Vector location, Vector velocity, double Mass)
+        public GameObject(Vector location, Vector velocity, double Mass, bool blackhole)
         {
             Location = location;
             DV = velocity;
             this.mass = Mass;
+            IsAffectedByBlackHole = blackhole;
         }
 
         public void InvertObjectX()
