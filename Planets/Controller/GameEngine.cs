@@ -18,21 +18,21 @@ namespace Planets.Controller
         [DllImport("user32.dll")]
         static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
 
-        // Hosts
+    // Hosts
         private MainEngine HostEngine;
         private PlanetsForm HostForm;
 
-        // Views
+    // Views
         private GameView GameView;
 
-        // Model Data
+    // Model Data
         private Playfield field;
 
         // Mouse Variables
         private int MouseX;
         private int MouseY;
 
-        // Variables
+    // Variables
 		private bool running;
         private Thread GameThread;
         private Thread InputThread;
