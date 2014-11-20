@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Planets.Model
 {
@@ -18,16 +19,22 @@ namespace Planets.Model
             } 
         }
 
-        public GameObject(double x, double y, double dx, double dy, double mass) : this(new Vector(x, y), new Vector(dx, dy), mass)
+        public bool IsAffectedByBlackHole {
+            get;
+            private set;
+        }
+
+        public GameObject(double x, double y, double dx, double dy, double mass, bool blackhole) : this(new Vector(x, y), new Vector(dx, dy), mass, false)
         {
 
         }
 
-        public GameObject(Vector location, Vector velocity, double Mass)
+        public GameObject(Vector location, Vector velocity, double Mass, bool blackhole)
         {
             Location = location;
             DV = velocity;
             this.mass = Mass;
+            IsAffectedByBlackHole = blackhole;
         }
 
         public void InvertObjectX()
@@ -48,6 +55,11 @@ namespace Planets.Model
         public Vector CalcNewLocation()
         {
             return this.Location + this.DV / 4000;
+        }
+
+        public Boolean IntersectsWith(GameObject go)
+        {
+            return (this.Location - go.Location).Length() < (this.radius + go.radius);
         }
     }
 }

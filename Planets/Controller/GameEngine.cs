@@ -11,6 +11,7 @@ using Planets.Controller.Subcontrollers;
 using Planets.View;
 using Planets.Model;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace Planets.Controller
 {
@@ -38,8 +39,9 @@ namespace Planets.Controller
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
             this.field = new Playfield();
-
             this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
+            this.field.GameObjects.Add(new BlackHole(new Vector(100, 100), new Vector(0, 0), 10, 1));
+
             this.GameView = new GameView(this.field);
 
             // Create new ShootProjectileController
@@ -89,13 +91,23 @@ namespace Planets.Controller
                         GameObject obj = field.GameObjects[i];
                         if (obj == null) continue; // TODO Remove hack
                         Vector newLoc = obj.CalcNewLocation();
-                        if (!CheckXCollision(newLoc, obj.radius))
+                        if (!FieldXCollission(newLoc, obj.radius))
                             obj.InvertObjectX();
-                        if (!CheckYCollision(newLoc, obj.radius))
+                        if (!FieldYCollission(newLoc, obj.radius))
                             obj.InvertObjectY();
 
+                        for(int j = 0; j < this.field.GameObjects.Count; j++)
+                        {
+                            GameObject SecondObj = this.field.GameObjects[j];
+
+                            if (obj == SecondObj)
+                                continue;
+
+                            CheckObjectCollission(obj, SecondObj);
+                        }
                         obj.UpdateLocation();
                     }
+
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
@@ -107,14 +119,32 @@ namespace Planets.Controller
             }
         }
 
-        private bool CheckXCollision(Vector location, double radius)
+        private bool FieldXCollission(Vector location, double radius)
         {
             return (location.X > radius && location.X + radius < this.HostForm.Size.Width);
         }
 
-        private bool CheckYCollision(Vector location, double radius)
+        private bool FieldYCollission(Vector location, double radius)
         {
             return (location.Y > radius && location.Y + radius < this.HostForm.Size.Height);
+        }
+
+        private void CheckObjectCollission(GameObject CurObj, GameObject CheckObj)
+        {
+            if(CurObj.IntersectsWith(CheckObj))
+            {
+                if (CurObj.DV.X > 0 && CheckObj.DV.X > 0)
+                {
+                    CurObj.InvertObjectY();
+                    CheckObj.InvertObjectY();
+                }
+
+                if(CurObj.DV.Y > 0 && CheckObj.DV.Y > 0)
+                {
+                    CurObj.InvertObjectX();
+                    CheckObj.InvertObjectX();
+                }
+            }
         }
     }
 }

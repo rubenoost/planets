@@ -4,12 +4,12 @@ namespace Planets.Model
 {
     class Player : GameObject
     {
-        public Player(double x, double y, double dx, double dy, double mass) : base(x, y, dx, dy, mass)
+        public Player(double x, double y, double dx, double dy, double mass) : base(x, y, dx, dy, mass, false)
         {
 
         }
 
-        public Player(Vector location, Vector velocity, double mass) : base(location, velocity, mass)
+        public Player(Vector location, Vector velocity, double mass) : base(location, velocity, mass, false)
         {
 
         }
@@ -37,12 +37,11 @@ namespace Planets.Model
                     break;
             }
 
-            GameObject BallShot = new GameObject((this.Location.X + (Utils.CalcRadius(this.mass - 5) / 2)) - (Utils.CalcRadius(scale) / 2), this.Location.Y + (Utils.CalcRadius(this.mass - 5) / 2) - (Utils.CalcRadius(scale) / 2), BallDV.X, BallDV.Y, scale);
+            GameObject BallShot = new GameObject((this.Location.X + (Utils.CalcRadius(this.mass - 5) / 2)) - (Utils.CalcRadius(scale) / 2), this.Location.Y + (Utils.CalcRadius(this.mass - 5) / 2) - (Utils.CalcRadius(scale) / 2), BallDV.X, BallDV.Y, scale, true);
 
             this.mass -= 5;
 
-            if(this.DV.X < 10 && this.DV.Y < 10)
-                this.DV += BallDV;
+            this.DV += BallDV;
         }
     }
 }
