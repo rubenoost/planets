@@ -16,11 +16,16 @@ namespace Planets.Model
 
         }
 
-        public GameObject(Vector location, Vector velocity, double mass)
+        public GameObject(Vector location, Vector velocity, double Mass)
         {
             Location = location;
             DV = velocity;
-            mass = mass;
+            this.mass = Mass;
+        }
+
+        public void UpdateLocation()
+        {
+            this.Location += this.DV / 4000;
         }
     }
 }

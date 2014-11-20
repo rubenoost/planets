@@ -35,6 +35,7 @@ namespace Planets.Controller
         // Variables
 		private bool running;
         private Thread GameThread;
+        private Thread InputThread;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
@@ -52,7 +53,9 @@ namespace Planets.Controller
 
 			running = false;
             GameThread = new Thread(GameLoop);
+            InputThread = new Thread(InputLoop);
             GameThread.Start();
+            InputThread.Start();
         }
 
         private void Form_Click(object sender, EventArgs e)
@@ -91,10 +94,13 @@ namespace Planets.Controller
                     LoopBegin = DateTime.Now;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-					if (DeltaT.Milliseconds >= 1000 / 60) 
+					if (DeltaT.Milliseconds > 1000 / 60) 
 					{
 						Thread.Sleep(1);	
 					}
+
+                    foreach (GameObject obj in this.field.GameObjects)
+                        obj.UpdateLocation();
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
@@ -102,7 +108,15 @@ namespace Planets.Controller
 					GameView.Invalidate();
                 }
                 loopcount = 0;
-                Thread.Sleep(50);
+                Thread.Sleep(1);
+            }
+        }
+
+        private void CheckCollission(GameObject CurObj)
+        {
+            foreach(GameObject obj in this.field.GameObjects)
+            {
+                // Check for collission
             }
         }
 
@@ -111,21 +125,22 @@ namespace Planets.Controller
         {
             while(true)
             {
+                Player player = (Player)this.field.GameObjects[0];
                 if(GetAsyncKeyState(Keys.W))        // Input Up
                 {
-                    
+                    player.ShootBall(Direction.up);
                 }
                 if(GetAsyncKeyState(Keys.A))        // Input Left
                 {
-
+                    player.ShootBall(Direction.left);
                 }
                 if (GetAsyncKeyState(Keys.S))       // Input Down
                 {
-
+                    player.ShootBall(Direction.down);
                 }
                 if (GetAsyncKeyState(Keys.D))       // Input Right
                 {
-
+                    player.ShootBall(Direction.right);
                 }
 
                 Thread.Sleep(60);
