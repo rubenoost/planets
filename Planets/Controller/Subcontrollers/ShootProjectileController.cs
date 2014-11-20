@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Planets.Model;
@@ -65,13 +66,13 @@ namespace Planets.Controller.Subcontrollers
             Vector Lc = p;
 
             //Projectile being shooted
-            GameObject P = new GameObject(0,0,0,0,0);
+            GameObject P = new GameObject(0, 0, 0, 0, 0);
 
             //Player
             GameObject O = InternalPlayfield.CurrentPlayer;
 
             //set the mass of the projectile
-            P.mass = 0.05 * O.mass;
+            P.mass = 0.05*O.mass;
 
             //set velocity projectile
             Vector temp1 = Lc - Lo;
@@ -82,13 +83,20 @@ namespace Planets.Controller.Subcontrollers
             O.mass = O.mass - P.mass;
 
             //set the velocity of the new player
-            O.DV = O.DV - temp1 * Math.Sqrt(P.mass / O.mass);
+            O.DV = O.DV - temp1*Math.Sqrt(P.mass/O.mass);
 
             //Set projectile location
             P.Location = O.Location + temp1.ScaleToLength(O.radius + P.radius);
 
             InternalPlayfield.GameObjects.Add(P);
 
+            // Reset if too low
+            if (O.mass < 25)
+            {
+
+                InternalPlayfield.GameObjects.Clear();
+                InternalPlayfield.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
+            }
         }
     }
 }

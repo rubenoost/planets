@@ -16,10 +16,6 @@ namespace Planets.Controller
 {
     class GameEngine
     {
-        // GetAsyncKeyState -> Input
-        [DllImport("user32.dll")]
-        static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
-
         // Hosts
         private MainEngine HostEngine;
         private PlanetsForm HostForm;
@@ -33,14 +29,9 @@ namespace Planets.Controller
         // Model Data
         private Playfield field;
 
-        // Mouse Variables
-        private int MouseX;
-        private int MouseY;
-
         // Variables
         private bool running;
         private Thread GameThread;
-        private Thread InputThread;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
@@ -58,11 +49,8 @@ namespace Planets.Controller
 
             running = false;
             GameThread = new Thread(GameLoop);
-            InputThread = new Thread(InputLoop);
             GameThread.Start();
-            InputThread.Start();
         }
-
 
         public void Start()
         {
@@ -99,9 +87,9 @@ namespace Planets.Controller
                         GameObject obj = field.GameObjects[i];
                         if (obj == null) continue; // TODO Remove hack
                         Vector newLoc = obj.CalcNewLocation();
-                        if (!CheckXCollision(newLoc))
+                        if (!CheckXCollision(newLoc, obj.radius))
                             obj.InvertObjectX();
-                        if (!CheckYCollision(newLoc))
+                        if (!CheckYCollision(newLoc, obj.radius))
                             obj.InvertObjectY();
 
                         obj.UpdateLocation();
@@ -117,41 +105,14 @@ namespace Planets.Controller
             }
         }
 
-        private bool CheckXCollision(Vector location)
+        private bool CheckXCollision(Vector location, double radius)
         {
-            return (location.X > 0 && location.X < this.HostForm.Size.Width);
+            return (location.X > radius && location.X + radius < this.HostForm.Size.Width);
         }
 
-        private bool CheckYCollision(Vector location)
+        private bool CheckYCollision(Vector location, double radius)
         {
-            return (location.Y > 0 && location.Y < this.HostForm.Size.Height);
-        }
-
-        // Tijdelijke inputloop
-        private void InputLoop()
-        {
-            while (true)
-            {
-                Player player = (Player)this.field.CurrentPlayer;
-                if (GetAsyncKeyState(Keys.W))        // Input Up
-                {
-                    player.ShootBall(Direction.up);
-                }
-                if (GetAsyncKeyState(Keys.A))        // Input Left
-                {
-                    player.ShootBall(Direction.left);
-                }
-                if (GetAsyncKeyState(Keys.S))       // Input Down
-                {
-                    player.ShootBall(Direction.down);
-                }
-                if (GetAsyncKeyState(Keys.D))       // Input Right
-                {
-                    player.ShootBall(Direction.right);
-                }
-
-                Thread.Sleep(60);
-            }
+            return (location.Y > radius && location.Y + radius < this.HostForm.Size.Height);
         }
     }
 }
