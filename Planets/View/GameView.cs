@@ -10,23 +10,34 @@ namespace Planets.View
 
         Playfield field;
 
+        /// <summary>
+        /// Buffer bitmap
+        /// </summary>
+        private Bitmap b = new Bitmap(Properties.Resources.LogoFinal_Inv, new Size(1920, 1080));
+
+        /// <summary>
+        /// Buffer brush
+        /// </summary>
+        private Brush brush = new SolidBrush(Color.Blue);
+
         public GameView(Playfield field)
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
+            DoubleBuffered = true;
             this.field = field;
-            this.BackgroundImage = Properties.Resources.LogoFinal_Inv;
-            this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            
+
+            // Draw background unscaled to improve performance.
+            g.DrawImageUnscaled(b, new Point(0, 0));
+
             // Maak teken functie
             foreach(GameObject obj in field.GameObjects)
             {
-                g.FillEllipse(new SolidBrush(Color.Blue), (float)obj.Location.X, (float)obj.Location.Y, Utils.CalcRadius(obj.mass), Utils.CalcRadius(obj.mass));
+                g.FillEllipse(brush, (float)obj.Location.X, (float)obj.Location.Y, Utils.CalcRadius(obj.mass), Utils.CalcRadius(obj.mass));
             }
         }
 
