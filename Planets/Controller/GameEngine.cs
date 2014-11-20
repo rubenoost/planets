@@ -8,11 +8,16 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Planets.View;
 using Planets.Model;
+using System.Runtime.InteropServices;
 
 namespace Planets.Controller
 {
     class GameEngine
     {
+    // GetAsyncKeyState -> Input
+        [DllImport("user32.dll")]
+        static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
+
         // Hosts
         private MainEngine HostEngine;
         private PlanetsForm HostForm;
@@ -28,7 +33,7 @@ namespace Planets.Controller
         private int MouseY;
 
         // Variables
-        private bool running;
+		private bool running;
         private Thread GameThread;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
@@ -40,16 +45,19 @@ namespace Planets.Controller
             this.HostForm.Click += Form_Click;
             this.HostForm.MouseDown += Form_MouseDown;
 
+            this.field.GameObjects.Add(new Player(100, 200, 0, 0, Utils.StartMass));
             this.GameView = new GameView(this.field);
 
-            running = false;
+            this.HostEngine.SetView(GameView);
+
+			running = false;
             GameThread = new Thread(GameLoop);
             GameThread.Start();
         }
 
         private void Form_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Form Clicked = " + MouseX + " / " + MouseY);
+
         }
 
         private void Form_MouseDown(object sender, MouseEventArgs e)
@@ -58,10 +66,10 @@ namespace Planets.Controller
             MouseY = e.Y;
         }
 
-        public void Start()
-        {
+		public void Start()
+		{
             this.running = true;
-        }
+		}
 
         public void GameLoop()
         {
@@ -83,18 +91,44 @@ namespace Planets.Controller
                     LoopBegin = DateTime.Now;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-                    if (DeltaT.Milliseconds >= 1000 / 60) 
-                    {
-                        Thread.Sleep(1);	
-                    }
+					if (DeltaT.Milliseconds >= 1000 / 60) 
+					{
+						Thread.Sleep(1);	
+					}
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
-                    // Update shizzle hier.
-                    GameView.Invalidate();
+					// Update shizzle hier.
+					GameView.Invalidate();
                 }
                 loopcount = 0;
                 Thread.Sleep(50);
+            }
+        }
+
+        // Tijdelijke inputloop
+        private void InputLoop()
+        {
+            while(true)
+            {
+                if(GetAsyncKeyState(Keys.W))        // Input Up
+                {
+                    
+                }
+                if(GetAsyncKeyState(Keys.A))        // Input Left
+                {
+
+                }
+                if (GetAsyncKeyState(Keys.S))       // Input Down
+                {
+
+                }
+                if (GetAsyncKeyState(Keys.D))       // Input Right
+                {
+
+                }
+
+                Thread.Sleep(60);
             }
         }
     }

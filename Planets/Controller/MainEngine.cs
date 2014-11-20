@@ -18,6 +18,7 @@ namespace Planets.Controller
 
         public void SetView(UserControl uc)
         {
+            uc.Size = this.host.Size;
             this.host.Controls.Clear();
             this.host.Controls.Add(uc);
         }
