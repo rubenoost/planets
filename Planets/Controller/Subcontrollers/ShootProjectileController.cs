@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Planets.Model;
 using Planets.View;
@@ -32,7 +33,7 @@ namespace Planets.Controller.Subcontrollers
             InternalControl = listenControl;
 
             // Register event handlers
-            listenControl.Click += ClickCallback;
+            listenControl.MouseClick += delegate(object sender, MouseEventArgs args) {Clicked(args.Location);};
         }
 
         /// <summary>
@@ -40,9 +41,9 @@ namespace Planets.Controller.Subcontrollers
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ClickCallback(object sender, EventArgs e)
+        public void Clicked(Point p)
         {
-            
+            MessageBox.Show(p.ToString());
         }
     }
 }

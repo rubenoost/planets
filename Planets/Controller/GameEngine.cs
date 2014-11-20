@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Planets.Controller.Subcontrollers;
 using Planets.View;
 using Planets.Model;
 using System.Runtime.InteropServices;
@@ -25,6 +26,9 @@ namespace Planets.Controller
         // Views
         private GameView GameView;
 
+        // Controllers
+        private ShootProjectileController spc;
+
         // Model Data
         private Playfield field;
 
@@ -33,7 +37,7 @@ namespace Planets.Controller
         private int MouseY;
 
         // Variables
-		private bool running;
+        private bool running;
         private Thread GameThread;
         private Thread InputThread;
 
@@ -43,36 +47,26 @@ namespace Planets.Controller
             this.HostForm = HostForm;
             this.field = new Playfield();
 
-            this.HostForm.Click += Form_Click;
-            this.HostForm.MouseDown += Form_MouseDown;
-
             this.field.GameObjects.Add(new Player(100, 200, 0, 0, Utils.StartMass));
             this.GameView = new GameView(this.field);
 
+            // Create new ShootProjectileController
+            spc = new ShootProjectileController(field, GameView);
+
             this.HostEngine.SetView(GameView);
 
-			running = false;
+            running = false;
             GameThread = new Thread(GameLoop);
             InputThread = new Thread(InputLoop);
             GameThread.Start();
             InputThread.Start();
         }
 
-        private void Form_Click(object sender, EventArgs e)
+
+        public void Start()
         {
-
-        }
-
-        private void Form_MouseDown(object sender, MouseEventArgs e)
-        {
-            MouseX = e.X;
-            MouseY = e.Y;
-        }
-
-		public void Start()
-		{
             this.running = true;
-		}
+        }
 
         public void GameLoop()
         {
@@ -94,18 +88,18 @@ namespace Planets.Controller
                     LoopBegin = DateTime.Now;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-					if (DeltaT.Milliseconds > 1000 / 60) 
-					{
-						Thread.Sleep(1);	
-					}
+                    if (DeltaT.Milliseconds > 1000 / 60) 
+                    {
+                        Thread.Sleep(1);	
+                    }
 
                     foreach (GameObject obj in this.field.GameObjects)
                         obj.UpdateLocation();
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
-					// Update shizzle hier.
-					GameView.Invalidate();
+                    // Update shizzle hier.
+                    GameView.Invalidate();
                 }
                 loopcount = 0;
                 Thread.Sleep(1);
