@@ -16,10 +16,6 @@ namespace Planets.Controller
 {
     class GameEngine
     {
-        // GetAsyncKeyState -> Input
-        [DllImport("user32.dll")]
-        static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
-
         // Hosts
         private MainEngine HostEngine;
         private PlanetsForm HostForm;
@@ -33,14 +29,9 @@ namespace Planets.Controller
         // Model Data
         private Playfield field;
 
-        // Mouse Variables
-        private int MouseX;
-        private int MouseY;
-
         // Variables
         private bool running;
         private Thread GameThread;
-        private Thread InputThread;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
@@ -58,11 +49,8 @@ namespace Planets.Controller
 
             running = false;
             GameThread = new Thread(GameLoop);
-            InputThread = new Thread(InputLoop);
             GameThread.Start();
-            InputThread.Start();
         }
-
 
         public void Start()
         {
@@ -125,33 +113,6 @@ namespace Planets.Controller
         private bool CheckYCollision(Vector location)
         {
             return (location.Y > 0 && location.Y < this.HostForm.Size.Height);
-        }
-
-        // Tijdelijke inputloop
-        private void InputLoop()
-        {
-            while (true)
-            {
-                Player player = (Player)this.field.CurrentPlayer;
-                if (GetAsyncKeyState(Keys.W))        // Input Up
-                {
-                    player.ShootBall(Direction.up);
-                }
-                if (GetAsyncKeyState(Keys.A))        // Input Left
-                {
-                    player.ShootBall(Direction.left);
-                }
-                if (GetAsyncKeyState(Keys.S))       // Input Down
-                {
-                    player.ShootBall(Direction.down);
-                }
-                if (GetAsyncKeyState(Keys.D))       // Input Right
-                {
-                    player.ShootBall(Direction.right);
-                }
-
-                Thread.Sleep(60);
-            }
         }
     }
 }
