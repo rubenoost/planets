@@ -25,7 +25,7 @@ namespace Planets.Model
 
         public void UpdateLocation()
         {
-            this.Location += this.DV;
+            this.Location += this.DV / 4000;
         }
     }
 }

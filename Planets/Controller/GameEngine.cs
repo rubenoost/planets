@@ -94,7 +94,7 @@ namespace Planets.Controller
                     LoopBegin = DateTime.Now;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-					if (DeltaT.Milliseconds >= 1000 / 60) 
+					if (DeltaT.Milliseconds > 1000 / 60) 
 					{
 						Thread.Sleep(1);	
 					}
@@ -108,7 +108,7 @@ namespace Planets.Controller
 					GameView.Invalidate();
                 }
                 loopcount = 0;
-                Thread.Sleep(50);
+                Thread.Sleep(1);
             }
         }
 
