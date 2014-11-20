@@ -89,9 +89,9 @@ namespace Planets.Controller
                         GameObject obj = field.GameObjects[i];
                         if (obj == null) continue; // TODO Remove hack
                         Vector newLoc = obj.CalcNewLocation();
-                        if (!CheckXCollision(newLoc))
+                        if (!CheckXCollision(newLoc, obj.radius))
                             obj.InvertObjectX();
-                        if (!CheckYCollision(newLoc))
+                        if (!CheckYCollision(newLoc, obj.radius))
                             obj.InvertObjectY();
 
                         obj.UpdateLocation();
@@ -107,14 +107,14 @@ namespace Planets.Controller
             }
         }
 
-        private bool CheckXCollision(Vector location)
+        private bool CheckXCollision(Vector location, double radius)
         {
-            return (location.X > 0 && location.X < this.HostForm.Size.Width);
+            return (location.X > radius && location.X + radius < this.HostForm.Size.Width);
         }
 
-        private bool CheckYCollision(Vector location)
+        private bool CheckYCollision(Vector location, double radius)
         {
-            return (location.Y > 0 && location.Y < this.HostForm.Size.Height);
+            return (location.Y > radius && location.Y + radius < this.HostForm.Size.Height);
         }
     }
 }
