@@ -97,6 +97,7 @@ namespace Planets.Controller
                     for (int i = 0; i < field.GameObjects.Count; i++)
                     {
                         GameObject obj = field.GameObjects[i];
+                        if (obj == null) continue; // TODO Remove hack
                         Vector newLoc = obj.CalcNewLocation();
                         if (!CheckXCollision(newLoc))
                             obj.InvertObjectX();
