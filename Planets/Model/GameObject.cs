@@ -30,9 +30,24 @@ namespace Planets.Model
             this.mass = Mass;
         }
 
+        public void InvertObjectX()
+        {
+            this.DV = new Vector(this.DV.X * -1, this.DV.Y);
+        }
+
+        public void InvertObjectY()
+        {
+            this.DV = new Vector(this.DV.X, this.DV.Y * -1);
+        }
+
         public void UpdateLocation()
         {
             this.Location += this.DV / 4000;
+        }
+
+        public Vector CalcNewLocation()
+        {
+            return this.Location + this.DV / 4000;
         }
     }
 }
