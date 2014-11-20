@@ -100,7 +100,15 @@ namespace Planets.Controller
 					}
 
                     foreach (GameObject obj in this.field.GameObjects)
+                    {
+                        Vector newLoc = obj.CalcNewLocation();
+                        if (!CheckXCollision(newLoc))
+                            obj.InvertObjectX();
+                        if (!CheckYCollision(newLoc))
+                            obj.InvertObjectY();
+
                         obj.UpdateLocation();
+                    }
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
@@ -112,12 +120,14 @@ namespace Planets.Controller
             }
         }
 
-        private void CheckCollission(GameObject CurObj)
+        private bool CheckXCollision(Vector location)
         {
-            foreach(GameObject obj in this.field.GameObjects)
-            {
-                // Check for collission
-            }
+            return (location.X > 0 && location.X < this.HostForm.Size.Width);
+        }
+
+        private bool CheckYCollision(Vector location)
+        {
+            return (location.Y > 0 && location.Y < this.HostForm.Size.Height);
         }
 
         // Tijdelijke inputloop
