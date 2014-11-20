@@ -26,7 +26,7 @@ namespace Planets.View
             // Maak teken functie
             foreach(GameObject obj in field.GameObjects)
             {
-                g.FillEllipse(new SolidBrush(Color.Blue), (float)obj.Location.X, (float)obj.Location.Y, Utils.CalcRadius(obj.Mass), Utils.CalcRadius(obj.Mass));
+                g.FillEllipse(new SolidBrush(Color.Blue), (float)obj.Location.X, (float)obj.Location.Y, Utils.CalcRadius(obj.mass), Utils.CalcRadius(obj.mass));
             }
         }
 

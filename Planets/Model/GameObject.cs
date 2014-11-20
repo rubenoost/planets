@@ -9,7 +9,7 @@ namespace Planets.Model
 
         public Vector DV;
 
-        public double Mass;
+        public double mass;
 
         public GameObject(double x, double y, double dx, double dy, double mass) : this(new Vector(x, y), new Vector(dx, dy), mass)
         {
@@ -20,7 +20,7 @@ namespace Planets.Model
         {
             Location = location;
             DV = velocity;
-            Mass = mass;
+            mass = mass;
         }
     }
 }

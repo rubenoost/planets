@@ -57,7 +57,7 @@ namespace Planets.Controller
 
         private void Form_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Form Clicked = " + MouseX + " / " + MouseY);
+
         }
 
         private void Form_MouseDown(object sender, MouseEventArgs e)
@@ -106,9 +106,30 @@ namespace Planets.Controller
             }
         }
 
+        // Tijdelijke inputloop
         private void InputLoop()
         {
-            
+            while(true)
+            {
+                if(GetAsyncKeyState(Keys.W))        // Input Up
+                {
+                    
+                }
+                if(GetAsyncKeyState(Keys.A))        // Input Left
+                {
+
+                }
+                if (GetAsyncKeyState(Keys.S))       // Input Down
+                {
+
+                }
+                if (GetAsyncKeyState(Keys.D))       // Input Right
+                {
+
+                }
+
+                Thread.Sleep(60);
+            }
         }
     }
 }
