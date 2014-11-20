@@ -1,17 +1,65 @@
-﻿namespace Planets.Model
+﻿using System;
+
+namespace Planets.Model
 {
     public struct Vector
     {
+        /// <summary>
+        /// X component of this Vector.
+        /// </summary>
         public readonly double X;
 
+        /// <summary>
+        /// Y component of this Vector.
+        /// </summary>
         public readonly double Y;
 
+        /// <summary>
+        /// Creates a new Vector with the given X and Y component.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public Vector(double x = 0, double y = 0)
         {
             X = x;
             Y = y;
         }
 
+        /// <summary>
+        /// Scales this vector so it becomes the give length.
+        /// <code>this.ScaleToLength(newLength).Length() == newLength</code>
+        /// </summary>
+        /// <param name="newLength">The new length of this Vector.</param>
+        /// <returns>A new Vector.</returns>
+        public Vector ScaleToLength(double newLength)
+        {
+            return Normal() * newLength;
+        }
+
+        /// <summary>
+        /// Returns the normal of this Vector.
+        /// </summary>
+        /// <returns>A new Vector.</returns>
+        public Vector Normal()
+        {
+            return this / Length();
+        }
+
+        /// <summary>
+        /// Returns the length of this Vector.
+        /// </summary>
+        /// <returns><code>Math.sqrt(X * X + Y * Y)</code></returns>
+        public double Length()
+        {
+            return Math.Sqrt(X * X + Y * Y);
+        }
+
+        /// <summary>
+        /// Adds two Vectors.
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns>A new Vector</returns>
         public static Vector operator +(Vector v1, Vector v2)
         {
             return new Vector(v1.X + v2.X, v1.Y + v2.Y);
@@ -25,6 +73,11 @@
         public static Vector operator *(Vector v1, double scalar)
         {
             return new Vector(v1.X * scalar, v1.Y * scalar);
+        }
+
+        public static Vector operator /(Vector v1, double scalar)
+        {
+            return new Vector(v1.X / scalar, v1.Y / scalar);
         }
     }
 }
