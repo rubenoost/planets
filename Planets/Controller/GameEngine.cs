@@ -40,7 +40,10 @@ namespace Planets.Controller
             this.HostForm.Click += Form_Click;
             this.HostForm.MouseDown += Form_MouseDown;
 
+            this.field.GameObjects.Add(new Player(100, 200, 0, 0, Utils.StartMass));
             this.GameView = new GameView(this.field);
+
+            this.HostEngine.SetView(GameView);
 
 			running = false;
             GameThread = new Thread(GameLoop);

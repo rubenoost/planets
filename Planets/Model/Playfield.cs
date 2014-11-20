@@ -4,9 +4,12 @@ namespace Planets.Model
 {
     public class Playfield
     {
-        public IEnumerable<GameObject> GameObjects
+        public List<GameObject> GameObjects;
+
+        public Playfield()
         {
-            get { yield return new Player(10, 10, 1, 1, 300); }
+            this.GameObjects = new List<GameObject>();
         }
+
     }
 }
