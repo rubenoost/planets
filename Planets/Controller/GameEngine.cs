@@ -28,7 +28,7 @@ namespace Planets.Controller
         private int MouseY;
 
         // Variables
-		private bool running;
+        private bool running;
         private Thread GameThread;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
@@ -42,7 +42,7 @@ namespace Planets.Controller
 
             this.GameView = new GameView(this.field);
 
-			running = false;
+            running = false;
             GameThread = new Thread(GameLoop);
             GameThread.Start();
         }
@@ -58,10 +58,10 @@ namespace Planets.Controller
             MouseY = e.Y;
         }
 
-		public void Start()
-		{
+        public void Start()
+        {
             this.running = true;
-		}
+        }
 
         public void GameLoop()
         {
@@ -83,15 +83,15 @@ namespace Planets.Controller
                     LoopBegin = DateTime.Now;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-					if (DeltaT.Milliseconds >= 1000 / 60) 
-					{
-						Thread.Sleep(1);	
-					}
+                    if (DeltaT.Milliseconds >= 1000 / 60) 
+                    {
+                        Thread.Sleep(1);	
+                    }
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
-					// Update shizzle hier.
-					GameView.Invalidate();
+                    // Update shizzle hier.
+                    GameView.Invalidate();
                 }
                 loopcount = 0;
                 Thread.Sleep(50);
