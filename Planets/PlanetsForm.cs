@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Planets.Controller;
 
@@ -14,6 +15,9 @@ namespace Planets
             InitializeComponent();
             this.DoubleBuffered = true;
             engine = new MainEngine(this);
+
+            // Event handlers
+            Closed += (sender, args) => Process.GetCurrentProcess().Kill();
         }
 
         private void PlanetsForm_Load(object sender, EventArgs e)
