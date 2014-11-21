@@ -124,6 +124,16 @@ namespace Planets.Model
             return new Vector(p.X, p.Y);
         }
 
+        /// <summary>
+        /// Converts point to Vector.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static implicit operator Point(Vector v)
+        {
+            return new Point((int) v.X, (int)v.Y);
+        }
+
         public override string ToString()
         {
             return string.Format("{0},{1}", X.ToString(), Y.ToString());

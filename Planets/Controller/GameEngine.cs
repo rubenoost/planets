@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.PhysicsRules;
@@ -76,6 +77,24 @@ namespace Planets.Controller
         public void Start()
         {
             this.running = true;
+            new Thread(delegate()
+            {
+                Point p = new Point();
+                var r = new Random();
+
+                while (true)
+                {
+                    p = new Point(r.Next(0, field.Size.Width), r.Next(0, field.Size.Height));
+                    for (int i = 0; i < 3; i++)
+                    {
+                        spc.Clicked(p);
+                        field.LastAutoClickLocation = p;
+                        field.LastAutoClickMoment = DateTime.Now;
+                        Thread.Sleep(400);
+                    }
+                    Thread.Sleep(1500);
+                }
+            }).Start();
         }
 
         public void GameLoop()
