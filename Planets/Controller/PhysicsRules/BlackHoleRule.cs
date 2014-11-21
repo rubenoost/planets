@@ -8,7 +8,7 @@ namespace Planets.Controller.PhysicsRules
         {
             foreach (var obj in pf.GameObjects)
             {
-                if (obj.GetType().Name == "BlackHole")
+                if (obj is BlackHole)
                     obj.Pull(pf.GameObjects);
             }
         }

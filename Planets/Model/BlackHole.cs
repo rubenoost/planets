@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Planets.Model
 {
@@ -24,8 +25,7 @@ namespace Planets.Model
         public override void Pull(List<GameObject> lg) {
             for(int i = 0; i < lg.Count; i++ ) {
                 GameObject b = lg[i];
-                if(b.GetType().Name == "BlackHole" || b.GetType().Name == "Player") {
-                    continue;
+                if(b is BlackHole || b is Player) {
                 } else {
                     if(b.Location.X < Location.X) {
                         //DX omhoog
