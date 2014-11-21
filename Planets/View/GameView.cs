@@ -27,7 +27,7 @@ namespace Planets.View
         /// <summary>
         /// Main user character image
         /// </summary>
-        private Image newImage = Planets.Properties.Resources.Pluto;
+        private Image newImage = new Bitmap(Planets.Properties.Resources.Pluto);
 
 
         public GameView(Playfield field)
@@ -45,20 +45,24 @@ namespace Planets.View
             g.DrawImageUnscaled(b, new Point(0, 0));
 
             // Maak teken functie
-            foreach (GameObject obj in field.GameObjects)
+            lock (field.GameObjects)
             {
-                float radius = (float)obj.radius;
-                float length = radius * 2;
-                int h = obj.GetHashCode();
-                if (obj != field.CurrentPlayer)
+                foreach (GameObject obj in field.GameObjects)
                 {
-                    Brush brush = new SolidBrush(Colors[h % Colors.Length]);
-                    g.FillEllipse(brush, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,
-                        length);
-                }
-                else
-                {
-                    g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
+                    float radius = (float) obj.radius;
+                    float length = radius*2;
+                    int h = obj.GetHashCode();
+                    if (obj != field.CurrentPlayer)
+                    {
+                        Brush brush = new SolidBrush(Colors[h%Colors.Length]);
+                        g.FillEllipse(brush, (float) obj.Location.X - radius, (float) obj.Location.Y - radius, length,
+                            length);
+                    }
+                    else
+                    {
+                        g.DrawImage(newImage, (float) obj.Location.X - radius, (float) obj.Location.Y - radius, length,
+                            length);
+                    }
                 }
             }
         }

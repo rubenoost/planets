@@ -62,7 +62,7 @@
                 return false;
                 
             }
-            return (Location - go.Location).Length() < (radius + go.radius);
+            return (Location - go.Location).Length() <= (radius + go.radius);
             
         }
 

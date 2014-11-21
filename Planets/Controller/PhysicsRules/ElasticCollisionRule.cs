@@ -24,14 +24,19 @@ namespace Planets.Controller.PhysicsRules
                 
                 // Calculate new speeds
                 var t = c1.mass + c2.mass;
+
                 var h1 = c1.Location - c2.Location;
-                var t1 = c1.DV - (2.0 * c2.mass / t) * (c1.DV - c2.DV).InnerProduct(h1) / h1.Length() / h1.Length() * h1;
                 var h2 = c2.Location - c1.Location;
-                var t2 = c2.DV - (2.0 * c1.mass / t) * (c2.DV - c1.DV).InnerProduct(h2) / h2.Length() / h1.Length() * h2;
+
+                var t2 = h1.Length()*h1.Length();
+                var t3 = (c1.DV - c2.DV).InnerProduct(h1);
+
+                var f1 = c1.DV - (2.0 * c2.mass / t) * t3 / t2 * h1;
+                var f2 = c2.DV - (2.0 * c1.mass / t) * t3 / t2 * h2;
 
                 // Apply speeds
-                c1.DV = t1;
-                c2.DV = t2;
+                c1.DV = f1;
+                c2.DV = f2;
             }
         }
     }
