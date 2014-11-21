@@ -5,7 +5,7 @@ namespace Planets.Controller.PhysicsRules
 {
     class BlackHoleRule : AbstractGameRule
     {
-        private double JoelConstante = 0.1;
+        private double JoelConstante = 10001.0;
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
@@ -35,9 +35,13 @@ namespace Planets.Controller.PhysicsRules
             foreach(GameObject g in pf.GameObjects){
                 if (g is BlackHole){
                     foreach (GameObject g2 in pf.GameObjects){
-                        Vector V = g2.Location - g.Location;
-                        double Fg = JoelConstante * ((g2.mass * g.mass) / (V.Length() * V.Length()));
-                        g2.DV += V.ScaleToLength(Fg * (ms / 1000.0));
+                        if (g != g2 && !(g2 is Player))
+                        {
+                            Vector V = g.Location - g2.Location;
+                            double Fg = JoelConstante*((g2.mass*g.mass)/(V.Length()*V.Length()));
+                            //double Fg = JoelConstante * ((g2.mass * g.mass) / (V.Length()));
+                            g2.DV += V.ScaleToLength(Fg*(ms/1000.0));
+                        }
                     }
                 }
             }
