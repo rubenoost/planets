@@ -22,7 +22,9 @@ namespace Planets.View
         /// <summary>
         /// Buffer bitmap
         /// </summary>
-        private Bitmap b = new Bitmap(Properties.Resources.Background, new Size(1920, 1080));
+        private Bitmap b = new Bitmap(Properties.Resources.LogoFinal_Inv, new Size(1920, 1080));
+        private Brush b2 = new TextureBrush(Properties.Resources.LogoFinal);
+        private Brush b3 = new SolidBrush(Color.Magenta);
 
         /// <summary>
         /// Main user character image
@@ -49,18 +51,24 @@ namespace Planets.View
             {
                 foreach (GameObject obj in field.GameObjects)
                 {
-                    float radius = (float) obj.radius;
-                    float length = radius*2;
+                    float radius = (float)obj.radius;
+                    float length = radius * 2;
                     int h = obj.GetHashCode();
-                    if (obj != field.CurrentPlayer)
+
+
+                    if (obj == field.CurrentPlayer)
                     {
-                        Brush brush = new SolidBrush(Colors[h%Colors.Length]);
-                        g.FillEllipse(brush, (float) obj.Location.X - radius, (float) obj.Location.Y - radius, length,
+                        g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,
                             length);
+                    }
+                    else if (obj is BlackHole)
+                    {
+                        g.FillEllipse(b3, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
                     }
                     else
                     {
-                        g.DrawImage(newImage, (float) obj.Location.X - radius, (float) obj.Location.Y - radius, length,
+                        //Brush brush = new SolidBrush(Colors[h%Colors.Length]);
+                        g.FillEllipse(b2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,
                             length);
                     }
                 }

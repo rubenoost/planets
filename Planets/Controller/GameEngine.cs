@@ -29,8 +29,8 @@ namespace Planets.Controller
             new MoveRule(),
 
             // Collision Rules (can change location of GameObjects)
-            new ElasticCollisionRule(),
             new BlackHoleRule(), 
+            new ElasticCollisionRule(),
 
             // Do not touch the next rule, this one is used to remove any remaining collisions
             new CollisionCorrectionRule(),
