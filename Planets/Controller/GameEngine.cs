@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows.Forms;
 using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.View;
@@ -54,6 +55,10 @@ namespace Planets.Controller
             this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
             
             this.GameView = new GameView(this.field);
+            this.GameView.KeyDown += delegate(object sender, KeyEventArgs args)
+            {
+                if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0;
+            };
 
             // Create new ShootProjectileController
             spc = new ShootProjectileController(field, GameView);
