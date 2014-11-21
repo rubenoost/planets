@@ -4,7 +4,7 @@ namespace Planets.Controller.PhysicsRules
 {
     class ElasticCollisionRule : AbstractGameRule
     {
-        internal override void Execute(Playfield pf, double ms)
+        protected override void ExecuteRule(Playfield pf, double ms)
         {
             for (int i = 0; i < pf.GameObjects.Count; i++)
             {

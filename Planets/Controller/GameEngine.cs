@@ -23,7 +23,23 @@ namespace Planets.Controller
         private Playfield field;
 
         // Game rules
-        private AbstractGameRule[] _gameRules = {new MoveRule(), new StayInFieldRule(1920, 1080), new ElasticCollisionRule()};
+        private AbstractGameRule[] _gameRules =
+        {
+            // Movement Rules (will change location of GameObjects)
+            new MoveRule(),
+
+            // Collision Rules (can change location of GameObjects)
+            new ElasticCollisionRule(),
+
+            // Do not touch the next rule, this one is used to remove any remaining collisions
+            new CollisionCorrectionRule(),
+
+            // Effect rules (cannot change location of GameObjects)
+            new StayInFieldRule(), 
+
+            // Reset rule
+            new ResetRule(), 
+        };
 
         // Variables
         private bool running;
@@ -33,7 +49,7 @@ namespace Planets.Controller
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            this.field = new Playfield();
+            this.field = new Playfield(1920, 1080);
             this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
 
             this.GameView = new GameView(this.field);
@@ -56,7 +72,7 @@ namespace Planets.Controller
         public void GameLoop()
         {
             DateTime LoopBegin = DateTime.Now;
-            TimeSpan DeltaT = new TimeSpan(1000 / 60);
+            TimeSpan DeltaT;
 
             int loopcount = 0;
 
@@ -64,36 +80,32 @@ namespace Planets.Controller
             {
                 while (running)
                 {
-
-
+                    // Bereken DeltaT
                     DeltaT = DateTime.Now - LoopBegin;
-
-
                     LoopBegin = DateTime.Now;
 
+                    // Converteer DeltaT naar ms
+                    double dt = DeltaT.TotalMilliseconds;
+
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-                    while (DeltaT.Milliseconds > 1000 / 60)
-                    {
-                        Thread.Sleep(1);
-                    }
+                    double temp1 = dt*60/1000;
+                    double temp2 = temp1 - (int) temp1;
+                    double temp3 = temp2*1000/60;
+                    Thread.Sleep((int) temp3);
 
                     // Lock GameObjects
                     lock (field.GameObjects)
                     {
-                        // Execute game rules
+                        // ExecuteRule game rules
                         foreach (AbstractGameRule agr in _gameRules)
                         {
-                            agr.Execute(field, DeltaT.TotalMilliseconds);
+                            if(agr.Activated) agr.Execute(field, DeltaT.TotalMilliseconds);
                         }
                     }
-
-                    // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
                     // Update shizzle hier.
                     GameView.Invalidate();
                 }
-                loopcount = 0;
-                Thread.Sleep(1);
             }
         }
     }

@@ -4,35 +4,26 @@ namespace Planets.Controller.PhysicsRules
 {
     class StayInFieldRule : AbstractGameRule
     {
-        private int _width;
-        private int _height;
-
-        public StayInFieldRule(int width, int height)
-        {
-            _width = width;
-            _height = height;
-        }
-
-        internal override void Execute(Playfield pf, double ms)
+        protected override void ExecuteRule(Playfield pf, double ms)
         {
             foreach (GameObject obj in pf.GameObjects)
             {
                 Vector newLoc = obj.CalcNewLocation(ms);
-                if (!FieldXCollission(newLoc, obj.radius))
+                if (!FieldXCollission(newLoc, obj.radius, pf))
                     obj.InvertObjectX();
-                if (!FieldYCollission(newLoc, obj.radius))
+                if (!FieldYCollission(newLoc, obj.radius, pf))
                     obj.InvertObjectY();
             }
         }
 
-        private bool FieldXCollission(Vector location, double radius)
+        private bool FieldXCollission(Vector location, double radius, Playfield pf)
         {
-            return (location.X > radius && location.X + radius < _width);
+            return (location.X > radius && location.X + radius < pf.Width);
         }
 
-        private bool FieldYCollission(Vector location, double radius)
+        private bool FieldYCollission(Vector location, double radius, Playfield pf)
         {
-            return (location.Y > radius && location.Y + radius < _height);
+            return (location.Y > radius && location.Y + radius < pf.Height);
         }
     }
 }

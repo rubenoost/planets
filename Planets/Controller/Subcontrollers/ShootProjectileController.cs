@@ -68,13 +68,6 @@ namespace Planets.Controller.Subcontrollers
                 O.DV = O.DV - temp1 * Math.Sqrt(P.mass / O.mass);
 
                 InternalPlayfield.GameObjects.Add(P);
-
-                // Reset if too low
-                if (O.mass < 25)
-                {
-                    InternalPlayfield.GameObjects.Clear();
-                    InternalPlayfield.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
-                }
             }
         }
     }

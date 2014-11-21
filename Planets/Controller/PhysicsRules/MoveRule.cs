@@ -4,7 +4,7 @@ namespace Planets.Controller.PhysicsRules
 {
     class MoveRule : AbstractGameRule
     {
-        internal override void Execute(Playfield pf, double ms)
+        protected override void ExecuteRule(Playfield pf, double ms)
         {
             foreach (GameObject go in pf.GameObjects)
             {
