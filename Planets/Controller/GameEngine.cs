@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.PhysicsRules;
@@ -53,12 +54,12 @@ namespace Planets.Controller
             this.HostForm = HostForm;
             this.field = new Playfield(1920, 1080);
             this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
-            
-            this.GameView = new GameView(this.field);
-            this.GameView.KeyDown += delegate(object sender, KeyEventArgs args)
-            {
-                if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0;
-            };
+
+            GameView = new GameView(this.field);
+
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.K) { new Thread(delegate() { var p = new Point(); var r = new Random(); while (true) { p = new Point(r.Next(0, field.Size.Width), r.Next(0, field.Size.Height)); for (int i = 0; i < 3; i++) { spc.Clicked(p); field.LastAutoClickLocation = p; field.LastAutoClickMoment = DateTime.Now; Thread.Sleep(400); } Thread.Sleep(1500); } }).Start(); } };
+
 
             // Create new ShootProjectileController
             spc = new ShootProjectileController(field, GameView);
@@ -90,17 +91,17 @@ namespace Planets.Controller
                 while (running)
                 {
                     // Bereken DeltaT
-                        DeltaT = DateTime.Now - LoopBegin;
+                    DeltaT = DateTime.Now - LoopBegin;
                     LoopBegin = DateTime.Now;
 
                     // Converteer DeltaT naar ms
                     double dt = DeltaT.TotalMilliseconds;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-                    double temp1 = dt*60/1000;
-                    double temp2 = temp1 - (int) temp1;
-                    double temp3 = temp2*1000/60;
-                    Thread.Sleep((int) temp3);
+                    double temp1 = dt * 60 / 1000;
+                    double temp2 = temp1 - (int)temp1;
+                    double temp3 = temp2 * 1000 / 60;
+                    Thread.Sleep((int)temp3);
 
                     // Lock GameObjects
                     lock (field.GameObjects)
@@ -108,14 +109,14 @@ namespace Planets.Controller
                         // ExecuteRule game rules
                         foreach (AbstractGameRule agr in _gameRules)
                         {
-                            if(agr.Activated) agr.Execute(field, DeltaT.TotalMilliseconds);
+                            if (agr.Activated) agr.Execute(field, DeltaT.TotalMilliseconds);
                         }
                     }
 
                     // Update shizzle hier.
                     GameView.Invalidate();
                 }
-        }
+            }
         }
     }
 }

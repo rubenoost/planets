@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 
@@ -9,6 +10,10 @@ namespace Planets.Model
         internal Player _currentPlayer;
 
         internal Size Size { get; set; }
+
+        internal Point LastAutoClickLocation { get; set; }
+
+        internal DateTime LastAutoClickMoment { get; set; }
 
         public Playfield(int width, int height)
         {

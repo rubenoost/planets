@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Planets.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -70,6 +73,16 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cursors_Red {
+            get {
+                object obj = ResourceManager.GetObject("Cursors_Red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LogoFinal {
             get {
                 object obj = ResourceManager.GetObject("LogoFinal", resourceCulture);
@@ -103,6 +116,16 @@ namespace Planets.Properties {
         internal static System.Drawing.Bitmap Pluto {
             get {
                 object obj = ResourceManager.GetObject("Pluto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wall {
+            get {
+                object obj = ResourceManager.GetObject("wall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
