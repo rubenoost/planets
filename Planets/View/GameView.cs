@@ -1,4 +1,5 @@
-﻿using Planets.Model;
+﻿using System;
+using Planets.Model;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -61,8 +62,7 @@ namespace Planets.View
 
                     if (obj == field.CurrentPlayer)
                     {
-                        g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,
-                            length);
+                        g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
                     }
                     else if (obj is BlackHole)
                     {
@@ -71,9 +71,15 @@ namespace Planets.View
                     else
                     {
                         //Brush brush = new SolidBrush(Colors[h%Colors.Length]);
-                        g.FillEllipse(b2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,
-                            length);
+                        g.FillEllipse(b2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
                     }
+                }
+
+                double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
+                if (f < 1000)
+                {
+                    int radius = 30 + (int)(f/10);
+                    g.FillEllipse(new SolidBrush(Color.FromArgb((int) (255 - f / 1000 * 255), 255, 0, 0)), field.LastAutoClickLocation.X - radius / 2, field.LastAutoClickLocation.Y - radius / 2, radius, radius);
                 }
             }
         }
