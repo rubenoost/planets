@@ -14,7 +14,7 @@ namespace Planets.Controller
             this.host = host;
             GameEngine = new GameEngine(this, this.host);
 
-			GameEngine.Start();
+            GameEngine.Start();
         }
 
         public void SetView(UserControl uc)

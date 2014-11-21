@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Drawing;
 
 namespace Planets.Model
 {
@@ -6,15 +8,12 @@ namespace Planets.Model
     {
         internal Player _currentPlayer;
 
-        internal double Height { get; private set; }
+        internal Size Size { get; set; }
 
-        internal double Width { get; private set; }
-
-        public Playfield(double width, double height)
+        public Playfield(int width, int height)
         {
             // Save variables
-            Width = width;
-            Height = height;
+            Size = new Size(width, height);
 
             // Create GameObject list
             this.GameObjects = new List<GameObject>();

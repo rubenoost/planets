@@ -30,6 +30,7 @@ namespace Planets.Controller
 
             // Collision Rules (can change location of GameObjects)
             new ElasticCollisionRule(),
+            new BlackHoleRule(), 
 
             // Do not touch the next rule, this one is used to remove any remaining collisions
             new CollisionCorrectionRule(),
@@ -58,6 +59,9 @@ namespace Planets.Controller
             spc = new ShootProjectileController(field, GameView);
 
             this.HostEngine.SetView(GameView);
+
+            // Adjust playfield
+            field.Size = GameView.Size;
 
             running = false;
             GameThread = new Thread(GameLoop);

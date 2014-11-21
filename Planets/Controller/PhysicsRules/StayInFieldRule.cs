@@ -18,12 +18,12 @@ namespace Planets.Controller.PhysicsRules
 
         private bool FieldXCollission(Vector location, double radius, Playfield pf)
         {
-            return (location.X > radius && location.X + radius < pf.Width);
+            return (location.X > radius && location.X + radius < pf.Size.Width);
         }
 
         private bool FieldYCollission(Vector location, double radius, Playfield pf)
         {
-            return (location.Y > radius && location.Y + radius < pf.Height);
+            return (location.Y > radius && location.Y + radius < pf.Size.Height);
         }
     }
 }
