@@ -24,6 +24,7 @@ namespace Planets.View
         /// Buffer bitmap
         /// </summary>
         private Bitmap b = new Bitmap(Properties.Resources.LogoFinal_Inv, new Size(1920, 1080));
+        private Bitmap cursor = new Bitmap(Properties.Resources.Cursors_Red);
         private Brush b2 = new TextureBrush(Properties.Resources.LogoFinal);
         private Brush b3 = new SolidBrush(Color.Magenta);
 
@@ -80,6 +81,7 @@ namespace Planets.View
                 {
                     int radius = 30 + (int)(f/10);
                     g.FillEllipse(new SolidBrush(Color.FromArgb((int) (255 - f / 1000 * 255), 255, 0, 0)), field.LastAutoClickLocation.X - radius / 2, field.LastAutoClickLocation.Y - radius / 2, radius, radius);
+                    g.DrawImage(cursor, field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
                 }
             }
         }
