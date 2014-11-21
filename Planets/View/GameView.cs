@@ -22,7 +22,7 @@ namespace Planets.View
         /// <summary>
         /// Buffer bitmap
         /// </summary>
-        private Bitmap b = new Bitmap(Properties.Resources.LogoFinal_Inv, new Size(1920, 1080));
+        private Bitmap b = new Bitmap(Properties.Resources.wall, new Size(1920, 1080));
         private Brush b2 = new TextureBrush(Properties.Resources.LogoFinal);
         private Brush b3 = new SolidBrush(Color.Magenta);
 
@@ -39,12 +39,19 @@ namespace Planets.View
             this.field = field;
         }
 
+        Point[] destinationPoints = {
+          new Point(200, 20),   // destination for upper-left point of original
+          new Point(110, 100),  // destination for upper-right point of original
+          new Point(250, 30)};
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
 
             // Draw background unscaled to improve performance.
-            g.DrawImageUnscaled(b, new Point(0, 0));
+            //g.DrawImageUnscaled(b, new Point(0, 0));
+            g.DrawImage(b, destinationPoints);
+
 
             // Maak teken functie
             lock (field.GameObjects)
