@@ -11,6 +11,9 @@ namespace Planets.View
 
         Playfield field;
 
+        // Word gebruikt voor bewegende achtergrond
+        private int angle = 0;
+
         private Color[] Colors =
         {
             Color.FromArgb(127, 255, 0, 0),
@@ -42,17 +45,20 @@ namespace Planets.View
             this.field = field;
         }
 
-
+        
 
         protected override void OnPaint(PaintEventArgs e)
         {
+
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             // Draw background unscaled to improve performance.
             g.DrawImageUnscaled(b, new Point(0, 0));
-            //g.DrawImage(b, destinationPoints);
-
+            
+            // Bewegende achtergrond testcode
+            //g.DrawImageUnscaled(b, new Point(angle/4, angle/4));
+            //angle -= 1;
 
             // Maak teken functie
             lock (field.GameObjects)
