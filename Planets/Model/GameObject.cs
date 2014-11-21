@@ -1,4 +1,6 @@
-﻿namespace Planets.Model
+﻿using System.Collections.Generic;
+
+namespace Planets.Model
 {
     public class GameObject
     {

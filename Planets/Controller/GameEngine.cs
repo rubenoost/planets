@@ -101,9 +101,6 @@ namespace Planets.Controller
                         {
                             if(agr.Activated) agr.Execute(field, DeltaT.TotalMilliseconds);
                         }
-
-                        if(obj.GetType().Name == "BlackHole")
-                            obj.Pull(field.GameObjects);
                     }
 
                     // Update shizzle hier.

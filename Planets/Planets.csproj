@@ -47,6 +47,7 @@
     <Compile Include="Controller\GameEngine.cs" />
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
+    <Compile Include="Controller\PhysicsRules\BlackHoleRule.cs" />
     <Compile Include="Controller\PhysicsRules\CollisionCorrectionRule.cs" />
     <Compile Include="Controller\PhysicsRules\ElasticCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\MoveRule.cs" />

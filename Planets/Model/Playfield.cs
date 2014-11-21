@@ -10,7 +10,7 @@ namespace Planets.Model
 
         internal double Width { get; private set; }
 
-        internal Playfield(double width, double height)
+        public Playfield(double width, double height)
         {
             // Save variables
             Width = width;

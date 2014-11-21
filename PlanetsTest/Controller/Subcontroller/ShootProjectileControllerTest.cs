@@ -13,7 +13,7 @@ namespace PlanetsTest.Controller.Subcontroller
         public void UnitTest_ShootProjectileController_Constructor()
         {
             // Arrange
-            Playfield pf = new Playfield();
+            Playfield pf = new Playfield(1920.0, 1080.0);
             GameView gv = new GameView(pf);
 
             // Act
@@ -28,7 +28,7 @@ namespace PlanetsTest.Controller.Subcontroller
         public void UnitTest_ShootProjectileController_Click()
         {
             // Arrange
-            Playfield pf = new Playfield();
+            Playfield pf = new Playfield(1920, 1080);
             GameView gv = new GameView(pf);
             ShootProjectileController spc = new ShootProjectileController(pf, gv);
             int objectCount = pf.GameObjects.Count;

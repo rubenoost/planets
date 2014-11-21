@@ -1,4 +1,6 @@
-﻿namespace Planets.Model
+﻿using System.Collections.Generic;
+
+namespace Planets.Model
 {
 	class BlackHole : GameObject
 	{
@@ -20,7 +22,7 @@
         }
 
         public override void Pull(List<GameObject> lg) {
-            for(int i = 0; i < lg.Count(); i++ ) {
+            for(int i = 0; i < lg.Count; i++ ) {
                 GameObject b = lg[i];
                 if(b.GetType().Name == "BlackHole" || b.GetType().Name == "Player") {
                     continue;
