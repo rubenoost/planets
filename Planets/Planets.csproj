@@ -103,6 +103,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\wall.jpg" />
     <None Include="Resources\ROCmbwF.jpg" />
     <None Include="Resources\Pluto.png" />
     <None Include="Resources\LogoFinal.jpg" />
