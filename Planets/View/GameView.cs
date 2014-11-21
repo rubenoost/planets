@@ -1,6 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using Planets.Model;
-using System.Collections.Generic;
+﻿using Planets.Model;
 using System.Drawing;
 using System.Windows.Forms;
 

@@ -34,7 +34,7 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public Vector ScaleToLength(double newLength)
         {
-            return Normal()*newLength;
+            return Normal() * newLength;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public Vector Normal()
         {
-            return this/Length();
+            return this / Length();
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Planets.Model
         /// <returns><code>Math.sqrt(X * X + Y * Y)</code></returns>
         public double Length()
         {
-            return Math.Sqrt(X*X + Y*Y);
+            return Math.Sqrt(X * X + Y * Y);
         }
 
         /// <summary>
@@ -85,7 +85,22 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public static Vector operator *(Vector v1, double scalar)
         {
-            return new Vector(v1.X*scalar, v1.Y*scalar);
+            return new Vector(v1.X * scalar, v1.Y * scalar);
+        }
+        public static Vector operator *(double scalar, Vector v1)
+        {
+            return v1 * scalar;
+        }
+
+        /// <summary>
+        /// Inner product of two vectors.
+        /// </summary>
+        /// <param name="v1">First vector</param>
+        /// <param name="v2">Second vector</param>
+        /// <returns></returns>
+        public double InnerProduct(Vector v)
+        {
+            return (X * v.X + Y * v.Y);
         }
 
         /// <summary>
@@ -96,7 +111,7 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public static Vector operator /(Vector v1, double scalar)
         {
-            return new Vector(v1.X/scalar, v1.Y/scalar);
+            return new Vector(v1.X / scalar, v1.Y / scalar);
         }
 
         /// <summary>

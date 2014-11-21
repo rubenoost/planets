@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using System.Windows.Forms;
-using System.Diagnostics;
+using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.View;
 using Planets.Model;
-using System.Runtime.InteropServices;
-using System.Drawing;
 
 namespace Planets.Controller
 {
@@ -29,6 +21,9 @@ namespace Planets.Controller
 
         // Model Data
         private Playfield field;
+
+        // Game rules
+        private AbstractGameRule[] _gameRules = {new MoveRule(), new StayInFieldRule(1920, 1080), new ElasticCollisionRule()};
 
         // Variables
         private bool running;
@@ -82,29 +77,13 @@ namespace Planets.Controller
                         Thread.Sleep(1);
                     }
 
-                    // Check every obj for field limits
+                    // Lock GameObjects
                     lock (field.GameObjects)
                     {
-                        for (int i = 0; i < field.GameObjects.Count; i++)
+                        // Execute game rules
+                        foreach (AbstractGameRule agr in _gameRules)
                         {
-                            GameObject obj = field.GameObjects[i];
-                            if (obj == null) continue; // TODO Remove hack
-                            Vector newLoc = obj.CalcNewLocation(DeltaT.TotalMilliseconds);
-                            if (!FieldXCollission(newLoc, obj.radius))
-                                obj.InvertObjectX();
-                            if (!FieldYCollission(newLoc, obj.radius))
-                                obj.InvertObjectY();
-
-                            for (int j = i + 1; j < this.field.GameObjects.Count; j++)
-                            {
-                                GameObject SecondObj = this.field.GameObjects[j];
-                                if (SecondObj == null) continue;
-                                if (obj == SecondObj)
-                                    continue;
-
-                                CheckObjectCollission(obj, SecondObj);
-                            }
-                            obj.UpdateLocation(DeltaT.TotalMilliseconds);
+                            agr.Execute(field, DeltaT.TotalMilliseconds);
                         }
                     }
 
@@ -115,32 +94,6 @@ namespace Planets.Controller
                 }
                 loopcount = 0;
                 Thread.Sleep(1);
-            }
-        }
-
-        private bool FieldXCollission(Vector location, double radius)
-        {
-            return (location.X > radius && location.X + radius < this.HostForm.Size.Width);
-        }
-
-        private bool FieldYCollission(Vector location, double radius)
-        {
-            return (location.Y > radius && location.Y + radius < this.HostForm.Size.Height);
-        }
-
-        private void CheckObjectCollission(GameObject CurObj, GameObject CheckObj)
-        {
-            if (CurObj.IntersectsWith(CheckObj))
-            {
-                Vector i = (CheckObj.Location - CurObj.Location).ScaleToLength((CheckObj.DV - CurObj.DV).Length());
-                double totalMass = CheckObj.mass + CurObj.mass;
-                Vector i2 = CheckObj.DV + i * (2.0 * CurObj.mass / totalMass);
-                Vector i3 = CurObj.DV - i * (CheckObj.mass / totalMass);
-
-                CheckObj.Location = CurObj.Location + i.ScaleToLength(CheckObj.radius + CurObj.radius + 1); // TODO Remove hack
-
-                CheckObj.DV = i2;
-                CurObj.DV = i3;
             }
         }
     }

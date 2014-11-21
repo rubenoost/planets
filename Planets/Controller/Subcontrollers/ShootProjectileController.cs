@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Planets.Model;
@@ -44,7 +43,7 @@ namespace Planets.Controller.Subcontrollers
         /// <param name="e"></param>
         public void Clicked(Point p)
         {
-            lock (InternalPlayfield)
+            lock (InternalPlayfield.GameObjects)
             {
                 //formules
                 //mN = mO - mP

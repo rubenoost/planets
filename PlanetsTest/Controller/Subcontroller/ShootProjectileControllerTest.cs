@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Reflection;
+﻿using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;

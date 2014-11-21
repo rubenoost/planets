@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace Planets.Model
+﻿namespace Planets.Model
 {
     class Player : GameObject
     {
