@@ -95,6 +95,7 @@ namespace Planets.Controller.Subcontrollers
             {
                 InternalPlayfield.GameObjects.Clear();
                 InternalPlayfield.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
+                InternalPlayfield.GameObjects.Add(new BlackHole(new Vector(100, 100), new Vector(0, 0), 10, 10));
             }
         }
     }

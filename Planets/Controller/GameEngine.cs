@@ -96,11 +96,15 @@ namespace Planets.Controller
                             obj.InvertObjectY();
 
                         obj.UpdateLocation();
+
+                        if(obj.GetType().Name == "BlackHole")
+                            obj.Pull(field.GameObjects);
                     }
 
                     // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
 
                     // Update shizzle hier.
+                    
                     GameView.Invalidate();
                 }
                 loopcount = 0;

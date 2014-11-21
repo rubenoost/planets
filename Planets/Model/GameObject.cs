@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace Planets.Model
 {
@@ -8,6 +9,8 @@ namespace Planets.Model
         public Vector Location;
 
         public Vector DV;
+
+        public Vector HoleVelocity;
 
         public double mass;
 
@@ -34,6 +37,7 @@ namespace Planets.Model
             DV = velocity;
             this.mass = Mass;
             IsAffectedByBlackHole = blackhole;
+            HoleVelocity = new Vector(velocity.X, velocity.Y);
         }
 
         public void InvertObjectX()
@@ -54,6 +58,10 @@ namespace Planets.Model
         public Vector CalcNewLocation()
         {
             return this.Location + this.DV / 4000;
+        }
+
+        public virtual void Pull(List<GameObject> g){
+
         }
     }
 }
