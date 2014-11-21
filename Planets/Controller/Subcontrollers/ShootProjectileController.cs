@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Planets.Model;
-using Planets.View;
 
 namespace Planets.Controller.Subcontrollers
 {
