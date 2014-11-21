@@ -5,6 +5,8 @@ namespace Planets.Controller.PhysicsRules
 {
     class BlackHoleRule : AbstractGameRule
     {
+        private double JoelConstante = 0.1;
+
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             // Check for collisions with black hole
@@ -30,7 +32,15 @@ namespace Planets.Controller.PhysicsRules
             removed.ForEach(g => pf.GameObjects.Remove(g));
 
             // Update speed to black hole
-
+            foreach(GameObject g in pf.GameObjects){
+                if (g is BlackHole){
+                    foreach (GameObject g2 in pf.GameObjects){
+                        Vector V = g2.Location - g.Location;
+                        double Fg = JoelConstante * ((g2.mass * g.mass) / (V.Length() * V.Length()));
+                        g2.DV += V.ScaleToLength(Fg * (ms / 1000.0));
+                    }
+                }
+            }
         }
     }
 }
