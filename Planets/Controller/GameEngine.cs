@@ -48,6 +48,9 @@ namespace Planets.Controller
         private bool running;
         private Thread GameThread;
 
+        private autodemo ad;
+        private Thread adthread;
+        
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
             this.HostEngine = HostEngine;
@@ -57,10 +60,6 @@ namespace Planets.Controller
 
             GameView = new GameView(this.field);
 
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.K) { new Thread(delegate() { var p = new Point(); var r = new Random(); while (true) { p = new Point(r.Next(0, field.Size.Width), r.Next(0, field.Size.Height)); for (int i = 0; i < 3; i++) { spc.Clicked(p); field.LastAutoClickLocation = p; field.LastAutoClickMoment = DateTime.Now; Thread.Sleep(400); } Thread.Sleep(1500); } }).Start(); } };
-
-
             // Create new ShootProjectileController
             spc = new ShootProjectileController(field, GameView);
 
@@ -68,6 +67,27 @@ namespace Planets.Controller
 
             // Adjust playfield
             field.Size = GameView.Size;
+
+            this.ad = new autodemo(this.field, this.spc);
+            this.adthread = new Thread(ad.run);
+
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
+            GameView.KeyUp += delegate(object sender, KeyEventArgs args)
+            {
+                if (args.KeyData == Keys.K && ad.kpressed == false)
+                {
+                    this.adthread = new Thread(ad.run);
+                    ad.start();
+                    adthread.Start();
+                }
+            };
+            GameView.KeyUp += delegate(object sender, KeyEventArgs args)
+            {
+                if (args.KeyData == Keys.L && ad.kpressed == true)
+                {
+                    ad.stop();
+                }
+            };
 
             running = false;
             GameThread = new Thread(GameLoop);
