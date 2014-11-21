@@ -22,7 +22,7 @@ namespace Planets.Model
             return GravGrootte;
         }
 
-        public override void Pull(List<GameObject> lg) {
+        public override bool Pull(List<GameObject> lg) {
             for(int i = 0; i < lg.Count; i++ ) {
                 GameObject b = lg[i];
                 if(b is BlackHole || b is Player) {
@@ -33,7 +33,7 @@ namespace Planets.Model
                     } else if(b.Location.X > Location.X) {
                         b.DV = new Vector(-10, b.DV.Y);
                     } else {
-                        b.DV = new Vector(0, b.DV.X);
+                        b.DV = new Vector(0, b.DV.Y);
                     }
 
                     if(b.Location.Y < Location.Y) {
@@ -44,11 +44,12 @@ namespace Planets.Model
                         b.DV = new Vector(b.DV.X, 0);
                     }
 
-                    if(b.Location.X == Location.X && b.Location.Y == Location.Y){
-                        
+                    if(IntersectsWith(b)){
+                        return true;
                     }
                 }
             }
+            return false;
         }
     }
 }
