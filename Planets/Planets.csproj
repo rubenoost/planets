@@ -108,6 +108,10 @@
     <None Include="Resources\Pluto.png" />
     <None Include="Resources\LogoFinal.jpg" />
     <None Include="Resources\LogoFinal-Inv.jpg" />
+    <None Include="Resources\Cursor-Blue.png" />
+    <None Include="Resources\Cursor-Green.png" />
+    <None Include="Resources\Cursors-Red.png" />
+    <None Include="Resources\Cursor-White.png" />
     <Content Include="Resources\logotest.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
