@@ -29,11 +29,11 @@ namespace Planets.Controller
             new MoveRule(),
 
             // Collision Rules (can change location of GameObjects)
-            new BlackHoleRule(), 
-            new ElasticCollisionRule(),
+            new BlackHoleRule(),
+            
 
-            // Do not touch the next rule, this one is used to remove any remaining collisions
-            new CollisionCorrectionRule(),
+            // Do not touch the next rules, these should have the final word about movement
+            new ElasticCollisionRule(),
 
             // Effect rules (cannot change location of GameObjects)
             new StayInFieldRule(), 
@@ -108,7 +108,6 @@ namespace Planets.Controller
                     }
 
                     // Update shizzle hier.
-                    
                     GameView.Invalidate();
                 }
         }
