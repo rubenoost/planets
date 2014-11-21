@@ -9,9 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace Planets.Properties {
-    using System;
-    
-    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -63,9 +60,29 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Background {
+            get {
+                object obj = ResourceManager.GetObject("Background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogoFinal {
+            get {
+                object obj = ResourceManager.GetObject("LogoFinal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LogoFinal_Inv {
             get {
-                object obj = ResourceManager.GetObject("LogoFinal-Inv", resourceCulture);
+                object obj = ResourceManager.GetObject("LogoFinal_Inv", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -76,6 +93,16 @@ namespace Planets.Properties {
         internal static System.Drawing.Bitmap logotest {
             get {
                 object obj = ResourceManager.GetObject("logotest", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pluto {
+            get {
+                object obj = ResourceManager.GetObject("Pluto", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,6 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using Planets.Model;
-using System.Collections.Generic;
+﻿using Planets.Model;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -24,8 +22,13 @@ namespace Planets.View
         /// <summary>
         /// Buffer bitmap
         /// </summary>
-        private Bitmap b = new Bitmap(Properties.Resources.LogoFinal_Inv, new Size(1920, 1080));
-        
+        private Bitmap b = new Bitmap(Properties.Resources.Background, new Size(1920, 1080));
+
+        /// <summary>
+        /// Main user character image
+        /// </summary>
+        private Image newImage = new Bitmap(Planets.Properties.Resources.Pluto);
+
 
         public GameView(Playfield field)
         {
@@ -42,24 +45,24 @@ namespace Planets.View
             g.DrawImageUnscaled(b, new Point(0, 0));
 
             // Maak teken functie
-            foreach(GameObject obj in field.GameObjects)
+            lock (field.GameObjects)
             {
-                float radius = (float) obj.radius;
-                float length = radius*2;
-                int h = obj.GetHashCode();
-                if (obj != field.CurrentPlayer)
+                foreach (GameObject obj in field.GameObjects)
                 {
-                    Brush brush = new SolidBrush(Colors[h%Colors.Length]);
-                    g.FillEllipse(brush, (float) obj.Location.X - radius, (float) obj.Location.Y - radius, length,
-                        length);
-                }
-                else
-                {
-                    Brush brush2 = new LinearGradientBrush(new Point(0, 0), new Point(1920, 1080), Color.GreenYellow, Color.Red);
-                    g.FillEllipse(brush2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
-                    Brush brush = new LinearGradientBrush(new Point(0, 1080),new Point(1920, 0),Color.Magenta,Color.Blue);
-                    g.FillEllipse(brush, (float)obj.Location.X - radius / 2, (float)obj.Location.Y - radius / 2, length/2, length/2);
-                    
+                    float radius = (float) obj.radius;
+                    float length = radius*2;
+                    int h = obj.GetHashCode();
+                    if (obj != field.CurrentPlayer)
+                    {
+                        Brush brush = new SolidBrush(Colors[h%Colors.Length]);
+                        g.FillEllipse(brush, (float) obj.Location.X - radius, (float) obj.Location.Y - radius, length,
+                            length);
+                    }
+                    else
+                    {
+                        g.DrawImage(newImage, (float) obj.Location.X - radius, (float) obj.Location.Y - radius, length,
+                            length);
+                    }
                 }
             }
         }

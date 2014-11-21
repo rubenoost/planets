@@ -6,6 +6,20 @@ namespace Planets.Model
     {
         internal Player _currentPlayer;
 
+        internal double Height { get; private set; }
+
+        internal double Width { get; private set; }
+
+        internal Playfield(double width, double height)
+        {
+            // Save variables
+            Width = width;
+            Height = height;
+
+            // Create GameObject list
+            this.GameObjects = new List<GameObject>();
+        }
+
         internal Player CurrentPlayer
         {
             get { return _currentPlayer; }
@@ -18,11 +32,5 @@ namespace Planets.Model
         }
 
         public List<GameObject> GameObjects;
-
-        public Playfield()
-        {
-            this.GameObjects = new List<GameObject>();
-        }
-
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Planets.Model
+﻿namespace Planets.Model
 {
 	class BlackHole : GameObject
 	{
@@ -13,7 +7,7 @@ namespace Planets.Model
 		public BlackHole(double x, double y, double dx, double dy, double mass, double strength) : base(x, y, dx, dy, mass, false)
 		{
             Strength = strength;
-        }
+		}
 
 		public BlackHole(Vector location, Vector velocity,  double mass, double strength) : base(location, velocity, mass, false)
 		{

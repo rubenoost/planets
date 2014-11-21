@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using System.Windows.Forms;
-using System.Diagnostics;
+using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.View;
 using Planets.Model;
-using System.Runtime.InteropServices;
 
 namespace Planets.Controller
 {
@@ -29,6 +22,25 @@ namespace Planets.Controller
         // Model Data
         private Playfield field;
 
+        // Game rules
+        private AbstractGameRule[] _gameRules =
+        {
+            // Movement Rules (will change location of GameObjects)
+            new MoveRule(),
+
+            // Collision Rules (can change location of GameObjects)
+            new ElasticCollisionRule(),
+
+            // Do not touch the next rule, this one is used to remove any remaining collisions
+            new CollisionCorrectionRule(),
+
+            // Effect rules (cannot change location of GameObjects)
+            new StayInFieldRule(), 
+
+            // Reset rule
+            new ResetRule(), 
+        };
+
         // Variables
         private bool running;
         private Thread GameThread;
@@ -37,9 +49,8 @@ namespace Planets.Controller
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            this.field = new Playfield();
+            this.field = new Playfield(1920, 1080);
             this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
-            this.field.GameObjects.Add(new BlackHole(new Vector(100, 100), new Vector(0, 0), 10, 1));
             
             this.GameView = new GameView(this.field);
 
@@ -61,7 +72,7 @@ namespace Planets.Controller
         public void GameLoop()
         {
             DateTime LoopBegin = DateTime.Now;
-            TimeSpan DeltaT = new TimeSpan(1000 / 60);
+            TimeSpan DeltaT;
 
             int loopcount = 0;
 
@@ -69,57 +80,37 @@ namespace Planets.Controller
             {
                 while (running)
                 {
-
-                    if (loopcount > 0)
-                    {
+                    // Bereken DeltaT
                         DeltaT = DateTime.Now - LoopBegin;
-                    }
-
                     LoopBegin = DateTime.Now;
 
+                    // Converteer DeltaT naar ms
+                    double dt = DeltaT.TotalMilliseconds;
+
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
-                    if (DeltaT.Milliseconds > 1000 / 60)
+                    double temp1 = dt*60/1000;
+                    double temp2 = temp1 - (int) temp1;
+                    double temp3 = temp2*1000/60;
+                    Thread.Sleep((int) temp3);
+
+                    // Lock GameObjects
+                    lock (field.GameObjects)
                     {
-                        Thread.Sleep(1);
-                    }
-
-                    // Check every obj for field limits
-
-                    for (int i = 0; i < field.GameObjects.Count; i++)
-                    {
-                        GameObject obj = field.GameObjects[i];
-                        if (obj == null) continue; // TODO Remove hack
-                        Vector newLoc = obj.CalcNewLocation();
-                        if (!CheckXCollision(newLoc, obj.radius))
-                            obj.InvertObjectX();
-                        if (!CheckYCollision(newLoc, obj.radius))
-                            obj.InvertObjectY();
-
-                        obj.UpdateLocation();
+                        // ExecuteRule game rules
+                        foreach (AbstractGameRule agr in _gameRules)
+                        {
+                            if(agr.Activated) agr.Execute(field, DeltaT.TotalMilliseconds);
+                        }
 
                         if(obj.GetType().Name == "BlackHole")
                             obj.Pull(field.GameObjects);
                     }
 
-                    // PLAATS GAMELOOP HIER, voor allereerste loop is DELTA T niet beschikbaar! Bedenk dus een vaste waarde voor eerste loop!?
-
                     // Update shizzle hier.
                     
                     GameView.Invalidate();
                 }
-                loopcount = 0;
-                Thread.Sleep(1);
-            }
         }
-
-        private bool CheckXCollision(Vector location, double radius)
-        {
-            return (location.X > radius && location.X + radius < this.HostForm.Size.Width);
-        }
-
-        private bool CheckYCollision(Vector location, double radius)
-        {
-            return (location.Y > radius && location.Y + radius < this.HostForm.Size.Height);
         }
     }
 }
