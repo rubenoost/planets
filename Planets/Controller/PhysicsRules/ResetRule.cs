@@ -11,7 +11,7 @@ namespace Planets.Controller.PhysicsRules
             {
                 pf.GameObjects.Clear();
                 pf.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
-                pf.GameObjects.Add(new BlackHole(600, 600, 0, 0, 100, 1));
+                pf.GameObjects.Add(new BlackHole(600, 600, 0, 0, 1000000, 1));
             }
         }
     }

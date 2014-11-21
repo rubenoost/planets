@@ -9,9 +9,9 @@ namespace Planets.Controller.PhysicsRules
             foreach (GameObject obj in pf.GameObjects)
             {
                 Vector newLoc = obj.CalcNewLocation(ms);
-                if (!FieldXCollission(newLoc, obj.radius, pf))
+                if (!FieldXCollission(newLoc, obj.Radius, pf))
                     obj.InvertObjectX();
-                if (!FieldYCollission(newLoc, obj.radius, pf))
+                if (!FieldYCollission(newLoc, obj.Radius, pf))
                     obj.InvertObjectY();
             }
         }

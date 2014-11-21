@@ -43,7 +43,7 @@ namespace Planets.Controller.Subcontrollers
         public void Clicked(Point p)
         {
             //Projectile being shot
-            GameObject P = new GameObject(0, 0, 0, 0, 0, true);
+            GameObject P = new GameObject(0, 0, 0, 0, 0);
 
             //Player
             GameObject O = InternalPlayfield.CurrentPlayer;
@@ -57,7 +57,7 @@ namespace Planets.Controller.Subcontrollers
             P.DV = O.DV + temp1;
 
             //Set projectile location
-            P.Location = O.Location + temp1.ScaleToLength(O.radius + P.radius + 1);
+            P.Location = O.Location + temp1.ScaleToLength(O.Radius + P.Radius + 1);
 
             lock (InternalPlayfield.GameObjects)
             {

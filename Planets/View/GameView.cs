@@ -65,7 +65,7 @@ namespace Planets.View
             {
                 foreach (GameObject obj in field.GameObjects)
                 {
-                    float radius = (float)obj.radius;
+                    float radius = (float)obj.Radius;
                     float length = radius * 2;
                     int h = obj.GetHashCode();
 
