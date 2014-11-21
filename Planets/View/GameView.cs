@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
 using Planets.Model;
 using System.Drawing;
 using System.Windows.Forms;
@@ -46,6 +47,7 @@ namespace Planets.View
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
 
             // Draw background unscaled to improve performance.
             g.DrawImageUnscaled(b, new Point(0, 0));

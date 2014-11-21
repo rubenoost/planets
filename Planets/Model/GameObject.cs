@@ -78,8 +78,8 @@ namespace Planets.Model
             return (x1 + width1) > x2;
         }
 
-        public virtual void Pull(List<GameObject> g){
-
+        public virtual bool Pull(List<GameObject> g){
+            return false;
         }
     }
 }

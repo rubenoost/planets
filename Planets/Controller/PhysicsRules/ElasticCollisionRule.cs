@@ -35,8 +35,15 @@ namespace Planets.Controller.PhysicsRules
                 var f2 = c2.DV - (2.0 * c1.mass / t) * t3 / t2 * h2;
 
                 // Apply speeds
-                c1.DV = f1;
-                c2.DV = f2;
+                if(c1 is BlackHole){
+                } else {
+                    c1.DV = f1;
+                }
+
+                if(c2 is BlackHole) {
+                } else {
+                    c2.DV = f2;
+                }
             }
         }
     }
