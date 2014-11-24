@@ -36,7 +36,7 @@ namespace PlanetsTest.Controller.Subcontroller
         public void UnitTest_ShootProjectileController_Click_Once()
         {
             // Arrange
-            var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(0, 0, 0, 0, 100)};
+            var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 100)};
             var gv = new GameView(pf);
             var spc = new ShootProjectileController(pf, gv);
             var objectCount = pf.GameObjects.Count;
@@ -55,7 +55,7 @@ namespace PlanetsTest.Controller.Subcontroller
         public void UnitTest_ShootProjectileController_Click_Multiple()
         {
             // Arrange
-            var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(0, 0, 0, 0, 100)};
+            var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 100)};
             var gv = new GameView(pf);
             var spc = new ShootProjectileController(pf, gv);
             var objectCount = pf.GameObjects.Count;

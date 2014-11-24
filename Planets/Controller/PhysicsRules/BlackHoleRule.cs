@@ -10,31 +10,10 @@ namespace Planets.Controller.PhysicsRules
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            // Check for collisions with black hole
-
-            var removed = new List<GameObject>();
-
-            foreach (GameObject go in pf.GameObjects)
-            {
-                if (go is BlackHole)
-                {
-                    foreach (GameObject go2 in pf.GameObjects.Where(p => p.IsAffectedByBlackHole))
-                    {
-
-                        if (go != go2 && go.IntersectsWith(go2))
-                        {
-                            if (!(go2 is Player))
-                                removed.Add(go2);
-                        }
-                    }
-                }
-            }
-            removed.ForEach(g => pf.GameObjects.Remove(g));
-
             // Update speed to black hole
             foreach(GameObject g in pf.GameObjects){
                 if (g is BlackHole){
-                    foreach (GameObject g2 in pf.GameObjects.Where(p => p.IsAffectedByBlackHole && p.CanMove))
+                    foreach (GameObject g2 in pf.GameObjects.Where(p => p.Traits.HasFlag(Rule.AFFECTED_BY_BH)))
                     {
                         if (g != g2 && !(g2 is Player))
                         {
