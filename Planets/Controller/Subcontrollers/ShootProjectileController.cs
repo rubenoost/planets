@@ -43,7 +43,7 @@ namespace Planets.Controller.Subcontrollers
         public void Clicked(Point p)
         {
             //Projectile being shot
-            GameObject P = new GameObject(0, 0, 0, 0, 0);
+            GameObject P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
 
             //Player
             GameObject O = InternalPlayfield.CurrentPlayer;

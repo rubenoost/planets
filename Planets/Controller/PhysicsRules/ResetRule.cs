@@ -10,8 +10,8 @@ namespace Planets.Controller.PhysicsRules
             if (pf.CurrentPlayer.mass < 10)
             {
                 pf.GameObjects.Clear();
-                pf.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
-                pf.GameObjects.Add(new BlackHole(600, 600, 0, 0, 1000000, 1));
+                pf.CurrentPlayer = new Player(new Vector(200, 200), new Vector(0, 0), Utils.StartMass);
+                pf.GameObjects.Add(new BlackHole(new Vector(600, 600), new Vector(0, 0), 1000000, 1));
             }
         }
     }

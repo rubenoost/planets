@@ -7,7 +7,7 @@ namespace Planets.Controller.PhysicsRules
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            foreach (GameObject go in pf.GameObjects.Where(p => p.CanMove))
+            foreach (GameObject go in pf.GameObjects.Where(p => p.Traits.HasFlag(Rule.MOVE)))
             {
                 go.UpdateLocation(ms);
             }
