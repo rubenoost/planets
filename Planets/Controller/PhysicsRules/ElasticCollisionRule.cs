@@ -17,9 +17,9 @@ namespace Planets.Controller.PhysicsRules
 
         private void CheckObjectCollission(GameObject c1, GameObject c2)
         {
-            if (c1.IntersectsWith(c2))
+            if (c1.IntersectsWith(c2) && c1.Traits.HasFlag(Rule.COLLIDES) && c2.Traits.HasFlag(Rule.COLLIDES))
             {
-                if (c1.CanMove && c2.CanMove)
+                if (c1.Traits.HasFlag(Rule.MOVE) && c2.Traits.HasFlag(Rule.MOVE))
                 {
                     var totalMass = c1.mass + c2.mass;
 
@@ -42,7 +42,7 @@ namespace Planets.Controller.PhysicsRules
                     c1.DV = c1.DV - (2.0*c2.mass/totalMass)*t3/t2*h1;
                     c2.DV = c2.DV - (2.0*c1.mass/totalMass)*t3/t2*h2;
                 }
-                else if (c1.CanMove)
+                else if (c1.Traits.HasFlag(Rule.MOVE))
                 {
                     // Move back
                     c1.Location = c2.Location + (c1.Location - c2.Location).ScaleToLength(c1.Radius + c2.Radius);
@@ -57,7 +57,7 @@ namespace Planets.Controller.PhysicsRules
 
                     c1.DV = c1.DV - (2.0 * c2.mass / t) * t3 / t2 * h1;
                 }
-                else if (c2.CanMove)
+                else if (c2.Traits.HasFlag(Rule.MOVE))
                 {
                     // Move back
                     c2.Location = c1.Location + (c2.Location - c1.Location).ScaleToLength(c2.Radius + c1.Radius);

@@ -20,7 +20,7 @@ namespace Planets.Model
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public Vector(double x = 0, double y = 0)
+        public Vector(double x, double y)
         {
             X = x;
             Y = y;
