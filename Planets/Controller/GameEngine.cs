@@ -58,7 +58,7 @@ namespace Planets.Controller
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
             this.field = new Playfield(1920, 1080);
-            this.field.CurrentPlayer = new Player(new Vector(200, 200), new Vector(0, 0), Utils.StartMass);
+            this.field.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 0);
 
             GameView = new GameView(this.field);
 
