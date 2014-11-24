@@ -48,7 +48,7 @@ namespace Planets.Controller
         private bool running;
         private Thread GameThread;
 
-        private autodemo ad;
+        private Autodemo ad;
         private Thread adthread;
         
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
@@ -68,24 +68,24 @@ namespace Planets.Controller
             // Adjust playfield
             field.Size = GameView.Size;
 
-            this.ad = new autodemo(this.field, this.spc);
-            this.adthread = new Thread(ad.run);
+            this.ad = new Autodemo(this.field, this.spc);
+            this.adthread = new Thread(ad.Run);
 
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
             GameView.KeyUp += delegate(object sender, KeyEventArgs args)
             {
-                if (args.KeyData == Keys.K && ad.kpressed == false)
+                if (args.KeyData == Keys.K && ad.Kpressed == false)
                 {
-                    this.adthread = new Thread(ad.run);
-                    ad.start();
+                    this.adthread = new Thread(ad.Run);
+                    ad.Start();
                     adthread.Start();
                 }
             };
             GameView.KeyUp += delegate(object sender, KeyEventArgs args)
             {
-                if (args.KeyData == Keys.L && ad.kpressed == true)
+                if (args.KeyData == Keys.L && ad.Kpressed == true)
                 {
-                    ad.stop();
+                    ad.Stop();
                 }
             };
 

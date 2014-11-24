@@ -53,7 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Controller\Subcontroller\ShootProjectileControllerTest.cs" />
-    <Compile Include="Model\UnitTest1.cs" />
+    <Compile Include="Model\GameObjectTest.cs" />
     <Compile Include="Model\VectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

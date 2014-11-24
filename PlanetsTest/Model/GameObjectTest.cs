@@ -4,7 +4,7 @@ using Planets.Model;
 namespace PlanetsTest.Model
 {
     [TestClass]
-    public class UnitTest1
+    public class GameObjectTest
     {
         [TestMethod]
         public void UnitTest_GameObject_IntersectWith_True()

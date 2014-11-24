@@ -1,6 +1,6 @@
 ﻿namespace Planets.Model
 {
-    class Player : GameObject
+    public class Player : GameObject
     {
         public Player(double x, double y, double dx, double dy, double mass)
             : base(x, y, dx, dy, mass)
