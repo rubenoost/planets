@@ -115,6 +115,8 @@
     <None Include="Resources\Cursor-White.png" />
     <None Include="Resources\Cursor-Blue.png" />
     <None Include="Resources\Cursors-Red.png" />
+    <None Include="Resources\Hole1.png" />
+    <None Include="Resources\Hole2.png" />
     <Content Include="Resources\logotest.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
