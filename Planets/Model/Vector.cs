@@ -136,7 +136,7 @@ namespace Planets.Model
 
         public override string ToString()
         {
-            return string.Format("{0},{1}", X.ToString(), Y.ToString());
+            return string.Format("{0:0.000},{1:0.000}", X, Y);
         }
     }
 
