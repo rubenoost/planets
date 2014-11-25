@@ -71,21 +71,20 @@ namespace Planets.Controller
             field.Size = GameView.Size;
 
             this.ad = new Autodemo(this.field, this.spc);
-            this.adthread = new Thread(ad.Run);
 
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
             GameView.KeyUp += delegate(object sender, KeyEventArgs args)
             {
-                if (args.KeyData == Keys.K && ad.Kpressed == false)
+                if (args.KeyData == Keys.K && ad.Kpressed == false && ad.running == false)
                 {
-                    this.adthread = new Thread(ad.Run);
+                    adthread = new Thread(ad.Run);
                     ad.Start();
                     adthread.Start();
                 }
             };
             GameView.KeyUp += delegate(object sender, KeyEventArgs args)
             {
-                if (args.KeyData == Keys.L && ad.Kpressed == true)
+                if (args.KeyData == Keys.L && ad.Kpressed == true && ad.running == true)
                 {
                     ad.Stop();
                 }
