@@ -6,7 +6,7 @@ using Planets.Model;
 
 namespace Planets.Controller.PhysicsRules
 {
-    class ElasticCollisionRule : AbstractGameRule
+    public class ElasticCollisionRule : AbstractGameRule
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
@@ -25,7 +25,7 @@ namespace Planets.Controller.PhysicsRules
             }
         }
 
-        private void CheckObjectCollission(GameObject c1, GameObject c2)
+        public void CheckObjectCollission(GameObject c1, GameObject c2)
         {
             if (c1.IntersectsWith(c2))
             {

@@ -2,7 +2,7 @@
 
 namespace Planets.Controller.PhysicsRules
 {
-    internal abstract class AbstractGameRule
+    public abstract class AbstractGameRule
     {
         internal bool Activated { get; set; }
 
@@ -11,7 +11,7 @@ namespace Planets.Controller.PhysicsRules
             Activated = true;
         }
 
-        internal void Execute(Playfield pf, double ms)
+        public void Execute(Playfield pf, double ms)
         {
             if(Activated)
                 ExecuteRule(pf, ms);
