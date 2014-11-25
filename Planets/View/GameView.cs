@@ -13,7 +13,6 @@ namespace Planets.View
 
         // Wordt gebruikt voor bewegende achtergrond
         private int angle = 0;
-        private int angle2 = 0;
 
         private Color[] Colors =
         {
