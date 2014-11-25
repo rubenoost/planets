@@ -70,24 +70,41 @@ namespace Planets.Controller
             //Create a Auto demo refrence for the auto-demo
             this.ad = new Autodemo(this.field, this.spc);
 
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
-            GameView.KeyUp += OnGameViewOnKeyUp;
-            GameView.KeyUp += OnViewOnKeyUp;
-            GameView.Click += delegate { OnViewOnKeyUp(null, new KeyEventArgs(Keys.L)); };
+            // Register keys for resetting
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 0.0; };
 
+            // Register keys for auto-demo
+            GameView.KeyUp += StartDemo;
+            GameView.KeyUp += StopDemo;
+            GameView.Click += delegate { StopDemo(null, new KeyEventArgs(Keys.L)); };
+
+            // Set running to false
             running = false;
+
+            // Create new GameThread
             GameThread = new Thread(GameLoop);
+
+            // Start GameThread
             GameThread.Start();
 
             //Hier komt code voor automatisch opstarten auto-demo
-            OnGameViewOnKeyUp(null, new KeyEventArgs(Keys.K));
+            StartDemo(null, new KeyEventArgs(Keys.K));
         }
 
-        private void OnViewOnKeyUp(object sender, KeyEventArgs args)
+        /// <summary>
+        /// Stop the auto-demo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void StopDemo(object sender, KeyEventArgs args)
         {
-            if (args.KeyData == Keys.L && ad.Kpressed == true && ad.running == true)
+            // If keys ok
+            if (args.KeyData == Keys.L && ad.Kpressed && ad.running)
             {
+                // Debug message
                 Debug.AddMessage("Stopping demo");
+
+                // Stop demo
                 ad.Stop();
 
                 // Little hack
@@ -95,11 +112,20 @@ namespace Planets.Controller
             }
         }
 
-        private void OnGameViewOnKeyUp(object sender, KeyEventArgs args)
+        /// <summary>
+        /// Start the demo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void StartDemo(object sender, KeyEventArgs args)
         {
-            if (args.KeyData == Keys.K && ad.Kpressed == false && ad.running == false)
+            // If keys ok
+            if (args.KeyData == Keys.K && !ad.Kpressed && !ad.running)
             {
+                // Debug message
                 Debug.AddMessage("Starting demo");
+
+                // Start demo
                 adthread = new Thread(ad.Run);
                 ad.Start();
                 adthread.Start();
@@ -108,7 +134,7 @@ namespace Planets.Controller
 
         public void Start()
         {
-            this.running = true;
+            running = true;
         }
 
         public void GameLoop()
