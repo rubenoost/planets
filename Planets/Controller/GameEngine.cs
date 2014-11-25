@@ -25,6 +25,9 @@ namespace Planets.Controller
         // Model Data
         private Playfield field;
 
+        // Events
+        public event Action<double> GameLoopEvent;
+
         // Game rules
         private AbstractGameRule[] _gameRules =
         {
@@ -45,11 +48,9 @@ namespace Planets.Controller
             new ResetRule(), 
         };
 
-        // Variables
-        private bool running;
         private Thread GameThread;
-        private Thread adthread;
-        
+        private bool running = true;
+
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
             this.HostEngine = HostEngine;
@@ -57,79 +58,27 @@ namespace Planets.Controller
             this.field = new Playfield(1920, 1080);
             this.field.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 0);
 
-            GameView = new GameView(this.field);
+            // Create view
+            GameView = new GameView(field);
 
-            // Create new ShootProjectileController
+            // Create controllers
             spc = new ShootProjectileController(field, GameView);
+            ad = new Autodemo(spc, GameView, this);
 
+            // Set gameview
             this.HostEngine.SetView(GameView);
 
             // Adjust playfield
             field.Size = GameView.Size;
 
-            //Create a Auto demo refrence for the auto-demo
-            this.ad = new Autodemo(this.field, this.spc);
-
             // Register keys for resetting
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 0.0; };
-
-            // Register keys for auto-demo
-            GameView.KeyUp += StartDemo;
-            GameView.KeyUp += StopDemo;
-            GameView.Click += delegate { StopDemo(null, new KeyEventArgs(Keys.L)); };
-
-            // Set running to false
-            running = false;
 
             // Create new GameThread
             GameThread = new Thread(GameLoop);
 
             // Start GameThread
             GameThread.Start();
-
-            //Hier komt code voor automatisch opstarten auto-demo
-            StartDemo(null, new KeyEventArgs(Keys.K));
-        }
-
-        /// <summary>
-        /// Stop the auto-demo
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void StopDemo(object sender, KeyEventArgs args)
-        {
-            // If keys ok
-            if (args.KeyData == Keys.L && ad.Kpressed && ad.running)
-            {
-                // Debug message
-                Debug.AddMessage("Stopping demo");
-
-                // Stop demo
-                ad.Stop();
-
-                // Little hack
-                field.CurrentPlayer.mass = 0;
-            }
-        }
-
-        /// <summary>
-        /// Start the demo
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void StartDemo(object sender, KeyEventArgs args)
-        {
-            // If keys ok
-            if (args.KeyData == Keys.K && !ad.Kpressed && !ad.running)
-            {
-                // Debug message
-                Debug.AddMessage("Starting demo");
-
-                // Start demo
-                adthread = new Thread(ad.Run);
-                ad.Start();
-                adthread.Start();
-            }
         }
 
         public void Start()
@@ -170,6 +119,10 @@ namespace Planets.Controller
                             agr.Execute(field, dt);
                         }
                     }
+
+                    // Execute gameloop hook
+                    if (GameLoopEvent != null)
+                        GameLoopEvent(dt);
 
                     // Update shizzle hier.
                     GameView.Invalidate();

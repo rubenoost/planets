@@ -1,47 +1,77 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading;
+using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
+using Planets.View;
 
 namespace Planets.Controller
 {
     public class Autodemo
     {
         /// <summary>
-        /// The field used by this autodemo
-        /// </summary>
-        internal Playfield Field;
-
-        /// <summary>
         /// The shootprojectilecontroller used by this autodemo
         /// </summary>
         internal ShootProjectileController Spc;
+
+        /// <summary>
+        /// The GameView
+        /// </summary>
+        internal GameView Gv;
+
+        /// <summary>
+        /// Thread for the autodemo
+        /// </summary>
+        private Thread adthread;
+
+        /// <summary>
+        /// Time of last activity
+        /// </summary>
+        private DateTime lastActivityTime = DateTime.MinValue;
 
         /// <summary>
         /// Create new autodemo on given playfield that uses given ShootProjectileController
         /// </summary>
         /// <param name="p"></param>
         /// <param name="s"></param>
-        public Autodemo(Playfield p, ShootProjectileController s)
+        public Autodemo(ShootProjectileController s, GameView gv, GameEngine ge)
         {
-            Field = p;
             Spc = s;
-        }
+            Gv = gv;
 
-        /// <summary>
-        /// Whether the key is pressed
-        /// </summary>
-        public bool Kpressed
-        {
-            get;
-            private set;
+            // Register keys for auto-demo
+            gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if(kea.KeyData == Keys.K) StartDemo(); };
+            gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if(kea.KeyData == Keys.L) StopDemo();
+                                                                      lastActivityTime = DateTime.Now;
+            };
+            gv.Click += delegate
+            {
+                StopDemo();
+                lastActivityTime = DateTime.Now;
+            };
+
+            // Register gamehookloop
+            ge.GameLoopEvent += delegate(double ms)
+            {
+                if ((DateTime.Now - lastActivityTime).TotalSeconds > 5)
+                {
+                    StartDemo();
+                }
+            };
+
+            // Create thread
+            adthread = new Thread(Run);
+            adthread.Start();
+
+            // Start autodemo
+            StartDemo();
         }
 
         /// <summary>
         /// Whether this autodemo is running
         /// </summary>
-        public bool running
+        public bool Running
         {
             get;
             set;
@@ -56,46 +86,77 @@ namespace Planets.Controller
             var p = new Point();
             var r = new Random();
 
-            // While key is pressed
-            while (Kpressed)
+            while (true)
             {
-                // Set running to true
-                running = true;
-
-                // Determine next click
-                p = new Point(r.Next(0, Field.Size.Width), r.Next(0, Field.Size.Height));
-
-                // Click 3 times and wait
-                for (int i = 0; i < 3; i++)
+                // While key is pressed
+                while (Running)
                 {
-                    // Click
-                    Spc.Clicked(p);
-                    Field.LastAutoClickLocation = p;
-                    Field.LastAutoClickMoment = DateTime.Now;
-                    Thread.Sleep(400);
+                    // Determine next click
+                    p = new Point(r.Next(0, Spc.InternalPlayfield.Size.Width),
+                        r.Next(0, Spc.InternalPlayfield.Size.Height));
+
+                    // Click 3 times and wait
+                    for (int i = 0; i < 3; i++)
+                    {
+                        // Click
+                        if (Running)
+                        {
+                            Spc.Clicked(p);
+                            Spc.InternalPlayfield.LastAutoClickLocation = p;
+                            Spc.InternalPlayfield.LastAutoClickMoment = DateTime.Now;
+                            Thread.Sleep(400);
+                        }
+                    }
+                    Thread.Sleep(1500);
                 }
-                Thread.Sleep(1500);
+
+                // Set running to false
+                Running = false;
+
+                Thread.Sleep(100);
             }
-
-            // Set running to false
-            running = false;
         }
 
         /// <summary>
-        /// Stop autodemo
+        /// Stop the auto-demo
         /// </summary>
-        public void Stop()
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void StopDemo()
         {
-            Kpressed = false;
+            // If keys ok
+            if (Running)
+            {
+                // Debug message
+                Debug.AddMessage("Stopping demo");
+
+                // Stop demo
+                Running = false;
+
+                // Change lastautoclicklocation
+                Spc.InternalPlayfield.LastAutoClickMoment = DateTime.MinValue;
+
+                // Little hack
+                Spc.InternalPlayfield.CurrentPlayer.mass = 0;
+            }
         }
 
         /// <summary>
-        /// Start autodemo
+        /// Start the demo
         /// </summary>
-        public void Start()
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void StartDemo()
         {
-            Kpressed = true;
-        }
+            // If keys ok
+            if (!Running)
+            {
+                // Debug message
+                Debug.AddMessage("Starting demo");
 
+                // Start demo
+                Running = true;
+            }
+        }
     }
 }
