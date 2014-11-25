@@ -91,8 +91,6 @@ namespace Planets.Controller
             DateTime LoopBegin = DateTime.Now;
             TimeSpan DeltaT;
 
-            int loopcount = 0;
-
             while (true)
             {
                 while (running)
