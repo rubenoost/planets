@@ -6,6 +6,7 @@ namespace Planets.Controller.PhysicsRules
 {
     class BlackHoleRule : AbstractGameRule
     {
+        // changes the speed
         private double JoelConstante = 1.0;
 
         protected override void ExecuteRule(Playfield pf, double ms)
@@ -19,6 +20,7 @@ namespace Planets.Controller.PhysicsRules
                         {
                             Vector V = g.Location - g2.Location;
                             double Fg = JoelConstante*((g2.mass*g.mass)/(V.Length()*V.Length()));
+                            // Speed of projectile gets updated
                             g2.DV += V.ScaleToLength(Fg*(ms/1000.0));
                         }
                     }
