@@ -137,7 +137,7 @@ namespace PlanetsTest.Model
         {
             // Arrange
             var v = new Vector(3.0, 4.0);
-            var expected = "3.000,4.000";
+            var expected = "3,000,4,000";
 
             // Act
             var actual = v.ToString();

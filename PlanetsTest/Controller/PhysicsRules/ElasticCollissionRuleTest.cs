@@ -25,7 +25,6 @@ namespace PlanetsTest.Controller.PhysicsRules
             ElasticRule.Execute(field, 17);
 
             Assert.AreNotEqual(OldDV1.X, go1.DV.X, 0.001);
-            
         }
     }
 }
