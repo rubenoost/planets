@@ -73,29 +73,37 @@ namespace Planets.Controller
             this.ad = new Autodemo(this.field, this.spc);
 
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
-            GameView.KeyUp += delegate(object sender, KeyEventArgs args)
-            {
-                if (args.KeyData == Keys.K && ad.Kpressed == false && ad.running == false)
-                {
-                    adthread = new Thread(ad.Run);
-                    ad.Start();
-                    adthread.Start();
-                }
-            };
-            GameView.KeyUp += delegate(object sender, KeyEventArgs args)
-            {
-                if (args.KeyData == Keys.L && ad.Kpressed == true && ad.running == true)
-                {
-                    ad.Stop();
-                }
-            };
+            GameView.KeyUp += OnGameViewOnKeyUp;
+            GameView.KeyUp += OnViewOnKeyUp;
+            GameView.Click += delegate { OnViewOnKeyUp(null, new KeyEventArgs(Keys.L)); };
 
             running = false;
             GameThread = new Thread(GameLoop);
             GameThread.Start();
 
             //Hier komt code voor automatisch opstarten auto-demo
-            KeyEventArgs key = new KeyEventArgs(Keys.K);
+            OnGameViewOnKeyUp(null, new KeyEventArgs(Keys.K));
+        }
+
+        private void OnViewOnKeyUp(object sender, KeyEventArgs args)
+        {
+            if (args.KeyData == Keys.L && ad.Kpressed == true && ad.running == true)
+            {
+                ad.Stop();
+
+                // Little hack
+                field.CurrentPlayer.mass = 0;
+            }
+        }
+
+        private void OnGameViewOnKeyUp(object sender, KeyEventArgs args)
+        {
+            if (args.KeyData == Keys.K && ad.Kpressed == false && ad.running == false)
+            {
+                adthread = new Thread(ad.Run);
+                ad.Start();
+                adthread.Start();
+            }
         }
 
         public void Start()
@@ -133,7 +141,7 @@ namespace Planets.Controller
                         // ExecuteRule game rules
                         foreach (var agr in _gameRules)
                         {
-                            if (agr.Activated) agr.Execute(field, dt);
+                            agr.Execute(field, dt);
                         }
                     }
 
