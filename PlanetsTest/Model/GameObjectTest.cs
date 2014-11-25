@@ -27,7 +27,6 @@ namespace PlanetsTest.Model
         public void UnitTest_GameObject_SpeedTest_True()
         {
             // Arrange
-            var go1 = new GameObject(new Vector(0, 0), new Vector(0, 0), 400);
             var pf1 = new Playfield(300, 300);
             var p = new Player(new Vector(10, 10), new Vector(0, 0), 30);
             var control = new Control();
@@ -38,7 +37,7 @@ namespace PlanetsTest.Model
             // Act
             shootController.Clicked(new Point(100, 100));
 
-            bool valid = (p.DV.Length() > 0 && go1.DV.Length() > 0);
+            bool valid = (p.DV.Length() > 0);
 
             // Assert
             Assert.IsTrue(valid, "Check default speed.");
