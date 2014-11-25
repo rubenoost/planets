@@ -101,15 +101,15 @@ namespace Planets.View
                     }
                     else if (obj is BlackHole)
                     {
-                        //angle += 1;
-                        //Bitmap test = RotateImg(h1, angle);
-                        //g.DrawImage(test, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
+                        angle += 1;
+                        Bitmap test = RotateImg(h1, angle);
+                        g.DrawImage(test, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
 
-                        //angle2 -= 1;
-                        //Bitmap test2 = RotateImg(h2, angle2);
-                        //g.DrawImage(test2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
+                        angle2 -= 1;
+                        Bitmap test2 = RotateImg(h2, angle2);
+                        g.DrawImage(test2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
 
-                        g.FillEllipse(b3, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
+                        //g.FillEllipse(b3, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
                     }
                     else
                     {
