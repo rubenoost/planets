@@ -11,7 +11,7 @@ namespace Planets.View
 
         Playfield field;
 
-        // Word gebruikt voor bewegende achtergrond
+        // Wordt gebruikt voor bewegende achtergrond
         private int angle = 0;
 
         private Color[] Colors =

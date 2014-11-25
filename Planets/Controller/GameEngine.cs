@@ -92,6 +92,9 @@ namespace Planets.Controller
             running = false;
             GameThread = new Thread(GameLoop);
             GameThread.Start();
+
+            //Hier komt code voor automatisch opstarten auto-demo
+            KeyEventArgs key = new KeyEventArgs(Keys.K);
         }
 
         public void Start()
