@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Planets
+﻿namespace Planets
 {
     enum Direction
     {

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace Planets.Model
+﻿namespace Planets.Model
 {
     public class BlackHole : GameObject
     {
@@ -11,6 +8,7 @@ namespace Planets.Model
             : base(location, velocity, mass, Rule.EAT)
         {
             Strength = strength;
+            // Radius of the hole is always 50
             Radius = 50;
         }
 

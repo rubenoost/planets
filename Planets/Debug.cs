@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Planets
 {
@@ -13,6 +9,8 @@ namespace Planets
         private static int size = 10;
 
         private static int current = 0;
+
+        public static bool Enabled = true;
 
         public static void AddMessage(string message)
         {

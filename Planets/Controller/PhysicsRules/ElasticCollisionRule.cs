@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Threading;
-using Planets.Model;
+﻿using Planets.Model;
 
 namespace Planets.Controller.PhysicsRules
 {
