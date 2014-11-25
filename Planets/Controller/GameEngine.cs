@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Input;
 using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.View;
@@ -71,32 +69,41 @@ namespace Planets.Controller
             field.Size = GameView.Size;
 
             this.ad = new Autodemo(this.field, this.spc);
-            this.adthread = new Thread(ad.Run);
 
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
-            GameView.KeyUp += delegate(object sender, KeyEventArgs args)
-            {
-                if (args.KeyData == Keys.K && ad.Kpressed == false)
-                {
-                    this.adthread = new Thread(ad.Run);
-                    ad.Start();
-                    adthread.Start();
-                }
-            };
-            GameView.KeyUp += delegate(object sender, KeyEventArgs args)
-            {
-                if (args.KeyData == Keys.L && ad.Kpressed == true)
-                {
-                    ad.Stop();
-                }
-            };
+            GameView.KeyUp += OnGameViewOnKeyUp;
+            GameView.KeyUp += OnViewOnKeyUp;
+            GameView.Click += delegate { OnViewOnKeyUp(null, new KeyEventArgs(Keys.L)); };
 
             running = false;
             GameThread = new Thread(GameLoop);
             GameThread.Start();
 
             //Hier komt code voor automatisch opstarten auto-demo
-            KeyEventArgs key = new KeyEventArgs(Keys.K);
+            OnGameViewOnKeyUp(null, new KeyEventArgs(Keys.K));
+        }
+
+        private void OnViewOnKeyUp(object sender, KeyEventArgs args)
+        {
+            if (args.KeyData == Keys.L && ad.Kpressed == true && ad.running == true)
+            {
+                Debug.AddMessage("Stopping demo");
+                ad.Stop();
+
+                // Little hack
+                field.CurrentPlayer.mass = 0;
+            }
+        }
+
+        private void OnGameViewOnKeyUp(object sender, KeyEventArgs args)
+        {
+            if (args.KeyData == Keys.K && ad.Kpressed == false && ad.running == false)
+            {
+                Debug.AddMessage("Starting demo");
+                adthread = new Thread(ad.Run);
+                ad.Start();
+                adthread.Start();
+            }
         }
 
         public void Start()
@@ -134,7 +141,7 @@ namespace Planets.Controller
                         // ExecuteRule game rules
                         foreach (var agr in _gameRules)
                         {
-                            if (agr.Activated) agr.Execute(field, dt);
+                            agr.Execute(field, dt);
                         }
                     }
 

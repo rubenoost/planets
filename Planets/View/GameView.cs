@@ -47,6 +47,12 @@ namespace Planets.View
             this.field = field;
         }
 
+        /// <summary>
+        /// Functie die een BMP input kan roteren
+        /// </summary>
+        /// <param name="bmp"></param>
+        /// <param name="angle"></param>
+        /// <returns></returns>
         public static Bitmap RotateImg(Bitmap bmp, float angle)
         {
             int w = bmp.Width;
@@ -122,14 +128,17 @@ namespace Planets.View
                 }
             }
 
-            // Draw debug info
-            /*int topPad = 120;
-            int pad = 12;
-            foreach (var s in Debug.LastMessages())
+            if (Debug.Enabled)
             {
-                g.DrawString(s, DefaultFont, b3, pad, topPad);
-                topPad += pad;
-            }*/
+                // Draw debug info
+                int topPad = 120;
+                int pad = 12;
+                foreach (var s in Debug.LastMessages())
+                {
+                    g.DrawString(s, DefaultFont, b3, pad, topPad);
+                    topPad += pad;
+                }
+            }
         }
 
     }

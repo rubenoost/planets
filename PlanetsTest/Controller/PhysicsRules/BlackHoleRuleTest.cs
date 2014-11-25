@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets.Model;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace PlanetsTest.Controller.PhysicsRules {
     [TestClass]
