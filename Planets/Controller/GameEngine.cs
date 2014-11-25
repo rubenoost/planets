@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Input;
 using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.View;
@@ -89,6 +87,7 @@ namespace Planets.Controller
         {
             if (args.KeyData == Keys.L && ad.Kpressed == true && ad.running == true)
             {
+                Debug.AddMessage("Stopping demo");
                 ad.Stop();
 
                 // Little hack
@@ -100,6 +99,7 @@ namespace Planets.Controller
         {
             if (args.KeyData == Keys.K && ad.Kpressed == false && ad.running == false)
             {
+                Debug.AddMessage("Starting demo");
                 adthread = new Thread(ad.Run);
                 ad.Start();
                 adthread.Start();
