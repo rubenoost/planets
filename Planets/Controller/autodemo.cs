@@ -4,10 +4,10 @@ using System.Threading;
 
 namespace Planets.Controller
 {
-    class Autodemo
+    public class Autodemo
     {
-        internal Model.Playfield field;
-        private Controller.Subcontrollers.ShootProjectileController spc;
+        public Model.Playfield field;
+        public Controller.Subcontrollers.ShootProjectileController spc;
 
         public Autodemo(Model.Playfield p, Controller.Subcontrollers.ShootProjectileController s)
         {

@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controller\AutoDemoTest.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleRuleTest.cs" />
     <Compile Include="Controller\PhysicsRules\ElasticCollissionRuleTest.cs" />
     <Compile Include="Controller\Subcontroller\ShootProjectileControllerTest.cs" />
