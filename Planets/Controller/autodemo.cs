@@ -13,12 +13,12 @@ namespace Planets.Controller
         /// <summary>
         /// The shootprojectilecontroller used by this autodemo
         /// </summary>
-        internal ShootProjectileController Spc;
+        public readonly ShootProjectileController Spc;
 
         /// <summary>
         /// The GameView
         /// </summary>
-        internal GameView Gv;
+        internal Control Gv;
 
         /// <summary>
         /// Thread for the autodemo
@@ -30,31 +30,35 @@ namespace Planets.Controller
         /// </summary>
         private DateTime lastActivityTime = DateTime.MinValue;
 
+        public int WaitTimeBetweenClick = 400;
+
+        public int WaitTimeBetweenClicks = 1500;
+
         /// <summary>
         /// Create new autodemo on given playfield that uses given ShootProjectileController
         /// </summary>
         /// <param name="p"></param>
         /// <param name="s"></param>
-        public Autodemo(ShootProjectileController s, GameView gv, GameEngine ge)
+        public Autodemo(ShootProjectileController s, GameEngine ge)
         {
             Spc = s;
-            Gv = gv;
+            Gv = Spc.InternalControl;
 
             // Register keys for auto-demo
-            gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if(kea.KeyData == Keys.K) StartDemo(); };
-            gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if(kea.KeyData == Keys.L) StopDemo();
-                                                                      lastActivityTime = DateTime.Now;
+            Gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if(kea.KeyData == Keys.K) StartDemo(); };
+            Gv.KeyUp += delegate(object sender, KeyEventArgs kea)
+            {
+                if (kea.KeyData == Keys.L) StopDemo();
             };
-            gv.Click += delegate
+            Gv.Click += delegate
             {
                 StopDemo();
-                lastActivityTime = DateTime.Now;
             };
 
             // Register gamehookloop
-            ge.GameLoopEvent += delegate(double ms)
+            ge.GameLoopEvent += delegate
             {
-                if ((DateTime.Now - lastActivityTime).TotalSeconds > 5)
+                if ((DateTime.Now - lastActivityTime).TotalSeconds > 60)
                 {
                     StartDemo();
                 }
@@ -74,13 +78,13 @@ namespace Planets.Controller
         public bool Running
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
         /// Run the autodemo
         /// </summary>
-        public void Run()
+        private void Run()
         {
             // Create vars
             var p = new Point();
@@ -104,10 +108,10 @@ namespace Planets.Controller
                             Spc.Clicked(p);
                             Spc.InternalPlayfield.LastAutoClickLocation = p;
                             Spc.InternalPlayfield.LastAutoClickMoment = DateTime.Now;
-                            Thread.Sleep(400);
+                            Thread.Sleep(WaitTimeBetweenClick);
                         }
                     }
-                    Thread.Sleep(1500);
+                    Thread.Sleep(WaitTimeBetweenClicks);
                 }
 
                 // Set running to false
@@ -122,8 +126,9 @@ namespace Planets.Controller
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void StopDemo()
+        public void StopDemo()
         {
+            lastActivityTime = DateTime.Now;
             // If keys ok
             if (Running)
             {
@@ -146,7 +151,7 @@ namespace Planets.Controller
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void StartDemo()
+        public void StartDemo()
         {
             // If keys ok
             if (!Running)
