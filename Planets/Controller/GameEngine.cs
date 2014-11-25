@@ -20,6 +20,7 @@ namespace Planets.Controller
 
         // Controllers
         private ShootProjectileController spc;
+        private Autodemo ad;
 
         // Model Data
         private Playfield field;
@@ -47,8 +48,6 @@ namespace Planets.Controller
         // Variables
         private bool running;
         private Thread GameThread;
-
-        private Autodemo ad;
         private Thread adthread;
         
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
@@ -68,6 +67,7 @@ namespace Planets.Controller
             // Adjust playfield
             field.Size = GameView.Size;
 
+            //Create a Auto demo refrence for the auto-demo
             this.ad = new Autodemo(this.field, this.spc);
 
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
