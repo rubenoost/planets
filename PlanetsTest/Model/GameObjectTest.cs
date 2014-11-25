@@ -38,7 +38,7 @@ namespace PlanetsTest.Model
             // Act
             shootController.Clicked(new Point(100, 100));
 
-            bool valid = (p.DV.X > 0);
+            bool valid = (p.DV.Length() > 0);
 
             // Assert
             Assert.IsTrue(valid, "Check default speed.");
