@@ -16,6 +16,8 @@ namespace Planets
             this.DoubleBuffered = true;
             engine = new MainEngine(this);
 
+
+
             // Event handlers
             Closed += (sender, args) => Process.GetCurrentProcess().Kill();
         }

@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Planets.Model
 {
-    class BlackHole : GameObject
+    public class BlackHole : GameObject
     {
         private double Strength;
 
