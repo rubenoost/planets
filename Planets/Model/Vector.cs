@@ -20,7 +20,7 @@ namespace Planets.Model
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public Vector(double x = 0, double y = 0)
+        public Vector(double x, double y)
         {
             X = x;
             Y = y;
@@ -136,7 +136,7 @@ namespace Planets.Model
 
         public override string ToString()
         {
-            return string.Format("{0},{1}", X.ToString(), Y.ToString());
+            return string.Format("{0:0.000},{1:0.000}", X, Y);
         }
     }
 

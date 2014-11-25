@@ -1,42 +1,59 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Planets.Model
 {
+    [Flags]
+    public enum Rule
+    {
+        MOVE = 1,
+        EATABLE = 2,
+        EAT = 4,
+        EAT_PLAYER = 8,
+        DYNAMIC_RADIUS = 16,
+        AFFECTED_BY_BH = 32,
+        COLLIDES = 64,
+    }
+
     public class GameObject
     {
+        // Properties
 
         public Vector Location;
 
         public Vector DV;
 
-        public Vector HoleVelocity;
-
         public double mass;
 
-        public double radius {
+        public Rule Traits { get; protected set; }
+
+        private double? _propRadius;
+        public double Radius
+        {
             get
             {
-                return 5 * System.Math.Sqrt(mass);
-            } 
+                if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
+                    return 5 * System.Math.Sqrt(mass);
+                return _propRadius.HasValue ? _propRadius.Value : 0.0;
+            }
+            set
+            {
+                if (!Traits.HasFlag(Rule.DYNAMIC_RADIUS))
+                    _propRadius = value;
+            }
         }
 
-        public bool IsAffectedByBlackHole {
-            get;
-            private set;
-        }
+        public GameObject(Vector location, Vector velocity, double Mass)
+            : this(location, velocity, Mass,
+            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE)
+        { }
 
-        public GameObject(double x, double y, double dx, double dy, double mass, bool blackhole) : this(new Vector(x, y), new Vector(dx, dy), mass, false)
-        {
-
-        }
-
-        public GameObject(Vector location, Vector velocity, double Mass, bool blackhole)
+        protected GameObject(Vector location, Vector velocity, double Mass, Rule traits)
         {
             Location = location;
             DV = velocity;
-            this.mass = Mass;
-            IsAffectedByBlackHole = blackhole;
-            HoleVelocity = new Vector(velocity.X, velocity.Y);
+            mass = Mass;
+            Traits = traits;
         }
 
         public void InvertObjectX()
@@ -61,14 +78,14 @@ namespace Planets.Model
 
         public bool IntersectsWith(GameObject go)
         {
-            if (!DoLinesOverlap(Location.X, radius*2, go.Location.X, go.radius*2) &&
-                !DoLinesOverlap(Location.Y, radius*2, go.Location.Y, go.radius*2))
-        {
+            if (!DoLinesOverlap(Location.X, Radius * 2, go.Location.X, go.Radius * 2) &&
+                !DoLinesOverlap(Location.Y, Radius * 2, go.Location.Y, go.Radius * 2))
+            {
                 return false;
-                
+
             }
-            return (Location - go.Location).Length() <= (radius + go.radius);
-            
+            return (Location - go.Location).Length() <= (Radius + go.Radius);
+
         }
 
         public static bool DoLinesOverlap(double x1, double width1, double x2, double width2)
@@ -76,10 +93,6 @@ namespace Planets.Model
             if (x1 >= x2)
                 return (x2 + width2) > x1;
             return (x1 + width1) > x2;
-        }
-
-        public virtual bool Pull(List<GameObject> g){
-            return false;
         }
     }
 }

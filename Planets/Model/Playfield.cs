@@ -24,7 +24,7 @@ namespace Planets.Model
             this.GameObjects = new List<GameObject>();
         }
 
-        internal Player CurrentPlayer
+        public Player CurrentPlayer
         {
             get { return _currentPlayer; }
             set

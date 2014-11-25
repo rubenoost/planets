@@ -2,10 +2,12 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Input;
 using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.View;
 using Planets.Model;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 
 namespace Planets.Controller
 {
@@ -27,20 +29,20 @@ namespace Planets.Controller
         // Game rules
         private AbstractGameRule[] _gameRules =
         {
-            // Movement Rules (will change location of GameObjects)
+            // ========== [ CHANGE SPEED ] ==========
+            new BlackHoleRule(),
+
+            // ========== [ CHANGE LOCATION ] ==========
             new MoveRule(),
 
-            // Collision Rules (can change location of GameObjects)
-            new BlackHoleRule(),
-            
+            // ========== [ REMOVING OBJECTS ] ==========
+            new EatRule(), 
 
-            // Do not touch the next rules, these should have the final word about movement
+            // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
 
-            // Effect rules (cannot change location of GameObjects)
+            // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(), 
-
-            // Reset rule
             new ResetRule(), 
         };
 
@@ -48,7 +50,7 @@ namespace Planets.Controller
         private bool running;
         private Thread GameThread;
 
-        private autodemo ad;
+        private Autodemo ad;
         private Thread adthread;
         
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
@@ -56,7 +58,7 @@ namespace Planets.Controller
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
             this.field = new Playfield(1920, 1080);
-            this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
+            this.field.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 0);
 
             GameView = new GameView(this.field);
 
@@ -68,24 +70,24 @@ namespace Planets.Controller
             // Adjust playfield
             field.Size = GameView.Size;
 
-            this.ad = new autodemo(this.field, this.spc);
-            this.adthread = new Thread(ad.run);
+            this.ad = new Autodemo(this.field, this.spc);
+            this.adthread = new Thread(ad.Run);
 
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
             GameView.KeyUp += delegate(object sender, KeyEventArgs args)
             {
-                if (args.KeyData == Keys.K && ad.kpressed == false)
+                if (args.KeyData == Keys.K && ad.Kpressed == false)
                 {
-                    this.adthread = new Thread(ad.run);
-                    ad.start();
+                    this.adthread = new Thread(ad.Run);
+                    ad.Start();
                     adthread.Start();
                 }
             };
             GameView.KeyUp += delegate(object sender, KeyEventArgs args)
             {
-                if (args.KeyData == Keys.L && ad.kpressed == true)
+                if (args.KeyData == Keys.L && ad.Kpressed == true)
                 {
-                    ad.stop();
+                    ad.Stop();
                 }
             };
 
@@ -132,7 +134,7 @@ namespace Planets.Controller
                         // ExecuteRule game rules
                         foreach (AbstractGameRule agr in _gameRules)
                         {
-                            if (agr.Activated) agr.Execute(field, DeltaT.TotalMilliseconds);
+                            if (agr.Activated) agr.Execute(field, dt);
                         }
                     }
 

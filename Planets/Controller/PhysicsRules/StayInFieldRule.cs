@@ -9,21 +9,28 @@ namespace Planets.Controller.PhysicsRules
             foreach (GameObject obj in pf.GameObjects)
             {
                 Vector newLoc = obj.CalcNewLocation(ms);
-                if (!FieldXCollission(newLoc, obj.radius, pf))
+
+                if (obj.Location.X < obj.Radius)
+                {
+                    obj.Location = new Vector(obj.Radius, obj.Location.Y);
                     obj.InvertObjectX();
-                if (!FieldYCollission(newLoc, obj.radius, pf))
+                }
+                if (obj.Location.X > pf.Size.Width - obj.Radius)
+                {
+                    obj.Location = new Vector(pf.Size.Width - obj.Radius, obj.Location.Y);
+                    obj.InvertObjectX();
+                }
+                if (obj.Location.Y < obj.Radius)
+                {
+                    obj.Location = new Vector(obj.Location.X, obj.Radius);
                     obj.InvertObjectY();
+                }
+                if (obj.Location.Y > pf.Size.Height - obj.Radius)
+                {
+                    obj.Location = new Vector(obj.Location.X, pf.Size.Height - obj.Radius);
+                    obj.InvertObjectY();
+                }
             }
-        }
-
-        private bool FieldXCollission(Vector location, double radius, Playfield pf)
-        {
-            return (location.X > radius && location.X + radius < pf.Size.Width);
-        }
-
-        private bool FieldYCollission(Vector location, double radius, Playfield pf)
-        {
-            return (location.Y > radius && location.Y + radius < pf.Size.Height);
         }
     }
 }

@@ -9,44 +9,44 @@ using System.Windows.Forms;
 
 namespace Planets.Controller
 {
-    class autodemo
+    class Autodemo
     {
         internal Model.Playfield field;
         private Controller.Subcontrollers.ShootProjectileController spc; 
 
-        public autodemo(Model.Playfield p, Controller.Subcontrollers.ShootProjectileController s)
+        public Autodemo(Model.Playfield p, Controller.Subcontrollers.ShootProjectileController s)
         {
-            this.field = p;
-            this.spc = s;
+            field = p;
+            spc = s;
         }
 
-        public bool kpressed
+        public bool Kpressed
         {
             get;
             private set;
         }
 
-        public void run()
+        public void Run()
         {
             var p = new Point(); var r = new Random();
-            while (kpressed)
+            while (Kpressed)
             {
                 p = new Point(r.Next(0, field.Size.Width), r.Next(0, field.Size.Height));
                 for (int i = 0; i < 3; i++)
                 {
-                    this.spc.Clicked(p); this.field.LastAutoClickLocation = p; this.field.LastAutoClickMoment = DateTime.Now; Thread.Sleep(400);
+                    spc.Clicked(p); field.LastAutoClickLocation = p; field.LastAutoClickMoment = DateTime.Now; Thread.Sleep(400);
                 }
                 Thread.Sleep(1500);
             }
         }
 
-        public void stop()
+        public void Stop()
         {
-            kpressed = false;
+            Kpressed = false;
         }
-        public void start()
+        public void Start()
         {
-            kpressed = true;
+            Kpressed = true;
         }
 
     }
