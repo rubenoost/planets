@@ -126,6 +126,15 @@ namespace Planets.View
                     g.DrawImage(cursor, field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
                 }
             }
+
+            // Draw debug info
+            /*int topPad = 120;
+            int pad = 12;
+            foreach (var s in Debug.LastMessages())
+            {
+                g.DrawString(s, DefaultFont, b3, pad, topPad);
+                topPad += pad;
+            }*/
         }
 
     }

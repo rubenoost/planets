@@ -56,6 +56,7 @@
     <Compile Include="Controller\PhysicsRules\ResetRule.cs" />
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
+    <Compile Include="Debug.cs" />
     <Compile Include="Model\BlackHole.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Player.cs" />

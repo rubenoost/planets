@@ -129,7 +129,7 @@ namespace Planets.Controller
                     lock (field.GameObjects)
                     {
                         // ExecuteRule game rules
-                        foreach (AbstractGameRule agr in _gameRules)
+                        foreach (var agr in _gameRules)
                         {
                             if (agr.Activated) agr.Execute(field, dt);
                         }
