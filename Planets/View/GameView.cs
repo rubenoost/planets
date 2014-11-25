@@ -29,8 +29,7 @@ namespace Planets.View
         /// Buffer bitmap
         /// </summary>
         private Bitmap b = new Bitmap(Properties.Resources.LogoFinal_Inv, new Size(1920, 1080));
-        private Bitmap h1 = new Bitmap(Properties.Resources.Hole1, new Size(10, 10));
-        private Bitmap h2 = new Bitmap(Properties.Resources.Hole2, new Size(10, 10));
+        private Bitmap h1 = new Bitmap(Properties.Resources.Hole1, new Size(100, 100));
         private Bitmap cursor = new Bitmap(Properties.Resources.Cursors_Red);
         private Brush b2 = new TextureBrush(Properties.Resources.LogoFinal);
         private Brush b3 = new SolidBrush(Color.Magenta);
@@ -104,10 +103,6 @@ namespace Planets.View
                         angle += 1;
                         Bitmap test = RotateImg(h1, angle);
                         g.DrawImage(test, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
-
-                        angle2 -= 1;
-                        Bitmap test2 = RotateImg(h2, angle2);
-                        g.DrawImage(test2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
 
                         //g.FillEllipse(b3, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
                     }
