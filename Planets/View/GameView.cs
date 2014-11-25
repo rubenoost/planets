@@ -106,7 +106,7 @@ namespace Planets.View
                     }
                     else if (obj is BlackHole)
                     {
-                        angle += 1;
+                        angle -= 1;
                         Bitmap test = RotateImg(h1, angle);
                         g.DrawImage(test, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
 
