@@ -107,15 +107,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\wall.jpg" />
-    <None Include="Resources\ROCmbwF.jpg" />
     <None Include="Resources\Pluto.png" />
     <None Include="Resources\LogoFinal.jpg" />
     <None Include="Resources\LogoFinal-Inv.jpg" />
     <None Include="Resources\Cursors-Red.png" />
-    <None Include="Resources\Hole2.png" />
     <None Include="Resources\Hole1.png" />
-    <Content Include="Resources\logotest.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 
 namespace Planets.Model
 {
@@ -136,7 +137,7 @@ namespace Planets.Model
 
         public override string ToString()
         {
-            return string.Format("{0:0.000},{1:0.000}", X, Y);
+            return string.Format("{0},{1}", X.ToString("0.000", new CultureInfo("en-US", false)), Y.ToString("0.000", new CultureInfo("en-US", false)));
         }
     }
 
