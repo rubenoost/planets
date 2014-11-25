@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Planets.Controller
 {
-    class MainEngine
+    public class MainEngine
     {
 
         private PlanetsForm host;

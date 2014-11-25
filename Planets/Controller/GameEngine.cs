@@ -9,7 +9,7 @@ using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 
 namespace Planets.Controller
 {
-    class GameEngine
+    public class GameEngine
     {
         // Hosts
         private MainEngine HostEngine;
