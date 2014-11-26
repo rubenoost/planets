@@ -10,7 +10,7 @@ namespace Planets
 
         private static int current = 0;
 
-        public static bool Enabled = true;
+        public static bool Enabled = false;
 
         public static void AddMessage(string message)
         {
