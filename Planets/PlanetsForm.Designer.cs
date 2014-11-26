@@ -20,7 +20,7 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Windows DebugForm Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify

@@ -73,6 +73,7 @@ namespace Planets.Controller
 
             // Register keys for resetting
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 0.0; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.D) Debug.ShowWindow();};
 
             // Create new GameThread
             GameThread = new Thread(GameLoop);
