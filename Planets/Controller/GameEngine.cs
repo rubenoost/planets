@@ -38,6 +38,7 @@ namespace Planets.Controller
             new MoveRule(),
 
             // ========== [ REMOVING OBJECTS ] ==========
+            new EatRule(),
             new CollidewithSmaller(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
