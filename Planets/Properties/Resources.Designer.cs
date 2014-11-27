@@ -83,6 +83,16 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap KomeetStaartje {
+            get {
+                object obj = ResourceManager.GetObject("KomeetStaartje", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LogoFinal {
             get {
                 object obj = ResourceManager.GetObject("LogoFinal", resourceCulture);
