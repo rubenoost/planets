@@ -19,14 +19,14 @@ namespace Planets.Controller.Subcontrollers
         /// <summary>
         /// The control used by this controller to listen on for mouse clicks.
         /// </summary>
-        public Control InternalControl { get; private set; }
+        public GameView InternalControl { get; private set; }
 
         /// <summary>
         /// Create new ShootProjectileController.
         /// </summary>
         /// <param name="pf">The playfield to shoot projectiles in.</param>
         /// <param name="listenControl">The control to listen on for clicks.</param>
-        public ShootProjectileController(Playfield pf, Control listenControl)
+        public ShootProjectileController(Playfield pf, GameView listenControl)
         {
             // Save variables
             InternalPlayfield = pf;
@@ -34,6 +34,19 @@ namespace Planets.Controller.Subcontrollers
 
             // Register event handlers
             listenControl.MouseClick += (sender, args) => Clicked(args.Location);
+
+            this.InternalControl.MouseDown += MouseDownEvent;
+            this.InternalControl.MouseUp += MouseUpEvent;
+        }
+
+        private void MouseUpEvent(object sender, MouseEventArgs e)
+        {
+            this.InternalControl.IsAiming = false;
+        }
+
+        private void MouseDownEvent(object sender, MouseEventArgs e)
+        {
+            this.InternalControl.IsAiming = true;
         }
 
         /// <summary>

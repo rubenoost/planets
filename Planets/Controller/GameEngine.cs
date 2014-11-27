@@ -63,7 +63,6 @@ namespace Planets.Controller
 
             // Create controllers
             spc = new ShootProjectileController(field, GameView);
-            AimController AC = new AimController(field, GameView);
             ad = new Autodemo(spc, this);
 
             // Set gameview
