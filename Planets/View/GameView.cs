@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using Planets.View.Imaging;
 using Planets.Controller.Subcontrollers;
-using ImageMagick;
 
 namespace Planets.View
 {
@@ -22,7 +21,7 @@ namespace Planets.View
         /// <summary>
         /// Buffer bitmap
         /// </summary>
-        
+
         // Aiming Settings
         /// <summary>
         /// If true, a vector will be drawn to show the current trajectory
@@ -44,7 +43,7 @@ namespace Planets.View
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             this.CurVecPen.CustomEndCap = bigArrow;
             this.NextVecPen.CustomEndCap = bigArrow;
-            this.AimVecPen.DashPattern = new float[]{ 10 };
+            this.AimVecPen.DashPattern = new float[] { 10 };
             this.AimVecPen.DashStyle = DashStyle.Dash;
             this.AimVecPen.CustomEndCap = bigArrow;
         }
@@ -59,9 +58,9 @@ namespace Planets.View
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height, 0), 0, 0);
 
             // Maak teken functie
-            lock (field.GameObjects)
+            lock (field.BOT)
             {
-                foreach (GameObject obj in field.GameObjects)
+                field.BOT.Iterate(obj =>
                 {
                     float radius = (float)obj.Radius;
                     int length = (int)(radius * 2);
@@ -70,7 +69,7 @@ namespace Planets.View
                     int y = (int)(obj.Location.Y - radius);
 
                     // Calculate player angle
-                    if (obj.DV.Length() > 1.0)
+                    /*if (obj.DV.Length() > 1.0)
                     {
                         int angleO = 0;
                         angleO = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
@@ -78,9 +77,9 @@ namespace Planets.View
                         Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angleO + 180);
                         g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
 
-                    }
+                    }*/
 
-                    
+
 
                     if (obj == field.CurrentPlayer)
                     {
@@ -94,14 +93,17 @@ namespace Planets.View
                             g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
 
                             // Draw aim direction vector
-                            g.DrawLine(AimVecPen, obj.Location + AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
+                            g.DrawLine(AimVecPen, obj.Location + AimPoint.ScaleToLength(obj.Radius + 1),
+                                obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
 
                             // Draw next direction vector
-                            Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
-                            g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
+                            Vector NextVec = ShootProjectileController.CalcNewDV(obj,
+                                new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
+                            g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1),
+                                obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
 
-                        
+
                         // Draw player
                         Sprite s = sp.GetSprite(Sprite.Player, length, length);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
@@ -117,17 +119,27 @@ namespace Planets.View
                         Sprite s = sp.GetSprite(Sprite.Player, length, length);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
-                }
 
-                // Drawing the autodemo
-                double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
-                if (f < 1000)
-                {
-                    int radius = 30 + (int)(f / 10);
-                    g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)), field.LastAutoClickLocation.X - radius / 2, field.LastAutoClickLocation.Y - radius / 2, radius, radius);
-                    g.DrawImage(sp.GetSprite(Sprite.Cursor, 100, 100, 0), field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
-                }
+
+                    // Drawing the autodemo
+                    double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
+                    if (f < 1000)
+                    {
+                        int r = 30 + (int)(f / 10);
+                        g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)),
+                            field.LastAutoClickLocation.X - r / 2, field.LastAutoClickLocation.Y - r / 2, r,
+                            r);
+                        g.DrawImage(sp.GetSprite(Sprite.Cursor, 100, 100, 0), field.LastAutoClickLocation.X - 4,
+                            field.LastAutoClickLocation.Y - 10);
+                    }
+                });
             }
+
+            int d = field.BOT.Count;
+            int d2 = (d + 1) * d / 2;
+            g.DrawString("Regular Collision Detection: " + d2, DefaultFont, new SolidBrush(Color.Magenta), 100, 300);
+            g.DrawString("Binary Tree Collision Detection: " + (field.BOT.colCount), DefaultFont, new SolidBrush(Color.Magenta), 100, 320);
+            g.DrawString("Collision Detection Improvement: " + (d2 - field.BOT.colCount) * 100 / d2, DefaultFont, new SolidBrush(Color.Magenta), 100, 340);
         }
 
     }

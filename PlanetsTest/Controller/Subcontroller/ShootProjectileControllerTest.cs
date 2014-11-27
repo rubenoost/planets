@@ -29,7 +29,7 @@ namespace PlanetsTest.Controller.Subcontroller
         }
 
         /// <summary>
-        /// Click once on the field, and the amount of GameObjects should be one higher.
+        /// Click once on the field, and the amount of BOT should be one higher.
         /// </summary>
         [TestMethod]
         public void UnitTest_ShootProjectileController_Click_Once()
@@ -38,17 +38,17 @@ namespace PlanetsTest.Controller.Subcontroller
             var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 100)};
             var gv = new GameView(pf);
             var spc = new ShootProjectileController(pf, gv);
-            var objectCount = pf.GameObjects.Count;
+            var objectCount = pf.BOT.Count;
 
             // Act
             spc.Clicked(new Point());
 
             // Assert
-            Assert.AreEqual(objectCount + 1, pf.GameObjects.Count, "Shooting once");
+            Assert.AreEqual(objectCount + 1, pf.BOT.Count, "Shooting once");
         }
 
         /// <summary>
-        /// Click multiple times on the field, and the amount of GameObjects should be that many higher.
+        /// Click multiple times on the field, and the amount of BOT should be that many higher.
         /// </summary>
         [TestMethod]
         public void UnitTest_ShootProjectileController_Click_Multiple()
@@ -57,7 +57,7 @@ namespace PlanetsTest.Controller.Subcontroller
             var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 100)};
             var gv = new GameView(pf);
             var spc = new ShootProjectileController(pf, gv);
-            var objectCount = pf.GameObjects.Count;
+            var objectCount = pf.BOT.Count;
             var count = new Random().Next(20);
 
             // Act
@@ -65,7 +65,7 @@ namespace PlanetsTest.Controller.Subcontroller
                 spc.Clicked(new Point());
 
             // Assert
-            Assert.AreEqual(objectCount + count, pf.GameObjects.Count, "Shooting " + count + " times");
+            Assert.AreEqual(objectCount + count, pf.BOT.Count, "Shooting " + count + " times");
         }
     }
 }

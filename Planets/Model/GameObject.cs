@@ -18,7 +18,19 @@ namespace Planets.Model
     {
         // Properties
 
-        public Vector Location;
+        public event Action<GameObject> Moved;
+
+        private Vector _propLocation;
+
+        public Vector Location
+        {
+            get { return _propLocation; }
+            set
+            {
+                _propLocation = value;
+                if(Moved != null) Moved(this);
+            }
+        }
 
         public Vector DV;
 
