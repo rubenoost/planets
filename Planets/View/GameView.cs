@@ -33,7 +33,7 @@ namespace Planets.View
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 2);
-        private Pen NewVecPen = new Pen(Color.Green, 2);
+        private Pen NextVecPen = new Pen(Color.Green, 2);
         private Pen AimVecPen = new Pen(Color.Black, 2);
 
         public GameView(Playfield field)
@@ -43,6 +43,7 @@ namespace Planets.View
             this.field = field;
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             this.CurVecPen.CustomEndCap = bigArrow;
+            this.NextVecPen.CustomEndCap = bigArrow;
             this.AimVecPen.DashPattern = new float[]{ 10 };
             this.AimVecPen.DashStyle = DashStyle.Dash;
             this.AimVecPen.CustomEndCap = bigArrow;
@@ -82,7 +83,7 @@ namespace Planets.View
 
                             // Draw next direction vector
                             Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), MousePoint);
-                            g.DrawLine(NewVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
+                            g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
                         Sprite s = sp.GetSprite(Sprite.Player, length, length, 55);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));

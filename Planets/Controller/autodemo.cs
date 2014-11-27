@@ -88,6 +88,7 @@ namespace Planets.Controller
             var p = new Point();
             var r = new Random();
 
+            this.Spc.InternalControl.IsAiming = true;
             while (true)
             {
                 // While key is pressed
@@ -117,6 +118,7 @@ namespace Planets.Controller
 
                 Thread.Sleep(100);
             }
+            this.Spc.InternalControl.IsAiming = false;
         }
 
         /// <summary>
