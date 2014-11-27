@@ -50,7 +50,7 @@ namespace Planets.View
 
             // Teken achtergrond
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height, 0), 0, 0);
-            
+
             // Maak teken functie
             lock (field.GameObjects)
             {
@@ -64,9 +64,7 @@ namespace Planets.View
 
                     if (obj == field.CurrentPlayer)
                     {
-                        g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
-
-                        if(IsAiming)
+                        if (IsAiming)
                         {
                             Vector NewPoint = obj.CalcNewLocation(17);
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(100.0);
