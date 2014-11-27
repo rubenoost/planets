@@ -43,6 +43,7 @@ namespace Planets.View
         /// If true, a vector will be drawn to show the current trajectory
         /// </summary>
         public bool IsAiming;
+        public Vector AimPoint;
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 2);
@@ -56,6 +57,7 @@ namespace Planets.View
             this.field = field;
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             this.CurVecPen.CustomEndCap = bigArrow;
+            this.AimVecPen.DashPattern = new float[]{ 15, 15, 15 };
         }
 
         /// <summary>
@@ -119,7 +121,11 @@ namespace Planets.View
                         {
                             Vector NewPoint = obj.CalcNewLocation(17);
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(100.0);
+                            // Draw current direction vector
                             g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
+
+                            // Draw aim direction vector
+                            g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(100.0));
                         }
                     }
                     else if (obj is BlackHole)
