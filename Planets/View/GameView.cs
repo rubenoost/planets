@@ -73,7 +73,7 @@ namespace Planets.View
                     if (obj.DV.Length() > 1.0)
                     {
                         int angleO = 0;
-                        angle = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
+                        angleO = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
                         // Retrieve sprites
                         Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angleO + 180);
                         g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
@@ -100,7 +100,7 @@ namespace Planets.View
                             Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
                             g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
-                        Sprite s = sp.GetSprite(Sprite.Player, length, length, angle);
+                        Sprite s = sp.GetSprite(Sprite.Player, length, length, 0);
 
                         // Draw sprites
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
@@ -124,7 +124,7 @@ namespace Planets.View
                 {
                     int radius = 30 + (int)(f / 10);
                     g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)), field.LastAutoClickLocation.X - radius / 2, field.LastAutoClickLocation.Y - radius / 2, radius, radius);
-                    g.DrawImage(cursor, field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
+                    g.DrawImage(sp.GetSprite(Sprite.Cursor, 100, 100, 0), field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
                 }
             }
         }
