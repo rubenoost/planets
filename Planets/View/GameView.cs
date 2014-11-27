@@ -76,7 +76,7 @@ namespace Planets.View
                             // Draw aim direction vector
                             g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(100.0));
                         }
-                        Sprite s = sp.GetSprite(Sprite.Player, length, length);
+                        Sprite s = sp.GetSprite(Sprite.Player, length, length, 55);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
                     else if (obj is BlackHole)

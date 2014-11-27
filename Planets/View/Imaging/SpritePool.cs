@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using Planets.Properties;
 
@@ -76,12 +77,12 @@ namespace Planets.View.Imaging
 
         private Sprite CreateImage(Bitmap bm, ImageRequest i)
         {
-            Debug.AddMessage("Creating new image, new buffer size: " + (_imageBuffer.Count + 1));
+            // Create result image
             var result = new Bitmap(i.w, i.h, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(result);
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.CompositingQuality = CompositingQuality.HighQuality;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
+            //g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            //g.CompositingQuality = CompositingQuality.HighQuality;
+            //g.SmoothingMode = SmoothingMode.AntiAlias;
             g.DrawImage(bm, new Rectangle(0, 0, i.w, i.h), new Rectangle(0, 0, bm.Width, bm.Height), GraphicsUnit.Pixel);
 
             if (i.r == 0)
@@ -91,10 +92,25 @@ namespace Planets.View.Imaging
 
         public static Bitmap RotateImg(Bitmap bmp, int angle)
         {
-            // Rotate image
+            double scale = Math.PI/180.0;
+            double r = angle*scale;
 
-            // Temporary
-            return bmp;
+            double c = Math.Cos(r);
+            double s = Math.Sin(r);
+
+            double x = bmp.Width / 2;
+            double y = bmp.Height/2;
+
+            double size = Math.Max(bmp.Width, bmp.Height);
+
+            Bitmap result = new Bitmap((int) size, (int)size);
+            Graphics g = Graphics.FromImage(result);
+
+            g.TranslateTransform((float) (size / 2), (float) (size / 2));
+            g.RotateTransform(angle);
+            g.TranslateTransform((float)(-size / 2), (float)(-size / 2));
+            g.DrawImageUnscaled(bmp, 0, 0);
+            return result;
         }
     }
 }
