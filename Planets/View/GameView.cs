@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Planets.View.Imaging;
 using Planets.Controller.Subcontrollers;
+using ImageMagick;
 
 namespace Planets.View
 {
@@ -21,8 +22,7 @@ namespace Planets.View
         /// <summary>
         /// Buffer bitmap
         /// </summary>
-        private Bitmap cursor = new Bitmap(Properties.Resources.Cursors_Red);
-
+        
         // Aiming Settings
         /// <summary>
         /// If true, a vector will be drawn to show the current trajectory
