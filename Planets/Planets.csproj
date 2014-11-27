@@ -134,7 +134,6 @@
     <None Include="Resources\Pluto-Green.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pluto-Blue.ico" />
     <Content Include="Pluto-Icon.ico" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
