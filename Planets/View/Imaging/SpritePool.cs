@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Runtime.Remoting.Messaging;
-using System.Windows.Forms;
 using Planets.Properties;
 
 namespace Planets.View.Imaging
@@ -70,43 +68,45 @@ namespace Planets.View.Imaging
             if (s != null)
                 return s;
 
-            s = CreateImage(_imageSource[imageId], i);
+            s = CreateImage(imageId, i);
             _imageBuffer.Add(i, s);
             return s;
         }
 
-        private Sprite CreateImage(Bitmap bm, ImageRequest i)
+        private Sprite CreateImage(int id, ImageRequest i)
         {
-            // Create result image
-            var result = new Bitmap(i.w, i.h, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(result);
-            //g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            //g.CompositingQuality = CompositingQuality.HighQuality;
-            //g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.DrawImage(bm, new Rectangle(0, 0, i.w, i.h), new Rectangle(0, 0, bm.Width, bm.Height), GraphicsUnit.Pixel);
-
+            // Check for rotation
             if (i.r == 0)
+            {
+                // Create result image
+                var result = new Bitmap(i.w, i.h, PixelFormat.Format32bppArgb);
+                Graphics g = Graphics.FromImage(result);
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                Bitmap b = _imageSource[id];
+                g.DrawImage(b, new Rectangle(0, 0, i.w, i.h), new Rectangle(0, 0, b.Width, b.Height),
+                    GraphicsUnit.Pixel);
                 return result;
-            return RotateImg(result, i.r);
+            }
+            else
+            {
+                // Create result image
+                Bitmap b = GetSprite(id, i.w, i.h);
+                return RotateImg(b, i.r);
+            }
         }
 
         public static Bitmap RotateImg(Bitmap bmp, int angle)
         {
-            double scale = Math.PI/180.0;
-            double r = angle*scale;
-
-            double c = Math.Cos(r);
-            double s = Math.Sin(r);
-
-            double x = bmp.Width / 2;
-            double y = bmp.Height/2;
-
             double size = Math.Max(bmp.Width, bmp.Height);
-
-            Bitmap result = new Bitmap((int) size, (int)size);
+            Bitmap result = new Bitmap((int)size, (int)size);
             Graphics g = Graphics.FromImage(result);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            g.TranslateTransform((float) (size / 2), (float) (size / 2));
+            g.TranslateTransform((float)(size / 2), (float)(size / 2));
             g.RotateTransform(angle);
             g.TranslateTransform((float)(-size / 2), (float)(-size / 2));
             g.DrawImageUnscaled(bmp, 0, 0);
