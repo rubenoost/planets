@@ -133,13 +133,24 @@ namespace Planets.View
                             field.LastAutoClickLocation.Y - 10);
                     }
                 });
-            }
 
-            int d = field.BOT.Count;
-            int d2 = (d + 1) * d / 2;
-            g.DrawString("Regular Collision Detection: " + d2, DefaultFont, new SolidBrush(Color.Magenta), 100, 300);
-            g.DrawString("Binary Tree Collision Detection: " + (field.BOT.colCount), DefaultFont, new SolidBrush(Color.Magenta), 100, 320);
-            g.DrawString("Collision Detection Improvement: " + (d2 - field.BOT.colCount) * 100 / d2, DefaultFont, new SolidBrush(Color.Magenta), 100, 340);
+                if (Debug.Enabled)
+                {
+                    int d = field.BOT.Count;
+                    int d2 = (d + 1) * d / 2;
+                    g.DrawString("Regular Collision Detection: " + d2, DefaultFont, new SolidBrush(Color.Magenta), 100,
+                        300);
+                    g.DrawString("Binary Tree Collision Detection: " + (field.BOT.colCount), DefaultFont,
+                        new SolidBrush(Color.Magenta), 100, 320);
+                    g.DrawString("Collision Detection Improvement: " + (d2 - field.BOT.colCount) * 100 / d2 + "%",
+                        DefaultFont, new SolidBrush(Color.Magenta), 100, 340);
+
+                    field.BOT.DoCollisions(delegate(GameObject go1, GameObject go2, double ms)
+                    {
+                        g.DrawLine(new Pen(Color.OrangeRed), go1.Location, go2.Location);
+                    }, 0);
+                }
+            }
         }
 
     }

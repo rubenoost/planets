@@ -142,7 +142,7 @@ namespace Planets.Controller
                 Spc.InternalPlayfield.LastAutoClickMoment = DateTime.MinValue;
 
                 // Little hack
-                Spc.InternalPlayfield.CurrentPlayer.mass = 0;
+                Spc.InternalPlayfield.CurrentPlayer.mass = 1;
             }
         }
 

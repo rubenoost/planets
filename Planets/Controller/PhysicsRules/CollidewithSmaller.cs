@@ -2,16 +2,11 @@
 
 namespace Planets.Controller.PhysicsRules
 {
-    class CollidewithSmaller : AbstractGameRule
+    class CollidewithSmaller : AbstractCollisionRule
     {
-        protected override void ExecuteRule(Playfield pf, double ms)
+        protected override void DoCollision(GameObject go1, GameObject go2, double ms)
         {
-            pf.BOT.DoCollisions((go1, go2, dt) => CheckObjectCollission(go1, go2), ms);
-        }
-
-        public void CheckObjectCollission(GameObject c1, GameObject c2)
-        {
-
+            
         }
     }
 }

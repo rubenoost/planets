@@ -20,7 +20,7 @@ namespace Planets.Model
             Size = new Size(width, height);
 
             // Create GameObject list
-            BOT = new BinaryObjectTree(null, new Rectangle(0, 0, 1920, 1080), 0, 5, 0);
+            BOT = new BinaryObjectTree(null, new Rectangle(0, 0, 1920, 1080), 0, 7, 0);
         }
 
         public Player CurrentPlayer

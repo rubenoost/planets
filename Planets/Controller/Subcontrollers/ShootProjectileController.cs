@@ -80,7 +80,7 @@ namespace Planets.Controller.Subcontrollers
             //Player
             GameObject O = InternalPlayfield.CurrentPlayer;
 
-            P.mass = 0.05 * O.mass;
+            P.mass = 0.005 * O.mass;
 
             lock (InternalPlayfield.BOT)
             {

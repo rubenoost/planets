@@ -32,7 +32,17 @@ namespace Planets.Model
             }
         }
 
-        public Vector DV;
+        private Vector _propDV;
+        public Vector DV
+        {
+            get { return _propDV; }
+            set
+            {
+                _propDV = value;
+                if(Double.IsNaN(DV.X) || Double.IsNaN(DV.Y))
+                    throw new Exception("NAN!");
+            }
+        }
 
         public double mass;
 
