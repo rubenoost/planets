@@ -35,6 +35,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Pluto-Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
@@ -113,11 +116,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Pluto.png" />
     <None Include="Resources\LogoFinal.jpg" />
     <None Include="Resources\LogoFinal-Inv.jpg" />
     <None Include="Resources\Cursors-Red.png" />
     <None Include="Resources\Hole1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pluto-Blue.ico" />
+    <Content Include="Pluto-Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

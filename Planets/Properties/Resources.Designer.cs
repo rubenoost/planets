@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Planets.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -103,6 +106,36 @@ namespace Planets.Properties {
         internal static System.Drawing.Bitmap Pluto {
             get {
                 object obj = ResourceManager.GetObject("Pluto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pluto_Blue {
+            get {
+                object obj = ResourceManager.GetObject("Pluto_Blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pluto_Green {
+            get {
+                object obj = ResourceManager.GetObject("Pluto_Green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pluto_Red {
+            get {
+                object obj = ResourceManager.GetObject("Pluto_Red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

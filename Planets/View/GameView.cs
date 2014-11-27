@@ -4,6 +4,7 @@ using Planets.Model;
 using System.Drawing;
 using System.Windows.Forms;
 using Planets.View.Imaging;
+using Planets.Controller.Subcontrollers;
 
 namespace Planets.View
 {
@@ -28,11 +29,12 @@ namespace Planets.View
         /// </summary>
         public bool IsAiming;
         public Vector AimPoint;
+        public Vector MousePoint;
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 2);
         private Pen NewVecPen = new Pen(Color.Green, 2);
-        private Pen AimVecPen = new Pen(Color.White, 2);
+        private Pen AimVecPen = new Pen(Color.Black, 2);
 
         public GameView(Playfield field)
         {
@@ -41,7 +43,9 @@ namespace Planets.View
             this.field = field;
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             this.CurVecPen.CustomEndCap = bigArrow;
-            this.AimVecPen.DashPattern = new float[]{ 15, 15, 15 };
+            this.AimVecPen.DashPattern = new float[]{ 10 };
+            this.AimVecPen.DashStyle = DashStyle.Dash;
+            this.AimVecPen.CustomEndCap = bigArrow;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -69,12 +73,16 @@ namespace Planets.View
                         if (IsAiming)
                         {
                             Vector NewPoint = obj.CalcNewLocation(17);
-                            Vector CurVec = obj.Location + obj.DV.ScaleToLength(100.0);
+                            Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.DV.Length());
                             // Draw current direction vector
                             g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
 
                             // Draw aim direction vector
-                            g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(100.0));
+                            g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
+
+                            // Draw next direction vector
+                            Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), MousePoint);
+                            g.DrawLine(NewVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
                         Sprite s = sp.GetSprite(Sprite.Player, length, length, 55);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
