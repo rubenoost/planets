@@ -44,7 +44,8 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public Vector Normal()
         {
-            return this / Length();
+            double lenth = (Length() > 0) ? Length() : 1;
+            return this / lenth;
         }
 
         /// <summary>

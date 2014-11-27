@@ -22,11 +22,24 @@ namespace Planets.View
         /// </summary>
         private Bitmap cursor = new Bitmap(Properties.Resources.Cursors_Red);
 
+        // Aiming Settings
+        /// <summary>
+        /// If true, a vector will be drawn to show the current trajectory
+        /// </summary>
+        public bool IsAiming;
+
+        // Aiming pen buffer
+        private Pen CurVecPen = new Pen(Color.Red, 2);
+        private Pen NewVecPen = new Pen(Color.Green, 2);
+        private Pen AimVecPen = new Pen(Color.White, 2);
+
         public GameView(Playfield field)
         {
             InitializeComponent();
             DoubleBuffered = true;
             this.field = field;
+            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+            this.CurVecPen.CustomEndCap = bigArrow;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -37,7 +50,7 @@ namespace Planets.View
 
             // Teken achtergrond
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height, 0), 0, 0);
-
+            
             // Maak teken functie
             lock (field.GameObjects)
             {
@@ -51,6 +64,14 @@ namespace Planets.View
 
                     if (obj == field.CurrentPlayer)
                     {
+                        g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
+
+                        if(IsAiming)
+                        {
+                            Vector NewPoint = obj.CalcNewLocation(17);
+                            Vector CurVec = obj.Location + obj.DV.ScaleToLength(100.0);
+                            g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
+                        }
                         Sprite s = sp.GetSprite(Sprite.Player, length, length);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
