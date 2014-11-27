@@ -9,11 +9,13 @@ namespace Planets.View.Imaging
 {
     public struct ImageRequest
     {
+        public readonly int no;
         public readonly int w;
         public readonly int h;
         public readonly int r;
-        public ImageRequest(int width, int height, int rotation)
+        public ImageRequest(int index, int width, int height, int rotation)
         {
+            no = index;
             w = width;
             h = height;
             r = rotation;
@@ -22,9 +24,10 @@ namespace Planets.View.Imaging
         public override int GetHashCode()
         {
             int i = 23;
-            i = i * 17 + w;
-            i = i * 17 + h;
-            i = i * 17 + r;
+            i = i * 486187739 + no;
+            i = i * 486187739 + w;
+            i = i * 486187739 + h;
+            i = i * 486187739 + r;
             return i;
         }
 
@@ -37,7 +40,7 @@ namespace Planets.View.Imaging
 
             var i = (ImageRequest)o;
 
-            return w == i.w && h == i.h && r == i.r;
+            return no == i.no && w == i.w && h == i.h && r == i.r;
         }
     }
 
@@ -51,7 +54,8 @@ namespace Planets.View.Imaging
         {
             _imageSource.Add(Sprite.Player, Resources.Pluto);
             _imageSource.Add(Sprite.BlackHole, Resources.Hole1);
-            _imageSource.Add(Sprite.Background, Resources.LogoFinal);
+            _imageSource.Add(Sprite.Background, Resources.LogoFinal_Inv);
+            _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
         }
 
         public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)
@@ -62,18 +66,18 @@ namespace Planets.View.Imaging
             // Normalize rotation
             rotation = rotation % 360;
 
-            ImageRequest i = new ImageRequest(width, height, rotation);
+            ImageRequest i = new ImageRequest(imageId, width, height, rotation);
             Sprite s;
             _imageBuffer.TryGetValue(i, out s);
             if (s != null)
                 return s;
 
-            s = CreateImage(imageId, i);
+            s = CreateImage(i);
             _imageBuffer.Add(i, s);
             return s;
         }
 
-        private Sprite CreateImage(int id, ImageRequest i)
+        private Sprite CreateImage(ImageRequest i)
         {
             // Check for rotation
             if (i.r == 0)
@@ -84,7 +88,7 @@ namespace Planets.View.Imaging
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.CompositingQuality = CompositingQuality.HighQuality;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-                Bitmap b = _imageSource[id];
+                Bitmap b = _imageSource[i.no];
                 g.DrawImage(b, new Rectangle(0, 0, i.w, i.h), new Rectangle(0, 0, b.Width, b.Height),
                     GraphicsUnit.Pixel);
                 return result;
@@ -92,7 +96,7 @@ namespace Planets.View.Imaging
             else
             {
                 // Create result image
-                Bitmap b = GetSprite(id, i.w, i.h);
+                Bitmap b = GetSprite(i.no, i.w, i.h);
                 return RotateImg(b, i.r);
             }
         }

@@ -141,6 +141,7 @@
     <Content Include="library\Magick.NET-x64.dll" />
     <Content Include="library\Magick.NET-x64.xml" />
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
