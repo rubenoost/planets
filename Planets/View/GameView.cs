@@ -70,12 +70,12 @@ namespace Planets.View
                     int y = (int)(obj.Location.Y - radius);
 
                     // Calculate player angle
-                    int angle = 0;
                     if (obj.DV.Length() > 1.0)
                     {
+                        int angleO = 0;
                         angle = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
                         // Retrieve sprites
-                        Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angle + 180);
+                        Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angleO + 180);
                         g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
 
                     }
