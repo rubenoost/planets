@@ -54,6 +54,8 @@ namespace Planets.View
             InitializeComponent();
             DoubleBuffered = true;
             this.field = field;
+            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+            this.CurVecPen.CustomEndCap = bigArrow;
         }
 
         /// <summary>
@@ -115,10 +117,7 @@ namespace Planets.View
 
                         if(IsAiming)
                         {
-                            // if deltaV x = - dan gaat ie naar links bij + naar rechts
-                            // if deltaV y = - dan gaat ie naar boven bij + naar beneden
                             Vector NewPoint = obj.CalcNewLocation(17);
-
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(100.0);
                             g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
                         }
