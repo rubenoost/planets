@@ -5,7 +5,7 @@
         public Player(Vector location, Vector velocity, double mass)
             : base(location, velocity, mass)
         {
-            Traits = base.Traits & ~Rule.AFFECTED_BY_BH;
+            Traits = base.Traits & ~Rule.AFFECTED_BY_BH & Rule.EATS;
         }
     }
 }

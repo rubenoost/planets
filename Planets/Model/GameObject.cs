@@ -7,7 +7,7 @@ namespace Planets.Model
     {
         MOVE = 1,
         EATABLE = 2,
-        EAT = 4,
+        EATS = 4,
         EAT_PLAYER = 8,
         DYNAMIC_RADIUS = 16,
         AFFECTED_BY_BH = 32,
