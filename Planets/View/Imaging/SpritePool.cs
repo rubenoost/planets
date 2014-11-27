@@ -107,7 +107,7 @@ namespace Planets.View.Imaging
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             g.TranslateTransform((float)(size / 2), (float)(size / 2));
-            g.RotateTransform(-angle);
+            g.RotateTransform(angle);
             g.TranslateTransform((float)(-size / 2), (float)(-size / 2));
             g.DrawImageUnscaled(bmp, 0, 0);
             return result;
