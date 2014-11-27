@@ -38,6 +38,16 @@ namespace Planets.View
         /// </summary>
         private Image newImage = new Bitmap(Planets.Properties.Resources.Pluto);
 
+        // Aiming Settings
+        /// <summary>
+        /// If true, a vector will be drawn to show the current trajectory
+        /// </summary>
+        public bool IsAiming;
+
+        // Aiming pen buffer
+        private Pen CurVecPen = new Pen(Color.Red, 2);
+        private Pen NewVecPen = new Pen(Color.Green, 2);
+        private Pen AimVecPen = new Pen(Color.White, 2);
 
         public GameView(Playfield field)
         {
@@ -102,6 +112,16 @@ namespace Planets.View
                     if (obj == field.CurrentPlayer)
                     {
                         g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
+
+                        if(IsAiming)
+                        {
+                            // if deltaV x = - dan gaat ie naar links bij + naar rechts
+                            // if deltaV y = - dan gaat ie naar boven bij + naar beneden
+                            Vector NewPoint = obj.CalcNewLocation(17);
+
+                            Vector CurVec = obj.Location + obj.DV.ScaleToLength(100.0);
+                            g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
+                        }
                     }
                     else if (obj is BlackHole)
                     {
