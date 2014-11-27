@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{91CC490F-D6F1-4212-8BF0-9A7ABB5BB632}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Planets</RootNamespace>
     <AssemblyName>Planets</AssemblyName>
@@ -113,11 +113,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Pluto.png" />
     <None Include="Resources\LogoFinal.jpg" />
     <None Include="Resources\LogoFinal-Inv.jpg" />
     <None Include="Resources\Cursors-Red.png" />
     <None Include="Resources\Hole1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Green.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
