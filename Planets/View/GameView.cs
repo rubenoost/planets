@@ -69,6 +69,19 @@ namespace Planets.View
                     int x = (int)(obj.Location.X - radius);
                     int y = (int)(obj.Location.Y - radius);
 
+                    // Calculate player angle
+                    int angle = 0;
+                    if (obj.DV.Length() > 1.0)
+                    {
+                        angle = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
+                        // Retrieve sprites
+                        Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angle + 180);
+                        g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
+
+                    }
+
+                    
+
                     if (obj == field.CurrentPlayer)
                     {
                         if (IsAiming)
@@ -87,20 +100,9 @@ namespace Planets.View
                             Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
                             g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
-
-                        // Calculate player angle
-                        int angle = 0;
-                        if (obj.DV.Length() > 0.01)
-                        {
-                            angle = (int) (Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
-                        }
-
-                        // Retrieve sprites
-                        Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angle + 180);
                         Sprite s = sp.GetSprite(Sprite.Player, length, length, angle);
 
                         // Draw sprites
-                        g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
                     else if (obj is BlackHole)
