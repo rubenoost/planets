@@ -81,7 +81,7 @@ namespace Planets.View
                             g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
 
                             // Draw next direction vector
-                            Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), MousePoint);
+                            Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
                             g.DrawLine(NewVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
                         Sprite s = sp.GetSprite(Sprite.Player, length, length, 55);
