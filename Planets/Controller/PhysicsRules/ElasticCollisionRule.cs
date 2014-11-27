@@ -4,6 +4,7 @@ namespace Planets.Controller.PhysicsRules
 {
     public class ElasticCollisionRule : AbstractGameRule
     {
+
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             int collisionCheckCount = 0;
