@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Planets.View.Imaging;
 using Planets.Controller.Subcontrollers;
+using ImageMagick;
 
 namespace Planets.View
 {
@@ -21,8 +22,7 @@ namespace Planets.View
         /// <summary>
         /// Buffer bitmap
         /// </summary>
-        private Bitmap cursor = new Bitmap(Properties.Resources.Cursors_Red);
-
+        
         // Aiming Settings
         /// <summary>
         /// If true, a vector will be drawn to show the current trajectory
@@ -69,26 +69,40 @@ namespace Planets.View
                     int x = (int)(obj.Location.X - radius);
                     int y = (int)(obj.Location.Y - radius);
 
+                    // Calculate player angle
+                    if (obj.DV.Length() > 1.0)
+                    {
+                        int angleO = 0;
+                        angleO = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
+                        // Retrieve sprites
+                        Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angleO + 180);
+                        g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
+
+                    }
+
+                    
+
                     if (obj == field.CurrentPlayer)
                     {
                         if (IsAiming)
                         {
-							Vector CursorPosition = new Vector(Cursor.Position.X, Cursor.Position.Y);
-							this.AimPoint = obj.Location - CursorPosition;
+                            Vector CursorPosition = Cursor.Position;
+                            AimPoint = obj.Location - CursorPosition;
 
-                            Vector NewPoint = obj.CalcNewLocation(17);
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.DV.Length());
                             // Draw current direction vector
                             g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
 
                             // Draw aim direction vector
-                            g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
+                            g.DrawLine(AimVecPen, obj.Location + AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
 
                             // Draw next direction vector
                             Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
-							g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
+                            g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
-                        Sprite s = sp.GetSprite(Sprite.Player, length, length, 55);
+                        Sprite s = sp.GetSprite(Sprite.Player, length, length, 0);
+
+                        // Draw sprites
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
                     else if (obj is BlackHole)
@@ -110,7 +124,7 @@ namespace Planets.View
                 {
                     int radius = 30 + (int)(f / 10);
                     g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)), field.LastAutoClickLocation.X - radius / 2, field.LastAutoClickLocation.Y - radius / 2, radius, radius);
-                    g.DrawImage(cursor, field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
+                    g.DrawImage(sp.GetSprite(Sprite.Cursor, 100, 100, 0), field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
                 }
             }
         }
