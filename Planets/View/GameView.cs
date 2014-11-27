@@ -70,7 +70,7 @@ namespace Planets.View
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(100.0);
                             g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
                         }
-                        Sprite s = sp.GetSprite(Sprite.Player, length, length);
+                        Sprite s = sp.GetSprite(Sprite.Player, length, length, 55);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
                     else if (obj is BlackHole)
