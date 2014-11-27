@@ -14,7 +14,7 @@ namespace Planets.Controller.PhysicsRules
         {
             var removed = new List<GameObject>();
 
-            foreach (GameObject go in pf.GameObjects.Where(p => p.Traits.HasFlag(Rule.EATS)))
+            foreach (GameObject go in pf.GameObjects.Where(p => p.Traits.HasFlag(Rule.EATS)).Where(p => p is BlackHole))
             {
                 foreach (GameObject go2 in pf.GameObjects.Where(p => p.Traits.HasFlag(Rule.EATABLE)))
                 {
