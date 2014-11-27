@@ -14,6 +14,7 @@ namespace Planets.Controller.PhysicsRules
 
                     // Move back
                     Vector v1 = (c2.Location - c1.Location);
+                    if (v1.Length() < 0.1) return;
                     double l1 = v1.Length();
                     double l2 = c2.Radius + c1.Radius;
                     double diff = l2 - l1;

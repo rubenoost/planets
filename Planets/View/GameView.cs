@@ -53,6 +53,8 @@ namespace Planets.View
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.CompositingQuality = CompositingQuality.HighQuality;
 
             // Teken achtergrond
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height, 0), 0, 0);
@@ -129,26 +131,28 @@ namespace Planets.View
                         g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)),
                             field.LastAutoClickLocation.X - r / 2, field.LastAutoClickLocation.Y - r / 2, r,
                             r);
-                        g.DrawImage(sp.GetSprite(Sprite.Cursor, 100, 100, 0), field.LastAutoClickLocation.X - 4,
+                        g.DrawImageUnscaled(sp.GetSprite(Sprite.Cursor, 100, 100, 0), field.LastAutoClickLocation.X - 4,
                             field.LastAutoClickLocation.Y - 10);
                     }
                 });
 
                 if (Debug.Enabled)
                 {
+                    using (Pen p = new Pen(Color.OrangeRed, 1.0f))
+                    {
+                        field.BOT.DoCollisions((go1, go2, ms) => g.DrawLine(p, go1.Location, go2.Location), 0);
+                    }
+
                     int d = field.BOT.Count;
                     int d2 = (d + 1) * d / 2;
-                    g.DrawString("Regular Collision Detection: " + d2, DefaultFont, new SolidBrush(Color.Magenta), 100,
-                        300);
-                    g.DrawString("Binary Tree Collision Detection: " + (field.BOT.colCount), DefaultFont,
-                        new SolidBrush(Color.Magenta), 100, 320);
-                    g.DrawString("Collision Detection Improvement: " + (d2 - field.BOT.colCount) * 100 / d2 + "%",
-                        DefaultFont, new SolidBrush(Color.Magenta), 100, 340);
 
-                    field.BOT.DoCollisions(delegate(GameObject go1, GameObject go2, double ms)
+                    using (Brush b = new SolidBrush(Color.Magenta))
                     {
-                        g.DrawLine(new Pen(Color.OrangeRed), go1.Location, go2.Location);
-                    }, 0);
+                        Font f = new Font(FontFamily.GenericSansSerif, 16.0f, FontStyle.Bold);
+                        g.DrawString("Regular Collision Detection: " + d2, f, b, 100, 300);
+                        g.DrawString("Binary Tree Collision Detection: " + (field.BOT.colCount), f, b, 100, 320);
+                        g.DrawString("Collision Detection Improvement: " + (d2 - field.BOT.colCount) * 100 / d2 + "%", f, b, 100, 340);
+                    }
                 }
             }
         }
