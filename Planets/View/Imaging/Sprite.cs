@@ -7,6 +7,7 @@ namespace Planets.View.Imaging
         public const int Background = 0;
         public const int Player = 1;
         public const int BlackHole = 2;
+        public const int CometTail = 3;
 
         public int Width
         {

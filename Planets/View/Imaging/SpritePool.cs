@@ -51,7 +51,8 @@ namespace Planets.View.Imaging
         {
             _imageSource.Add(Sprite.Player, Resources.Pluto);
             _imageSource.Add(Sprite.BlackHole, Resources.Hole1);
-            _imageSource.Add(Sprite.Background, Resources.LogoFinal);
+            _imageSource.Add(Sprite.Background, Resources.LogoFinal_Inv);
+            _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
         }
 
         public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)

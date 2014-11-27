@@ -73,27 +73,34 @@ namespace Planets.View
                     {
                         if (IsAiming)
                         {
-                            Vector CursorPosition = new Vector(Cursor.Position.X, Cursor.Position.Y);
-                            this.AimPoint = obj.Location - CursorPosition;
+                            Vector CursorPosition = Cursor.Position;
+                            AimPoint = obj.Location - CursorPosition;
 
-                            Vector NewPoint = obj.CalcNewLocation(17);
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.DV.Length());
                             // Draw current direction vector
                             g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
 
                             // Draw aim direction vector
-                            g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
+                            g.DrawLine(AimVecPen, obj.Location + AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
 
                             // Draw next direction vector
                             Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
                             g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
+
+                        // Calculate player angle
                         int angle = 0;
                         if (obj.DV.Length() > 0.01)
                         {
                             angle = (int) (Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
                         }
-                        Sprite s = sp.GetSprite(Sprite.Player, length, length, angle - 90);
+
+                        // Retrieve sprites
+                        Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angle + 180);
+                        Sprite s = sp.GetSprite(Sprite.Player, length, length, angle);
+
+                        // Draw sprites
+                        g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
                     else if (obj is BlackHole)
