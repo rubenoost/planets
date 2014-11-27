@@ -73,8 +73,8 @@ namespace Planets.View
                     {
                         if (IsAiming)
                         {
-							Vector CursorPosition = new Vector(Cursor.Position.X, Cursor.Position.Y);
-							this.AimPoint = obj.Location - CursorPosition;
+                            Vector CursorPosition = new Vector(Cursor.Position.X, Cursor.Position.Y);
+                            this.AimPoint = obj.Location - CursorPosition;
 
                             Vector NewPoint = obj.CalcNewLocation(17);
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.DV.Length());
@@ -86,9 +86,14 @@ namespace Planets.View
 
                             // Draw next direction vector
                             Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
-							g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
+                            g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
-                        Sprite s = sp.GetSprite(Sprite.Player, length, length, 55);
+                        int angle = 0;
+                        if (obj.DV.Length() > 0.01)
+                        {
+                            angle = (int) (Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
+                        }
+                        Sprite s = sp.GetSprite(Sprite.Player, length, length, angle - 90);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
                     else if (obj is BlackHole)
