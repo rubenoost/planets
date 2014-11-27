@@ -39,6 +39,10 @@
     <ApplicationIcon>Pluto-Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Magick.NET-x64, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Magick.NET-x64.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
     </Reference>
@@ -134,6 +138,8 @@
     <None Include="Resources\Pluto-Green.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="library\Magick.NET-x64.dll" />
+    <Content Include="library\Magick.NET-x64.xml" />
     <Content Include="Pluto-Icon.ico" />
     <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
