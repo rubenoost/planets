@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets;
 using Planets.Model;

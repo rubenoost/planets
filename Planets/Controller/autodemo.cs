@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
-using Planets.Model;
-using Planets.View;
 
 namespace Planets.Controller
 {
