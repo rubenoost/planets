@@ -72,6 +72,9 @@ namespace Planets.View
                     {
                         if (IsAiming)
                         {
+							Vector CursorPosition = new Vector(Cursor.Position.X, Cursor.Position.Y);
+							this.AimPoint = obj.Location - CursorPosition;
+
                             Vector NewPoint = obj.CalcNewLocation(17);
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.DV.Length());
                             // Draw current direction vector
@@ -80,7 +83,7 @@ namespace Planets.View
                             // Draw aim direction vector
                             g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
 
-                            // Draw next direction vector
+							// Draw next direction vector
                             Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
                             g.DrawLine(NewVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }

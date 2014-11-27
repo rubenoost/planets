@@ -46,10 +46,6 @@ namespace Planets.Controller.Subcontrollers
 
         private void MouseDownEvent(object sender, MouseEventArgs e)
         {
-            Vector MousePoint = new Vector(e.X, e.Y);
-            Vector Delta = this.InternalPlayfield.CurrentPlayer.Location - MousePoint;
-            this.InternalControl.AimPoint = Delta;
-            this.InternalControl.MousePoint = MousePoint;
             this.InternalControl.IsAiming = true;
         }
 
