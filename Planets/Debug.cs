@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Net.Mime;
 using System.Windows.Forms;
 
 namespace Planets
@@ -28,7 +26,11 @@ namespace Planets
             TextBox.ForeColor = Color.Red;
             TextBox.BorderStyle = BorderStyle.None;
             TextBox.Font = new Font(FontFamily.GenericMonospace, (float)14.0, FontStyle.Bold);
-
+            TextBox.TextChanged += delegate(object sender, EventArgs args)
+            {
+                TextBox.SelectionStart = TextBox.Text.Length;
+                TextBox.ScrollToCaret();
+            };
             DebugForm.Controls.Add(TextBox);
         }
 
