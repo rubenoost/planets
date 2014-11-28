@@ -122,23 +122,25 @@ namespace Planets.Model
 
                 if (t1 != null)
                 {
-                    t1.DoCollisions(a, go1, ms);
+                    colCount += t1.DoCollisions(a, go1, ms);
                 }
 
                 if (t2 != null)
                 {
-                    t2.DoCollisions(a, go1, ms);
+                    colCount += t2.DoCollisions(a, go1, ms);
                 }
             }
 
             if (t1 != null)
             {
                 t1.DoCollisions(a, ms);
+                colCount += t1.colCount;
             }
 
             if (t2 != null)
             {
                 t2.DoCollisions(a, ms);
+                colCount += t2.colCount;
             }
         }
 
@@ -147,7 +149,7 @@ namespace Planets.Model
             int colCount = 0;
             if (t1 != null)
             {
-                if (IsIn(go.BoundingBox, t1.boundigBox))
+                if (go.BoundingBox.IntersectsWith(t1.boundigBox))
                 {
                     colCount += t1.DoCollisions(a, go, ms);
                 }
@@ -155,13 +157,13 @@ namespace Planets.Model
 
             if (t2 != null)
             {
-                if (IsIn(go.BoundingBox, t2.boundigBox))
+                if (go.BoundingBox.IntersectsWith(t2.boundigBox))
                 {
                     colCount += t2.DoCollisions(a, go, ms);
                 }
             }
 
-            if (IsIn(go.BoundingBox, boundigBox))
+            if (go.BoundingBox.IntersectsWith(boundigBox))
             {
                 for (int i = 0; i < _objects.Count; i++)
                 {
