@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 
 namespace Planets.Model
 {
@@ -115,13 +116,14 @@ namespace Planets.Model
         public void DoCollisions(Action<GameObject, GameObject, double> a, double ms)
         {
             colCount = 0;
-            for(int i = _objects.Count - 1; i >= 0; i = Math.Min(i - 1, _objects.Count - 1))
+            List<GameObject> temp = _objects.ToList();
+            for(int i = temp.Count - 1; i >= 0; i--)
             {
-                GameObject go1 = _objects[i];
+                GameObject go1 = temp[i];
                 for (int j = i - 1; j >= 0; j--)
                 {
                     colCount++;
-                    a(go1, _objects[j], ms);
+                    a(go1, temp[j], ms);
                 }
 
                 if (t1 != null)

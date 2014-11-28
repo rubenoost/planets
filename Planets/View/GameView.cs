@@ -138,7 +138,7 @@ namespace Planets.View
 
                 if (Debug.Enabled)
                 {
-                    using (Pen p = new Pen(Color.OrangeRed, 1.0f))
+                    using (Pen p = new Pen(Color.OrangeRed, 2.0f))
                     {
                         field.BOT.DoCollisions((go1, go2, ms) => g.DrawLine(p, go1.Location, go2.Location), 0);
                     }
