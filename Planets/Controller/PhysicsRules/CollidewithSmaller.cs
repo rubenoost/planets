@@ -14,7 +14,7 @@ namespace Planets.Controller.PhysicsRules
                     {
                         go1.mass += go2.mass;
                         go2.mass = 1;
-                        go1.Location = go2.Location;
+                        go1.Location = 0.5 * (go1.Location + go2.Location);
                         pf.BOT.Remove(go2);
                     }
                 }
@@ -24,7 +24,7 @@ namespace Planets.Controller.PhysicsRules
                     {
                         go2.mass += go1.mass;
                         go1.mass = 1;
-                        go2.Location = go1.Location;
+                        go2.Location = 0.5 *(go1.Location + go2.Location);
                         pf.BOT.Remove(go1);
                     }
                 }
@@ -34,7 +34,7 @@ namespace Planets.Controller.PhysicsRules
                     {
                         go2.mass += go1.mass;
                         go1.mass = 1;
-                        go1.Location = go2.Location;
+                        go1.Location = 0.5 * (go1.Location + go2.Location);
                         pf.BOT.Remove(go1);
                     }
                 }
@@ -44,7 +44,7 @@ namespace Planets.Controller.PhysicsRules
                     {
                         go1.mass += go2.mass;
                         go2.mass = 1;
-                        go1.Location = go2.Location;
+                        go2.Location = 0.5 * (go1.Location + go2.Location);
                         pf.BOT.Remove(go2);
                     }
                 }
