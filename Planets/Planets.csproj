@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
+    <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
@@ -144,6 +145,7 @@
     <Content Include="library\Magick.NET-x64.dll" />
     <Content Include="library\Magick.NET-x64.xml" />
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Pluto.svg" />
     <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
