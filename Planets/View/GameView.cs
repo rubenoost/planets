@@ -143,7 +143,7 @@ namespace Planets.View
                     }
 
                     int d = field.BOT.Count;
-                    int d2 = (d + 1) * d / 2;
+                    int d2 = (d - 1) * d / 2;
 
                     using (Brush b = new SolidBrush(Color.Magenta))
                     {

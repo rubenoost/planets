@@ -111,13 +111,13 @@ namespace Planets.Controller
                         }
                     }
                     Thread.Sleep(WaitTimeBetweenClicks);
+                    this.Spc.InternalControl.IsAiming = false;
                 }
 
                 // Set running to false
                 Running = false;
 
                 Thread.Sleep(100);
-                this.Spc.InternalControl.IsAiming = false;
             }
         }
 
