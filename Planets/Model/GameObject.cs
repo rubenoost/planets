@@ -28,6 +28,7 @@ namespace Planets.Model
             set
             {
                 _propLocation = value;
+                _propBoundingBox = null;
                 if (Moved != null) Moved(this);
             }
         }
@@ -39,20 +40,35 @@ namespace Planets.Model
             set
             {
                 _propDV = value;
-                if (Double.IsNaN(DV.X) || Double.IsNaN(DV.Y))
-                    throw new Exception("NAN!");
             }
         }
 
+        private Rectangle? _propBoundingBox;
         public Rectangle BoundingBox
         {
             get
             {
-                return new Rectangle((int)Location.X, (int)Location.Y, (int)Radius, (int)Radius);
+                if(!_propBoundingBox.HasValue)
+                    _propBoundingBox = new Rectangle((int)Location.X, (int)Location.Y, (int)Radius, (int)Radius);
+                return _propBoundingBox.Value;
+                //return new Rectangle((int)Location.X, (int)Location.Y, (int)Radius, (int)Radius);
             }
         }
 
-        public double mass;
+        private double _propMass;
+        public double mass
+        {
+            get { return _propMass; }
+            set
+            {
+                if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
+                {
+                    _propRadius = null;
+                    _propBoundingBox = null;
+                }
+                _propMass = Math.Max(0.0, value);
+            }
+        }
 
         public Rule Traits { get; protected set; }
 
@@ -61,14 +77,26 @@ namespace Planets.Model
         {
             get
             {
-                if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
-                    return 5 * System.Math.Sqrt(mass);
-                return _propRadius.HasValue ? _propRadius.Value : 0.0;
+                if (!_propRadius.HasValue)
+                {
+                    if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
+                    {
+                        _propRadius = 5*Math.Sqrt(mass);
+                    }
+                    else
+                    {
+                        _propRadius = 50;
+                    }
+                }
+                return _propRadius.Value;
             }
             set
             {
                 if (!Traits.HasFlag(Rule.DYNAMIC_RADIUS))
+                {
                     _propRadius = value;
+                    _propBoundingBox = null;
+                }
             }
         }
 
