@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Planets.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -154,6 +157,16 @@ namespace Planets.Properties {
             get {
                 object obj = ResourceManager.GetObject("Pluto_Red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] PlutoSVG {
+            get {
+                object obj = ResourceManager.GetObject("PlutoSVG", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
