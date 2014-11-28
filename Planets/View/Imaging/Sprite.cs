@@ -4,11 +4,11 @@ namespace Planets.View.Imaging
 {
     public class Sprite
     {
-        public const int Background = 0;
-        public const int Player = 1;
-        public const int BlackHole = 2;
-        public const int CometTail = 3;
-        public const int Cursor = 4;
+        public const int Player = 0;
+        public const int Background = 1;
+        public const int Cursor = 2;
+        public const int BlackHole = 3;
+        public const int CometTail = 4;
 
         public int Width
         {

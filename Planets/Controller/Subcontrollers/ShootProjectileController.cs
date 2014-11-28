@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ImageMagick;
 using Planets.Model;
 using Planets.View;
 
@@ -72,7 +73,7 @@ namespace Planets.Controller.Subcontrollers
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Clicked(Point p)
+        public void Clicked(Point pixelPoint)
         {
             GameObject P;
             //Player
@@ -98,7 +99,7 @@ namespace Planets.Controller.Subcontrollers
 
             lock (InternalPlayfield.BOT)
             {
-                O.DV = CalcNewDV(O, P, p);
+                O.DV = CalcNewDV(O, P, InternalControl.ScreenToGame(pixelPoint));
                 if(IsBlackhole)
                     P.mass = 1000000;
 

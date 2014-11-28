@@ -152,6 +152,8 @@
     <Content Include="library\Magick.NET-x64.xml" />
     <Content Include="library\Svg.dll" />
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\1796813.jpg" />
+    <None Include="Resources\space-wallpaper.jpg" />
     <None Include="Resources\Pluto.svg" />
     <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />

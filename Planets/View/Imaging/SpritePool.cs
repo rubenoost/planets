@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using Planets.Model;
 using Planets.Properties;
 using Planets.Controller;
 
@@ -55,7 +56,7 @@ namespace Planets.View.Imaging
         {
             _imageSource.Add(Sprite.Player, Resources.Pluto);
             _imageSource.Add(Sprite.BlackHole, Resources.Hole1);
-            _imageSource.Add(Sprite.Background, Resources.LogoFinal_Inv);
+            _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
             _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
         }

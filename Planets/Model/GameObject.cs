@@ -49,7 +49,7 @@ namespace Planets.Model
             get
             {
                 if(!_propBoundingBox.HasValue)
-                    _propBoundingBox = new Rectangle((int)Location.X, (int)Location.Y, (int)Radius, (int)Radius);
+                    _propBoundingBox = new Rectangle((int)(Location.X- Radius), (int)(Location.Y - Radius), (int)Radius * 2, (int)Radius * 2);
                 return _propBoundingBox.Value;
                 //return new Rectangle((int)Location.X, (int)Location.Y, (int)Radius, (int)Radius);
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.View;
@@ -39,14 +40,14 @@ namespace Planets.Controller
 
             // ========== [ REMOVING OBJECTS ] ==========
             new EatRule(),
-            new CollidewithSmaller(), 
+            //new CollidewithSmaller(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
-            new StayInFieldRule(), 
-            new ResetRule(), 
+            new StayInFieldRule(),
+            new ResetRule(),
         };
 
         private Thread GameThread;
@@ -64,7 +65,7 @@ namespace Planets.Controller
 
             // Create controllers
             spc = new ShootProjectileController(field, GameView);
-            ad = new Autodemo(spc, this);
+            //ad = new Autodemo(spc, this);
 
             // Set gameview
             this.HostEngine.SetView(GameView);
@@ -80,6 +81,8 @@ namespace Planets.Controller
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.mass *= 1.2; };
             // Decrease mass
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.mass /= 1.2; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Scale *= 1.25f; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Scale *= 0.8f; };
 
             // Create new GameThread
             GameThread = new Thread(GameLoop);
