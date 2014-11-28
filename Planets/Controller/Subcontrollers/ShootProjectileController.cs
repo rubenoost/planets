@@ -74,20 +74,35 @@ namespace Planets.Controller.Subcontrollers
         /// <param name="e"></param>
         public void Clicked(Point p)
         {
-            //Projectile being shot
-            GameObject P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
-
+            GameObject P;
             //Player
             GameObject O = InternalPlayfield.CurrentPlayer;
 
-            P.mass = 0.05 * O.mass;
+            bool IsBlackhole = false;
+
+            //Projectile being shot
+            Random rnd = new Random();
+            if (rnd.Next(0, 100) == 56)
+            {
+                P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
+                P.mass = 0.05 * O.mass;
+                IsBlackhole = true;
+            }
+            else
+            {
+                P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
+                P.mass = 0.05 * O.mass;
+                O.mass = O.mass - P.mass;
+            }
+
 
             lock (InternalPlayfield.BOT)
             {
-                //Set mass of the player
-                O.mass = O.mass - P.mass;
-                //set the velocity of the new player
                 O.DV = CalcNewDV(O, P, p);
+                if(IsBlackhole)
+                    P.mass = 1000000;
+
+                //set the velocity of the new player
                 InternalPlayfield.BOT.Add(P);
             }
         }
