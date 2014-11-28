@@ -38,13 +38,16 @@ namespace Planets
         {
             lock (TextBox)
             {
-                TextBox.Text += message + "\n";
+                if (TextBox.InvokeRequired)
+                    TextBox.Invoke(new Action(() => TextBox.Text += message + "\n"));
+                else
+                    TextBox.Text += message + "\n";
             }
         }
 
         public static void ShowWindow()
         {
-            PlanetsLauncher.HostForm.BeginInvoke(new Action(DebugForm.Show)); 
+            PlanetsLauncher.HostForm.BeginInvoke(new Action(DebugForm.Show));
         }
     }
 }

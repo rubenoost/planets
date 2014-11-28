@@ -7,7 +7,7 @@ namespace Planets.Model
     {
         MOVE = 1,
         EATABLE = 2,
-        EAT = 4,
+        EATS = 4,
         EAT_PLAYER = 8,
         DYNAMIC_RADIUS = 16,
         AFFECTED_BY_BH = 32,
@@ -18,9 +18,31 @@ namespace Planets.Model
     {
         // Properties
 
-        public Vector Location;
+        public event Action<GameObject> Moved;
 
-        public Vector DV;
+        private Vector _propLocation;
+
+        public Vector Location
+        {
+            get { return _propLocation; }
+            set
+            {
+                _propLocation = value;
+                if(Moved != null) Moved(this);
+            }
+        }
+
+        private Vector _propDV;
+        public Vector DV
+        {
+            get { return _propDV; }
+            set
+            {
+                _propDV = value;
+                if(Double.IsNaN(DV.X) || Double.IsNaN(DV.Y))
+                    throw new Exception("NAN!");
+            }
+        }
 
         public double mass;
 

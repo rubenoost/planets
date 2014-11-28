@@ -38,7 +38,8 @@ namespace Planets.Controller
             new MoveRule(),
 
             // ========== [ REMOVING OBJECTS ] ==========
-            new EatRule(), 
+            new EatRule(),
+            new CollidewithSmaller(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
@@ -109,8 +110,8 @@ namespace Planets.Controller
                     double temp3 = temp2 * 1000 / 60;
                     Thread.Sleep((int)temp3);
 
-                    // Lock GameObjects
-                    lock (field.GameObjects)
+                    // Lock BOT
+                    lock (field.BOT)
                     {
                         // ExecuteRule game rules
                         foreach (var agr in _gameRules)

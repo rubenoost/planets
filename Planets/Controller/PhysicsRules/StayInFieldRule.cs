@@ -6,10 +6,8 @@ namespace Planets.Controller.PhysicsRules
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            foreach (GameObject obj in pf.GameObjects)
+            pf.BOT.Iterate(obj =>
             {
-                Vector newLoc = obj.CalcNewLocation(ms);
-
                 if (obj.Location.X < obj.Radius)
                 {
                     obj.Location = new Vector(obj.Radius, obj.Location.Y);
@@ -30,7 +28,7 @@ namespace Planets.Controller.PhysicsRules
                     obj.Location = new Vector(obj.Location.X, pf.Size.Height - obj.Radius);
                     obj.InvertObjectY();
                 }
-            }
+            });
         }
     }
 }

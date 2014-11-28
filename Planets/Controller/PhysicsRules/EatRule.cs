@@ -1,34 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using Planets.Model;
 
 namespace Planets.Controller.PhysicsRules
 {
+
     class EatRule : AbstractGameRule
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            var removed = new List<GameObject>();
-
-            foreach (GameObject go in pf.GameObjects.Where(p => p.Traits.HasFlag(Rule.EAT)))
+            pf.BOT.Iterate(go =>
             {
-                foreach (GameObject go2 in pf.GameObjects.Where(p => p.Traits.HasFlag(Rule.EATABLE)))
+                if (!(go is BlackHole) || !go.Traits.HasFlag(Rule.EATS)) return;
+                pf.BOT.Iterate(go2 =>
                 {
+                    if (!go2.Traits.HasFlag(Rule.EATABLE)) return;
                     if (go != go2 && go.IntersectsWith(go2))
                     {
                         if (go2 is Player)
                         {
-                            if(go.Traits.HasFlag(Rule.EAT_PLAYER))
-                                removed.Add(go2);
+                            if (go.Traits.HasFlag(Rule.EAT_PLAYER))
+                                pf.BOT.Remove(go2);
                         }
                         else
                         {
-                            removed.Add(go2);
+                            pf.BOT.Remove(go2);
                         }
                     }
-                }
-            }
-            removed.ForEach(g => pf.GameObjects.Remove(g));
+                });
+            });
         }
     }
 }
+

@@ -21,7 +21,6 @@ namespace Planets.View
         /// <summary>
         /// Buffer bitmap
         /// </summary>
-        private Bitmap cursor = new Bitmap(Properties.Resources.Cursors_Red);
 
         // Aiming Settings
         /// <summary>
@@ -44,7 +43,7 @@ namespace Planets.View
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             this.CurVecPen.CustomEndCap = bigArrow;
             this.NextVecPen.CustomEndCap = bigArrow;
-            this.AimVecPen.DashPattern = new float[]{ 10 };
+            this.AimVecPen.DashPattern = new float[] { 10 };
             this.AimVecPen.DashStyle = DashStyle.Dash;
             this.AimVecPen.CustomEndCap = bigArrow;
         }
@@ -54,14 +53,16 @@ namespace Planets.View
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.CompositingQuality = CompositingQuality.HighQuality;
 
             // Teken achtergrond
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height, 0), 0, 0);
 
             // Maak teken functie
-            lock (field.GameObjects)
+            lock (field.BOT)
             {
-                foreach (GameObject obj in field.GameObjects)
+                field.BOT.Iterate(obj =>
                 {
                     float radius = (float)obj.Radius;
                     int length = (int)(radius * 2);
@@ -69,26 +70,44 @@ namespace Planets.View
                     int x = (int)(obj.Location.X - radius);
                     int y = (int)(obj.Location.Y - radius);
 
+                    // Calculate player angle
+                    /*if (obj.DV.Length() > 1.0)
+                    {
+                        int angleO = 0;
+                        angleO = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
+                        // Retrieve sprites
+                        Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angleO + 180);
+                        g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
+
+                    }*/
+
+
+
                     if (obj == field.CurrentPlayer)
                     {
                         if (IsAiming)
                         {
-							Vector CursorPosition = new Vector(Cursor.Position.X, Cursor.Position.Y);
-							this.AimPoint = obj.Location - CursorPosition;
+                            Vector CursorPosition = Cursor.Position;
+                            AimPoint = obj.Location - CursorPosition;
 
-                            Vector NewPoint = obj.CalcNewLocation(17);
                             Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.DV.Length());
                             // Draw current direction vector
                             g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
 
                             // Draw aim direction vector
-                            g.DrawLine(AimVecPen, obj.Location + this.AimPoint.ScaleToLength(obj.Radius + 1), obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
+                            g.DrawLine(AimVecPen, obj.Location + AimPoint.ScaleToLength(obj.Radius + 1),
+                                obj.Location + AimPoint.ScaleToLength(obj.DV.Length()));
 
                             // Draw next direction vector
-                            Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
-							g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1), obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
+                            Vector NextVec = ShootProjectileController.CalcNewDV(obj,
+                                new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
+                            g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1),
+                                obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
-                        Sprite s = sp.GetSprite(Sprite.Player, length, length, 55);
+
+
+                        // Draw player
+                        Sprite s = sp.GetSprite(Sprite.Player, length, length);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
                     else if (obj is BlackHole)
@@ -102,15 +121,38 @@ namespace Planets.View
                         Sprite s = sp.GetSprite(Sprite.Player, length, length);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
                     }
-                }
 
-                // Drawing the autodemo
-                double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
-                if (f < 1000)
+
+                    // Drawing the autodemo
+                    double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
+                    if (f < 1000)
+                    {
+                        int r = 30 + (int)(f / 10);
+                        g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)),
+                            field.LastAutoClickLocation.X - r / 2, field.LastAutoClickLocation.Y - r / 2, r,
+                            r);
+                        g.DrawImageUnscaled(sp.GetSprite(Sprite.Cursor, 100, 100, 0), field.LastAutoClickLocation.X - 4,
+                            field.LastAutoClickLocation.Y - 10);
+                    }
+                });
+
+                if (Debug.Enabled)
                 {
-                    int radius = 30 + (int)(f / 10);
-                    g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)), field.LastAutoClickLocation.X - radius / 2, field.LastAutoClickLocation.Y - radius / 2, radius, radius);
-                    g.DrawImage(cursor, field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
+                    using (Pen p = new Pen(Color.OrangeRed, 2.0f))
+                    {
+                        field.BOT.DoCollisions((go1, go2, ms) => g.DrawLine(p, go1.Location, go2.Location), 0);
+                    }
+
+                    int d = field.BOT.Count;
+                    int d2 = (d + 1) * d / 2;
+
+                    using (Brush b = new SolidBrush(Color.Magenta))
+                    {
+                        Font f = new Font(FontFamily.GenericSansSerif, 16.0f, FontStyle.Bold);
+                        g.DrawString("Regular Collision Detection: " + d2, f, b, 100, 300);
+                        g.DrawString("Binary Tree Collision Detection: " + (field.BOT.colCount), f, b, 100, 320);
+                        g.DrawString("Collision Detection Improvement: " + (d2 - field.BOT.colCount) * 100 / d2 + "%", f, b, 100, 340);
+                    }
                 }
             }
         }

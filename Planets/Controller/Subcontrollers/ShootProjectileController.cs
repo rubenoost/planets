@@ -82,13 +82,13 @@ namespace Planets.Controller.Subcontrollers
 
             P.mass = 0.05 * O.mass;
 
-            lock (InternalPlayfield.GameObjects)
+            lock (InternalPlayfield.BOT)
             {
                 //Set mass of the player
                 O.mass = O.mass - P.mass;
                 //set the velocity of the new player
                 O.DV = CalcNewDV(O, P, p);
-                InternalPlayfield.GameObjects.Add(P);
+                InternalPlayfield.BOT.Add(P);
             }
         }
     }

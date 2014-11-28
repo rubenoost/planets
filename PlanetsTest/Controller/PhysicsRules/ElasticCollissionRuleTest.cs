@@ -10,14 +10,14 @@ namespace PlanetsTest.Controller.PhysicsRules
         [TestMethod]
         public void UnitTest_ElasticCollissionRule_Working()
         {
-            // Create two new GameObjects
+            // Create two new BOT
             var go1 = new GameObject(new Vector(100, 100), new Vector(10, 10), 300);
             var go2 = new GameObject(new Vector(110, 110), new Vector(-5, -5), 300);
 
-            // Playfield with the new two GameObjects
+            // Playfield with the new two BOT
             var field = new Playfield(300, 300);
-            field.GameObjects.Add(go1);
-            field.GameObjects.Add(go2);
+            field.BOT.Add(go1);
+            field.BOT.Add(go2);
 
             // Save old DeltaV's
             var OldDV1 = go1.DV;
