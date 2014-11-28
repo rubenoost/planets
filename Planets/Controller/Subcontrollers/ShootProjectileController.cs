@@ -83,7 +83,8 @@ namespace Planets.Controller.Subcontrollers
 
             //Projectile being shot
             Random rnd = new Random();
-            if (rnd.Next(0, 100) == 56)
+            int rndint = rnd.Next(0, 100);
+            if (rndint == 56 || rndint == 57 || rndint == 58 || rndint == 42)
             {
                 P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
                 P.mass = 0.05 * O.mass;
