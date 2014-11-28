@@ -11,11 +11,13 @@ namespace Planets.Controller.PhysicsRules
                 if (go1.mass > go2.mass)
                 {
                     go1.mass += go2.mass;
+                    go2.mass = 1;
                     pf.BOT.Remove(go2);
                 }
                 else if (go2.mass > go1.mass)
                 {
                     go2.mass += go1.mass;
+                    go1.mass = 1;
                     pf.BOT.Remove(go1);
                 }
             }
