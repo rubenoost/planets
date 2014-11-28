@@ -77,9 +77,9 @@ namespace Planets.Controller
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.B) Debug.ShowWindow();};
 
             // Increase mass
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.mass += 100; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.mass *= 1.2; };
             // Decrease mass
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.mass -= 100; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.mass /= 1.2; };
 
             // Create new GameThread
             GameThread = new Thread(GameLoop);
