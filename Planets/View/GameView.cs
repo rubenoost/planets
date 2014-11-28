@@ -105,7 +105,6 @@ namespace Planets.View
                                 obj.Location + NextVec.ScaleToLength(obj.DV.Length()));
                         }
 
-
                         // Draw player
                         Sprite s = sp.GetSprite(Sprite.Player, length, length);
                         g.DrawImageUnscaled(s, (int)(obj.Location.X - s.Width / 2), (int)(obj.Location.Y - s.Height / 2));
@@ -156,6 +155,5 @@ namespace Planets.View
                 }
             }
         }
-
     }
 }

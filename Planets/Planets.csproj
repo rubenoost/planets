@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
+    <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
