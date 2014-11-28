@@ -51,30 +51,24 @@ namespace Planets.Model
 
         public void Add(GameObject go)
         {
-            var r = new Rectangle((int)(go.Location.X - go.Radius), (int)(go.Location.Y - go.Radius), (int)go.Radius * 2, (int)go.Radius * 2);
-            Add(go, r);
-        }
-
-        private void Add(GameObject go, Rectangle r)
-        {
             if (_parent != null)
             {
-                if (!IsIn(r, boundigBox))
+                if (!IsIn(go.BoundingBox, boundigBox))
                 {
-                    _parent.Add(go, r);
+                    _parent.Add(go);
                     return;
                 }
             }
 
-            if (t1 != null && IsIn(r, t1.boundigBox))
+            if (t1 != null && IsIn(go.BoundingBox, t1.boundigBox))
             {
-                t1.Add(go, r);
+                t1.Add(go);
                 return;
             }
 
-            if (t2 != null && IsIn(r, t2.boundigBox))
+            if (t2 != null && IsIn(go.BoundingBox, t2.boundigBox))
             {
-                t2.Add(go, r);
+                t2.Add(go);
                 return;
             }
 
@@ -122,34 +116,60 @@ namespace Planets.Model
                 GameObject go1 = temp[i];
                 for (int j = i - 1; j >= 0; j--)
                 {
-                    colCount++;
                     a(go1, temp[j], ms);
+                    colCount++;
                 }
 
                 if (t1 != null)
                 {
-                    colCount += t1.Count;
-                    t1.Iterate(p => a(go1, p, ms));
+                    t1.DoCollisions(a, go1, ms);
                 }
 
                 if (t2 != null)
                 {
-                    colCount += t2.Count;
-                    t2.Iterate(p => a(go1, p, ms));
+                    t2.DoCollisions(a, go1, ms);
                 }
             }
 
             if (t1 != null)
             {
                 t1.DoCollisions(a, ms);
-                colCount += t1.colCount;
             }
 
             if (t2 != null)
             {
                 t2.DoCollisions(a, ms);
-                colCount += t2.colCount;
             }
+        }
+
+        protected int DoCollisions(Action<GameObject, GameObject, double> a, GameObject go, double ms)
+        {
+            int colCount = 0;
+            if (t1 != null)
+            {
+                if (IsIn(go.BoundingBox, t1.boundigBox))
+                {
+                    colCount += t1.DoCollisions(a, go, ms);
+                }
+            }
+
+            if (t2 != null)
+            {
+                if (IsIn(go.BoundingBox, t2.boundigBox))
+                {
+                    colCount += t2.DoCollisions(a, go, ms);
+                }
+            }
+
+            if (IsIn(go.BoundingBox, boundigBox))
+            {
+                for (int i = 0; i < _objects.Count; i++)
+                {
+                    a(_objects[i], go, ms);
+                    colCount++;
+                }
+            }
+            return colCount;
         }
 
         public void Iterate(Action<GameObject> a)
