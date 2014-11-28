@@ -150,7 +150,7 @@ namespace Planets.View
                         Font f = new Font(FontFamily.GenericSansSerif, 16.0f, FontStyle.Bold);
                         g.DrawString("Regular Collision Detection: " + d2, f, b, 100, 300);
                         g.DrawString("Binary Tree Collision Detection: " + (field.BOT.colCount), f, b, 100, 320);
-                        g.DrawString("Collision Detection Improvement: " + (d2 - field.BOT.colCount) * 100 / d2 + "%", f, b, 100, 340);
+                        g.DrawString("Collision Detection Pimp rovement: " + (d2 - field.BOT.colCount) * 100 / d2 + "%", f, b, 100, 340);
                     }
                 }
             }

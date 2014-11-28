@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Planets.Model
 {
@@ -21,14 +22,13 @@ namespace Planets.Model
         public event Action<GameObject> Moved;
 
         private Vector _propLocation;
-
         public Vector Location
         {
             get { return _propLocation; }
             set
             {
                 _propLocation = value;
-                if(Moved != null) Moved(this);
+                if (Moved != null) Moved(this);
             }
         }
 
@@ -39,8 +39,16 @@ namespace Planets.Model
             set
             {
                 _propDV = value;
-                if(Double.IsNaN(DV.X) || Double.IsNaN(DV.Y))
+                if (Double.IsNaN(DV.X) || Double.IsNaN(DV.Y))
                     throw new Exception("NAN!");
+            }
+        }
+
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                return new Rectangle((int)Location.X, (int)Location.Y, (int)Radius, (int)Radius);
             }
         }
 

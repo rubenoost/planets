@@ -15,10 +15,10 @@ namespace Planets.Controller.PhysicsRules
                 (go1, go2, dt) =>
                 {
                     if (go1.Traits.HasFlag(Rule.COLLIDES) && go2.Traits.HasFlag(Rule.COLLIDES))
-                        DoCollision(go1, go2, dt);
+                        DoCollision(pf, go1, go2, dt);
                 }, ms);
         }
 
-        protected abstract void DoCollision(GameObject go1, GameObject go2, double ms);
+        protected abstract void DoCollision(Playfield pf, GameObject go1, GameObject go2, double ms);
     }
 }

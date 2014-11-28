@@ -4,7 +4,7 @@ namespace Planets.Controller.PhysicsRules
 {
     public class ElasticCollisionRule : AbstractCollisionRule
     {
-        protected override void DoCollision(GameObject c1, GameObject c2, double ms)
+        protected override void DoCollision(Playfield pf, GameObject c1, GameObject c2, double ms)
         {
             if (c1.IntersectsWith(c2))
             {
