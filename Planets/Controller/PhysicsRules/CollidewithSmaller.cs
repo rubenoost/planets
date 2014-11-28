@@ -10,15 +10,43 @@ namespace Planets.Controller.PhysicsRules
             {
                 if (go1.mass > go2.mass)
                 {
-                    go1.mass += go2.mass;
-                    go2.mass = 1;
-                    pf.BOT.Remove(go2);
+                    if (!(go2 is Player))
+                    {
+                        go1.mass += go2.mass;
+                        go2.mass = 1;
+                        go1.Location = 0.5 * (go1.Location + go2.Location);
+                        pf.BOT.Remove(go2);
+                    }
                 }
                 else if (go2.mass > go1.mass)
                 {
-                    go2.mass += go1.mass;
-                    go1.mass = 1;
-                    pf.BOT.Remove(go1);
+                    if (!(go1 is Player))
+                    {
+                        go2.mass += go1.mass;
+                        go1.mass = 1;
+                        go2.Location = 0.5 *(go1.Location + go2.Location);
+                        pf.BOT.Remove(go1);
+                    }
+                }
+                else if (go1.mass == go2.mass)
+                {
+                    if (!(go1 is Player))
+                    {
+                        go2.mass += go1.mass;
+                        go1.mass = 1;
+                        go1.Location = 0.5 * (go1.Location + go2.Location);
+                        pf.BOT.Remove(go1);
+                    }
+                }
+                else if (go2.mass == go1.mass)
+                {
+                    if (!(go2 is Player))
+                    {
+                        go1.mass += go2.mass;
+                        go2.mass = 1;
+                        go2.Location = 0.5 * (go1.Location + go2.Location);
+                        pf.BOT.Remove(go2);
+                    }
                 }
             }
         }
