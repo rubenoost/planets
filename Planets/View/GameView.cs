@@ -74,7 +74,7 @@ namespace Planets.View
         {
             Rectangle rg = new Rectangle(new Point(), field.Size);
             Rectangle rp = GameToScreen(rg);
-            g.DrawRectangle(BorderPen, rp.X - 10, rp.Y - 10, rp.Width + 20, rp.Height + 20);
+            g.DrawRectangle(BorderPen, rp.X - BorderPen.Width / 2, rp.Y - BorderPen.Width / 2, rp.Width + BorderPen.Width, rp.Height + BorderPen.Width);
         }
 
         private void DrawAimVectors(Graphics g)
