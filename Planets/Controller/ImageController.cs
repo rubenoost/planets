@@ -1,11 +1,10 @@
 ﻿using System.Drawing;
-using Svg;
 
 namespace Planets.Controller
 {
     class ImageController
     {
-        /// <summary>
+        /*/// <summary>
         /// Converts an SVG file to a Bitmap image.
         /// </summary>
         /// <param name="filePath">The full path of the SVG image.</param>
@@ -40,6 +39,6 @@ namespace Planets.Controller
             document.Width = width;
             document.Height = height;
             return document;
-        }
+        }*/
     }
 }
