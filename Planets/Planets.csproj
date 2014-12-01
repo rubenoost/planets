@@ -67,6 +67,7 @@
     <Compile Include="Controller\PhysicsRules\BlackHoleRule.cs" />
     <Compile Include="Controller\PhysicsRules\CollidewithSmaller.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
+    <Compile Include="Controller\PhysicsRules\DynamicEatRule.cs" />
     <Compile Include="Controller\PhysicsRules\ElasticCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\MoveRule.cs" />
     <Compile Include="Controller\PhysicsRules\ResetRule.cs" />

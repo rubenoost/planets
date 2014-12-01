@@ -9,8 +9,7 @@ namespace Planets.Controller.PhysicsRules
             pf.BOT.DoCollisions(
                 (go1, go2, dt) =>
                 {
-                    if (go1.Traits.HasFlag(Rule.COLLIDES) && go2.Traits.HasFlag(Rule.COLLIDES))
-                        DoCollision(pf, go1, go2, dt);
+                    DoCollision(pf, go1, go2, dt);
                 }, ms);
         }
 

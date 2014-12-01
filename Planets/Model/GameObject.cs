@@ -76,7 +76,7 @@ namespace Planets.Model
                 {
                     if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
                     {
-                        _propRadius = Math.PI*Math.Sqrt(Mass);
+                        _propRadius = Math.Sqrt(Mass / Math.PI);
                     }
                     else
                     {
@@ -98,7 +98,7 @@ namespace Planets.Model
 
         public GameObject(Vector location, Vector velocity, double Mass)
             : this(location, velocity, Mass,
-            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE)
+            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS)
         { }
 
         protected GameObject(Vector location, Vector velocity, double Mass, Rule traits)

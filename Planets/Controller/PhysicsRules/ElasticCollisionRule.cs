@@ -6,6 +6,8 @@ namespace Planets.Controller.PhysicsRules
     {
         protected override void DoCollision(Playfield pf, GameObject c1, GameObject c2, double ms)
         {
+            if (c1.Mass > c2.Mass && c2.Traits.HasFlag(Rule.EATABLE) && c1.Traits.HasFlag(c2 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
+            if (c2.Mass > c1.Mass && c1.Traits.HasFlag(Rule.EATABLE) && c2.Traits.HasFlag(c1 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
             if (c1.IntersectsWith(c2))
             {
                 if (c1.Traits.HasFlag(Rule.MOVE) && c2.Traits.HasFlag(Rule.MOVE))
