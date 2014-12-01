@@ -145,7 +145,7 @@ namespace Planets.View
             if (f < 1000)
             {
                 int r = 20 + (int)(f / 10);
-                Rectangle autoDemoEffectTarget = GameToScreen(new Rectangle(field.LastAutoClickGameLocation.X - r/2, field.LastAutoClickGameLocation.Y - r/2, r, r));
+                Rectangle autoDemoEffectTarget = GameToScreen(new Rectangle(field.LastAutoClickGameLocation.X - r / 2, field.LastAutoClickGameLocation.Y - r / 2, r, r));
                 g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)), autoDemoEffectTarget);
                 Point cursorPixelPoint = GameToScreen(field.LastAutoClickGameLocation);
                 g.DrawImageUnscaled(sp.GetSprite(Sprite.Cursor, 100, 100), cursorPixelPoint.X - 4, cursorPixelPoint.Y - 10);
