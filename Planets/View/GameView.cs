@@ -96,8 +96,7 @@ namespace Planets.View
 
                 // Draw next direction vector
                 Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.Mass), Cursor.Position);
-                g.DrawLine(NextVecPen, GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + 1)),
-                    GameToScreen(obj.Location + NextVec.ScaleToLength(obj.DV.Length())));
+                g.DrawLine(NextVecPen, GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + 1)), GameToScreen(obj.Location + NextVec.ScaleToLength(obj.DV.Length())));
             }
         }
 
