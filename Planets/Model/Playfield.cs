@@ -9,7 +9,7 @@ namespace Planets.Model
 
         internal Size Size { get; set; }
 
-        internal Point LastAutoClickLocation { get; set; }
+        internal Point LastAutoClickGameLocation { get; set; }
 
         internal DateTime LastAutoClickMoment { get; set; }
 

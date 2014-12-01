@@ -33,7 +33,7 @@ namespace Planets.Controller.Subcontrollers
             InternalControl = listenControl;
 
             // Register event handlers
-            listenControl.MouseClick += (sender, args) => Clicked(args.Location);
+            listenControl.MouseClick += (sender, args) => Clicked(InternalControl.ScreenToGame(args.Location));
 
             this.InternalControl.MouseDown += MouseDownEvent;
             this.InternalControl.MouseUp += MouseUpEvent;
@@ -72,7 +72,7 @@ namespace Planets.Controller.Subcontrollers
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Clicked(Point pixelPoint)
+        public void Clicked(Point gamePoint)
         {
             GameObject P;
             //Player
@@ -99,7 +99,7 @@ namespace Planets.Controller.Subcontrollers
 
             lock (InternalPlayfield.BOT)
             {
-                O.DV = CalcNewDV(O, P, InternalControl.ScreenToGame(pixelPoint));
+                O.DV = CalcNewDV(O, P, InternalControl.ScreenToGame(gamePoint));
                 if(IsBlackhole)
                     P.mass = 1000000;
 

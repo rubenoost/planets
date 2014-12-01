@@ -81,7 +81,7 @@ namespace Planets.Model
                 {
                     if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
                     {
-                        _propRadius = 5*Math.Sqrt(mass);
+                        _propRadius = Math.PI*Math.Sqrt(mass);
                     }
                     else
                     {

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
@@ -140,16 +141,15 @@ namespace Planets.View
 
 
             // Drawing the autodemo
-            /*double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
+            double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
             if (f < 1000)
             {
-                int r = 30 + (int)(f / 10);
-                g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)),
-                    field.LastAutoClickLocation.X - r / 2, field.LastAutoClickLocation.Y - r / 2, r,
-                    r);
-                g.DrawImageUnscaled(sp.GetSprite(Sprite.Cursor, 100, 100, 0), field.LastAutoClickLocation.X - 4,
-                    field.LastAutoClickLocation.Y - 10);
-            }*/
+                int r = 20 + (int)(f / 10);
+                Rectangle autoDemoEffectTarget = GameToScreen(new Rectangle(field.LastAutoClickGameLocation.X - r/2, field.LastAutoClickGameLocation.Y - r/2, r, r));
+                g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)), autoDemoEffectTarget);
+                Point cursorPixelPoint = GameToScreen(field.LastAutoClickGameLocation);
+                g.DrawImageUnscaled(sp.GetSprite(Sprite.Cursor, 100, 100), cursorPixelPoint.X - 4, cursorPixelPoint.Y - 10);
+            }
         }
 
         private void DrawDebug(Graphics g)
