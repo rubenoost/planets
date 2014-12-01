@@ -33,8 +33,6 @@ namespace Planets.View.Imaging
 
         public override bool Equals(object o)
         {
-            if (o == null)
-                return false;
             if (!(o is ImageRequest))
                 return false;
 
@@ -46,9 +44,9 @@ namespace Planets.View.Imaging
 
     public class SpritePool
     {
-        private Dictionary<int, Sprite> _imageSource = new Dictionary<int, Sprite>();
+        private readonly Dictionary<int, Sprite> _imageSource = new Dictionary<int, Sprite>();
 
-        private Dictionary<ImageRequest, Sprite> _imageBuffer = new Dictionary<ImageRequest, Sprite>();
+        private readonly Dictionary<ImageRequest, Sprite> _imageBuffer = new Dictionary<ImageRequest, Sprite>();
 
         public SpritePool()
         {
@@ -102,7 +100,7 @@ namespace Planets.View.Imaging
             }
         }
 
-        public static Bitmap RotateImg(Bitmap bmp, int angle)
+        private static Bitmap RotateImg(Bitmap bmp, int angle)
         {
             double size = Math.Max(bmp.Width, bmp.Height);
             Bitmap result = new Bitmap((int)size, (int)size);

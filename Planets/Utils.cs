@@ -1,13 +1,5 @@
 ﻿namespace Planets
 {
-    enum Direction
-    {
-        up,
-        down,
-        left,
-        right
-    }
-
     static class Utils
     {
 

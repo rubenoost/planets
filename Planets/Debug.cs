@@ -9,8 +9,8 @@ namespace Planets
     {
         public static bool Enabled = true;
 
-        public static Form DebugForm;
-        private static RichTextBox TextBox;
+        private static readonly Form DebugForm;
+        private static readonly RichTextBox TextBox;
 
         static Debug()
         {
@@ -20,13 +20,15 @@ namespace Planets
             DebugForm.TopMost = true;
             DebugForm.LostFocus += (sender, args) => DebugForm.Hide();
 
-            TextBox = new RichTextBox();
-            TextBox.Size = DebugForm.ClientSize;
-            TextBox.BackColor = Color.Black;
-            TextBox.ForeColor = Color.Red;
-            TextBox.BorderStyle = BorderStyle.None;
-            TextBox.Font = new Font(FontFamily.GenericMonospace, (float)14.0, FontStyle.Bold);
-            TextBox.TextChanged += delegate(object sender, EventArgs args)
+            TextBox = new RichTextBox
+            {
+                Size = DebugForm.ClientSize,
+                BackColor = Color.Black,
+                ForeColor = Color.Red,
+                BorderStyle = BorderStyle.None,
+                Font = new Font(FontFamily.GenericMonospace, (float) 14.0, FontStyle.Bold)
+            };
+            TextBox.TextChanged += delegate
             {
                 TextBox.SelectionStart = TextBox.Text.Length;
                 TextBox.ScrollToCaret();

@@ -9,38 +9,37 @@ namespace Planets.Model
     {
         public int Count
         {
-            get { return _objects.Count + (t1 == null ? 0 : t1.Count) + (t2 == null ? 0 : t2.Count); }
+            get { return _objects.Count + (_t1 == null ? 0 : _t1.Count) + (_t2 == null ? 0 : _t2.Count); }
         }
 
-        private BinaryObjectTree t1;
-        private BinaryObjectTree t2;
+        private readonly BinaryObjectTree _t1;
+        private readonly BinaryObjectTree _t2;
 
-        private int level;
-        private BinaryObjectTree _parent;
+        private readonly BinaryObjectTree _parent;
 
-        private Rectangle boundigBox;
+        private readonly Rectangle _boundingBox;
 
-        private List<GameObject> _objects = new List<GameObject>();
+        private readonly List<GameObject> _objects = new List<GameObject>();
 
-        public int colCount;
+        public int ColCount;
 
         public BinaryObjectTree(BinaryObjectTree parent, Rectangle r, int l, int maxlevel, int splitDirection)
         {
-            boundigBox = r;
-            level = l;
+            _boundingBox = r;
+            var level = l;
             _parent = parent;
 
             if (level != maxlevel)
             {
                 if (splitDirection == 0)
                 {
-                    t1 = new BinaryObjectTree(this, new Rectangle(r.X, r.Y, r.Width / 2, r.Height), level + 1, maxlevel, 1);
-                    t2 = new BinaryObjectTree(this, new Rectangle(r.X + r.Width / 2, r.Y, r.Width / 2, r.Height), level + 1, maxlevel, 1);
+                    _t1 = new BinaryObjectTree(this, new Rectangle(r.X, r.Y, r.Width / 2, r.Height), level + 1, maxlevel, 1);
+                    _t2 = new BinaryObjectTree(this, new Rectangle(r.X + r.Width / 2, r.Y, r.Width / 2, r.Height), level + 1, maxlevel, 1);
                 }
                 else
                 {
-                    t1 = new BinaryObjectTree(this, new Rectangle(r.X, r.Y, r.Width, r.Height / 2), level + 1, maxlevel, 0);
-                    t2 = new BinaryObjectTree(this, new Rectangle(r.X, r.Y + r.Height / 2, r.Width, r.Height / 2), level + 1, maxlevel, 0);
+                    _t1 = new BinaryObjectTree(this, new Rectangle(r.X, r.Y, r.Width, r.Height / 2), level + 1, maxlevel, 0);
+                    _t2 = new BinaryObjectTree(this, new Rectangle(r.X, r.Y + r.Height / 2, r.Width, r.Height / 2), level + 1, maxlevel, 0);
                 }
             }
         }
@@ -49,28 +48,29 @@ namespace Planets.Model
         {
             if (_parent != null)
             {
-                if (!IsIn(go.BoundingBox, boundigBox))
+                if (!IsIn(go.BoundingBox, _boundingBox))
                 {
                     _parent.Add(go);
                     return;
                 }
             }
 
-            if (t1 != null && IsIn(go.BoundingBox, t1.boundigBox))
+            if (_t1 != null && IsIn(go.BoundingBox, _t1._boundingBox))
             {
-                t1.Add(go);
+                _t1.Add(go);
                 return;
             }
 
-            if (t2 != null && IsIn(go.BoundingBox, t2.boundigBox))
+            if (_t2 != null && IsIn(go.BoundingBox, _t2._boundingBox))
             {
-                t2.Add(go);
+                _t2.Add(go);
                 return;
             }
 
 
             _objects.Add(go);
             go.Moved += Update;
+            go.Resized += Update;
         }
 
         private static bool IsIn(Rectangle s, Rectangle r)
@@ -87,25 +87,25 @@ namespace Planets.Model
 
         public void Remove(GameObject go)
         {
-            if (t1 != null)
-                t1.Remove(go);
-            if (t2 != null)
-                t2.Remove(go);
+            if (_t1 != null)
+                _t1.Remove(go);
+            if (_t2 != null)
+                _t2.Remove(go);
             _objects.Remove(go);
         }
 
         public void Clear()
         {
             _objects.Clear();
-            if (t1 != null)
-                t1.Clear();
-            if (t2 != null)
-                t2.Clear();
+            if (_t1 != null)
+                _t1.Clear();
+            if (_t2 != null)
+                _t2.Clear();
         }
 
         public void DoCollisions(Action<GameObject, GameObject, double> a, double ms)
         {
-            colCount = 0;
+            ColCount = 0;
             List<GameObject> temp = _objects.ToList();
             for(int i = temp.Count - 1; i >= 0; i--)
             {
@@ -113,53 +113,53 @@ namespace Planets.Model
                 for (int j = i - 1; j >= 0; j--)
                 {
                     a(go1, temp[j], ms);
-                    colCount++;
+                    ColCount++;
                 }
 
-                if (t1 != null)
+                if (_t1 != null)
                 {
-                    colCount += t1.DoCollisions(a, go1, ms);
+                    ColCount += _t1.DoCollisions(a, go1, ms);
                 }
 
-                if (t2 != null)
+                if (_t2 != null)
                 {
-                    colCount += t2.DoCollisions(a, go1, ms);
+                    ColCount += _t2.DoCollisions(a, go1, ms);
                 }
             }
 
-            if (t1 != null)
+            if (_t1 != null)
             {
-                t1.DoCollisions(a, ms);
-                colCount += t1.colCount;
+                _t1.DoCollisions(a, ms);
+                ColCount += _t1.ColCount;
             }
 
-            if (t2 != null)
+            if (_t2 != null)
             {
-                t2.DoCollisions(a, ms);
-                colCount += t2.colCount;
+                _t2.DoCollisions(a, ms);
+                ColCount += _t2.ColCount;
             }
         }
 
         protected int DoCollisions(Action<GameObject, GameObject, double> a, GameObject go, double ms)
         {
             int colCount = 0;
-            if (t1 != null)
+            if (_t1 != null)
             {
-                if (go.BoundingBox.IntersectsWith(t1.boundigBox))
+                if (go.BoundingBox.IntersectsWith(_t1._boundingBox))
                 {
-                    colCount += t1.DoCollisions(a, go, ms);
+                    colCount += _t1.DoCollisions(a, go, ms);
                 }
             }
 
-            if (t2 != null)
+            if (_t2 != null)
             {
-                if (go.BoundingBox.IntersectsWith(t2.boundigBox))
+                if (go.BoundingBox.IntersectsWith(_t2._boundingBox))
                 {
-                    colCount += t2.DoCollisions(a, go, ms);
+                    colCount += _t2.DoCollisions(a, go, ms);
                 }
             }
 
-            if (go.BoundingBox.IntersectsWith(boundigBox))
+            if (go.BoundingBox.IntersectsWith(_boundingBox))
             {
                 for (int i = 0; i < _objects.Count; i++)
                 {
@@ -176,10 +176,10 @@ namespace Planets.Model
             {
                 a(_objects[i]);
             }
-            if(t1 != null)
-                t1.Iterate(a);
-            if(t2 != null)
-                t2.Iterate(a);
+            if(_t1 != null)
+                _t1.Iterate(a);
+            if(_t2 != null)
+                _t2.Iterate(a);
         }
     }
 }

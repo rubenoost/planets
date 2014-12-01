@@ -21,7 +21,7 @@ namespace Planets.Controller.PhysicsRules
                         if (g != g2 && !(g2 is Player))
                         {
                             Vector V = g.Location - g2.Location;
-                            double Fg = JoelConstante * (g.mass / (V.Length() * V.Length()));
+                            double Fg = JoelConstante * (g.Mass / (V.Length() * V.Length()));
                             // Speed of projectile gets updated
                             g2.DV += V.ScaleToLength(Fg * (ms / 1000.0));
                         }

@@ -35,18 +35,18 @@ namespace Planets.Controller.Subcontrollers
             // Register event handlers
             listenControl.MouseClick += (sender, args) => Clicked(InternalControl.ScreenToGame(args.Location));
 
-            this.InternalControl.MouseDown += MouseDownEvent;
-            this.InternalControl.MouseUp += MouseUpEvent;
+            InternalControl.MouseDown += MouseDownEvent;
+            InternalControl.MouseUp += MouseUpEvent;
         }
 
         private void MouseUpEvent(object sender, MouseEventArgs e)
         {
-            this.InternalControl.IsAiming = false;
+            InternalControl.IsAiming = false;
         }
 
         private void MouseDownEvent(object sender, MouseEventArgs e)
         {
-            this.InternalControl.IsAiming = true;
+            InternalControl.IsAiming = true;
         }
 
         public static Vector CalcNewDV(GameObject Player, GameObject Projectile, Point p)
@@ -64,7 +64,7 @@ namespace Planets.Controller.Subcontrollers
             P.Location = O.Location + temp1.ScaleToLength(O.Radius + P.Radius + 1);
 
             //set the velocity of the new player
-            return O.DV - temp1 * Math.Sqrt(P.mass / O.mass);
+            return O.DV - temp1 * Math.Sqrt(P.Mass / O.Mass);
         }
 
         /// <summary>
@@ -86,14 +86,14 @@ namespace Planets.Controller.Subcontrollers
             if (rndint == 56 || rndint == 57 || rndint == 58 || rndint == 42)
             {
                 P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
-                P.mass = 0.05 * O.mass;
+                P.Mass = 0.05 * O.Mass;
                 IsBlackhole = true;
             }
             else
             {
                 P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
-                P.mass = 0.05 * O.mass;
-                O.mass = O.mass - P.mass;
+                P.Mass = 0.05 * O.Mass;
+                O.Mass = O.Mass - P.Mass;
             }
 
 
@@ -101,7 +101,7 @@ namespace Planets.Controller.Subcontrollers
             {
                 O.DV = CalcNewDV(O, P, InternalControl.ScreenToGame(gamePoint));
                 if(IsBlackhole)
-                    P.mass = 1000000;
+                    P.Mass = 1000000;
 
                 //set the velocity of the new player
                 InternalPlayfield.BOT.Add(P);

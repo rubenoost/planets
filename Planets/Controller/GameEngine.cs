@@ -45,7 +45,7 @@ namespace Planets.Controller
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
-            new ResetRule(),
+            new ResetRule()
         };
 
         private Thread GameThread;
@@ -55,8 +55,8 @@ namespace Planets.Controller
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            this.field = new Playfield(1920, 1080);
-            this.field.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 0);
+            field = new Playfield(1920, 1080);
+            field.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 0);
 
             // Create view
             GameView = new GameView(field);
@@ -72,13 +72,13 @@ namespace Planets.Controller
             field.Size = GameView.Size;
 
             // Register keys for resetting
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 0.0; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.Mass = 0.0; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.B) Debug.ShowWindow();};
 
             // Increase mass
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.mass *= 1.2; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.Mass *= 1.2; };
             // Decrease mass
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.mass /= 1.2; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.Mass /= 1.2; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Scale *= 1.25f; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Scale *= 0.8f; };
 

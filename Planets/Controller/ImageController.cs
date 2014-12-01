@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace Planets.Controller
+﻿namespace Planets.Controller
 {
     class ImageController
     {

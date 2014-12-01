@@ -20,8 +20,8 @@ namespace Planets.Controller
         public void SetView(UserControl uc)
         {
             uc.Size = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-            this.host.Controls.Clear();
-            this.host.Controls.Add(uc);
+            host.Controls.Clear();
+            host.Controls.Add(uc);
         }
     }
 }

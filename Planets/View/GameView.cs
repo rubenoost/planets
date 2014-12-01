@@ -11,7 +11,7 @@ namespace Planets.View
 {
     public partial class GameView : UserControl
     {
-        public float Scale = 2.0f;
+        public new float Scale = 2.0f;
 
         Playfield field;
 
@@ -55,7 +55,7 @@ namespace Planets.View
             g.CompositingQuality = CompositingQuality.HighQuality;
 
             // Draw background
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height, 0), 0, 0);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height), 0, 0);
 
             // Draw boundary
 
@@ -95,7 +95,7 @@ namespace Planets.View
                     GameToScreen(obj.Location + AimPoint.ScaleToLength(obj.DV.Length())));
 
                 // Draw next direction vector
-                Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.mass), Cursor.Position);
+                Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.Mass), Cursor.Position);
                 g.DrawLine(NextVecPen, GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + 1)),
                     GameToScreen(obj.Location + NextVec.ScaleToLength(obj.DV.Length())));
             }
@@ -168,8 +168,8 @@ namespace Planets.View
                 {
                     Font f = new Font(FontFamily.GenericSansSerif, 16.0f, FontStyle.Bold);
                     g.DrawString("Regular Collision Detection: " + d2, f, b, 100, 300);
-                    g.DrawString("Binary Tree Collision Detection: " + (field.BOT.colCount), f, b, 100, 320);
-                    g.DrawString("Collision Detection improvement: " + (d2 - field.BOT.colCount) * 100 / d2 + "%", f, b, 100, 340);
+                    g.DrawString("Binary Tree Collision Detection: " + (field.BOT.ColCount), f, b, 100, 320);
+                    g.DrawString("Collision Detection improvement: " + (d2 - field.BOT.ColCount) * 100 / d2 + "%", f, b, 100, 340);
                 }
             }
         }

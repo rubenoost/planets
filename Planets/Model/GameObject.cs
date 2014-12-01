@@ -12,7 +12,7 @@ namespace Planets.Model
         EAT_PLAYER = 8,
         DYNAMIC_RADIUS = 16,
         AFFECTED_BY_BH = 32,
-        COLLIDES = 64,
+        COLLIDES = 64
     }
 
     public class GameObject
@@ -20,6 +20,8 @@ namespace Planets.Model
         // Properties
 
         public event Action<GameObject> Moved;
+
+        public event Action<GameObject> Resized;
 
         private Vector _propLocation;
         public Vector Location
@@ -33,15 +35,7 @@ namespace Planets.Model
             }
         }
 
-        private Vector _propDV;
-        public Vector DV
-        {
-            get { return _propDV; }
-            set
-            {
-                _propDV = value;
-            }
-        }
+        public Vector DV { get; set; }
 
         private Rectangle? _propBoundingBox;
         public Rectangle BoundingBox
@@ -56,7 +50,7 @@ namespace Planets.Model
         }
 
         private double _propMass;
-        public double mass
+        public double Mass
         {
             get { return _propMass; }
             set
@@ -65,6 +59,7 @@ namespace Planets.Model
                 {
                     _propRadius = null;
                     _propBoundingBox = null;
+                    if (Resized != null) Resized(this);
                 }
                 _propMass = Math.Max(0.0, value);
             }
@@ -81,11 +76,12 @@ namespace Planets.Model
                 {
                     if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
                     {
-                        _propRadius = Math.PI*Math.Sqrt(mass);
+                        _propRadius = Math.PI*Math.Sqrt(Mass);
                     }
                     else
                     {
                         _propRadius = 50;
+                        if (Resized != null) Resized(this);
                     }
                 }
                 return _propRadius.Value;
@@ -109,18 +105,18 @@ namespace Planets.Model
         {
             Location = location;
             DV = velocity;
-            mass = Mass;
+            this.Mass = Mass;
             Traits = traits;
         }
 
         public void InvertObjectX()
         {
-            this.DV = new Vector(this.DV.X * -1, this.DV.Y);
+            DV = new Vector(DV.X * -1, DV.Y);
         }
 
         public void InvertObjectY()
         {
-            this.DV = new Vector(this.DV.X, this.DV.Y * -1);
+            DV = new Vector(DV.X, DV.Y * -1);
         }
 
         public void UpdateLocation(double ms)

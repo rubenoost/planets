@@ -17,7 +17,7 @@ namespace Planets.Controller
         /// <summary>
         /// The GameView
         /// </summary>
-        internal GameView Gv;
+        private readonly GameView Gv;
 
         /// <summary>
         /// Thread for the autodemo
@@ -86,7 +86,6 @@ namespace Planets.Controller
         private void Run()
         {
             // Create vars
-            var p = new Point();
             var r = new Random();
 
             while (true)
@@ -94,9 +93,9 @@ namespace Planets.Controller
                 // While key is pressed
                 while (Running)
                 {
-                    this.Spc.InternalControl.IsAiming = true;
+                    Spc.InternalControl.IsAiming = true;
                     // Determine next click
-                    p = new Point(r.Next(0, Spc.InternalPlayfield.Size.Width), r.Next(0, Spc.InternalPlayfield.Size.Height));
+                    var p = new Point(r.Next(0, Spc.InternalPlayfield.Size.Width), r.Next(0, Spc.InternalPlayfield.Size.Height));
 
                     // Click 3 times and wait
                     for (int i = 0; i < 3; i++)
@@ -111,7 +110,7 @@ namespace Planets.Controller
                         }
                     }
                     Thread.Sleep(WaitTimeBetweenClicks);
-                    this.Spc.InternalControl.IsAiming = false;
+                    Spc.InternalControl.IsAiming = false;
                 }
 
                 // Set running to false
@@ -142,7 +141,7 @@ namespace Planets.Controller
                 Spc.InternalPlayfield.LastAutoClickMoment = DateTime.MinValue;
 
                 // Little hack
-                Spc.InternalPlayfield.CurrentPlayer.mass = 1;
+                Spc.InternalPlayfield.CurrentPlayer.Mass = 1;
             }
         }
 
