@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Drawing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
-using System.Drawing;
 using Planets.View;
 
 namespace PlanetsTest.Model

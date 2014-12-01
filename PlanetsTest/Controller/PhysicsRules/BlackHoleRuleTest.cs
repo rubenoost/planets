@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Planets.Model;
-using System.Linq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PlanetsTest.Controller.PhysicsRules {
     [TestClass]

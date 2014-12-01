@@ -1,12 +1,10 @@
-﻿using System;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using ImageMagick;
-using Planets.Model;
-using System.Drawing;
 using System.Windows.Forms;
+using Planets.Controller.Subcontrollers;
+using Planets.Model;
 using Planets.Properties;
 using Planets.View.Imaging;
-using Planets.Controller.Subcontrollers;
 
 namespace Planets.View
 {
@@ -84,7 +82,7 @@ namespace Planets.View
             GameObject obj = field.CurrentPlayer;
             if (IsAiming)
             {
-                Vector CursorPosition = Cursor.Position;
+                Vector CursorPosition = ScreenToGame(Cursor.Position);
                 AimPoint = obj.Location - CursorPosition;
 
                 Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.DV.Length());

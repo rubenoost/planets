@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Planets.Model;
+﻿using Planets.Model;
 
 namespace Planets.Controller.PhysicsRules
 {

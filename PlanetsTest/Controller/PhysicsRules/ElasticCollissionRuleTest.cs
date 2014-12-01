@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Planets.Model;
 using Planets.Controller.PhysicsRules;
+using Planets.Model;
 
 namespace PlanetsTest.Controller.PhysicsRules
 {

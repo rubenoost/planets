@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using Planets.Model;
 using Planets.Properties;
-using Planets.Controller;
 
 namespace Planets.View.Imaging
 {

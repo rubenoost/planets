@@ -19,7 +19,7 @@ namespace Planets.Controller
 
         public void SetView(UserControl uc)
         {
-            uc.Size = new Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height);
+            uc.Size = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             this.host.Controls.Clear();
             this.host.Controls.Add(uc);
         }

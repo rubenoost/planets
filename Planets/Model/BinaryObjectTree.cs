@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 
@@ -15,9 +14,6 @@ namespace Planets.Model
 
         private BinaryObjectTree t1;
         private BinaryObjectTree t2;
-
-        private Rectangle r1;
-        private Rectangle r2;
 
         private int level;
         private BinaryObjectTree _parent;

@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets;
-using Planets.Model;
 using Planets.Controller;
 using Planets.Controller.Subcontrollers;
+using Planets.Model;
 using Planets.View;
 
 namespace PlanetsTest.Controller

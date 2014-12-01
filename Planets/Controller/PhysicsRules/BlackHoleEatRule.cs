@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using Planets.Model;
+﻿using Planets.Model;
 
 namespace Planets.Controller.PhysicsRules
 {
 
-    class EatRule : AbstractGameRule
+    class BlackHoleEatRule : AbstractGameRule
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {

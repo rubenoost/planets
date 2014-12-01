@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
-using Planets.View;
 using Planets.Model;
-using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
+using Planets.View;
 
 namespace Planets.Controller
 {
@@ -39,7 +37,7 @@ namespace Planets.Controller
             new MoveRule(),
 
             // ========== [ REMOVING OBJECTS ] ==========
-            new EatRule(),
+            new BlackHoleEatRule(),
             new CollidewithSmaller(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
