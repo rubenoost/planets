@@ -7,7 +7,7 @@ namespace Planets
 {
     public static class Debug
     {
-        public static bool Enabled = true;
+        public static bool Enabled = false;
 
         private static readonly Form DebugForm;
         private static readonly RichTextBox TextBox;

@@ -11,13 +11,16 @@ namespace Planets.View
 {
     public partial class GameView : UserControl
     {
-        public static readonly bool EnableScaling = true;
+        public static readonly bool EnableScaling = false;
 
         public new float Scale = 0.8f;
 
         Playfield field;
 
         private SpritePool sp = new SpritePool();
+
+        private static readonly double MaxArrowSize = 200;
+        private static readonly double MinArrowSize = 50;
 
         // Aiming Settings
         /// <summary>
@@ -55,22 +58,26 @@ namespace Planets.View
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.CompositingQuality = CompositingQuality.HighQuality;
 
-            // Draw background
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height), 0, 0);
-
-            // Draw boundary
+            DrawBackground(g);
+            DrawBorder(g);
 
             // Maak teken functie
             lock (field.BOT)
             {
-                DrawBorder(g);
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
                 DrawAimVectors(g);
+                DrawDemo(g);
                 DrawDebug(g);
             }
         }
 
         #region Draw Functions
+
+        private void DrawBackground(Graphics g)
+        {
+            // Draw background
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height), 0, 0);
+        }
 
         private void DrawBorder(Graphics g)
         {
@@ -87,17 +94,17 @@ namespace Planets.View
                 Vector CursorPosition = ScreenToGame(Cursor.Position);
                 AimPoint = obj.Location - CursorPosition;
 
-                Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.DV.Length());
+                Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize)));
                 // Draw current direction vector
                 g.DrawLine(CurVecPen, GameToScreen(obj.Location + obj.DV.ScaleToLength(obj.Radius + 1)), GameToScreen(CurVec));
 
                 // Draw aim direction vector
-                g.DrawLine(AimVecPen, GameToScreen(obj.Location + AimPoint.ScaleToLength(obj.Radius + 1)),
-                    GameToScreen(obj.Location + AimPoint.ScaleToLength(obj.DV.Length())));
+                Vector AimVec = GameToScreen(obj.Location + AimPoint.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize))));
+                g.DrawLine(AimVecPen, GameToScreen(obj.Location + AimPoint.ScaleToLength(obj.Radius + 1)), AimVec);
 
                 // Draw next direction vector
                 Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.Mass), Cursor.Position);
-                g.DrawLine(NextVecPen, GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + 1)), GameToScreen(obj.Location + NextVec.ScaleToLength(obj.DV.Length())));
+                g.DrawLine(NextVecPen, GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + 1)), GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize)))));
             }
         }
 
@@ -139,8 +146,10 @@ namespace Planets.View
             Rectangle target = GameToScreen(obj.BoundingBox);
             Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
             g.DrawImageUnscaled(s, target);
+        }
 
-
+        private void DrawDemo(Graphics g)
+        {
             // Drawing the autodemo
             double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
             if (f < 1000)
