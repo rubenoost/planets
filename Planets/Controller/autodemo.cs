@@ -131,9 +131,6 @@ namespace Planets.Controller
             // If keys ok
             if (Running)
             {
-                // Debug message
-                Debug.AddMessage("Stopping demo");
-
                 // Stop demo
                 Running = false;
 
@@ -155,9 +152,6 @@ namespace Planets.Controller
             // If keys ok
             if (!Running)
             {
-                // Debug message
-                Debug.AddMessage("Starting demo");
-
                 // Start demo
                 Running = true;
             }
