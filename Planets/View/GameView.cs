@@ -11,7 +11,9 @@ namespace Planets.View
 {
     public partial class GameView : UserControl
     {
-        public new float Scale = 2.0f;
+        public static readonly bool EnableScaling = true;
+
+        public new float Scale = 0.8f;
 
         Playfield field;
 
@@ -23,7 +25,6 @@ namespace Planets.View
         /// </summary>
         public bool IsAiming;
         public Vector AimPoint;
-        public Vector MousePoint;
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 5);
@@ -127,6 +128,7 @@ namespace Planets.View
             {
                 spriteID = Sprite.BlackHole;
                 objAngle = _blackHoleAngle;
+                _blackHoleAngle++;
             }
             else
             {
@@ -179,11 +181,13 @@ namespace Planets.View
 
         public double GameToScreen(double gameLength)
         {
+            if(!EnableScaling) return gameLength;
             return gameLength * Scale;
         }
 
         public Point GameToScreen(Point gamePoint)
         {
+            if (!EnableScaling) return gamePoint;
             Vector viewCenter = new Vector(960, 540);
             Vector gameCenter = field.CurrentPlayer.Location;
             Vector relativeGamePointToCenter = gamePoint - gameCenter;
@@ -194,6 +198,7 @@ namespace Planets.View
 
         public Point ScreenToGame(Point pixelPoint)
         {
+            if (!EnableScaling) return pixelPoint;
             Vector viewCenter = new Vector(960, 540);
             Vector gameCenter = field.CurrentPlayer.Location;
             Vector relativePixelPointToCenter = pixelPoint - viewCenter;
@@ -209,6 +214,7 @@ namespace Planets.View
 
         public Rectangle GameToScreen(Rectangle gameRect)
         {
+            if (!EnableScaling) return gameRect;
             Vector gameRectangleCenter = new Vector(gameRect.X + gameRect.Width / 2, gameRect.Y + gameRect.Height / 2);
             Vector pixelRectangleCenter = GameToScreen(gameRectangleCenter);
             Size pixelRectangleSize = GameToScreen(gameRect.Size);

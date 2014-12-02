@@ -46,15 +46,19 @@ namespace Planets.Controller.PhysicsRules
 
             // Do magic
             double B = T;
-            double temp1 = Math.PI*L*L - T;
+            double temp1 = Math.PI * L * L - T;
 
-            //double C = temp1*temp1/4;
-            //double D = Math.Sqrt(B*B - 4*C);
             double C = temp1 * temp1;
-            double D = Math.Sqrt(B*B - C);
+            double D = Math.Sqrt(B * B - C);
 
-            gL.Mass = (B + D)/2;
-            gS.Mass = (B - D)/2;
+            double glM = (B + D) / 2;
+
+            // Set new velocity
+            gL.DV = (gL.DV * gL.Mass + gS.DV * (glM - gL.Mass)) / glM;
+
+            // Set new masses
+            gL.Mass = glM;
+            gS.Mass = (B - D) / 2;
         }
     }
 }
