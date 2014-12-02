@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Planets.Model;
+﻿using Planets.Model;
 
 namespace Planets.Controller.PhysicsRules
 {
@@ -7,10 +6,13 @@ namespace Planets.Controller.PhysicsRules
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            foreach (GameObject go in pf.GameObjects.Where(p => p.Traits.HasFlag(Rule.MOVE)))
+            pf.BOT.Iterate(g =>
             {
-                go.UpdateLocation(ms);
-            }
+                if (g.Traits.HasFlag(Rule.MOVE))
+                {
+                    g.UpdateLocation(ms);
+                }
+            });
         }
     }
 }

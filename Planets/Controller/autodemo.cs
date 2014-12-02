@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
-using Planets.Model;
 using Planets.View;
 
 namespace Planets.Controller
@@ -18,7 +17,7 @@ namespace Planets.Controller
         /// <summary>
         /// The GameView
         /// </summary>
-        internal Control Gv;
+        private readonly GameView Gv;
 
         /// <summary>
         /// Thread for the autodemo
@@ -87,7 +86,6 @@ namespace Planets.Controller
         private void Run()
         {
             // Create vars
-            var p = new Point();
             var r = new Random();
 
             while (true)
@@ -95,9 +93,9 @@ namespace Planets.Controller
                 // While key is pressed
                 while (Running)
                 {
+                    Spc.InternalControl.IsAiming = true;
                     // Determine next click
-                    p = new Point(r.Next(0, Spc.InternalPlayfield.Size.Width),
-                        r.Next(0, Spc.InternalPlayfield.Size.Height));
+                    var p = new Point(r.Next(0, Spc.InternalPlayfield.Size.Width), r.Next(0, Spc.InternalPlayfield.Size.Height));
 
                     // Click 3 times and wait
                     for (int i = 0; i < 3; i++)
@@ -106,12 +104,13 @@ namespace Planets.Controller
                         if (Running)
                         {
                             Spc.Clicked(p);
-                            Spc.InternalPlayfield.LastAutoClickLocation = p;
+                            Spc.InternalPlayfield.LastAutoClickGameLocation = p;
                             Spc.InternalPlayfield.LastAutoClickMoment = DateTime.Now;
                             Thread.Sleep(WaitTimeBetweenClick);
                         }
                     }
                     Thread.Sleep(WaitTimeBetweenClicks);
+                    Spc.InternalControl.IsAiming = false;
                 }
 
                 // Set running to false
@@ -142,7 +141,7 @@ namespace Planets.Controller
                 Spc.InternalPlayfield.LastAutoClickMoment = DateTime.MinValue;
 
                 // Little hack
-                Spc.InternalPlayfield.CurrentPlayer.mass = 0;
+                Spc.InternalPlayfield.CurrentPlayer.Mass = 1;
             }
         }
 
@@ -163,5 +162,6 @@ namespace Planets.Controller
                 Running = true;
             }
         }
+
     }
 }

@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Drawing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
-using System.Drawing;
-using System.Windows.Forms;
+using Planets.View;
 
 namespace PlanetsTest.Model
 {
@@ -29,7 +29,7 @@ namespace PlanetsTest.Model
             // Arrange
             var pf1 = new Playfield(300, 300);
             var p = new Player(new Vector(10, 10), new Vector(0, 0), 30);
-            var control = new Control();
+            var control = new GameView(pf1);
 
             pf1.CurrentPlayer = p;
             ShootProjectileController shootController = new ShootProjectileController(pf1, control);

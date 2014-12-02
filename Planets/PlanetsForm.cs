@@ -13,7 +13,7 @@ namespace Planets
         public PlanetsForm()
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
+            DoubleBuffered = true;
             engine = new MainEngine(this);
 
 

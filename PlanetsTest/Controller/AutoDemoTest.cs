@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets;
-using Planets.Model;
 using Planets.Controller;
 using Planets.Controller.Subcontrollers;
+using Planets.Model;
 using Planets.View;
 
 namespace PlanetsTest.Controller
@@ -43,13 +42,13 @@ namespace PlanetsTest.Controller
                 WaitTimeBetweenClick = 1,
                 WaitTimeBetweenClicks = 1
             };
-            int startCount = pf.GameObjects.Count;
+            int startCount = pf.BOT.Count;
 
             // Act
             Thread.Sleep(10);
 
             // Assert
-            Assert.IsTrue(ad.Spc.InternalPlayfield.GameObjects.Count > startCount, "GameObjects spawned");
+            Assert.IsTrue(ad.Spc.InternalPlayfield.BOT.Count > startCount, "BOT spawned");
         }
 
         [TestMethod]
@@ -71,11 +70,11 @@ namespace PlanetsTest.Controller
             Thread.Sleep(10);
             ad.StopDemo();
             Thread.Sleep(10);
-            int startCount = pf.GameObjects.Count;
+            int startCount = pf.BOT.Count;
             Thread.Sleep(10);
 
             // Assert
-            Assert.AreEqual(startCount, ad.Spc.InternalPlayfield.GameObjects.Count, "GameObjects spawned");
+            Assert.AreEqual(startCount, ad.Spc.InternalPlayfield.BOT.Count, "BOT spawned");
         }
     }
 }

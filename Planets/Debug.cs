@@ -1,32 +1,56 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Planets
 {
     public static class Debug
     {
-        private static string[] Messages = new string[10];
+        public static bool Enabled = false;
 
-        private static int size = 10;
+        private static readonly Form DebugForm;
+        private static readonly RichTextBox TextBox;
 
-        private static int current = 0;
+        static Debug()
+        {
+            DebugForm = new Form();
+            DebugForm.Closing += delegate(object sender, CancelEventArgs args) { args.Cancel = true; DebugForm.Hide(); };
+            DebugForm.Size = new Size(800, 600);
+            DebugForm.TopMost = true;
+            DebugForm.LostFocus += (sender, args) => DebugForm.Hide();
 
         public static bool Enabled = false;
+            TextBox = new RichTextBox
+            {
+                Size = DebugForm.ClientSize,
+                BackColor = Color.Black,
+                ForeColor = Color.Red,
+                BorderStyle = BorderStyle.None,
+                Font = new Font(FontFamily.GenericMonospace, (float) 14.0, FontStyle.Bold)
+            };
+            TextBox.TextChanged += delegate
+            {
+                TextBox.SelectionStart = TextBox.Text.Length;
+                TextBox.ScrollToCaret();
+            };
+            DebugForm.Controls.Add(TextBox);
+        }
 
         public static void AddMessage(string message)
         {
-            lock (Messages)
+            lock (TextBox)
             {
-                Messages[current] = message;
-                current = (current + 1)%size;
+                if (TextBox.InvokeRequired)
+                    TextBox.Invoke(new Action(() => TextBox.Text += message + "\n"));
+                else
+                    TextBox.Text += message + "\n";
             }
         }
 
-        public static IEnumerable<string> LastMessages()
-        {
-            for (int i = current; i < current + size; i++)
+        public static void ShowWindow()
             {
-                yield return Messages[i % size];
-            }
+            PlanetsLauncher.HostForm.BeginInvoke(new Action(DebugForm.Show));
         } 
     }
 }
