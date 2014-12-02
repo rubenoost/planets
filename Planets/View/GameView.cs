@@ -59,7 +59,7 @@ namespace Planets.View
             g.CompositingQuality = CompositingQuality.HighQuality;
 
             DrawBackground(g);
-            DrawBorder(g);
+            //DrawBorder(g);
 
             // Maak teken functie
             lock (field.BOT)
@@ -67,7 +67,7 @@ namespace Planets.View
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
                 DrawAimVectors(g);
                 DrawDemo(g);
-                DrawDebug(g);
+                //DrawDebug(g);
             }
         }
 
