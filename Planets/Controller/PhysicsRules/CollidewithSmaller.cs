@@ -2,7 +2,7 @@
 
 namespace Planets.Controller.PhysicsRules
 {
-    class CollidewithSmaller : AbstractCollisionRule
+    public class CollidewithSmaller : AbstractCollisionRule
     {
 
         public void change(GameObject go1, GameObject go2, Playfield pf)
