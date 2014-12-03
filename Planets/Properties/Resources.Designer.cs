@@ -173,6 +173,16 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap smallStars {
+            get {
+                object obj = ResourceManager.GetObject("smallStars", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap space_wallpaper {
             get {
                 object obj = ResourceManager.GetObject("space_wallpaper", resourceCulture);
