@@ -180,9 +180,11 @@ namespace Planets.View
                 g.DrawImageUnscaled(s, target);
             }
 
+            // To test the animation of sprites
             if (DiscoMode)
             {
-                Sprite s1 = sp.GetSprite(Sprite.Sprity, 100, 100, 0, true);
+                spriteID = Sprite.Sprity;
+                Sprite s1 = sp.GetSprite(spriteID, 30,30, 0, true);
                 g.DrawImage(s1, target);
             }
         }
