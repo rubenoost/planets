@@ -183,6 +183,16 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Stasis {
+            get {
+                object obj = ResourceManager.GetObject("Stasis", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Texture {
             get {
                 object obj = ResourceManager.GetObject("Texture", resourceCulture);

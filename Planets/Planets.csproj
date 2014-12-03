@@ -71,6 +71,7 @@
     <Compile Include="Controller\PhysicsRules\ElasticCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\MoveRule.cs" />
     <Compile Include="Controller\PhysicsRules\ResetRule.cs" />
+    <Compile Include="Controller\PhysicsRules\StasisRule.cs" />
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
+    <Compile Include="Model\Stasis.cs" />
     <Compile Include="Model\Vector.cs" />
     <Compile Include="PlanetsForm.cs">
       <SubType>Form</SubType>
@@ -146,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Stasis.png" />
     <None Include="Resources\PLANET.png" />
     <None Include="Resources\1796813.jpg" />
     <None Include="Resources\space-wallpaper.jpg" />

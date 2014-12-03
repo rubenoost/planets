@@ -43,6 +43,9 @@ namespace Planets.Controller
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
 
+            // ========== [ SLOW OBJECT ] ==========
+            new StasisRule(),
+
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
             new ResetRule()

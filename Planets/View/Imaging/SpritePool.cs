@@ -55,6 +55,7 @@ namespace Planets.View.Imaging
             _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
             _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
+            _imageSource.Add(Sprite.Stasis, Resources.Stasis);
         }
 
         public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)

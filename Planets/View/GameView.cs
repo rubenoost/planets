@@ -136,6 +136,9 @@ namespace Planets.View
                 spriteID = Sprite.BlackHole;
                 objAngle = _blackHoleAngle;
                 _blackHoleAngle++;
+            } else if (obj is Stasis)
+            {
+                spriteID = Sprite.Stasis;
             }
             else
             {
