@@ -174,13 +174,15 @@ namespace Planets.View
             // Draw object
             Rectangle target = GameToScreen(obj.BoundingBox);
 
-            Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
-            
-            g.DrawImageUnscaled(s, target);
+            if (!DiscoMode)
+            {
+                Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
+                g.DrawImageUnscaled(s, target);
+            }
 
             if (DiscoMode)
             {
-                Sprite s1 = sp.GetSprite(Sprite.Sprity, 300, 300, 0, true);
+                Sprite s1 = sp.GetSprite(Sprite.Sprity, 80, 80, 0, true);
                 g.DrawImage(s1, target);
             }
         }

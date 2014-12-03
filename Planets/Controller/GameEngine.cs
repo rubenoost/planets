@@ -83,7 +83,7 @@ namespace Planets.Controller
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Scale *= 1.25f; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Scale *= 0.8f; };
 
-            // DiscoMode and animation test with D
+            // DiscoMode = Animation test
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.D) GameView.DiscoMode =! GameView.DiscoMode; };
 
             // Create new GameThread
