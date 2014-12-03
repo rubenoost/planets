@@ -11,7 +11,7 @@ namespace Planets.View
 {
     public partial class GameView : UserControl
     {
-        public static readonly bool EnableScaling = false;
+        public static readonly bool EnableScaling = true;
 
         public new float Scale = 0.8f;
 
@@ -19,7 +19,7 @@ namespace Planets.View
 
         private SpritePool sp = new SpritePool();
 
-        private static readonly double MaxArrowSize = 200;
+        private static readonly double MaxArrowSize = 150;
         private static readonly double MinArrowSize = 50;
 
         // Aiming Settings
@@ -197,7 +197,7 @@ namespace Planets.View
         public Point GameToScreen(Point gamePoint)
         {
             if (!EnableScaling) return gamePoint;
-            Vector viewCenter = new Vector(960, 540);
+            Vector viewCenter = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
             Vector gameCenter = field.CurrentPlayer.Location;
             Vector relativeGamePointToCenter = gamePoint - gameCenter;
             Vector relativePixelPointToCenter = relativeGamePointToCenter * Scale;
@@ -208,7 +208,7 @@ namespace Planets.View
         public Point ScreenToGame(Point pixelPoint)
         {
             if (!EnableScaling) return pixelPoint;
-            Vector viewCenter = new Vector(960, 540);
+            Vector viewCenter = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
             Vector gameCenter = field.CurrentPlayer.Location;
             Vector relativePixelPointToCenter = pixelPoint - viewCenter;
             Vector relativeGamePointToCenter = relativePixelPointToCenter / Scale;
