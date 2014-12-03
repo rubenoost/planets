@@ -28,7 +28,7 @@ namespace Planets.Model
         }
 
         /// <summary>
-        /// Scales this vector so it becomes the give length.
+        /// Scales this vector so it becomes the given length.
         /// <code>this.ScaleToLength(newLength).Length() == newLength</code>
         /// </summary>
         /// <param name="newLength">The new length of this Vector.</param>
