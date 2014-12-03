@@ -35,13 +35,22 @@ namespace Planets.Controller.PhysicsRules
 			// Go boom!
 			double lostMass = goPlayer.Mass / 2;
 
-			pf.BOT.Add(new GameObject(new Vector(goPlayer.Location.X + 100, goPlayer.Location.Y + 100), new Vector(goPlayer.DV.X, goPlayer.DV.Y), lostMass / 2));
-			pf.BOT.Add(new GameObject(new Vector(goPlayer.Location.X - 100, goPlayer.Location.Y - 100), new Vector(goPlayer.DV.X, goPlayer.DV.Y), lostMass / 2));
-
-			goPlayer.Mass -= lostMass;
-
 			// TODO: We should probably create an epic explosion before removing the object.
 			pf.BOT.Remove(goExplodes);
+
+			Random random = new Random();
+
+			double massPool = lostMass;
+			while (massPool > 0) {
+				double mass = random.Next(1000, 3000);
+				Vector createLocation = goExplodes.Location + new Vector(random.Next(-50, 100), random.Next(-50, 100));
+				GameObject debris = new GameObject(createLocation, new Vector(random.Next(-500, 500), random.Next(-500, 500)), mass);
+
+				pf.BOT.Add(debris);
+				massPool -= mass;
+			}
+
+			goPlayer.Mass -= lostMass;
 		}
 	}
 }
