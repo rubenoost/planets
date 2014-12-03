@@ -9,7 +9,7 @@ namespace Planets.View.Imaging
         public const int Cursor = 2;
         public const int BlackHole = 3;
         public const int CometTail = 4;
-
+        public const int Stars = 10;
         public int Width
         {
             get { return _bm.Width; }

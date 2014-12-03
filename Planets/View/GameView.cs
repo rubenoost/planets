@@ -61,11 +61,9 @@ namespace Planets.View
             g.CompositingQuality = CompositingQuality.HighQuality;
 
             // Draw static back layer
-            ParallaxDepth = 0.0f;
-            DrawBackground(g);
+            DrawBackLayers(g);
 
             // Draw top layer
-            ParallaxDepth = 1.0f;
             DrawBorder(g);
             lock (field.BOT)
             {
@@ -78,15 +76,32 @@ namespace Planets.View
 
         #region Draw Functions
 
-        private void DrawBackground(Graphics g)
+        private void DrawBackLayers(Graphics g)
         {
             // Draw background
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height), 0, 0);
+            Rectangle target;
+
+            ParallaxDepth = 0.0f;
+            target = GameToScreen(new Rectangle(0, 0, ClientSize.Width, ClientSize.Height));
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height), target);
+
+            ParallaxDepth = 0.25f;
+            target = GameToScreen(new Rectangle(0, 0, ClientSize.Width, ClientSize.Height));
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, ClientSize.Width, ClientSize.Height), target);
+
+            ParallaxDepth = 0.5f;
+            target = GameToScreen(new Rectangle(0, 0, ClientSize.Width, ClientSize.Height));
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, ClientSize.Width, ClientSize.Height), target);
+
+            ParallaxDepth = 0.75f;
+            target = GameToScreen(new Rectangle(0, 0, ClientSize.Width, ClientSize.Height));
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, ClientSize.Width, ClientSize.Height), target);
         }
 
         private void DrawBorder(Graphics g)
         {
-            Rectangle rp = new Rectangle(new Point(), field.Size);
+            ParallaxDepth = 1.0f;
+            Rectangle rp = GameToScreen(new Rectangle(new Point(), field.Size));
             g.DrawRectangle(BorderPen, rp.X - BorderPen.Width / 2, rp.Y - BorderPen.Width / 2, rp.Width + BorderPen.Width, rp.Height + BorderPen.Width);
         }
 
@@ -100,15 +115,15 @@ namespace Planets.View
 
                 Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize)));
                 // Draw current direction vector
-                g.DrawLine(CurVecPen, obj.Location + obj.DV.ScaleToLength(obj.Radius + 1), CurVec);
+                g.DrawLine(CurVecPen, GameToScreen(obj.Location + obj.DV.ScaleToLength(obj.Radius + 1)), GameToScreen(CurVec));
 
                 // Draw aim direction vector
                 Vector AimVec = obj.Location + AimPoint.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize)));
-                g.DrawLine(AimVecPen, obj.Location + AimPoint.ScaleToLength(obj.Radius + 1), AimVec);
+                g.DrawLine(AimVecPen, GameToScreen(obj.Location + AimPoint.ScaleToLength(obj.Radius + 1)), GameToScreen(AimVec));
 
                 // Draw next direction vector
                 Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.Mass), Cursor.Position);
-                g.DrawLine(NextVecPen, obj.Location + NextVec.ScaleToLength(obj.Radius + 1.0), obj.Location + NextVec.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize))));
+                g.DrawLine(NextVecPen, GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + 1.0)), GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize)))));
             }
         }
 
@@ -147,7 +162,7 @@ namespace Planets.View
             }
 
             // Draw object
-            Rectangle target = obj.BoundingBox;
+            Rectangle target = GameToScreen(obj.BoundingBox);
             Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
             g.DrawImageUnscaled(s, target);
         }
@@ -196,24 +211,66 @@ namespace Planets.View
         {
             Vector pixelCenter = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
             Vector gameCenter = field.CurrentPlayer.Location;
-            return gameCenter*ParallaxDepth + pixelCenter*(1.0 - ParallaxDepth);
+            return gameCenter * ParallaxDepth + pixelCenter * (1.0 - ParallaxDepth);
         }
 
         public Vector ViewSize()
         {
             var pixelSize = new Vector(ClientSize.Width, ClientSize.Height);
             var gameSize = pixelSize / Scale;
-            var corrSize = gameSize*ParallaxDepth + pixelSize*(1.0 - ParallaxDepth);
+            var corrSize = gameSize * ParallaxDepth + pixelSize * (1.0 - ParallaxDepth);
             return corrSize;
         }
 
         public Rectangle ViewRectangle()
         {
-            Point p = ViewCenter() - ViewSize()/2;
-            Size s = new Size((int) ViewSize().X, (int) ViewSize().Y);
+            Point p = ViewCenter() - ViewSize() / 2;
+            Size s = new Size((int)ViewSize().X, (int)ViewSize().Y);
             return new Rectangle(p, s);
         }
 
+        public Rectangle GameToScreen(Rectangle gameRectangle)
+        {
+            Rectangle view = ViewRectangle();
+
+            double scaleX = (double)view.Width / ClientSize.Width;
+            double scaleY = (double)view.Height / ClientSize.Height;
+
+            Vector viewCenter = ViewCenter();
+            Vector rectangleGameCenter = new Vector(gameRectangle.X + gameRectangle.Width / 2, gameRectangle.Y + gameRectangle.Height / 2);
+            Vector relativeRectangleGameCenter = rectangleGameCenter - viewCenter;
+            Vector relativeRectanglePixelCenter = new Vector(relativeRectangleGameCenter.X * scaleX, relativeRectangleGameCenter.Y * scaleY);
+            Vector rectanglePixelCenter = relativeRectanglePixelCenter + new Vector(ClientSize.Width/2, ClientSize.Height/2);
+
+            var pixelSize = new Size((int)(gameRectangle.Width * scaleX), (int)(gameRectangle.Height * scaleY));
+            var pixelLocation = new Point((int) (rectanglePixelCenter.X - pixelSize.Width / 2), (int) (rectanglePixelCenter.Y - pixelSize.Height / 2));
+            return new Rectangle(pixelLocation, pixelSize);
+        }
+
+        public Vector GameToScreen(Vector v)
+        {
+            Rectangle view = ViewRectangle();
+            double scaleX = (double)view.Width / ClientSize.Width;
+            double scaleY = (double)view.Height / ClientSize.Height;
+
+            Vector viewCenter = ViewCenter();
+            Vector relativeGamePoint = v - viewCenter;
+            Vector relativePixelPoint = new Vector(relativeGamePoint.X * scaleX, relativeGamePoint.Y * scaleY);
+            Vector pixelPoint = new Vector(ClientSize.Width / 2, ClientSize.Height / 2) + relativePixelPoint;
+            return pixelPoint;
+        }
+
+        public Vector ScreenToGame(Vector v)
+        {
+            Rectangle view = ViewRectangle();
+            double scaleX = (double)view.Width / ClientSize.Width;
+            double scaleY = (double)view.Height / ClientSize.Height;
+
+            var relativePixelPoint = v - new Vector(ClientSize.Width/2, ClientSize.Height/2);
+            var relativeGamePoint = new Vector(relativePixelPoint.X/scaleX, relativePixelPoint.Y/scaleY);
+
+            return relativeGamePoint + ViewCenter();
+        }
         #endregion
     }
 }
