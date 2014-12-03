@@ -13,12 +13,14 @@ namespace Planets.View.Imaging
         public readonly int w;
         public readonly int h;
         public readonly int r;
-        public ImageRequest(int index, int width, int height, int rotation)
+        public readonly int f;
+        public ImageRequest(int index, int width, int height, int rotation, int frame)
         {
             no = index;
             w = width;
             h = height;
             r = rotation;
+            f = frame;
         }
 
         public override int GetHashCode()
@@ -55,9 +57,10 @@ namespace Planets.View.Imaging
             _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
             _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
+            _imageSource.Add(Sprite.BlackHoleExplosion, Resources.sprites);
         }
 
-        public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)
+        public Sprite GetSprite(int imageId, int width, int height, int rotation = 0, int frame = 1)
         {
             // Check for drawing size 0
             if (width == 0 || height == 0) return new Bitmap(1, 1);
@@ -65,7 +68,7 @@ namespace Planets.View.Imaging
             // Normalize rotation
             rotation = rotation % 360;
 
-            ImageRequest i = new ImageRequest(imageId, width, height, rotation);
+            ImageRequest i = new ImageRequest(imageId, width, height, rotation, frame);
             Sprite s;
             _imageBuffer.TryGetValue(i, out s);
             if (s != null)
@@ -79,7 +82,19 @@ namespace Planets.View.Imaging
         private Sprite CreateImage(ImageRequest i)
         {
             // Check for rotation
-            if (i.r == 0)
+            if (i.r > 1)
+            {
+                // Create result image
+                Bitmap b = GetSprite(i.no, i.w, i.h);
+                return RotateImg(b, i.r);
+                
+            }
+            // Check which frame
+            if (i.f > 1)
+            {
+                return null;
+            }
+            else
             {
                 // Create result image
                 var result = new Bitmap(i.w, i.h, PixelFormat.Format32bppArgb);
@@ -91,12 +106,6 @@ namespace Planets.View.Imaging
                 g.DrawImage(b, new Rectangle(0, 0, i.w, i.h), new Rectangle(0, 0, b.Width, b.Height),
                     GraphicsUnit.Pixel);
                 return result;
-            }
-            else
-            {
-                // Create result image
-                Bitmap b = GetSprite(i.no, i.w, i.h);
-                return RotateImg(b, i.r);
             }
         }
 
