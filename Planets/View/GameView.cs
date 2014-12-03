@@ -1,93 +1,236 @@
 ﻿using System;
-using System.Drawing.Drawing2D;
-using Planets.Model;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using Planets.Controller.Subcontrollers;
+using Planets.Model;
+using Planets.Properties;
+using Planets.View.Imaging;
 
 namespace Planets.View
 {
     public partial class GameView : UserControl
     {
+        public static readonly bool EnableScaling = true;
+
+        public new float Scale = 0.8f;
 
         Playfield field;
 
-        private Color[] Colors =
-        {
-            Color.FromArgb(127, 255, 0, 0),
-            Color.FromArgb(127, 255, 255, 0),
-            Color.FromArgb(127, 0, 255, 0),
-            Color.FromArgb(127, 0, 255, 255),
-            Color.FromArgb(127, 0, 0, 255),
-            Color.FromArgb(127, 255, 0, 255)
-        };
+        private SpritePool sp = new SpritePool();
 
+        private static readonly double MaxArrowSize = 150;
+        private static readonly double MinArrowSize = 50;
+
+        // Aiming Settings
         /// <summary>
-        /// Buffer bitmap
+        /// If true, a vector will be drawn to show the current trajectory
         /// </summary>
-        private Bitmap b = new Bitmap(Properties.Resources.LogoFinal_Inv, new Size(1920, 1080));
-        private Bitmap cursor = new Bitmap(Properties.Resources.Cursors_Red);
-        private Brush b2 = new TextureBrush(Properties.Resources.LogoFinal);
-        private Brush b3 = new SolidBrush(Color.Magenta);
+        public bool IsAiming;
+        public Vector AimPoint;
 
-        /// <summary>
-        /// Main user character image
-        /// </summary>
-        private Image newImage = new Bitmap(Planets.Properties.Resources.Pluto);
+        // Aiming pen buffer
+        private Pen CurVecPen = new Pen(Color.Red, 5);
+        private Pen NextVecPen = new Pen(Color.Green, 5);
+        private Pen AimVecPen = new Pen(Color.White, 5);
+        private Pen BorderPen = new Pen(new TextureBrush(Resources.Texture), 10.0f);
 
+        // Wordt gebruikt voor bewegende achtergrond
+        private int _blackHoleAngle = 0;
 
         public GameView(Playfield field)
         {
             InitializeComponent();
             DoubleBuffered = true;
             this.field = field;
+            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+            CurVecPen.CustomEndCap = bigArrow;
+            NextVecPen.CustomEndCap = bigArrow;
+            AimVecPen.DashPattern = new float[] { 10 };
+            AimVecPen.DashStyle = DashStyle.Dash;
+            AimVecPen.CustomEndCap = bigArrow;
         }
-
-
 
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.CompositingQuality = CompositingQuality.HighQuality;
 
-            // Draw background unscaled to improve performance.
-            g.DrawImageUnscaled(b, new Point(0, 0));
-            //g.DrawImage(b, destinationPoints);
-
+            DrawBackground(g);
+            DrawBorder(g);
 
             // Maak teken functie
-            lock (field.GameObjects)
+            lock (field.BOT)
             {
-                foreach (GameObject obj in field.GameObjects)
+                field.BOT.Iterate(obj => DrawGameObject(g, obj));
+                DrawAimVectors(g);
+                DrawDemo(g);
+                DrawDebug(g);
+            }
+        }
+
+        #region Draw Functions
+
+        private void DrawBackground(Graphics g)
+        {
+            // Draw background
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height), 0, 0);
+        }
+
+        private void DrawBorder(Graphics g)
+        {
+            Rectangle rg = new Rectangle(new Point(), field.Size);
+            Rectangle rp = GameToScreen(rg);
+            g.DrawRectangle(BorderPen, rp.X - BorderPen.Width / 2, rp.Y - BorderPen.Width / 2, rp.Width + BorderPen.Width, rp.Height + BorderPen.Width);
+        }
+
+        private void DrawAimVectors(Graphics g)
+        {
+            GameObject obj = field.CurrentPlayer;
+            if (IsAiming)
+            {
+                Vector CursorPosition = ScreenToGame(Cursor.Position);
+                AimPoint = obj.Location - CursorPosition;
+
+                Vector CurVec = obj.Location + obj.DV.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize)));
+                // Draw current direction vector
+                g.DrawLine(CurVecPen, GameToScreen(obj.Location + obj.DV.ScaleToLength(obj.Radius + 1)), GameToScreen(CurVec));
+
+                // Draw aim direction vector
+                Vector AimVec = GameToScreen(obj.Location + AimPoint.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize))));
+                g.DrawLine(AimVecPen, GameToScreen(obj.Location + AimPoint.ScaleToLength(obj.Radius + 1)), AimVec);
+
+                // Draw next direction vector
+                Vector NextVec = ShootProjectileController.CalcNewDV(obj, new GameObject(new Vector(0, 0), new Vector(0, 0), 0.05 * obj.Mass), Cursor.Position);
+                g.DrawLine(NextVecPen, GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + 1)), GameToScreen(obj.Location + NextVec.ScaleToLength(obj.Radius + Math.Min(MaxArrowSize, Math.Max(obj.DV.Length(), MinArrowSize)))));
+            }
+        }
+
+        private void DrawGameObject(Graphics g, GameObject obj)
+        {
+            float radius = (float)obj.Radius;
+            int length = (int)(radius * 2);
+
+            // Calculate player
+            /*if (obj.DV.Length() > 1.0)
+            {
+                int angleO = 0;
+                angleO = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
+                // Retrieve sprites
+                Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angleO + 180);
+                g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
+            }*/
+
+            // Get sprite
+            int spriteID;
+            int objAngle = 0;
+
+            if (obj == field.CurrentPlayer)
+            {
+                spriteID = Sprite.Player;
+            }
+            else if (obj is BlackHole)
+            {
+                spriteID = Sprite.BlackHole;
+                objAngle = _blackHoleAngle;
+                _blackHoleAngle++;
+            }
+            else
+            {
+                spriteID = Sprite.Player;
+            }
+
+            // Draw object
+            Rectangle target = GameToScreen(obj.BoundingBox);
+            Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
+            g.DrawImageUnscaled(s, target);
+        }
+
+        private void DrawDemo(Graphics g)
+        {
+            // Drawing the autodemo
+            double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
+            if (f < 1000)
+            {
+                int r = 20 + (int)(f / 10);
+                Rectangle autoDemoEffectTarget = GameToScreen(new Rectangle(field.LastAutoClickGameLocation.X - r / 2, field.LastAutoClickGameLocation.Y - r / 2, r, r));
+                g.FillEllipse(new SolidBrush(Color.FromArgb((int)(255 - f / 1000 * 255), 255, 0, 0)), autoDemoEffectTarget);
+                Point cursorPixelPoint = GameToScreen(field.LastAutoClickGameLocation);
+                g.DrawImageUnscaled(sp.GetSprite(Sprite.Cursor, 100, 100), cursorPixelPoint.X - 4, cursorPixelPoint.Y - 10);
+            }
+        }
+
+        private void DrawDebug(Graphics g)
+        {
+            if (Debug.Enabled)
+            {
+                using (Pen p = new Pen(Color.OrangeRed, 2.0f))
                 {
-                    float radius = (float)obj.radius;
-                    float length = radius * 2;
-                    int h = obj.GetHashCode();
-
-
-                    if (obj == field.CurrentPlayer)
-                    {
-                        g.DrawImage(newImage, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
-                    }
-                    else if (obj is BlackHole)
-                    {
-                        g.FillEllipse(b3, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length,length);
-                    }
-                    else
-                    {
-                        //Brush brush = new SolidBrush(Colors[h%Colors.Length]);
-                        g.FillEllipse(b2, (float)obj.Location.X - radius, (float)obj.Location.Y - radius, length, length);
-                    }
+                    field.BOT.DoCollisions((go1, go2, ms) => g.DrawLine(p, GameToScreen(go1.Location), GameToScreen(go2.Location)), 0);
                 }
 
-                double f = (DateTime.Now - field.LastAutoClickMoment).TotalMilliseconds;
-                if (f < 1000)
+                int d = field.BOT.Count;
+                int d2 = (d - 1) * d / 2;
+
+                using (Brush b = new SolidBrush(Color.Magenta))
                 {
-                    int radius = 30 + (int)(f/10);
-                    g.FillEllipse(new SolidBrush(Color.FromArgb((int) (255 - f / 1000 * 255), 255, 0, 0)), field.LastAutoClickLocation.X - radius / 2, field.LastAutoClickLocation.Y - radius / 2, radius, radius);
-                    g.DrawImage(cursor, field.LastAutoClickLocation.X - 4, field.LastAutoClickLocation.Y - 10);
+                    Font f = new Font(FontFamily.GenericSansSerif, 16.0f, FontStyle.Bold);
+                    g.DrawString("Regular Collision Detection: " + d2, f, b, 100, 300);
+                    g.DrawString("Binary Tree Collision Detection: " + (field.BOT.ColCount), f, b, 100, 320);
+                    g.DrawString("Collision Detection improvement: " + (d2 - field.BOT.ColCount) * 100 / d2 + "%", f, b, 100, 340);
                 }
             }
         }
 
+        #endregion
+
+        #region Game / Screen conversions
+
+        public double GameToScreen(double gameLength)
+        {
+            if(!EnableScaling) return gameLength;
+            return gameLength * Scale;
+        }
+
+        public Point GameToScreen(Point gamePoint)
+        {
+            if (!EnableScaling) return gamePoint;
+            Vector viewCenter = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+            Vector gameCenter = field.CurrentPlayer.Location;
+            Vector relativeGamePointToCenter = gamePoint - gameCenter;
+            Vector relativePixelPointToCenter = relativeGamePointToCenter * Scale;
+            Vector pixelPoint = viewCenter + relativePixelPointToCenter;
+            return pixelPoint;
+        }
+
+        public Point ScreenToGame(Point pixelPoint)
+        {
+            if (!EnableScaling) return pixelPoint;
+            Vector viewCenter = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+            Vector gameCenter = field.CurrentPlayer.Location;
+            Vector relativePixelPointToCenter = pixelPoint - viewCenter;
+            Vector relativeGamePointToCenter = relativePixelPointToCenter / Scale;
+            Vector gamePoint = relativeGamePointToCenter + gameCenter;
+            return gamePoint;
+        }
+
+        public Size GameToScreen(Size gameSize)
+        {
+            return new Size((int)GameToScreen(gameSize.Width), (int)GameToScreen(gameSize.Height));
+        }
+
+        public Rectangle GameToScreen(Rectangle gameRect)
+        {
+            if (!EnableScaling) return gameRect;
+            Vector gameRectangleCenter = new Vector(gameRect.X + gameRect.Width / 2, gameRect.Y + gameRect.Height / 2);
+            Vector pixelRectangleCenter = GameToScreen(gameRectangleCenter);
+            Size pixelRectangleSize = GameToScreen(gameRect.Size);
+            Vector temp = new Vector(pixelRectangleSize.Width / 2, pixelRectangleSize.Height / 2);
+            return new Rectangle(pixelRectangleCenter - temp, pixelRectangleSize);
+        }
+
+        #endregion
     }
 }

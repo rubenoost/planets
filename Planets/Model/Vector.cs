@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 
 namespace Planets.Model
 {
@@ -20,7 +21,7 @@ namespace Planets.Model
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public Vector(double x = 0, double y = 0)
+        public Vector(double x, double y)
         {
             X = x;
             Y = y;
@@ -43,7 +44,8 @@ namespace Planets.Model
         /// <returns>A new Vector.</returns>
         public Vector Normal()
         {
-            return this / Length();
+            double lenth = (Length() > 0) ? Length() : 1;
+            return this / lenth;
         }
 
         /// <summary>
@@ -136,7 +138,7 @@ namespace Planets.Model
 
         public override string ToString()
         {
-            return string.Format("{0},{1}", X.ToString(), Y.ToString());
+            return string.Format("{0},{1}", X.ToString("0.000", new CultureInfo("en-US", false)), Y.ToString("0.000", new CultureInfo("en-US", false)));
         }
     }
 

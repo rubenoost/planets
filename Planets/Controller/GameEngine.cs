@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
-using Planets.View;
 using Planets.Model;
+using Planets.View;
 
 namespace Planets.Controller
 {
-    class GameEngine
+    public class GameEngine
     {
         // Hosts
         private MainEngine HostEngine;
@@ -20,71 +19,85 @@ namespace Planets.Controller
 
         // Controllers
         private ShootProjectileController spc;
+        private Autodemo ad;
 
         // Model Data
         private Playfield field;
 
+        // Events
+        public event Action<double> GameLoopEvent;
+
         // Game rules
         private AbstractGameRule[] _gameRules =
         {
-            // Movement Rules (will change location of GameObjects)
+            // ========== [ CHANGE SPEED ] ==========
+            new BlackHoleRule(),
+
+            // ========== [ CHANGE LOCATION ] ==========
             new MoveRule(),
 
-            // Collision Rules (can change location of GameObjects)
-            new BlackHoleRule(),
-            
+            // ========== [ REMOVING OBJECTS ] ==========
+            //new CollidewithSmaller(),
+            new DynamicEatRule(),
 
-            // Do not touch the next rules, these should have the final word about movement
+            // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
 
-            // Effect rules (cannot change location of GameObjects)
-            new StayInFieldRule(), 
-
-            // Reset rule
-            new ResetRule(), 
+            // ========== [ DO NOT TOUCH NEXT RULES ] ==========
+            new StayInFieldRule(),
+            new ResetRule()
         };
 
-        // Variables
-        private bool running;
         private Thread GameThread;
+        private bool running = true;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            this.field = new Playfield(1920, 1080);
-            this.field.CurrentPlayer = new Player(200, 200, 0, 0, Utils.StartMass);
+            field = new Playfield(1920, 1080);
+            field.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 0);
 
-            GameView = new GameView(this.field);
+            // Create view
+            GameView = new GameView(field);
 
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.mass = 1.0; };
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.K) { new Thread(delegate() { var p = new Point(); var r = new Random(); while (true) { p = new Point(r.Next(0, field.Size.Width), r.Next(0, field.Size.Height)); for (int i = 0; i < 3; i++) { spc.Clicked(p); field.LastAutoClickLocation = p; field.LastAutoClickMoment = DateTime.Now; Thread.Sleep(400); } Thread.Sleep(1500); } }).Start(); } };
-
-
-            // Create new ShootProjectileController
+            // Create controllers
             spc = new ShootProjectileController(field, GameView);
+            ad = new Autodemo(spc, this);
 
+            // Set gameview
             this.HostEngine.SetView(GameView);
 
             // Adjust playfield
             field.Size = GameView.Size;
 
-            running = false;
+            // Register keys for resetting
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.Mass = 0.0; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.B) Debug.ShowWindow();};
+
+            // Increase mass
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.Mass *= 1.2; };
+            // Decrease mass
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.Mass /= 1.2; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Scale *= 1.25f; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Scale *= 0.8f; };
+
+            // Create new GameThread
             GameThread = new Thread(GameLoop);
+
+            // Start GameThread
             GameThread.Start();
         }
 
         public void Start()
         {
-            this.running = true;
+            running = true;
         }
 
         public void GameLoop()
         {
             DateTime LoopBegin = DateTime.Now;
             TimeSpan DeltaT;
-
-            int loopcount = 0;
 
             while (true)
             {
@@ -103,15 +116,19 @@ namespace Planets.Controller
                     double temp3 = temp2 * 1000 / 60;
                     Thread.Sleep((int)temp3);
 
-                    // Lock GameObjects
-                    lock (field.GameObjects)
+                    // Lock BOT
+                    lock (field.BOT)
                     {
                         // ExecuteRule game rules
-                        foreach (AbstractGameRule agr in _gameRules)
+                        foreach (var agr in _gameRules)
                         {
-                            if (agr.Activated) agr.Execute(field, DeltaT.TotalMilliseconds);
+                            agr.Execute(field, dt);
                         }
                     }
+
+                    // Execute gameloop hook
+                    if (GameLoopEvent != null)
+                        GameLoopEvent(dt);
 
                     // Update shizzle hier.
                     GameView.Invalidate();

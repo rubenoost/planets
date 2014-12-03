@@ -16,11 +16,13 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,7 +33,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Pluto-Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Svg, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>library\Svg.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
     </Reference>
@@ -39,20 +51,30 @@
     <Reference Include="System.Drawing">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
+    <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\MainEngine.cs" />
+    <Compile Include="Controller\PhysicsRules\AbstractCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleRule.cs" />
+    <Compile Include="Controller\PhysicsRules\CollidewithSmaller.cs" />
+    <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
+    <Compile Include="Controller\PhysicsRules\DynamicEatRule.cs" />
     <Compile Include="Controller\PhysicsRules\ElasticCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\MoveRule.cs" />
     <Compile Include="Controller\PhysicsRules\ResetRule.cs" />
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
+    <Compile Include="Debug.cs" />
+    <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\BlackHole.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Player.cs" />
@@ -73,6 +95,8 @@
     <Compile Include="View\GameView.Designer.cs">
       <DependentUpon>GameView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Imaging\Sprite.cs" />
+    <Compile Include="View\Imaging\SpritePool.cs" />
     <EmbeddedResource Include="PlanetsForm.resx">
       <DependentUpon>PlanetsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,16 +127,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\wall.jpg" />
-    <None Include="Resources\ROCmbwF.jpg" />
-    <None Include="Resources\Pluto.png" />
     <None Include="Resources\LogoFinal.jpg" />
     <None Include="Resources\LogoFinal-Inv.jpg" />
-    <None Include="Resources\Cursor-Green.png" />
-    <None Include="Resources\Cursor-White.png" />
-    <None Include="Resources\Cursor-Blue.png" />
     <None Include="Resources\Cursors-Red.png" />
-    <Content Include="Resources\logotest.png" />
+    <None Include="Resources\Hole1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pluto-Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\PLANET.png" />
+    <None Include="Resources\1796813.jpg" />
+    <None Include="Resources\space-wallpaper.jpg" />
+    <None Include="Resources\Pluto.svg" />
+    <None Include="Resources\KomeetStaartje.png" />
+    <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

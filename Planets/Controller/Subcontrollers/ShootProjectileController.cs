@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Planets.Model;
+using Planets.View;
 
 namespace Planets.Controller.Subcontrollers
 {
@@ -18,38 +19,41 @@ namespace Planets.Controller.Subcontrollers
         /// <summary>
         /// The control used by this controller to listen on for mouse clicks.
         /// </summary>
-        public Control InternalControl { get; private set; }
+        public GameView InternalControl { get; private set; }
 
         /// <summary>
         /// Create new ShootProjectileController.
         /// </summary>
         /// <param name="pf">The playfield to shoot projectiles in.</param>
         /// <param name="listenControl">The control to listen on for clicks.</param>
-        public ShootProjectileController(Playfield pf, Control listenControl)
+        public ShootProjectileController(Playfield pf, GameView listenControl)
         {
             // Save variables
             InternalPlayfield = pf;
             InternalControl = listenControl;
 
             // Register event handlers
-            listenControl.MouseClick += (sender, args) => Clicked(args.Location);
+            listenControl.MouseClick += (sender, args) => Clicked(InternalControl.ScreenToGame(args.Location));
+
+            InternalControl.MouseDown += MouseDownEvent;
+            InternalControl.MouseUp += MouseUpEvent;
         }
 
-        /// <summary>
-        /// Method called when click happens in listenControl.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Clicked(Point p)
+        private void MouseUpEvent(object sender, MouseEventArgs e)
+        {
+            InternalControl.IsAiming = false;
+        }
+
+        private void MouseDownEvent(object sender, MouseEventArgs e)
+        {
+            InternalControl.IsAiming = true;
+        }
+
+        public static Vector CalcNewDV(GameObject Player, GameObject Projectile, Point p)
         {
             //Projectile being shot
-            GameObject P = new GameObject(0, 0, 0, 0, 0, true);
-
-            //Player
-            GameObject O = InternalPlayfield.CurrentPlayer;
-
-            //set the mass of the projectile
-            P.mass = 0.05 * O.mass;
+            GameObject P = Projectile;
+            GameObject O = Player;
 
             //set velocity projectile
             Vector temp1 = p - O.Location;
@@ -57,17 +61,50 @@ namespace Planets.Controller.Subcontrollers
             P.DV = O.DV + temp1;
 
             //Set projectile location
-            P.Location = O.Location + temp1.ScaleToLength(O.radius + P.radius + 1);
-
-            lock (InternalPlayfield.GameObjects)
-            {
-            //Set mass of the player
-            O.mass = O.mass - P.mass;
+            P.Location = O.Location + temp1.ScaleToLength(O.Radius + P.Radius + 1);
 
             //set the velocity of the new player
-                O.DV = O.DV - temp1 * Math.Sqrt(P.mass / O.mass);
+            return O.DV - temp1 * Math.Sqrt(P.Mass / O.Mass);
+        }
 
-            InternalPlayfield.GameObjects.Add(P);
+        /// <summary>
+        /// Method called when click happens in listenControl.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Clicked(Point gamePoint)
+        {
+            GameObject P;
+            //Player
+            GameObject O = InternalPlayfield.CurrentPlayer;
+
+            bool IsBlackhole = false;
+
+            //Projectile being shot
+            Random rnd = new Random();
+            int rndint = rnd.Next(0, 100);
+            if (rndint == 56 || rndint == 57 || rndint == 58 || rndint == 42)
+            {
+                P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
+                P.Mass = 0.05 * O.Mass;
+                IsBlackhole = true;
+            }
+            else
+            {
+                P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
+                P.Mass = 0.05 * O.Mass;
+                O.Mass = O.Mass - P.Mass;
+            }
+
+
+            lock (InternalPlayfield.BOT)
+            {
+                O.DV = CalcNewDV(O, P, gamePoint);
+                if(IsBlackhole)
+                    P.Mass = 1000000;
+
+                //set the velocity of the new player
+                InternalPlayfield.BOT.Add(P);
             }
         }
     }

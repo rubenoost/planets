@@ -5,6 +5,8 @@ namespace Planets
 {
     static class PlanetsLauncher
     {
+        public static Form HostForm { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -13,8 +15,8 @@ namespace Planets
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PlanetsForm());
-
+            HostForm = new PlanetsForm();
+            Application.Run(HostForm);
         }
     }
 }

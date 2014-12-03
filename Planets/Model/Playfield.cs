@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Drawing;
 
 namespace Planets.Model
@@ -11,7 +9,7 @@ namespace Planets.Model
 
         internal Size Size { get; set; }
 
-        internal Point LastAutoClickLocation { get; set; }
+        internal Point LastAutoClickGameLocation { get; set; }
 
         internal DateTime LastAutoClickMoment { get; set; }
 
@@ -21,20 +19,20 @@ namespace Planets.Model
             Size = new Size(width, height);
 
             // Create GameObject list
-            this.GameObjects = new List<GameObject>();
+            BOT = new BinaryObjectTree(null, new Rectangle(0, 0, 1920, 1080), 0, 12, 0);
         }
 
-        internal Player CurrentPlayer
+        public Player CurrentPlayer
         {
             get { return _currentPlayer; }
             set
             {
-                GameObjects.Remove(_currentPlayer);
+                BOT.Remove(_currentPlayer);
                 _currentPlayer = value;
-                GameObjects.Add(_currentPlayer);
+                BOT.Add(_currentPlayer);
             }
         }
 
-        public List<GameObject> GameObjects;
+        public BinaryObjectTree BOT;
     }
 }

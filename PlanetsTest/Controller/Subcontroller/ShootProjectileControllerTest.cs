@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
@@ -9,35 +10,62 @@ namespace PlanetsTest.Controller.Subcontroller
     [TestClass]
     public class ShootProjectileControllerTest
     {
+        /// <summary>
+        /// Create new ShootProjectileController, check setting of given vars.
+        /// </summary>
         [TestMethod]
         public void UnitTest_ShootProjectileController_Constructor()
         {
             // Arrange
-            Playfield pf = new Playfield(1920, 1080);
-            GameView gv = new GameView(pf);
+            var pf = new Playfield(1920, 1080);
+            var gv = new GameView(pf);
 
             // Act
-            ShootProjectileController spc = new ShootProjectileController(pf, gv);
+            var spc = new ShootProjectileController(pf, gv);
 
             // Assert
-            Assert.AreEqual(pf, spc.InternalPlayfield);
-            Assert.AreEqual(gv, spc.InternalControl);
+            Assert.AreEqual(pf, spc.InternalPlayfield, "Playfield correctly saved");
+            Assert.AreEqual(gv, spc.InternalControl, "Control correctly saved");
         }
 
+        /// <summary>
+        /// Click once on the field, and the amount of BOT should be one higher.
+        /// </summary>
         [TestMethod]
-        public void UnitTest_ShootProjectileController_Click()
+        public void UnitTest_ShootProjectileController_Click_Once()
         {
             // Arrange
-            Playfield pf = new Playfield(1920, 1080);
-            GameView gv = new GameView(pf);
-            ShootProjectileController spc = new ShootProjectileController(pf, gv);
-            int objectCount = pf.GameObjects.Count;
+            var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 100)};
+            var gv = new GameView(pf);
+            var spc = new ShootProjectileController(pf, gv);
+            var objectCount = pf.BOT.Count;
 
             // Act
             spc.Clicked(new Point());
 
             // Assert
-            Assert.AreEqual(objectCount + 1, pf.GameObjects.Count);
+            Assert.AreEqual(objectCount + 1, pf.BOT.Count, "Shooting once");
+        }
+
+        /// <summary>
+        /// Click multiple times on the field, and the amount of BOT should be that many higher.
+        /// </summary>
+        [TestMethod]
+        public void UnitTest_ShootProjectileController_Click_Multiple()
+        {
+            // Arrange
+            var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 100)};
+            var gv = new GameView(pf);
+            var spc = new ShootProjectileController(pf, gv);
+            var objectCount = pf.BOT.Count;
+            var count = new Random().Next(20);
+
+            // Act
+            for(int i = 0; i < count; i++)
+                spc.Clicked(new Point());
+
+            // Assert
+            Assert.AreEqual(objectCount + count, pf.BOT.Count, "Shooting " + count + " times");
         }
     }
 }

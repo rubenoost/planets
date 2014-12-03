@@ -6,10 +6,13 @@ namespace Planets.Controller.PhysicsRules
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            foreach (GameObject go in pf.GameObjects)
+            pf.BOT.Iterate(g =>
             {
-                go.UpdateLocation(ms);
-            }
+                if (g.Traits.HasFlag(Rule.MOVE))
+                {
+                    g.UpdateLocation(ms);
+                }
+            });
         }
     }
 }
