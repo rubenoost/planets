@@ -96,6 +96,9 @@ namespace Planets.Controller.Subcontrollers
                 O.Mass = O.Mass - P.Mass;
             }
 
+            //P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0);
+            //P.Mass = 0.05 * O.Mass;
+            //O.Mass -= P.Mass;
 
             lock (InternalPlayfield.BOT)
             {
