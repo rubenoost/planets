@@ -183,7 +183,8 @@ namespace Planets.View
             // To test the animation of sprites
             if (DiscoMode)
             {
-                Sprite s1 = sp.GetSprite(Sprite.Sprity, 8, 8, 0, true);
+                spriteID = Sprite.Sprity;
+                Sprite s1 = sp.GetSprite(spriteID, 30,30, 0, true);
                 g.DrawImage(s1, target);
             }
         }
