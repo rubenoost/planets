@@ -12,7 +12,8 @@ namespace Planets.Model
         EAT_PLAYER = 8,
         DYNAMIC_RADIUS = 16,
         AFFECTED_BY_BH = 32,
-        COLLIDES = 64
+        COLLIDES = 64,
+		EXPLODES = 128
     }
 
     public class GameObject

@@ -69,6 +69,7 @@
     <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
     <Compile Include="Controller\PhysicsRules\DynamicEatRule.cs" />
     <Compile Include="Controller\PhysicsRules\ElasticCollisionRule.cs" />
+    <Compile Include="Controller\PhysicsRules\ExplosionRule.cs" />
     <Compile Include="Controller\PhysicsRules\MoveRule.cs" />
     <Compile Include="Controller\PhysicsRules\ResetRule.cs" />
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\BlackHole.cs" />
     <Compile Include="Model\GameObject.cs" />
+    <Compile Include="Model\Mine.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
     <Compile Include="Model\Vector.cs" />
@@ -147,7 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
-    <None Include="Resources\sprites.png" />
     <None Include="Resources\PLANET.png" />
     <None Include="Resources\1796813.jpg" />
     <None Include="Resources\space-wallpaper.jpg" />
