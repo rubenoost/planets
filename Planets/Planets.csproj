@@ -76,6 +76,7 @@
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Model\Antigravity.cs" />
+    <Compile Include="Model\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\BlackHole.cs" />
     <Compile Include="Model\GameObject.cs" />
