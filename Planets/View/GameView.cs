@@ -182,7 +182,7 @@ namespace Planets.View
 
             if (DiscoMode)
             {
-                Sprite s1 = sp.GetSprite(Sprite.Sprity, 80, 80, 0, true);
+                Sprite s1 = sp.GetSprite(Sprite.Sprity, 100, 100, 0, true);
                 g.DrawImage(s1, target);
             }
         }

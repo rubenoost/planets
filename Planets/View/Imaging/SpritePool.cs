@@ -103,7 +103,7 @@ namespace Planets.View.Imaging
                 // Dirty test code
                 // will be made nicer :D
                 Bitmap b = GetSprite(i.no, i.w, i.h);
-                List<Bitmap> frameList = CutupImage(b, 10, 10);
+                List<Bitmap> frameList = CutupImage(b, 2, 2);
                 if (testy < frameList.Count)
                 {
                     testy += 1;
