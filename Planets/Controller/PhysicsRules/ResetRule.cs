@@ -30,6 +30,14 @@ namespace Planets.Controller.PhysicsRules
 
                 pf.BOT.Add(new Stasis(new Vector(1200, 800), new Vector(0, 0), 1000));
             }
+
+            if (pf.CurrentPlayer.Mass > 30100)
+            {
+                pf.BOT.Clear();
+
+                pf.CurrentPlayer = new Player(new Vector(200, 200), new Vector(0, 0), Utils.StartMass);
+                pf.CurrentPlayer.Location = new Vector(1000, pf.Size.Height / 2);
+            }
         }
     }
 }
