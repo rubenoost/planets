@@ -13,7 +13,8 @@ namespace Planets.Model
         DYNAMIC_RADIUS = 16,
         AFFECTED_BY_BH = 32,
         COLLIDES = 64,
-        SLOWS = 128
+        SLOWS = 128,
+        EXPLODES = 256
     }
 
     public class GameObject

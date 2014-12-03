@@ -19,11 +19,16 @@ namespace Planets.Controller.PhysicsRules
                 //pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(0, 200), new Vector(0, 0), Utils.StartMass / 2));
                 //pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(0, -200), new Vector(0, 0), Utils.StartMass / 2));
 
-                //// Black holes
-                //pf.BOT.Add(new BlackHole(new Vector(50, 50), new Vector(0, 0), 1000000));
-                //pf.BOT.Add(new BlackHole(new Vector(50, 1030), new Vector(0, 0), 1000000));
-                //pf.BOT.Add(new BlackHole(new Vector(1870, 50), new Vector(0, 0), 1000000));
-                pf.BOT.Add(new Stasis(new Vector(1000, 600), new Vector(0, 0), 1000));
+				// Anti Gravity
+				pf.BOT.Add(new Mine(new Vector(500, 300), new Vector(0, 0), Utils.StartMass / 2));
+
+                // Black holes
+                pf.BOT.Add(new BlackHole(new Vector(50, 50), new Vector(0, 0), 1000000));
+                pf.BOT.Add(new BlackHole(new Vector(50, 1030), new Vector(0, 0), 1000000));
+                pf.BOT.Add(new BlackHole(new Vector(1870, 50), new Vector(0, 0), 1000000));
+                //pf.BOT.Add(new BlackHole(new Vector(1870, 1030), new Vector(0, 0), 1000000));
+
+                pf.BOT.Add(new Stasis(new Vector(1200, 800), new Vector(0, 0), 1000));
             }
         }
     }

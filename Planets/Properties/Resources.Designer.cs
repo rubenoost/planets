@@ -173,6 +173,26 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pooface {
+            get {
+                object obj = ResourceManager.GetObject("pooface", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap smallStars {
+            get {
+                object obj = ResourceManager.GetObject("smallStars", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap space_wallpaper {
             get {
                 object obj = ResourceManager.GetObject("space_wallpaper", resourceCulture);
@@ -183,9 +203,19 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Stasis {
+        internal static System.Drawing.Bitmap sprites {
             get {
-                object obj = ResourceManager.GetObject("Stasis", resourceCulture);
+                object obj = ResourceManager.GetObject("sprites", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap spritety {
+            get {
+                object obj = ResourceManager.GetObject("spritety", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -13,12 +13,15 @@ namespace Planets.View.Imaging
         public readonly int w;
         public readonly int h;
         public readonly int r;
-        public ImageRequest(int index, int width, int height, int rotation)
+        public readonly bool a;
+
+        public ImageRequest(int index, int width, int height, int rotation, bool animated)
         {
             no = index;
             w = width;
             h = height;
             r = rotation;
+            a = animated;
         }
 
         public override int GetHashCode()
@@ -48,6 +51,8 @@ namespace Planets.View.Imaging
 
         private readonly Dictionary<ImageRequest, Sprite> _imageBuffer = new Dictionary<ImageRequest, Sprite>();
 
+        private int testy = 0;
+
         public SpritePool()
         {
             _imageSource.Add(Sprite.Player, Resources.Pluto);
@@ -55,10 +60,13 @@ namespace Planets.View.Imaging
             _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
             _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
-            _imageSource.Add(Sprite.Stasis, Resources.Stasis);
+            _imageSource.Add(Sprite.BlackHoleExplosion, Resources.sprites);
+            _imageSource.Add(Sprite.Stars, Resources.smallStars);
+            _imageSource.Add(Sprite.Sprity, Resources.spritety);
+            _imageSource.Add(Sprite.Stasis, Resources.pooface);
         }
 
-        public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)
+        public Sprite GetSprite(int imageId, int width, int height, int rotation = 0, bool animated = false)
         {
             // Check for drawing size 0
             if (width == 0 || height == 0) return new Bitmap(1, 1);
@@ -66,21 +74,49 @@ namespace Planets.View.Imaging
             // Normalize rotation
             rotation = rotation % 360;
 
-            ImageRequest i = new ImageRequest(imageId, width, height, rotation);
+            ImageRequest i = new ImageRequest(imageId, width, height, rotation, animated);
             Sprite s;
             _imageBuffer.TryGetValue(i, out s);
-            if (s != null)
+            if (s != null && i.a != true)
                 return s;
 
             s = CreateImage(i);
+
+            if (i.a != true)
+            {
             _imageBuffer.Add(i, s);
+            }
             return s;
         }
 
         private Sprite CreateImage(ImageRequest i)
         {
             // Check for rotation
-            if (i.r == 0)
+            if (i.r > 1)
+            {
+                // Create result image
+                Bitmap b = GetSprite(i.no, i.w, i.h);
+                return RotateImg(b, i.r);
+            }
+            // Check if image is animated
+            if (i.a)
+            {
+                // Dirty test code
+                // will be made nicer :D
+                Bitmap b = GetSprite(i.no, i.w, i.h);
+                List<Bitmap> frameList = CutupImage(b, 2, 2);
+
+                if (testy < frameList.Count)
+                {
+                    testy += 1;
+                }
+                if (testy == frameList.Count)
+                {
+                    testy = 0;
+                }
+                return frameList[testy];
+            }
+            else
             {
                 // Create result image
                 var result = new Bitmap(i.w, i.h, PixelFormat.Format32bppArgb);
@@ -92,12 +128,6 @@ namespace Planets.View.Imaging
                 g.DrawImage(b, new Rectangle(0, 0, i.w, i.h), new Rectangle(0, 0, b.Width, b.Height),
                     GraphicsUnit.Pixel);
                 return result;
-            }
-            else
-            {
-                // Create result image
-                Bitmap b = GetSprite(i.no, i.w, i.h);
-                return RotateImg(b, i.r);
             }
         }
 
@@ -114,6 +144,33 @@ namespace Planets.View.Imaging
             g.RotateTransform(-angle);
             g.TranslateTransform((float)(-size / 2), (float)(-size / 2));
             g.DrawImageUnscaled(bmp, 0, 0);
+            return result;
+        }
+
+        private static List<Bitmap> CutupImage(Image bitmap, int rows, int columns)
+        {
+            // Determine target
+            var s = new Size(bitmap.Width / columns, bitmap.Height / rows);
+            var targetRectangle = new Rectangle(new Point(0, 0), s);
+
+            // Create result
+            var result = new List<Bitmap>(s.Height * s.Width);
+
+            // Cut up image
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    // Create new Bitmap
+                    var subImage = new Bitmap(s.Width, s.Height);
+                    // Draw scaled image
+                    using (Graphics g = Graphics.FromImage(subImage))
+                        g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
+                            GraphicsUnit.Pixel);
+                    // Add to result
+                    result.Add(subImage);
+                }
+            }
             return result;
         }
     }

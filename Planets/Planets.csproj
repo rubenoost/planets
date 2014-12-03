@@ -69,15 +69,19 @@
     <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
     <Compile Include="Controller\PhysicsRules\DynamicEatRule.cs" />
     <Compile Include="Controller\PhysicsRules\ElasticCollisionRule.cs" />
+    <Compile Include="Controller\PhysicsRules\ExplosionRule.cs" />
     <Compile Include="Controller\PhysicsRules\MoveRule.cs" />
     <Compile Include="Controller\PhysicsRules\ResetRule.cs" />
     <Compile Include="Controller\PhysicsRules\StasisRule.cs" />
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="Model\Antigravity.cs" />
+    <Compile Include="Model\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\BlackHole.cs" />
     <Compile Include="Model\GameObject.cs" />
+    <Compile Include="Model\Mine.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
     <Compile Include="Model\Stasis.cs" />
@@ -148,7 +152,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
-    <None Include="Resources\Stasis.png" />
+    <None Include="Resources\pooface.png" />
+    <None Include="Resources\spritety.png" />
+    <None Include="Resources\smallStars.png" />
+    <None Include="Resources\sprites.png" />
     <None Include="Resources\PLANET.png" />
     <None Include="Resources\1796813.jpg" />
     <None Include="Resources\space-wallpaper.jpg" />
