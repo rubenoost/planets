@@ -13,12 +13,15 @@ namespace Planets.View.Imaging
         public readonly int w;
         public readonly int h;
         public readonly int r;
-        public ImageRequest(int index, int width, int height, int rotation)
+        public readonly bool a;
+
+        public ImageRequest(int index, int width, int height, int rotation, bool animated = false)
         {
             no = index;
             w = width;
             h = height;
             r = rotation;
+            a = animated;
         }
 
         public override int GetHashCode()
