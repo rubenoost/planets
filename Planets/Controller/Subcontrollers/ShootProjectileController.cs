@@ -33,7 +33,7 @@ namespace Planets.Controller.Subcontrollers
             InternalControl = listenControl;
 
             // Register event handlers
-            listenControl.MouseClick += (sender, args) => Clicked(InternalControl.ScreenToGame(args.Location));
+            listenControl.MouseClick += (sender, args) => Clicked(args.Location);
 
             InternalControl.MouseDown += MouseDownEvent;
             InternalControl.MouseUp += MouseUpEvent;
