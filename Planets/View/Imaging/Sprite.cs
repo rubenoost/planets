@@ -12,6 +12,8 @@ namespace Planets.View.Imaging
         public const int BlackHole = 3;
         public const int CometTail = 4;
         public const int BlackHoleExplosion = 5;
+        public const int Stars = 10;
+        
 
         /// <summary>
         ///     Bitmap die wordt teruggegeven als er geen logisch alternatief is.
