@@ -93,6 +93,7 @@ namespace Planets.View.Imaging
             // Check which frame
             if (i.f > 1)
             {
+                Bitmap b = GetSprite(i.no, i.w, i.h);
                 return null;
             }
             else
