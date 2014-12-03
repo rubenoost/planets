@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\spritety.png" />
     <None Include="Resources\smallStars.png" />
     <None Include="Resources\sprites.png" />
     <None Include="Resources\PLANET.png" />

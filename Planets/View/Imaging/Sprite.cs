@@ -12,6 +12,7 @@ namespace Planets.View.Imaging
         public const int BlackHole = 3;
         public const int CometTail = 4;
         public const int BlackHoleExplosion = 5;
+        public const int Sprity = 6;
         public const int Stars = 10;
         
 
@@ -98,17 +99,6 @@ namespace Planets.View.Imaging
                 }
             }
             return result;
-        }
-
-        /// <summary>
-        ///     Create non-cyclic sprite, cut in pieces.
-        /// </summary>
-        /// <param name="bm"></param>
-        /// <param name="countX"></param>
-        /// <param name="countY"></param>
-        public Sprite(Bitmap bm, int countX = -1, int countY = -1)
-            : this(bm, countX, countY, false)
-        {
         }
 
         /// <summary>

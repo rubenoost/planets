@@ -5,6 +5,7 @@ using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.View;
+using Planets.View.Imaging;
 
 namespace Planets.Controller
 {
@@ -81,6 +82,9 @@ namespace Planets.Controller
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.Mass /= 1.2; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Scale *= 1.25f; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Scale *= 0.8f; };
+
+            // DiscoMode and animation test with D
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.D) GameView.DiscoMode =! GameView.DiscoMode; };
 
             // Create new GameThread
             GameThread = new Thread(GameLoop);

@@ -15,6 +15,8 @@ namespace Planets.View
 
         public new float Scale = 0.8f;
 
+        public bool DiscoMode = false;
+
         Playfield field;
 
         private SpritePool sp = new SpritePool();
@@ -173,10 +175,14 @@ namespace Planets.View
             Rectangle target = GameToScreen(obj.BoundingBox);
 
             Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
-            //Sprite s1 = sp.GetSprite(Sprite.BlackHoleExplosion, 100, 100, 0, true);
-
+            
             g.DrawImageUnscaled(s, target);
-            //g.DrawImageUnscaled(s1, target);
+
+            if (DiscoMode)
+            {
+                Sprite s1 = sp.GetSprite(Sprite.Sprity, 300, 300, 0, true);
+                g.DrawImage(s1, target);
+            }
         }
 
         private void DrawDemo(Graphics g)

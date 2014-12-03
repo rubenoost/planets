@@ -51,6 +51,8 @@ namespace Planets.View.Imaging
 
         private readonly Dictionary<ImageRequest, Sprite> _imageBuffer = new Dictionary<ImageRequest, Sprite>();
 
+        private int testy = 0;
+
         public SpritePool()
         {
             _imageSource.Add(Sprite.Player, Resources.Pluto);
@@ -60,6 +62,7 @@ namespace Planets.View.Imaging
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
             _imageSource.Add(Sprite.BlackHoleExplosion, Resources.sprites);
             _imageSource.Add(Sprite.Stars, Resources.smallStars);
+            _imageSource.Add(Sprite.Sprity, Resources.spritety);
         }
 
         public Sprite GetSprite(int imageId, int width, int height, int rotation = 0, bool animated = false)
@@ -73,11 +76,15 @@ namespace Planets.View.Imaging
             ImageRequest i = new ImageRequest(imageId, width, height, rotation, animated);
             Sprite s;
             _imageBuffer.TryGetValue(i, out s);
-            if (s != null)
+            if (s != null && i.a != true)
                 return s;
 
             s = CreateImage(i);
-            _imageBuffer.Add(i, s);
+
+            if (i.a != true)
+            {
+                _imageBuffer.Add(i, s);
+            }
             return s;
         }
 
@@ -93,10 +100,19 @@ namespace Planets.View.Imaging
             // Check if image is animated
             if (i.a)
             {
-                // Pick a frame from the spritesheet!
+                // Dirty test code
+                // will be made nicer :D
                 Bitmap b = GetSprite(i.no, i.w, i.h);
                 List<Bitmap> frameList = CutupImage(b, 10, 10);
-                return frameList[1];
+                if (testy < frameList.Count)
+                {
+                    testy += 1;
+                }
+                if (testy == frameList.Count)
+                {
+                    testy = 0;
+                }
+                return frameList[testy];
             }
             else
             {
