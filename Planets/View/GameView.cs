@@ -160,6 +160,10 @@ namespace Planets.View
 			{
 				spriteID = Sprite.BlackHole;
 			}
+            else if (obj is AntiMatter)
+            {
+                spriteID = Sprite.BlackHole;
+            }
             else
             {
                 spriteID = Sprite.Player;
