@@ -171,8 +171,12 @@ namespace Planets.View
 
             // Draw object
             Rectangle target = GameToScreen(obj.BoundingBox);
+
             Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
+            //Sprite s1 = sp.GetSprite(Sprite.BlackHoleExplosion, 100, 100, 0, true);
+
             g.DrawImageUnscaled(s, target);
+            //g.DrawImageUnscaled(s1, target);
         }
 
         private void DrawDemo(Graphics g)
