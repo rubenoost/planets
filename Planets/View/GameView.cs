@@ -155,7 +155,11 @@ namespace Planets.View
                 spriteID = Sprite.BlackHole;
                 objAngle = _blackHoleAngle;
                 _blackHoleAngle++;
-            }
+            } 
+			else if (obj is Antigravity) 
+			{
+				spriteID = Sprite.BlackHole;
+			}
             else
             {
                 spriteID = Sprite.Player;

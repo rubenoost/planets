@@ -74,6 +74,7 @@
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="Model\Antigravity.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\BlackHole.cs" />
     <Compile Include="Model\GameObject.cs" />
@@ -147,6 +148,7 @@
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
     <None Include="Resources\smallStars.png" />
+    <None Include="Resources\sprites.png" />
     <None Include="Resources\PLANET.png" />
     <None Include="Resources\1796813.jpg" />
     <None Include="Resources\space-wallpaper.jpg" />
