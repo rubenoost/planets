@@ -42,7 +42,6 @@ namespace Planets.View.Imaging
         }
     }
 
-
     public class SpritePool
     {
         private readonly Dictionary<int, Sprite> _imageSource = new Dictionary<int, Sprite>();
@@ -114,40 +113,6 @@ namespace Planets.View.Imaging
             g.RotateTransform(-angle);
             g.TranslateTransform((float)(-size / 2), (float)(-size / 2));
             g.DrawImageUnscaled(bmp, 0, 0);
-            return result;
-        }
-
-        /// <summary>
-        ///     Helper method to cut up images.
-        /// </summary>
-        /// <param name="bitmap"></param>
-        /// <param name="rows"></param>
-        /// <param name="columns"></param>
-        /// <returns></returns>
-        public static List<Bitmap> CutupImage(Image bitmap, int rows, int columns)
-        {
-            // Determine target
-            var s = new Size(bitmap.Width / columns, bitmap.Height / rows);
-            var targetRectangle = new Rectangle(new Point(0, 0), s);
-
-            // Create result
-            var result = new List<Bitmap>(s.Height * s.Width);
-
-            // Cut up image
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    // Create new Bitmap
-                    var subImage = new Bitmap(s.Width, s.Height);
-                    // Draw scaled image
-                    using (Graphics g = Graphics.FromImage(subImage))
-                        g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
-                            GraphicsUnit.Pixel);
-                    // Add to result
-                    result.Add(subImage);
-                }
-            }
             return result;
         }
     }
