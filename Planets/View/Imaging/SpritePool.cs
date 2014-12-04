@@ -134,7 +134,7 @@ namespace Planets.View.Imaging
         private static Bitmap RotateImg(Bitmap bmp, int angle)
         {
             double size = Math.Max(bmp.Width, bmp.Height);
-            Bitmap result = new Bitmap((int)size, (int)size);
+            Bitmap result = new Bitmap((int)size, (int)size, PixelFormat.Format32bppPArgb);
             Graphics g = Graphics.FromImage(result);
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.CompositingQuality = CompositingQuality.HighQuality;
