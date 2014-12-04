@@ -11,11 +11,20 @@ namespace Planets.View
 {
     public partial class GameView : UserControl
     {
-        public static readonly bool EnableScaling = true;
+        #region Properties
 
-        public float Zoom = 2.0f;
+        private float _propZoom = 2.0f;
+        public float Zoom
+        {
+            get { return _propZoom; }
+            set
+            {
+                if (value >= 1.0f)
+                    _propZoom = value;
+            }
+        }
 
-        public bool DiscoMode = false;
+        #endregion
 
         Playfield field;
 
@@ -82,16 +91,16 @@ namespace Planets.View
             Rectangle target;
 
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.25f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, ClientSize.Width, ClientSize.Height), target);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, target.Width, target.Height), target);
 
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.40f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, ClientSize.Width, ClientSize.Height), target);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
 
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.55f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, ClientSize.Width, ClientSize.Height), target);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
 
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.75f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, ClientSize.Width, ClientSize.Height), target);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
         }
 
         private void DrawBorder(Graphics g)
@@ -170,12 +179,8 @@ namespace Planets.View
 
             // Draw object
             Rectangle target = GameToScreen(obj.BoundingBox);
-
-            if (!DiscoMode)
-            {
-                Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
-                g.DrawImageUnscaled(s, target);
-            }
+            Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
+            g.DrawImageUnscaled(s, target);
         }
 
         private void DrawDemo(Graphics g)
@@ -255,33 +260,28 @@ namespace Planets.View
             // Corrected view size with any parallaxdepth
             Vector viewSizeGame = onePrlxViewSize * ParallaxDepth + (1.0f - ParallaxDepth) * noPrlxViewSize;
 
-            //=================================== [ Game Rect -> Pixel Rect] ======================
+            //=================================== [ Correct viewing rectangle ] ====================
 
-            // Size of the rectangle in game
-            Vector rectSizeGame = new Vector(gameRectangle.Width, gameRectangle.Height);
+            viewCenterGame = new Vector(Math.Max(viewSizeGame.X / 2, viewCenterGame.X), Math.Max(viewSizeGame.Y / 2, viewCenterGame.Y));
+            viewCenterGame = new Vector(Math.Min(viewCenterGame.X, layerGameSize.X - viewSizeGame.X / 2), Math.Min(viewCenterGame.Y, layerGameSize.Y - viewSizeGame.Y / 2));
 
-            // Relative game location to view center game
-            Vector relativeRectCenterGame = gameRectangle.Location - viewCenterGame + rectSizeGame / 2;
+            //=================================== [ Scale to pixels ] =============================
 
-            // Determine scaling for pixels
-            double pixelScaleX = ClientSize.Width/viewSizeGame.X;
-            double pixelScaleY = ClientSize.Height/viewSizeGame.Y;
+            double scaleX = ClientSize.Width / viewSizeGame.X;
+            double scaleY = ClientSize.Height / viewSizeGame.Y;
 
-            // Determine relative rectangle center in pixels
-            Vector relativeRectCenterPixel = new Vector(relativeRectCenterGame.X * pixelScaleX, relativeRectCenterGame.Y * pixelScaleY);
+            Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
 
-            // Determine view center in pixels
-            Vector viewCenterPixel = new Vector((double)ClientSize.Width / 2, (double)ClientSize.Height / 2);
+            Vector rectangleSizeGame = new Vector(gameRectangle.Width, gameRectangle.Height);
+            Vector rectangleCenterGame = gameRectangle.Location + rectangleSizeGame / 2;
 
-            // Determine rectangle size in pixels
-            Size rectSizePixel = new Size((int) (gameRectangle.Width*pixelScaleX), (int) (gameRectangle.Height*pixelScaleY));
+            Vector rectangleCenterGameRelativeToCenter = rectangleCenterGame - viewCenterGame;
+            Vector rectangleCenterPixelRelativeToCenter = new Vector(rectangleCenterGameRelativeToCenter.X * scaleX, rectangleCenterGameRelativeToCenter.Y * scaleY);
+            Vector rectangleCenterPixel = viewCenterPixel + rectangleCenterPixelRelativeToCenter;
 
-            // Determine absolute rectangle location in pixels
-            Vector rectLocPixel = viewCenterPixel + relativeRectCenterPixel - new Vector(rectSizePixel.Width / 2, rectSizePixel.Height / 2);
+            Vector rectangleSizePixel = new Vector(rectangleSizeGame.X * scaleX, rectangleSizeGame.Y * scaleY);
 
-            //=================================== [ Return result ] ===============================
-
-            return new Rectangle(rectLocPixel, rectSizePixel);
+            return new Rectangle(rectangleCenterPixel - rectangleSizePixel / 2, new Size((int)rectangleSizePixel.X, (int)rectangleSizePixel.Y));
         }
 
         #endregion
