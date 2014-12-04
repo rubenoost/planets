@@ -60,7 +60,6 @@ namespace Planets.View.Imaging
             _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
             _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
-            _imageSource.Add(Sprite.BlackHoleExplosion, Resources.sprites);
             _imageSource.Add(Sprite.Stars, Resources.smallStars);
             _imageSource.Add(Sprite.Sprity, Resources.spritety);
             _imageSource.Add(Sprite.Stasis, Resources.pooface);
