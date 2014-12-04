@@ -40,14 +40,6 @@ namespace Planets.View.Imaging
         }
 
         /// <summary>
-        ///     Gets the amount of frames in this Sprite. -1 if this is a static image.
-        /// </summary>
-        public int Frames
-        {
-            get { return Columns * Rows; }
-        }
-
-        /// <summary>
         ///     Gets the amount of columns in this sprite.
         /// </summary>
         public int Columns { get; private set; }
@@ -56,21 +48,6 @@ namespace Planets.View.Imaging
         ///     Gets the amount of rows in this sprite.
         /// </summary>
         public int Rows { get; private set; }
-
-        /// <summary>
-        ///     Gets whether this sprite is cyclic.
-        /// </summary>
-        public bool Cyclic { get; private set; }
-
-        /// <summary>
-        ///     Gets the images of this sprite, please use sprite[index] instead of this list.
-        /// </summary>
-        private List<Bitmap> Images { get; set; }
-
-        /// <summary>
-        ///     Gets the internal image of this sprite
-        /// </summary>
-        public Bitmap Image { get; private set; }
 
         public static implicit operator Sprite(Bitmap bm)
         {
