@@ -26,9 +26,9 @@ namespace Planets.Controller.PhysicsRules
                 pf.BOT.Add(new BlackHole(new Vector(50, 50), new Vector(0, 0), 1000000));
                 pf.BOT.Add(new BlackHole(new Vector(50, 1030), new Vector(0, 0), 1000000));
                 pf.BOT.Add(new BlackHole(new Vector(1870, 50), new Vector(0, 0), 1000000));
-                //pf.BOT.Add(new BlackHole(new Vector(1870, 1030), new Vector(0, 0), 1000000));
+                pf.BOT.Add(new BlackHole(new Vector(1870, 1030), new Vector(0, 0), 1000000));
 
-                pf.BOT.Add(new Stasis(new Vector(1200, 800), new Vector(0, 0), 1000));
+                pf.BOT.Add(new Stasis(new Vector(1200, 800), new Vector(0, 0), 800));
             }
 
             if (pf.CurrentPlayer.Mass > 30100)
