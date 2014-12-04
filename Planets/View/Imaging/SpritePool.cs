@@ -169,14 +169,15 @@ namespace Planets.View.Imaging
                 {
                     // Create new Bitmap
                     var subImage = new Bitmap(s.Width, s.Height);
+
                     // Draw scaled image
-                    using (Graphics g = Graphics.FromImage(subImage))
-                        g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
-                            GraphicsUnit.Pixel);
-                    Graphics gr = Graphics.FromImage(subImage);
-                    gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    gr.CompositingQuality = CompositingQuality.HighQuality;
-                    gr.SmoothingMode = SmoothingMode.AntiAlias;
+                    Graphics g = Graphics.FromImage(subImage);
+                    g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
+                        GraphicsUnit.Pixel);
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+
                     // Add to result
                     result.Add(subImage);
                 }
