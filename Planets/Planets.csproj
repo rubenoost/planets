@@ -152,6 +152,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Para3.png" />
+    <None Include="Resources\Para2.png" />
+    <None Include="Resources\Para1.png" />
+    <None Include="Resources\stasis.png" />
     <None Include="Resources\pooface.png" />
     <None Include="Resources\spritety.png" />
     <None Include="Resources\smallStars.png" />
