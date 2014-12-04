@@ -41,11 +41,12 @@ namespace Planets.Controller
             //new CollidewithSmaller(),
             new DynamicEatRule(),
 			new ExplosionRule(),
+
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
 
             // ========== [ SLOW OBJECT ] ==========
-            new StasisRule(),
+            //new StasisRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),

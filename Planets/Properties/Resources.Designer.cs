@@ -223,9 +223,9 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Stasis {
+        internal static System.Drawing.Bitmap stasis {
             get {
-                object obj = ResourceManager.GetObject("Stasis", resourceCulture);
+                object obj = ResourceManager.GetObject("stasis", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -236,16 +236,6 @@ namespace Planets.Properties {
         internal static System.Drawing.Bitmap Tardis {
             get {
                 object obj = ResourceManager.GetObject("Tardis", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap stasis {
-            get {
-                object obj = ResourceManager.GetObject("stasis", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

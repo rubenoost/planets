@@ -91,16 +91,14 @@ namespace Planets.View
             Rectangle target;
 
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.25f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background, target.Width, target.Height), target);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background1, target.Width, target.Height), target);
 
-            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.40f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
-
-            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.55f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.50f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background2, target.Width, target.Height), target);
 
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.75f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background3, target.Width, target.Height), target);
+
         }
 
         private void DrawBorder(Graphics g)

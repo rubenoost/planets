@@ -56,12 +56,14 @@ namespace Planets.View.Imaging
         {
             _imageSource.Add(Sprite.Player, Resources.Pluto);
             _imageSource.Add(Sprite.BlackHole, Resources.Hole1);
-            _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
+            _imageSource.Add(Sprite.Background1, Resources.space_wallpaper);
+            _imageSource.Add(Sprite.Background2, Resources.Para1);
+            _imageSource.Add(Sprite.Background3, Resources.Para2);
             _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
             _imageSource.Add(Sprite.Stars, Resources.smallStars);
             _imageSource.Add(Sprite.Sprity, Resources.spritety);
-            _imageSource.Add(Sprite.Stasis, Resources.Stasis);
+            _imageSource.Add(Sprite.Stasis, Resources.stasis);
             _imageSource.Add(Sprite.Tardis, Resources.Tardis);
         }
 

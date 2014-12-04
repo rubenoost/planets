@@ -18,6 +18,10 @@ namespace Planets.View.Imaging
         public const int Tardis = 8;
         public const int Stars = 10;
 
+        public const int Background1 = 405011;
+        public const int Background2 = 405012;
+        public const int Background3 = 405013;
+
 
         /// <summary>
         ///     Bitmap die wordt teruggegeven als er geen logisch alternatief is.
