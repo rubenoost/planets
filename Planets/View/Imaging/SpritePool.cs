@@ -51,7 +51,7 @@ namespace Planets.View.Imaging
 
         private readonly Dictionary<ImageRequest, Sprite> _imageBuffer = new Dictionary<ImageRequest, Sprite>();
 
-        private int testy = 0;
+        private int counter = 0;
 
         public SpritePool()
         {
@@ -60,7 +60,6 @@ namespace Planets.View.Imaging
             _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
             _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
-            _imageSource.Add(Sprite.BlackHoleExplosion, Resources.sprites);
             _imageSource.Add(Sprite.Stars, Resources.smallStars);
             _imageSource.Add(Sprite.Sprity, Resources.spritety);
             _imageSource.Add(Sprite.Stasis, Resources.Stasis);
@@ -83,9 +82,11 @@ namespace Planets.View.Imaging
 
             s = CreateImage(i);
 
+            // Als die geanimeerd is niet bufferen
+            // Moet wel maar werkt niet
             if (i.a != true)
             {
-            _imageBuffer.Add(i, s);
+                _imageBuffer.Add(i, s);
             }
             return s;
         }
@@ -102,20 +103,24 @@ namespace Planets.View.Imaging
             // Check if image is animated
             if (i.a)
             {
-                // Dirty test code
-                // will be made nicer :D
+                // Dirty code
                 Bitmap b = GetSprite(i.no, i.w, i.h);
+
+                // Image met maar 2 bij 2 sprites
                 List<Bitmap> frameList = CutupImage(b, 2, 2);
 
-                if (testy < frameList.Count)
+                // Wanneer counter lager is dan beschikbare frames
+                // Geef frame terug en doe counter+1
+                // Sprite blijft animated
+                if (counter < frameList.Count)
                 {
-                    testy += 1;
+                    counter += 1;
                 }
-                if (testy == frameList.Count)
+                if (counter == frameList.Count)
                 {
-                    testy = 0;
+                    counter = 0;
                 }
-                return frameList[testy];
+                return frameList[counter];
             }
             else
             {
@@ -135,7 +140,7 @@ namespace Planets.View.Imaging
         private static Bitmap RotateImg(Bitmap bmp, int angle)
         {
             double size = Math.Max(bmp.Width, bmp.Height);
-            Bitmap result = new Bitmap((int)size, (int)size);
+            Bitmap result = new Bitmap((int)size, (int)size, PixelFormat.Format32bppPArgb);
             Graphics g = Graphics.FromImage(result);
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.CompositingQuality = CompositingQuality.HighQuality;
@@ -164,10 +169,15 @@ namespace Planets.View.Imaging
                 {
                     // Create new Bitmap
                     var subImage = new Bitmap(s.Width, s.Height);
+
                     // Draw scaled image
-                    using (Graphics g = Graphics.FromImage(subImage))
-                        g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
-                            GraphicsUnit.Pixel);
+                    Graphics g = Graphics.FromImage(subImage);
+                    g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
+                        GraphicsUnit.Pixel);
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+
                     // Add to result
                     result.Add(subImage);
                 }

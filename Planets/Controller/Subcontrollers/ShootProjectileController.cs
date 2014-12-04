@@ -79,15 +79,23 @@ namespace Planets.Controller.Subcontrollers
             GameObject O = InternalPlayfield.CurrentPlayer;
 
             bool IsBlackhole = false;
+            bool IsAntiMatter = false;
 
             //Projectile being shot
             Random rnd = new Random();
             int rndint = rnd.Next(0, 100);
-            if (rndint == 56 || rndint == 57 || rndint == 58 || rndint == 42)
+            if (rndint == 58 || rndint == 42)
             {
                 P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
                 P.Mass = 0.05 * O.Mass;
                 IsBlackhole = true;
+            }
+            else if (rndint == 20 || rndint == 25 || rndint == 30 || rndint == 35 || rndint == 40 || rndint == 50 || rndint == 55 || rndint == 60)
+            {
+                P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0);
+                P.Mass = O.Mass * 0.05;
+                O.Mass -= (O.Mass * 0.05);
+                IsAntiMatter = true;
             }
             else
             {
@@ -96,15 +104,14 @@ namespace Planets.Controller.Subcontrollers
                 O.Mass = O.Mass - P.Mass;
             }
 
-            //P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0);
-            //P.Mass = 0.05 * O.Mass;
-            //O.Mass -= P.Mass;
-
             lock (InternalPlayfield.BOT)
             {
                 O.DV = CalcNewDV(O, P, gamePoint);
                 if(IsBlackhole)
                     P.Mass = 1000000;
+
+                if (IsAntiMatter)
+                    P.Mass = 100;
 
                 //set the velocity of the new player
                 InternalPlayfield.BOT.Add(P);

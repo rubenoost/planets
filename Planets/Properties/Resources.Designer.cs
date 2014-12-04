@@ -161,16 +161,6 @@ namespace Planets.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] PlutoSVG {
-            get {
-                object obj = ResourceManager.GetObject("PlutoSVG", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap smallStars {
@@ -186,16 +176,6 @@ namespace Planets.Properties {
         internal static System.Drawing.Bitmap space_wallpaper {
             get {
                 object obj = ResourceManager.GetObject("space_wallpaper", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap sprites {
-            get {
-                object obj = ResourceManager.GetObject("sprites", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

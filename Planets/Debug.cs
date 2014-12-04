@@ -11,7 +11,6 @@ namespace Planets
 
         private static readonly Form DebugForm;
         private static readonly RichTextBox TextBox;
-
         static Debug()
         {
             DebugForm = new Form();

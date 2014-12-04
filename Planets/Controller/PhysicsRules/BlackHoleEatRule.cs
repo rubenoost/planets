@@ -22,6 +22,7 @@ namespace Planets.Controller.PhysicsRules
                         }
                         else
                         {
+                            if (go2 is AntiMatter) return;
                             pf.BOT.Remove(go2);
                         }
                     }
