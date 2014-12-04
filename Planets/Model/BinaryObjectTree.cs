@@ -13,16 +13,14 @@ namespace Planets.Model
         }
         private BinaryObjectTree t1;
         private BinaryObjectTree t2;
-        private Rectangle r1;
-        private Rectangle r2;
         private int level;
         private BinaryObjectTree _parent;
-        private Rectangle boundigBox;
+        private Rectangle boundingBox;
         private List<GameObject> _objects = new List<GameObject>();
         public int ColCount;
         public BinaryObjectTree(BinaryObjectTree parent, Rectangle r, int l, int maxlevel, int splitDirection)
         {
-            boundigBox = r;
+            boundingBox = r;
             level = l;
             _parent = parent;
             if (level != maxlevel)
@@ -43,18 +41,18 @@ namespace Planets.Model
         {
             if (_parent != null)
             {
-                if (!IsIn(go.BoundingBox, boundigBox))
+                if (!IsIn(go.BoundingBox, boundingBox))
                 {
                     _parent.Add(go);
                     return;
                 }
             }
-            if (t1 != null && IsIn(go.BoundingBox, t1.boundigBox))
+            if (t1 != null && IsIn(go.BoundingBox, t1.boundingBox))
             {
                 t1.Add(go);
                 return;
             }
-            if (t2 != null && IsIn(go.BoundingBox, t2.boundigBox))
+            if (t2 != null && IsIn(go.BoundingBox, t2.boundingBox))
             {
                 t2.Add(go);
                 return;
@@ -125,19 +123,19 @@ namespace Planets.Model
             int colCount = 0;
             if (t1 != null)
             {
-                if (go.BoundingBox.IntersectsWith(t1.boundigBox))
+                if (go.BoundingBox.IntersectsWith(t1.boundingBox))
                 {
                     colCount += t1.DoCollisions(a, go, ms);
                 }
             }
             if (t2 != null)
             {
-                if (go.BoundingBox.IntersectsWith(t2.boundigBox))
+                if (go.BoundingBox.IntersectsWith(t2.boundingBox))
                 {
                     colCount += t2.DoCollisions(a, go, ms);
                 }
             }
-            if (go.BoundingBox.IntersectsWith(boundigBox))
+            if (go.BoundingBox.IntersectsWith(boundingBox))
             {
                 for (int i = 0; i < _objects.Count; i++)
                 {

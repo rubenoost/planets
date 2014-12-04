@@ -15,6 +15,8 @@ namespace Planets.View
 
         public new float Scale = 0.8f;
 
+        public bool DiscoMode = false;
+
         Playfield field;
 
         private SpritePool sp = new SpritePool();
@@ -155,7 +157,10 @@ namespace Planets.View
                 spriteID = Sprite.BlackHole;
                 objAngle = _blackHoleAngle;
                 _blackHoleAngle++;
-            } 
+            } else if (obj is Stasis)
+            {
+                spriteID = Sprite.Stasis;
+            }
 			else if (obj is Antigravity) 
 			{
 				spriteID = Sprite.BlackHole;
@@ -171,8 +176,20 @@ namespace Planets.View
 
             // Draw object
             Rectangle target = GameToScreen(obj.BoundingBox);
+
+            if (!DiscoMode)
+            {
             Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
             g.DrawImageUnscaled(s, target);
+        }
+
+            // To test the animation of sprites
+            if (DiscoMode)
+            {
+                spriteID = Sprite.Sprity;
+                Sprite s1 = sp.GetSprite(spriteID, 30,30, 0, true);
+                g.DrawImage(s1, target);
+            }
         }
 
         private void DrawDemo(Graphics g)
