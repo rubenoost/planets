@@ -61,7 +61,8 @@ namespace Planets.View.Imaging
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
             _imageSource.Add(Sprite.Stars, Resources.smallStars);
             _imageSource.Add(Sprite.Sprity, Resources.spritety);
-            _imageSource.Add(Sprite.Stasis, Resources.pooface);
+            _imageSource.Add(Sprite.Stasis, Resources.Stasis);
+            _imageSource.Add(Sprite.Tardis, Resources.Tardis);
         }
 
         public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)

@@ -15,6 +15,7 @@ namespace Planets.View.Imaging
         public const int Stasis = 5;
         public const int BlackHoleExplosion = 6;
         public const int Sprity = 7;
+        public const int Tardis = 8;
         public const int Stars = 10;
 
 
