@@ -93,10 +93,10 @@ namespace Planets.View
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.25f);
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Background1, target.Width, target.Height), target);
 
-            /*target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.50f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Background2, target.Width, target.Height), target);
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.50f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
 
-            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.75f);
+            /*target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.75f);
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Background3, target.Width, target.Height), target);*/
 
         }
@@ -223,7 +223,47 @@ namespace Planets.View
 
         public Vector GameToScreen(Vector v, float ParallaxDepth = 1.0f)
         {
-            return v;
+            // The game size associated with each layer
+            Vector layerGameSize = new Vector(field.Size.Width, field.Size.Height);
+
+            //=================================== [ Game Center ] =================================
+
+            // The center of the game, if no parallax is present
+            Vector noPrlxViewCenter = layerGameSize / 2;
+
+            // The center of the game if parallax is 1.0
+            Vector onePrlxViewCenter = field.CurrentPlayer.Location;
+
+            // The corrected center of the game, with any parallaxdepth
+            Vector viewCenterGame = onePrlxViewCenter * ParallaxDepth + (1.0f - ParallaxDepth) * noPrlxViewCenter;
+
+            //=================================== [ Game View Size ] ==============================
+
+            // View size with no parallax present
+            Vector noPrlxViewSize = layerGameSize;
+
+            // View size if parallax is 1.0
+            Vector onePrlxViewSize = layerGameSize / Zoom;
+
+            // Corrected view size with any parallaxdepth
+            Vector viewSizeGame = onePrlxViewSize * ParallaxDepth + (1.0f - ParallaxDepth) * noPrlxViewSize;
+
+            //=================================== [ Correct viewing rectangle ] ====================
+
+            viewCenterGame = new Vector(Math.Max(viewSizeGame.X / 2, viewCenterGame.X), Math.Max(viewSizeGame.Y / 2, viewCenterGame.Y));
+            viewCenterGame = new Vector(Math.Min(viewCenterGame.X, layerGameSize.X - viewSizeGame.X / 2), Math.Min(viewCenterGame.Y, layerGameSize.Y - viewSizeGame.Y / 2));
+
+            //=================================== [ Scale to pixels ] =============================
+
+            double scaleX = ClientSize.Width / viewSizeGame.X;
+            double scaleY = ClientSize.Height / viewSizeGame.Y;
+
+            Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+
+            Vector pointRelativeToViewCenterGame = v - viewCenterGame;
+            Vector pointRelativeToViewCenterPixel = new Vector(pointRelativeToViewCenterGame.X * scaleX, pointRelativeToViewCenterGame.Y*scaleY);
+
+            return pointRelativeToViewCenterPixel + viewCenterPixel;
         }
 
         public Vector ScreenToGame(Vector v, float ParallaxDepth = 1.0f)
