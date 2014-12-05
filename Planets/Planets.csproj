@@ -64,6 +64,7 @@
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
+    <Compile Include="Controller\PhysicsRules\AIrule.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleRule.cs" />
     <Compile Include="Controller\PhysicsRules\CollidewithSmaller.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\GameObjects\BlackHole.cs" />
+    <Compile Include="Model\Antagonist.cs" />
     <Compile Include="Model\GameObjects\GameObject.cs" />
     <Compile Include="Model\GameObjects\Mine.cs" />
     <Compile Include="Model\GameObjects\Player.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="View\GameView.Designer.cs">
       <DependentUpon>GameView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Imaging\ImageRequest.cs" />
     <Compile Include="View\Imaging\Sprite.cs" />
     <Compile Include="View\Imaging\SpritePool.cs" />
     <EmbeddedResource Include="PlanetsForm.resx">

@@ -10,7 +10,7 @@ namespace Planets.Model
 	{
 		public Tardis(Vector location, Vector velocity, double mass) : base(location, velocity, mass, Rule.COLLIDES)
 		{
-			Radius = 50;
+            Traits = Traits & ~Rule.COLLIDES;
 		}
 	}
 }

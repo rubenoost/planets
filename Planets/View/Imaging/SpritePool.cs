@@ -3,47 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
+using Planets.Model;
 using Planets.Properties;
 
 namespace Planets.View.Imaging
 {
-    public struct ImageRequest
-    {
-        public readonly int no;
-        public readonly int w;
-        public readonly int h;
-        public readonly int r;
-
-        public ImageRequest(int index, int width, int height, int rotation)
-        {
-            no = index;
-            w = width;
-            h = height;
-            r = rotation;
-        }
-
-        public override int GetHashCode()
-        {
-            int i = 23;
-            i = i * 486187739 + no;
-            i = i * 486187739 + w;
-            i = i * 486187739 + h;
-            i = i * 486187739 + r;
-            return i;
-        }
-
-        public override bool Equals(object o)
-        {
-            if (!(o is ImageRequest))
-                return false;
-
-            var i = (ImageRequest)o;
-
-            return no == i.no && w == i.w && h == i.h && r == i.r;
-        }
-    }
-
     public class SpritePool
     {
         private readonly Dictionary<int, Sprite> _imageSource = new Dictionary<int, Sprite>();
@@ -54,17 +18,38 @@ namespace Planets.View.Imaging
 
         public SpritePool()
         {
-            _imageSource.Add(Sprite.Player, Resources.Pluto);
-            _imageSource.Add(Sprite.BlackHole, Resources.Hole1);
-            _imageSource.Add(Sprite.Background1, Resources.space_wallpaper);
-            _imageSource.Add(Sprite.Background2, Resources.Para1);
-            _imageSource.Add(Sprite.Background3, Resources.Para2);
-            _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
-            _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
-            _imageSource.Add(Sprite.Stars, Resources.smallStars);
-            _imageSource.Add(Sprite.Sprity, Resources.spritety);
-            _imageSource.Add(Sprite.Stasis, Resources.stasis);
-            _imageSource.Add(Sprite.Tardis, Resources.Tardis);
+            RegisterImage(typeof(Player), Resources.Pluto);
+            RegisterImage(typeof(BlackHole), Resources.Hole1);
+            RegisterImage(typeof(Stasis), Resources.stasis);
+            RegisterImage(typeof(Tardis), Resources.Tardis);
+            RegisterImage(typeof(Mine), Resources.Pluto_Red);
+            RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
+            RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
+            RegisterImage(typeof(GameObject), Resources.Pluto);
+
+            RegisterImage(Sprite.Background1, Resources.space_wallpaper);
+            RegisterImage(Sprite.Background2, Resources.Para1);
+            RegisterImage(Sprite.Background3, Resources.Para2);
+            RegisterImage(Sprite.CometTail, Resources.KomeetStaartje);
+            RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
+            RegisterImage(Sprite.Stars, Resources.smallStars);
+            RegisterImage(Sprite.Sprity, Resources.spritety);
+            
+        }
+
+        private void RegisterImage(Type t, Sprite s)
+        {
+            RegisterImage(t.GetHashCode(), s);
+        }
+
+        private void RegisterImage(int id, Sprite s)
+        {
+            _imageSource.Add(id, s);
+        }
+
+        public Sprite GetSprite(Type t, int width, int height, int rotation = 0)
+        {
+            return GetSprite(t.GetHashCode(), width, height, rotation);
         }
 
         public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)
@@ -151,6 +136,13 @@ namespace Planets.View.Imaging
             return result;
         }
 
+
+        private static Bitmap PickFrame(Bitmap bmp, int columns, int rows, int frame)
+        {
+            List<Bitmap> result = CutupImage(bmp, columns, rows);
+            return result[frame];
+        }
+
         private static List<Bitmap> CutupImage(Image bitmap, int columns, int rows)
         {
             // Determine target
@@ -182,5 +174,7 @@ namespace Planets.View.Imaging
             }
             return result;
         }
+
+
     }
 }

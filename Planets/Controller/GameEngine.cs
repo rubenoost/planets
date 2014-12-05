@@ -31,8 +31,11 @@ namespace Planets.Controller
         // Game rules
         private AbstractGameRule[] _gameRules =
         {
+            // ========== [ ANTAGONIST BEHAVIOUR ] ==========
+            new AIrule(),
             // ========== [ CHANGE SPEED ] ==========
             new BlackHoleRule(),
+			new AntiGravityRule(),
 
             // ========== [ CHANGE LOCATION ] ==========
             new MoveRule(),
@@ -47,6 +50,9 @@ namespace Planets.Controller
 
             // ========== [ SLOW OBJECT ] ==========
             //new StasisRule(),
+
+            // ========== [ TARDIS ] ==========
+            new TardisRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule()
