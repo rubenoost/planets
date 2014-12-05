@@ -132,52 +132,14 @@ namespace Planets.View
         private void DrawGameObject(Graphics g, GameObject obj)
         {
             float radius = (float)obj.Radius;
-            int length = (int)(radius * 2);
-
-            // Calculate player
-            /*if (obj.DV.Length() > 1.0)
-            {
-                int angleO = 0;
-                angleO = (int)(Math.Atan2(obj.DV.X, obj.DV.Y) / Math.PI * 180.0);
-                // Retrieve sprites
-                Sprite cometSprite = sp.GetSprite(Sprite.CometTail, length * 4, length * 4, angleO + 180);
-                g.DrawImageUnscaled(cometSprite, (int)(obj.Location.X - cometSprite.Width / 2), (int)(obj.Location.Y - cometSprite.Height / 2));
-            }*/
 
             // Get sprite
             int spriteID;
             int objAngle = 0;
 
-            if (obj == field.CurrentPlayer)
-            {
-                spriteID = Sprite.Player;
-            }
-            else if (obj is BlackHole)
-            {
-                spriteID = Sprite.BlackHole;
-                objAngle = _blackHoleAngle;
-                _blackHoleAngle++;
-            }
-            else if (obj is Stasis)
-            {
-                spriteID = Sprite.Stasis;
-            }
-            else if (obj is Antigravity)
-            {
-                spriteID = Sprite.BlackHole;
-            }
-            else if (obj is AntiMatter)
-            {
-                spriteID = Sprite.BlackHole;
-            }
-            else
-            {
-                spriteID = Sprite.Player;
-            }
-
             // Draw object
             Rectangle target = GameToScreen(obj.BoundingBox);
-            Sprite s = sp.GetSprite(spriteID, target.Width, target.Height, objAngle);
+            Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height, objAngle);
             g.DrawImageUnscaled(s, target);
         }
 

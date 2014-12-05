@@ -109,6 +109,7 @@
     <Compile Include="View\GameView.Designer.cs">
       <DependentUpon>GameView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Imaging\ImageRequest.cs" />
     <Compile Include="View\Imaging\Sprite.cs" />
     <Compile Include="View\Imaging\SpritePool.cs" />
     <EmbeddedResource Include="PlanetsForm.resx">
