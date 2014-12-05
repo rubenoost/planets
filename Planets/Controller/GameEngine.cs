@@ -35,7 +35,7 @@ namespace Planets.Controller
             new AIrule(),
             // ========== [ CHANGE SPEED ] ==========
             new BlackHoleRule(),
-			new AntiGravityRule(),
+			//new AntiGravityRule(),
 
             // ========== [ CHANGE LOCATION ] ==========
             new MoveRule(),
