@@ -70,17 +70,26 @@
     <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
     <Compile Include="Controller\PhysicsRules\DynamicEatRule.cs" />
     <Compile Include="Controller\PhysicsRules\ElasticCollisionRule.cs" />
+    <Compile Include="Controller\PhysicsRules\ExplosionRule.cs" />
     <Compile Include="Controller\PhysicsRules\MoveRule.cs" />
     <Compile Include="Controller\PhysicsRules\ResetRule.cs" />
+    <Compile Include="Controller\PhysicsRules\StasisRule.cs" />
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
+    <Compile Include="Controller\PhysicsRules\TardisRule.cs" />
+    <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="Model\GameObjects\Antigravity.cs" />
+    <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
-    <Compile Include="Model\BlackHole.cs" />
-    <Compile Include="Model\Antagonist.cs" />
-    <Compile Include="Model\GameObject.cs" />
-    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\GameObjects\BlackHole.cs" />
+	<Compile Include="Model\Antagonist.cs" />
+    <Compile Include="Model\GameObjects\GameObject.cs" />
+    <Compile Include="Model\GameObjects\Mine.cs" />
+    <Compile Include="Model\GameObjects\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
+    <Compile Include="Model\GameObjects\Stasis.cs" />
+    <Compile Include="Model\GameObjects\Tardis.cs" />
     <Compile Include="Model\Vector.cs" />
     <Compile Include="PlanetsForm.cs">
       <SubType>Form</SubType>
@@ -90,6 +99,11 @@
     </Compile>
     <Compile Include="PlanetsLauncher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="View\GameView.cs">
       <SubType>UserControl</SubType>
@@ -104,14 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="View\GameView.resx">
       <DependentUpon>GameView.cs</DependentUpon>
     </EmbeddedResource>
@@ -148,6 +157,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Para3.png" />
+    <None Include="Resources\Para2.png" />
+    <None Include="Resources\Para1.png" />
+    <None Include="Resources\stasis.png" />
+    <None Include="Resources\KomeetStaartje1.png" />
+    <None Include="Resources\Pluto1.png" />
+    <None Include="Resources\pooface.png" />
     <None Include="Resources\PLANET.png" />
     <None Include="Resources\1796813.jpg" />
     <None Include="Resources\space-wallpaper.jpg" />

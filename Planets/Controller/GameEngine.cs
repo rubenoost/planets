@@ -5,6 +5,7 @@ using Planets.Controller.PhysicsRules;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.View;
+using Planets.View.Imaging;
 
 namespace Planets.Controller
 {
@@ -22,7 +23,7 @@ namespace Planets.Controller
         private Autodemo ad;
 
         // Model Data
-        private Playfield field;
+        public Playfield field;
 
         // Events
         public event Action<double> GameLoopEvent;
@@ -41,13 +42,17 @@ namespace Planets.Controller
             // ========== [ REMOVING OBJECTS ] ==========
             //new CollidewithSmaller(),
             new DynamicEatRule(),
+			new ExplosionRule(),
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
 
+            // ========== [ SLOW OBJECT ] ==========
+            //new StasisRule(),
+
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
-            new ResetRule()
+            new ResetRule(),
         };
 
         private Thread GameThread;
@@ -81,8 +86,8 @@ namespace Planets.Controller
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.Mass *= 1.2; };
             // Decrease mass
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.Mass /= 1.2; };
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Scale *= 1.25f; };
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Scale *= 0.8f; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Zoom *= 1.25f; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Zoom *= 0.8f; };
 
             // Create new GameThread
             GameThread = new Thread(GameLoop);

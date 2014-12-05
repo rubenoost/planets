@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 using Planets.Properties;
 
 namespace Planets.View.Imaging
@@ -13,6 +14,7 @@ namespace Planets.View.Imaging
         public readonly int w;
         public readonly int h;
         public readonly int r;
+
         public ImageRequest(int index, int width, int height, int rotation)
         {
             no = index;
@@ -48,13 +50,21 @@ namespace Planets.View.Imaging
 
         private readonly Dictionary<ImageRequest, Sprite> _imageBuffer = new Dictionary<ImageRequest, Sprite>();
 
+        private int counter = 0;
+
         public SpritePool()
         {
             _imageSource.Add(Sprite.Player, Resources.Pluto);
             _imageSource.Add(Sprite.BlackHole, Resources.Hole1);
-            _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
+            _imageSource.Add(Sprite.Background1, Resources.space_wallpaper);
+            _imageSource.Add(Sprite.Background2, Resources.Para1);
+            _imageSource.Add(Sprite.Background3, Resources.Para2);
             _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
             _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
+            _imageSource.Add(Sprite.Stars, Resources.smallStars);
+            _imageSource.Add(Sprite.Sprity, Resources.spritety);
+            _imageSource.Add(Sprite.Stasis, Resources.stasis);
+            _imageSource.Add(Sprite.Tardis, Resources.Tardis);
         }
 
         public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)
@@ -73,37 +83,62 @@ namespace Planets.View.Imaging
 
             s = CreateImage(i);
             _imageBuffer.Add(i, s);
+
             return s;
         }
 
         private Sprite CreateImage(ImageRequest i)
         {
-            // Check for rotation
-            if (i.r == 0)
+            if (i.r != 0)
             {
-                // Create result image
-                var result = new Bitmap(i.w, i.h, PixelFormat.Format32bppArgb);
-                Graphics g = Graphics.FromImage(result);
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                Bitmap b = _imageSource[i.no];
-                g.DrawImage(b, new Rectangle(0, 0, i.w, i.h), new Rectangle(0, 0, b.Width, b.Height),
-                    GraphicsUnit.Pixel);
-                return result;
+                return RotateImg(CreateImage(new ImageRequest(i.no, i.w, i.h, 0)), i.r);
             }
             else
             {
-                // Create result image
-                Bitmap b = GetSprite(i.no, i.w, i.h);
-                return RotateImg(b, i.r);
+                Sprite sourceSprite = _imageSource[i.no];
+                return ResizeImg(sourceSprite, i.w, i.h);
             }
+        }
+
+        private static Sprite ResizeImg(Sprite s, int width, int height)
+        {
+            if (s.Frames == 1)
+                return new Sprite { Columns = 1, Rows = 1, Image = ResizeImg(s.Image, width, height) };
+
+            Sprite result = new Sprite { Columns = s.Columns, Rows = s.Rows, Image = s.Image, FrameList = new List<Bitmap>() };
+            foreach (Bitmap bm in s.FrameList)
+                result.FrameList.Add(ResizeImg(bm, width, height));
+            return result;
+        }
+
+        private static Sprite ResizeImg(Bitmap s, int width, int height)
+        {
+            // Create result image
+            var result = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(result);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.DrawImage(s, new Rectangle(0, 0, width, height), new Rectangle(0, 0, s.Width, s.Height),
+                GraphicsUnit.Pixel);
+            return result;
+        }
+
+        private static Sprite RotateImg(Sprite s, int angle)
+        {
+            if (s.Frames == 1)
+                return new Sprite { Columns = 1, Rows = 1, Image = RotateImg(s.Image, angle) };
+
+            Sprite result = new Sprite { Columns = s.Columns, Rows = s.Rows, Image = s.Image, FrameList = new List<Bitmap>() };
+            foreach (Bitmap bm in s.FrameList)
+                result.FrameList.Add(RotateImg(bm, angle));
+            return result;
         }
 
         private static Bitmap RotateImg(Bitmap bmp, int angle)
         {
             double size = Math.Max(bmp.Width, bmp.Height);
-            Bitmap result = new Bitmap((int)size, (int)size);
+            Bitmap result = new Bitmap((int)size, (int)size, PixelFormat.Format32bppPArgb);
             Graphics g = Graphics.FromImage(result);
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.CompositingQuality = CompositingQuality.HighQuality;
@@ -113,6 +148,38 @@ namespace Planets.View.Imaging
             g.RotateTransform(-angle);
             g.TranslateTransform((float)(-size / 2), (float)(-size / 2));
             g.DrawImageUnscaled(bmp, 0, 0);
+            return result;
+        }
+
+        private static List<Bitmap> CutupImage(Image bitmap, int columns, int rows)
+        {
+            // Determine target
+            var s = new Size(bitmap.Width / columns, bitmap.Height / rows);
+            var targetRectangle = new Rectangle(new Point(0, 0), s);
+
+            // Create result
+            var result = new List<Bitmap>(s.Height * s.Width);
+
+            // Cut up image
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    // Create new Bitmap
+                    var subImage = new Bitmap(s.Width, s.Height);
+
+                    // Draw scaled image
+                    Graphics g = Graphics.FromImage(subImage);
+                    g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
+                        GraphicsUnit.Pixel);
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+
+                    // Add to result
+                    result.Add(subImage);
+                }
+            }
             return result;
         }
     }

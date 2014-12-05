@@ -33,20 +33,18 @@ namespace Planets
         /// </summary>
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(PlanetsForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlanetsForm));
             this.SuspendLayout();
             // 
             // PlanetsForm
             // 
-            this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.BackColor = SystemColors.ButtonHighlight;
-            this.ClientSize = new Size(1604, 882);
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ClientSize = new System.Drawing.Size(1604, 882);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PlanetsForm";
-            this.WindowState = FormWindowState.Maximized;
-            this.Load += new EventHandler(this.PlanetsForm_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }
