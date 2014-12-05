@@ -58,6 +58,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PhysicsRules\AntiGravityRule.cs" />
     <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
     <Compile Include="Controller\ImageController.cs" />
