@@ -61,7 +61,6 @@
     <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
     <Compile Include="Controller\ImageController.cs" />
-    <Compile Include="Controller\PhysicsRules\LoadGameRule.cs" />
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
@@ -76,6 +75,7 @@
     <Compile Include="Controller\PhysicsRules\StasisRule.cs" />
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
     <Compile Include="Controller\PhysicsRules\TardisRule.cs" />
+    <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Model\GameObjects\Antigravity.cs" />

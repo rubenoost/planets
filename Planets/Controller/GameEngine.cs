@@ -23,7 +23,7 @@ namespace Planets.Controller
         private Autodemo ad;
 
         // Model Data
-        private Playfield field;
+        public Playfield field;
 
         // Events
         public event Action<double> GameLoopEvent;
@@ -51,7 +51,6 @@ namespace Planets.Controller
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
             new ResetRule(),
-            new LoadGameRule()
         };
 
         private Thread GameThread;
