@@ -23,7 +23,7 @@ namespace Planets.Controller
         private Autodemo ad;
 
         // Model Data
-        private Playfield field;
+        public Playfield field;
 
         // Events
         public event Action<double> GameLoopEvent;
@@ -31,6 +31,8 @@ namespace Planets.Controller
         // Game rules
         private AbstractGameRule[] _gameRules =
         {
+            // ========== [ ANTAGONIST BEHAVIOUR ] ==========
+            new AIrule(),
             // ========== [ CHANGE SPEED ] ==========
             new BlackHoleRule(),
 
@@ -48,10 +50,12 @@ namespace Planets.Controller
             // ========== [ SLOW OBJECT ] ==========
             //new StasisRule(),
 
+            // ========== [ TARDIS ] ==========
+            new TardisRule(),
+
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
             new ResetRule(),
-            new LoadGameRule()
         };
 
         private Thread GameThread;

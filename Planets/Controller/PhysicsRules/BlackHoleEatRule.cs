@@ -1,4 +1,5 @@
 ﻿using Planets.Model;
+using Planets.View.Imaging;
 
 namespace Planets.Controller.PhysicsRules
 {

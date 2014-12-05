@@ -61,10 +61,10 @@
     <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
     <Compile Include="Controller\ImageController.cs" />
-    <Compile Include="Controller\PhysicsRules\LoadGameRule.cs" />
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
+    <Compile Include="Controller\PhysicsRules\AIrule.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleRule.cs" />
     <Compile Include="Controller\PhysicsRules\CollidewithSmaller.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
@@ -76,12 +76,14 @@
     <Compile Include="Controller\PhysicsRules\StasisRule.cs" />
     <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
     <Compile Include="Controller\PhysicsRules\TardisRule.cs" />
+    <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Model\GameObjects\Antigravity.cs" />
     <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\GameObjects\BlackHole.cs" />
+    <Compile Include="Model\Antagonist.cs" />
     <Compile Include="Model\GameObjects\GameObject.cs" />
     <Compile Include="Model\GameObjects\Mine.cs" />
     <Compile Include="Model\GameObjects\Player.cs" />
