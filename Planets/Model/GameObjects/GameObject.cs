@@ -134,21 +134,13 @@ namespace Planets.Model
 
         public bool IntersectsWith(GameObject go)
         {
-            if (!DoLinesOverlap(Location.X, Radius * 2, go.Location.X, go.Radius * 2) &&
-                !DoLinesOverlap(Location.Y, Radius * 2, go.Location.Y, go.Radius * 2))
+            if (BoundingBox.IntersectsWith(go.BoundingBox))
             {
-                return false;
+                return true;
 
             }
             return (Location - go.Location).Length() <= (Radius + go.Radius);
 
-        }
-
-        public static bool DoLinesOverlap(double x1, double width1, double x2, double width2)
-        {
-            if (x1 >= x2)
-                return (x2 + width2) > x1;
-            return (x1 + width1) > x2;
         }
     }
 }
