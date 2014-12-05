@@ -15,6 +15,7 @@ namespace Planets.Controller.Subcontrollers
         {
             pf = new Playfield(1920, 1080);
 
+            bool TARDIS = false;
             Random rnd = new Random();
             int AmntObstacles = rnd.Next(4, 8);
 
@@ -26,7 +27,11 @@ namespace Planets.Controller.Subcontrollers
                 int NextObj = rnd.Next(0, 6);
                 while (NextObj == previous)
                 {
-                    NextObj = rnd.Next(0, 6);
+                    if(NextObj == 6)
+                        TARDIS = true;
+
+                    if(!TARDIS)
+                        NextObj = rnd.Next(0, 6);
                 }
 
                 RndObstacles[i] = NextObj;
