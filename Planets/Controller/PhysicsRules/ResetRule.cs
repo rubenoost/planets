@@ -18,6 +18,7 @@ namespace Planets.Controller.PhysicsRules
                 pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(-200, 0), new Vector(0, 0), Utils.StartMass / 2));
                 pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(0, 200), new Vector(0, 0), Utils.StartMass / 2));
                 pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(0, -200), new Vector(0, 0), Utils.StartMass / 2));
+                pf.BOT.Add(new Antagonist(pf.CurrentPlayer.Location + new Vector(200, 200), new Vector(0, 0), Utils.StartMass));
 
                 // Black holes
                 pf.BOT.Add(new BlackHole(new Vector(50, 50), new Vector(0, 0), 1000000));

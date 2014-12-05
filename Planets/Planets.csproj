@@ -64,6 +64,7 @@
     <Compile Include="Controller\MainEngine.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractCollisionRule.cs" />
     <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
+    <Compile Include="Controller\PhysicsRules\AIrule.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleRule.cs" />
     <Compile Include="Controller\PhysicsRules\CollidewithSmaller.cs" />
     <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Debug.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\BlackHole.cs" />
+    <Compile Include="Model\Antagonist.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Playfield.cs" />

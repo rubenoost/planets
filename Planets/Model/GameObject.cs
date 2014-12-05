@@ -99,7 +99,7 @@ namespace Planets.Model
 
         public GameObject(Vector location, Vector velocity, double Mass)
             : this(location, velocity, Mass,
-            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS)
+            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS | Rule.EAT_PLAYER)
         { }
 
         protected GameObject(Vector location, Vector velocity, double Mass, Rule traits)

@@ -30,6 +30,8 @@ namespace Planets.Controller
         // Game rules
         private AbstractGameRule[] _gameRules =
         {
+            // ========== [ ANTAGONIST BEHAVIOUR ] ==========
+            new AIrule(),
             // ========== [ CHANGE SPEED ] ==========
             new BlackHoleRule(),
 
