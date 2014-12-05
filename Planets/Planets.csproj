@@ -83,7 +83,7 @@
     <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\GameObjects\BlackHole.cs" />
-	<Compile Include="Model\Antagonist.cs" />
+    <Compile Include="Model\Antagonist.cs" />
     <Compile Include="Model\GameObjects\GameObject.cs" />
     <Compile Include="Model\GameObjects\Mine.cs" />
     <Compile Include="Model\GameObjects\Player.cs" />
