@@ -17,7 +17,7 @@ namespace Planets.Controller.Subcontrollers
 
             bool TARDIS = false;
             Random rnd = new Random();
-            int AmntObstacles = rnd.Next(4, 8);
+            int AmntObstacles = rnd.Next(4, 12);
 
             int[] RndObstacles = new int[AmntObstacles];
             int previous = -1;
@@ -46,45 +46,63 @@ namespace Planets.Controller.Subcontrollers
             {
                 bool PointFound = false;
                 bool PointOK = false;
-                while(!PointOK)
-                {
-                    Point RndPoint = new Point(rnd.Next(0, 1920), rnd.Next(0, 1080));
-
-                    foreach(Point point in UsedPoints)
-                        if (point == RndPoint)
-                            PointFound = true;
-
-                    if (!PointFound)
-                    {
-                        NextPoint = RndPoint;
-                        PointOK = true;
-                    }
-                }
-
+                bool NotOK = false;
                 int UsedPointCount = 0;
 
-                switch(obj)
+                while (!NotOK)
                 {
-                    case 0: // AntiGravity
-                        pf.BOT.Add(new Antigravity(NextPoint, new Vector(0,0), -1000000));
-                        break;
-                    case 1: // AntiMatter
-                        pf.BOT.Add(new AntiMatter(NextPoint, new Vector(0, 0), 100));
-                        break;
-                    case 2: // BlackHole
-                        pf.BOT.Add(new BlackHole(NextPoint, new Vector(0, 0), 1000000));
-                        break;
-                    case 3: // Mine
-                        pf.BOT.Add(new Mine(NextPoint, new Vector(0, 0), 50));
-                        break;
-                    case 4: // Stasis
-                        pf.BOT.Add(new Stasis(NextPoint, new Vector(0, 0), 800));
-                        break;
-                    case 5: // Tardis
-                        pf.BOT.Add(new Tardis(NextPoint, new Vector(0, 0), 0));
-                        break;
-                }
+                    while(!PointOK)
+                    {
+                        Point RndPoint = new Point(rnd.Next(0, 1920), rnd.Next(0, 1080));
 
+                        foreach(Point point in UsedPoints)
+                            if (point == RndPoint)
+                                PointFound = true;
+
+                        if (!PointFound)
+                        {
+                            NextPoint = RndPoint;
+                            PointOK = true;
+                        }
+                    }
+
+                    GameObject NewObj = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
+
+                    switch (obj)
+                    {
+                        case 0: // AntiGravity
+                            NewObj = (new Antigravity(NextPoint, new Vector(0, 0), -1000000));
+                            break;
+                        case 1: // AntiMatter
+                            NewObj = (new AntiMatter(NextPoint, new Vector(0, 0), 100));
+                            break;
+                        case 2: // BlackHole
+                            NewObj = (new BlackHole(NextPoint, new Vector(0, 0), 1000000));
+                            break;
+                        case 3: // Mine
+                            NewObj = (new Mine(NextPoint, new Vector(0, 0), 50));
+                            break;
+                        case 4: // Stasis
+                            NewObj = (new Stasis(NextPoint, new Vector(0, 0), 800));
+                            break;
+                        case 5: // Tardis
+                            NewObj = (new Tardis(NextPoint, new Vector(0, 0), 0));
+                            break;
+                    }
+
+                    bool FoundIntersect = false;
+                    pf.BOT.Iterate(g =>
+                        {
+                            if (g.IntersectsWith(NewObj))
+                                FoundIntersect = true;
+                        });
+
+                    if (!FoundIntersect)
+                    {
+                        pf.BOT.Add(NewObj);
+                        NotOK = true;
+                    }
+                }
                 UsedPoints[UsedPointCount] = NextPoint;
             }
 
