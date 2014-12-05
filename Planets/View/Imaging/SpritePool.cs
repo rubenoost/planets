@@ -138,7 +138,7 @@ namespace Planets.View.Imaging
         }
 
 
-        private static Bitmap PickFrame(Bitmap bmp, int columns, int rows, int frame)
+        public Bitmap PickFrame(Bitmap bmp, int columns, int rows, int frame)
         {
             List<Bitmap> result = CutupImage(bmp, columns, rows);
             return result[frame];

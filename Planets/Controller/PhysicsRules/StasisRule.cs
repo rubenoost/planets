@@ -14,7 +14,7 @@ namespace Planets.Controller.PhysicsRules
             double StasisY = StasisField.Radius + StasisField.Location.Y;
             Vector StasisVector = new Vector(StasisX, StasisY);
 
-            if(StasisVector.Length() - RockVector.Length() < StasisField.Mass){
+            if((StasisVector - RockVector).Length() < StasisField.Mass){
                 return true;
             }
             return false;
