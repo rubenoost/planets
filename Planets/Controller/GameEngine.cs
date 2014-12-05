@@ -35,6 +35,7 @@ namespace Planets.Controller
             new AIrule(),
             // ========== [ CHANGE SPEED ] ==========
             new BlackHoleRule(),
+			new AntiGravityRule(),
 
             // ========== [ CHANGE LOCATION ] ==========
             new MoveRule(),
@@ -54,8 +55,7 @@ namespace Planets.Controller
             new TardisRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
-            new StayInFieldRule(),
-            new ResetRule(),
+            new StayInFieldRule()
         };
 
         private Thread GameThread;
@@ -65,8 +65,7 @@ namespace Planets.Controller
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            field = new Playfield(1920, 1080);
-            field.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 0);
+            field = RandomLevelGenerator.GenerateRandomLevel();
 
             // Create view
             GameView = new GameView(field);
