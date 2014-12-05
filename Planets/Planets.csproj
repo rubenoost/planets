@@ -78,16 +78,16 @@
     <Compile Include="Controller\PhysicsRules\TardisRule.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
-    <Compile Include="Model\Antigravity.cs" />
-    <Compile Include="Model\AntiMatter.cs" />
+    <Compile Include="Model\GameObjects\Antigravity.cs" />
+    <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
-    <Compile Include="Model\BlackHole.cs" />
-    <Compile Include="Model\GameObject.cs" />
-    <Compile Include="Model\Mine.cs" />
-    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\GameObjects\BlackHole.cs" />
+    <Compile Include="Model\GameObjects\GameObject.cs" />
+    <Compile Include="Model\GameObjects\Mine.cs" />
+    <Compile Include="Model\GameObjects\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
-    <Compile Include="Model\Stasis.cs" />
-    <Compile Include="Model\Tardis.cs" />
+    <Compile Include="Model\GameObjects\Stasis.cs" />
+    <Compile Include="Model\GameObjects\Tardis.cs" />
     <Compile Include="Model\Vector.cs" />
     <Compile Include="PlanetsForm.cs">
       <SubType>Form</SubType>
@@ -155,11 +155,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Para3.png" />
+    <None Include="Resources\Para2.png" />
+    <None Include="Resources\Para1.png" />
+    <None Include="Resources\stasis.png" />
     <None Include="Resources\KomeetStaartje1.png" />
     <None Include="Resources\Pluto1.png" />
-    <None Include="Resources\Stasis.png" />
     <None Include="Resources\pooface.png" />
-    <None Include="Resources\sprites.png" />
     <None Include="Resources\PLANET.png" />
     <None Include="Resources\1796813.jpg" />
     <None Include="Resources\space-wallpaper.jpg" />

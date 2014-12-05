@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace Planets.Model
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct Vector
     {
         /// <summary>
