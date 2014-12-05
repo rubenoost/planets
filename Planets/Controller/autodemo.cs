@@ -139,9 +139,6 @@ namespace Planets.Controller
 
                 // Change lastautoclicklocation
                 Spc.InternalPlayfield.LastAutoClickMoment = DateTime.MinValue;
-
-                // Little hack
-                Spc.InternalPlayfield.CurrentPlayer.Mass = 1;
             }
         }
 
