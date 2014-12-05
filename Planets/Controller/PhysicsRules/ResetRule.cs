@@ -38,6 +38,8 @@ namespace Planets.Controller.PhysicsRules
 
                 pf.CurrentPlayer = new Player(new Vector(200, 200), new Vector(0, 0), Utils.StartMass);
                 pf.CurrentPlayer.Location = new Vector(1000, pf.Size.Height / 2);
+                pf.BOT.Add(new Antagonist(pf.CurrentPlayer.Location + new Vector(200, 200), new Vector(0, 0), Utils.StartMass));
+
             }
         }
     }
