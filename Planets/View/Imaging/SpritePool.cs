@@ -151,6 +151,13 @@ namespace Planets.View.Imaging
             return result;
         }
 
+
+        private static Bitmap PickFrame(Bitmap bmp, int columns, int rows, int frame)
+        {
+            List<Bitmap> result = CutupImage(bmp, columns, rows);
+            return result[frame];
+        }
+
         private static List<Bitmap> CutupImage(Image bitmap, int columns, int rows)
         {
             // Determine target
@@ -182,5 +189,7 @@ namespace Planets.View.Imaging
             }
             return result;
         }
+
+
     }
 }

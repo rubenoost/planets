@@ -79,6 +79,7 @@ namespace Planets.View
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
                 DrawAimVectors(g);
                 DrawDemo(g);
+                DrawAnimations(g);
                 DrawDebug(g);
             }
         }
@@ -193,6 +194,12 @@ namespace Planets.View
                 Point cursorPixelPoint = field.LastAutoClickGameLocation;
                 g.DrawImageUnscaled(sp.GetSprite(Sprite.Cursor, 100, 100), cursorPixelPoint.X - 4, cursorPixelPoint.Y - 10);
             }
+        }
+
+        private void DrawAnimations(Graphics g)
+        {
+            //if there are animations queued
+            //play them
         }
 
         private void DrawDebug(Graphics g)
