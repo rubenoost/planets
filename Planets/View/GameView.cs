@@ -171,6 +171,10 @@ namespace Planets.View
             {
                 spriteID = Sprite.BlackHole;
             }
+            else if (obj is Tardis)
+            {
+                spriteID = Sprite.Tardis;
+            }
             else
             {
                 spriteID = Sprite.Player;
