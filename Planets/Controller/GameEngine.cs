@@ -50,6 +50,9 @@ namespace Planets.Controller
             // ========== [ SLOW OBJECT ] ==========
             //new StasisRule(),
 
+            // ========== [ TARDIS ] ==========
+            new TardisRule(),
+
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
             new ResetRule(),
