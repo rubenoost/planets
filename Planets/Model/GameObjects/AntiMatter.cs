@@ -4,10 +4,8 @@
     {
 
         public AntiMatter(Vector location, Vector velocity, double mass)
-            : base(location, velocity, mass, Rule.COLLIDES | Rule.EATABLE | Rule.MOVE | Rule.EATS)
-        {
-            Radius = 20;
-        }
+            : base(location, velocity, mass, Rule.COLLIDES | Rule.EATABLE | Rule.MOVE | Rule.EATS | Rule.DYNAMIC_RADIUS)
+        { }
 
     }
 }
