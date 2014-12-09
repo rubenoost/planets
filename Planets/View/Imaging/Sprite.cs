@@ -18,28 +18,22 @@ namespace Planets.View.Imaging
         /// Maakt een nieuwe <c>Sprite</c> aan.
         /// </summary>
         /// <param name="bm">De <see cref="Bitmap" /> van deze <c>Sprite</c>.</param>
-        /// <param name="countX">Aantal stukjes om de x-as in te verdelen.</param>
-        /// <param name="countY">Aantal stukjes om de y-as in te verdelen.</param>
+        /// <param name="countX">Aantal stukjes om de sheet in te verdelen.</param>
         /// <param name="cyclic">Of deze <c>Sprite</c> cyclisch moet zijn.</param>
-        public Sprite(Bitmap bm, int countX, int countY, bool cyclic)
+        public Sprite(Bitmap bm, int countX, bool cyclic)
         {
             // Save variables
             Image = bm;
             Cyclic = cyclic;
 
             // Check for moving image or static image
-            if (countX > 0 && countY > 0 && countX * countY > 1)
-            {
+            if (countX > 0) {
                 // Has to be cut up
                 Columns = countX;
-                Rows = countY;
-                Images = CutupImage(bm, Rows, Columns);
-            }
-            else
-            {
+                Images = CutupImage(bm, Columns);
+            } else {
                 // No cutup
                 Columns = 1;
-                Rows = 1;
             }
         }
 
@@ -90,30 +84,29 @@ namespace Planets.View.Imaging
         /// <param name="rows"></param>
         /// <param name="columns"></param>
         /// <returns></returns>
-        private static List<Bitmap> CutupImage(Image bitmap, int rows, int columns)
+        private static List<Bitmap> CutupImage(Image bitmap, int columns)
         {
             // Determine target
-            var s = new Size(bitmap.Width / columns, bitmap.Height / rows);
+            var s = new Size(bitmap.Width / columns, bitmap.Height);
             var targetRectangle = new Rectangle(new Point(0, 0), s);
 
             // Create result
             var result = new List<Bitmap>(s.Height * s.Width);
 
             // Cut up image
-            for (int i = 0; i < rows; i++)
+            for (int j = 0; j < columns; j++)
             {
-                for (int j = 0; j < columns; j++)
-                {
-                    // Create new Bitmap
-                    var subImage = new Bitmap(s.Width, s.Height);
-                    // Draw scaled image
-                    using (Graphics g = Graphics.FromImage(subImage))
-                        g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
-                            GraphicsUnit.Pixel);
-                    // Add to result
-                    result.Add(subImage);
-                }
+                // Create new Bitmap
+                var subImage = new Bitmap(s.Width, s.Height);
+
+                // Draw scaled image
+                using (Graphics g = Graphics.FromImage(subImage))
+                    g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, s.Height), s),
+                        GraphicsUnit.Pixel);
+                // Add to result
+                result.Add(subImage);
             }
+
             return result;
         }
 
@@ -133,8 +126,8 @@ namespace Planets.View.Imaging
         /// <param name="bm"></param>
         /// <param name="countX"></param>
         /// <param name="countY"></param>
-        public Sprite(Bitmap bm, int countX = -1, int countY = -1)
-            : this(bm, countX, countY, false)
+        public Sprite(Bitmap bm, int countX = -1)
+            : this(bm, countX, false)
         { }
 
 
@@ -148,21 +141,16 @@ namespace Planets.View.Imaging
         /// </summary>
         public int Columns { get; set; }
 
-        /// <summary>
-        ///     Gets the amount of rows in this sprite.
-        /// </summary>
-        public int Rows { get; set; }
-
         public int Frames
         {
-            get { return Rows * Columns; }
+            get { return Columns; }
         }
 
         public Bitmap Image;
 
         public static implicit operator Sprite(Bitmap bm)
         {
-            return new Sprite { Columns = 1, Rows = 1, Image = bm };
+            return new Sprite { Columns = 1, Image = bm };
         }
 
         public static implicit operator Bitmap(Sprite s)
