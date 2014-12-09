@@ -1,7 +1,7 @@
 ﻿using Planets.Model;
-using Planets.View.Imaging;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
 
     class BlackHoleEatRule : AbstractGameRule
@@ -10,10 +10,12 @@ namespace Planets.Controller.PhysicsRules
         {
             pf.BOT.Iterate(go =>
             {
-                if (!(go is BlackHole) || !go.Is(Rule.EATS)) return;
+                if (!(go is BlackHole)) return;
                 pf.BOT.Iterate(go2 =>
                 {
                     if (!go2.Is(Rule.EATABLE)) return;
+                    if (!go.Is(go2 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
+
                     if (go != go2 && go.IntersectsWith(go2))
                     {
                         if (go2 is Player)

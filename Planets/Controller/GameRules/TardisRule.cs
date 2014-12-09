@@ -1,7 +1,8 @@
-﻿using Planets.Model;
-using System;
+﻿using System;
+using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules {
+namespace Planets.Controller.GameRules {
     class TardisRule : AbstractGameRule {
         private Random randX = new Random();
         private Random randY = new Random();

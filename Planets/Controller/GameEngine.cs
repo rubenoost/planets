@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using Planets.Controller.PhysicsRules;
+using Planets.Controller.GameRules;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.View;
-using Planets.View.Imaging;
 
 namespace Planets.Controller
 {
