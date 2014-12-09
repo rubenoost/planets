@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     class DynamicEatRule : AbstractCollisionRule
     {
         protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms)
         {
-            if (!go1.Is(Rule.EATABLE) || !go2.Is(Rule.EATABLE)) return;
+            if (!go1.Is(Rule.EATABLE) && !go2.Is(Rule.EATABLE)) return;
             if (go1 is BlackHole || go2 is BlackHole) return;
 
             // Check distance
@@ -20,52 +17,35 @@ namespace Planets.Controller.PhysicsRules
             // Check for distance too large
             if (go1.Radius + go2.Radius <= L) return;
 
-            if ((go1 is AntiMatter || go2 is AntiMatter) && !(go1 is AntiMatter && go2 is AntiMatter))
+            // Determine largest and smallest
+            GameObject gL, gS;
+            if (go1.Radius > go2.Radius)
             {
-
-                GameObject gL, gS;
-                if(go1.Radius > go2.Radius)
-                {
-                    gL = go1;
-                    gS = go2;
-                }
-                else
-                {
-                    gL = go2;
-                    gS = go1;
-                }
-
-                // gL moet zoveel kleiner worden als dat gS is. Hierna moet er worden gecheckt of
-                double LostMass = gS.Mass * 30;
-
-                gL.Mass -= LostMass;
-
-                gS.Mass -= gS.Mass;
-
-                //pf.BOT.Remove(gS);
-
-                if (gL.Mass <= 0)
-                    pf.BOT.Remove(gL);
-
-                if (gS.Mass <= 0)
-                    pf.BOT.Remove(gS);
-
+                gL = go1;
+                gS = go2;
             }
             else
             {
-                // Find largest and smallest
-                GameObject gL, gS;
-                if (go1.Mass > go2.Mass)
-                {
-                    gL = go1;
-                    gS = go2;
-                }
-                else
-                {
-                    gL = go2;
-                    gS = go1;
-                }
+                gL = go2;
+                gS = go1;
+            }
 
+            if (gS is AntiMatter && !(gL is AntiMatter) && gL.Is(Rule.EATABLE))
+            {
+                // gL moet zoveel kleiner worden als dat gS is. Hierna moet er worden gecheckt of
+                double LostMass = gS.Mass * 30;
+
+                // Check for mass of large gameobject
+                if (LostMass >= gL.Mass)
+                    pf.BOT.Remove(gL);
+                else
+                    gL.Mass -= LostMass;
+
+                // Remove antimatter
+                pf.BOT.Remove(gS);
+            }
+            else
+            {
                 // Check for eat flags
                 if (!gS.Is(Rule.EATABLE)) return;
                 if (!gL.Is(gS is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;

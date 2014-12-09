@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Planets.Model
+namespace Planets.Model.GameObjects
 {
     [Flags]
     public enum Rule

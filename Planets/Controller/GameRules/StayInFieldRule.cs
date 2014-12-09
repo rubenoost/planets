@@ -1,6 +1,6 @@
 ﻿using Planets.Model;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     class StayInFieldRule : AbstractGameRule
     {

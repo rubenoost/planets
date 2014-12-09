@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Planets.Model.GameObjects;
 
 namespace Planets.Model
 {

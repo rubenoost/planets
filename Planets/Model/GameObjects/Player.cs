@@ -1,4 +1,4 @@
-﻿namespace Planets.Model
+﻿namespace Planets.Model.GameObjects
 {
     public class Player : GameObject
     {

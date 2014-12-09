@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.Properties;
 
 namespace Planets.View.Imaging
@@ -25,7 +26,7 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Mine), Resources.Pluto_Red);
             RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
-            RegisterImage(typeof(Antagonist), Resources.KomeetStaartje);
+            RegisterImage(typeof(Antagonist), Resources.antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);
 
             RegisterImage(Sprite.Background1, Resources.space_wallpaper);

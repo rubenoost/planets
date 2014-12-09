@@ -1,7 +1,7 @@
-﻿using System;
-using Planets.Model;
+﻿using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     public abstract class AbstractCollisionRule : AbstractGameRule
     {

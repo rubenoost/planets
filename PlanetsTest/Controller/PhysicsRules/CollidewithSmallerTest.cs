@@ -1,9 +1,7 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Forms;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Planets.Controller.PhysicsRules;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Planets.Controller.GameRules;
 using Planets.Model;
+using Planets.Model.GameObjects;
 
 namespace PlanetsTest.Controller.PhysicsRules
 {
