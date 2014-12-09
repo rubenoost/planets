@@ -229,10 +229,19 @@ namespace Planets.View
             
 
             // Draw Mass-o-meter
+            Point MassMeterPoint = new Point(hudLocation.X + 20, hudLocation.Y + 60);
 
+            int MassDrawY = (int)(MassMeterPoint.Y + (230 - field.CurrentPlayer.Radius));
+
+            Point MassDrawPoint = new Point(MassMeterPoint.X, (MassDrawY > MassMeterPoint.Y) ? MassDrawY : MassMeterPoint.Y);
+
+            g.FillRectangle(new SolidBrush(Color.Red), new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
+            g.DrawRectangle(new Pen(Color.White, 2), new Rectangle(MassMeterPoint, new Size(15, 230)));
 
             // Draw Whatever-o-meter
+            Point WhatEverMeterPoint = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
 
+            g.DrawRectangle(new Pen(Color.White, 2), new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
 
             // Draw something else
 
