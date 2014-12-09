@@ -6,7 +6,7 @@ namespace Planets.Controller.GameRules
 {
     class DynamicEatRule : AbstractCollisionRule
     {
-        protected override void DoCollision(Playfield pf, GameObject go1, GameObject go2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms)
         {
             if (!go1.Is(Rule.EATABLE) && !go2.Is(Rule.EATABLE)) return;
             if (go1 is BlackHole || go2 is BlackHole) return;
@@ -56,6 +56,14 @@ namespace Planets.Controller.GameRules
                 {
                     gL.Mass = T;
                     gS.Mass = 1.0;
+
+                    // Bereken score? Animeer score!
+                    if(!(gS is Player) && (gL is Player))
+                    {
+                        Player p = gL as Player;
+                        sb.AddScore(new Score(50, DateTime.Now, gS.Location, (gL == pf.CurrentPlayer)));
+                    }
+
                     pf.BOT.Remove(gS);
                     return;
                 }
