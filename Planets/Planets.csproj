@@ -80,11 +80,13 @@
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="Model\GameObjects\Animation.cs" />
     <Compile Include="Model\GameObjects\Antigravity.cs" />
     <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\GameObjects\BlackHole.cs" />
     <Compile Include="Model\Antagonist.cs" />
+    <Compile Include="Model\GameObjects\Explosion.cs" />
     <Compile Include="Model\GameObjects\GameObject.cs" />
     <Compile Include="Model\GameObjects\Mine.cs" />
     <Compile Include="Model\GameObjects\Player.cs" />

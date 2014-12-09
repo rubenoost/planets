@@ -25,8 +25,8 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Mine), Resources.Pluto_Red);
             RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
+            RegisterImage(typeof(Antagonist), Resources.KomeetStaartje);
             RegisterImage(typeof(GameObject), Resources.Pluto);
-            RegisterImage(typeof(Antagonist), Resources.Cursors_Red);
 
             RegisterImage(Sprite.Background1, Resources.space_wallpaper);
             RegisterImage(Sprite.Background2, Resources.Para1);
@@ -34,8 +34,6 @@ namespace Planets.View.Imaging
             RegisterImage(Sprite.CometTail, Resources.KomeetStaartje);
             RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
             RegisterImage(Sprite.Stars, Resources.smallStars);
-            RegisterImage(Sprite.Sprity, Resources.spritety);
-            
         }
 
         private void RegisterImage(Type t, Sprite s)
@@ -91,9 +89,9 @@ namespace Planets.View.Imaging
             if (s.Frames == 1)
                 return new Sprite { Columns = 1, Rows = 1, Image = ResizeImg(s.Image, width, height) };
 
-            Sprite result = new Sprite { Columns = s.Columns, Rows = s.Rows, Image = s.Image, FrameList = new List<Bitmap>() };
-            foreach (Bitmap bm in s.FrameList)
-                result.FrameList.Add(ResizeImg(bm, width, height));
+            Sprite result = new Sprite { Columns = s.Columns, Rows = s.Rows, Image = s.Image, Images = new List<Bitmap>() };
+            foreach (Bitmap bm in s.Images)
+                result.Images.Add(ResizeImg(bm, width, height));
             return result;
         }
 
@@ -115,9 +113,9 @@ namespace Planets.View.Imaging
             if (s.Frames == 1)
                 return new Sprite { Columns = 1, Rows = 1, Image = RotateImg(s.Image, angle) };
 
-            Sprite result = new Sprite { Columns = s.Columns, Rows = s.Rows, Image = s.Image, FrameList = new List<Bitmap>() };
-            foreach (Bitmap bm in s.FrameList)
-                result.FrameList.Add(RotateImg(bm, angle));
+            Sprite result = new Sprite { Columns = s.Columns, Rows = s.Rows, Image = s.Image, Images = new List<Bitmap>() };
+            foreach (Bitmap bm in s.Images)
+                result.Images.Add(RotateImg(bm, angle));
             return result;
         }
 
@@ -134,45 +132,6 @@ namespace Planets.View.Imaging
             g.RotateTransform(-angle);
             g.TranslateTransform((float)(-size / 2), (float)(-size / 2));
             g.DrawImageUnscaled(bmp, 0, 0);
-            return result;
-        }
-
-
-        public Bitmap PickFrame(Bitmap bmp, int columns, int rows, int frame)
-        {
-            List<Bitmap> result = CutupImage(bmp, columns, rows);
-            return result[frame];
-        }
-
-        private static List<Bitmap> CutupImage(Image bitmap, int columns, int rows)
-        {
-            // Determine target
-            var s = new Size(bitmap.Width / columns, bitmap.Height / rows);
-            var targetRectangle = new Rectangle(new Point(0, 0), s);
-
-            // Create result
-            var result = new List<Bitmap>(s.Height * s.Width);
-
-            // Cut up image
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    // Create new Bitmap
-                    var subImage = new Bitmap(s.Width, s.Height);
-
-                    // Draw scaled image
-                    Graphics g = Graphics.FromImage(subImage);
-                    g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
-                        GraphicsUnit.Pixel);
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-
-                    // Add to result
-                    result.Add(subImage);
-                }
-            }
             return result;
         }
 

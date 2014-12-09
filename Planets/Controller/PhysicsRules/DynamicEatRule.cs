@@ -13,14 +13,13 @@ namespace Planets.Controller.PhysicsRules
         {
             if (go1 is BlackHole || go2 is BlackHole) return;
 
-            // ANNIHALATE EACHOTHER BIIAATTCCHHH
             // Check distance
             double L = (go1.Location - go2.Location).Length();
 
             // Check for distance too large
             if (go1.Radius + go2.Radius <= L) return;
 
-            if (go1 is AntiMatter || go2 is AntiMatter && !(go1 is AntiMatter && go2 is AntiMatter))
+            if ((go1 is AntiMatter || go2 is AntiMatter) && !(go1 is AntiMatter && go2 is AntiMatter))
             {
 
                 GameObject gL, gS;
@@ -41,8 +40,6 @@ namespace Planets.Controller.PhysicsRules
                 gL.Mass -= LostMass;
 
                 gS.Mass -= gS.Mass;
-
-                // EXPLOSIEEEEE
 
                 //pf.BOT.Remove(gS);
 

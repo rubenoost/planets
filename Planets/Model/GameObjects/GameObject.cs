@@ -6,6 +6,7 @@ namespace Planets.Model
     [Flags]
     public enum Rule
     {
+        NONE = 0,
         MOVE = 1,
         EATABLE = 2,
         EATS = 4,
@@ -13,7 +14,7 @@ namespace Planets.Model
         DYNAMIC_RADIUS = 16,
         AFFECTED_BY_BH = 32,
         COLLIDES = 64,
-        SLOWS = 128,
+        SLOWABLE = 128,
         EXPLODES = 256,
 		AFFECTED_BY_AG = 512
     }
@@ -102,7 +103,7 @@ namespace Planets.Model
 
         public GameObject(Vector location, Vector velocity, double Mass)
             : this(location, velocity, Mass,
-            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS | Rule.SLOWS | Rule.AFFECTED_BY_AG)
+            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS | Rule.SLOWABLE | Rule.AFFECTED_BY_AG)
         { }
 
         protected GameObject(Vector location, Vector velocity, double Mass, Rule traits)

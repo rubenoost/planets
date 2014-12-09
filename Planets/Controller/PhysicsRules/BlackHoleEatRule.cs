@@ -20,6 +20,7 @@ namespace Planets.Controller.PhysicsRules
                         {
                             if (go.Traits.HasFlag(Rule.EAT_PLAYER))
                                 pf.BOT.Remove(go2);
+                            //pf.BOT.Add(new Explosion(new Vector(10, 10), new Vector(50, 50), 50000));
                         }
                         else
                         {

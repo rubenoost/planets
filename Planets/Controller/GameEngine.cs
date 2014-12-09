@@ -32,10 +32,11 @@ namespace Planets.Controller
         private AbstractGameRule[] _gameRules =
         {
             // ========== [ ANTAGONIST BEHAVIOUR ] ==========
-            new AIrule(),
+            //new AIrule(),
+
             // ========== [ CHANGE SPEED ] ==========
             new BlackHoleRule(),
-			//new AntiGravityRule(),
+			new AntiGravityRule(),
 
             // ========== [ CHANGE LOCATION ] ==========
             new MoveRule(),
@@ -43,19 +44,21 @@ namespace Planets.Controller
             // ========== [ REMOVING OBJECTS ] ==========
             //new CollidewithSmaller(),
             new DynamicEatRule(),
-			new ExplosionRule(),
+			//new ExplosionRule(),
+            new BlackHoleEatRule(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
 
             // ========== [ SLOW OBJECT ] ==========
-            //new StasisRule(),
+            new StasisRule(),
 
             // ========== [ TARDIS ] ==========
             new TardisRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
-            new StayInFieldRule()
+            new StayInFieldRule(),
+            new ResetRule()
         };
 
         private Thread GameThread;
@@ -65,7 +68,9 @@ namespace Planets.Controller
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            field = RandomLevelGenerator.GenerateRandomLevel();
+            //field = RandomLevelGenerator.GenerateRandomLevel();
+            field = new Playfield(1920, 1080);
+            field.CurrentPlayer = new Player(new Vector(100, 100), new Vector(100, 100), 1.0);
 
             // Create view
             GameView = new GameView(field);
@@ -81,8 +86,7 @@ namespace Planets.Controller
             field.Size = GameView.Size;
 
             // Register keys for resetting
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.Mass = 0.0; };
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.B) Debug.ShowWindow();};
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.Mass = 1.0; };
 
             // Increase mass
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.Mass *= 1.2; };
