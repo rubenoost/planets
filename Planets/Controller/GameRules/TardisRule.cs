@@ -12,7 +12,7 @@ namespace Planets.Controller.PhysicsRules {
                 if(!(g is Tardis))
                     return;
                 pf.BOT.Iterate(g2 => {
-                    if(!g2.Traits.HasFlag(Rule.AFFECTED_BY_BH))
+                    if (!g2.Is(Rule.AFFECTED_BY_BH))
                         return;
 
                     if(!(g2 is Player)) {

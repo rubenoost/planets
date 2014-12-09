@@ -13,7 +13,7 @@ namespace Planets.Controller.PhysicsRules
                 if (!(g is Stasis)) return;
                 pf.BOT.Iterate(g2 =>
                 {
-                    if (!g2.Traits.HasFlag(Rule.SLOWABLE)) return;
+                    if (!g2.Is(Rule.SLOWABLE)) return;
 
                     if(g != g2 && !(g2 is Player)) {
                         Vector V = g.Location - g2.Location;

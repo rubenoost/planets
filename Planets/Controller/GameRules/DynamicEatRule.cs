@@ -66,8 +66,8 @@ namespace Planets.Controller.PhysicsRules
                 }
 
                 // Check for eat flags
-                if (!gS.Traits.HasFlag(Rule.EATABLE)) return;
-                if (!gL.Traits.HasFlag(gS is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
+                if (!gS.Is(Rule.EATABLE)) return;
+                if (!gL.Is(gS is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
 
                 // Check for too close
                 double T = gL.Mass + gS.Mass;

@@ -15,7 +15,7 @@ namespace Planets.Controller.PhysicsRules
                 if (!(g is BlackHole)) return;
                 pf.BOT.Iterate(g2 =>
                 {
-                    if (!g2.Traits.HasFlag(Rule.AFFECTED_BY_AG)) return;
+                    if (!g2.Is(Rule.AFFECTED_BY_AG)) return;
 
                     if (g != g2 && !(g2 is Player))
                     {

@@ -8,7 +8,7 @@ namespace Planets.Controller.PhysicsRules
         {
             pf.BOT.Iterate(g =>
             {
-                if (g.Traits.HasFlag(Rule.MOVE))
+                if (g.Is(Rule.MOVE))
                 {
                     g.UpdateLocation(ms);
                 }

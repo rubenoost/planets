@@ -18,13 +18,14 @@ namespace Planets.Controller.PhysicsRules
 				return;
 
 			// Check for explosion flags
-			if (! go1.Traits.HasFlag(Rule.EXPLODES) && !go2.Traits.HasFlag(Rule.EXPLODES))
+            if (!go1.Is(Rule.EXPLODES) && !go2.Is(Rule.EXPLODES))
 				return;
 
 			GameObject goExplodes, goPlayer;
 
 			// Determine which object is the exploding object.
-			if (go1.Traits.HasFlag(Rule.EXPLODES)) {
+            if (go1.Is(Rule.EXPLODES))
+            {
 				goExplodes = go1;
 				goPlayer = go2;
 			} else {
