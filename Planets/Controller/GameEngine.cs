@@ -35,7 +35,7 @@ namespace Planets.Controller
             new AIrule(),
             // ========== [ CHANGE SPEED ] ==========
             new BlackHoleRule(),
-			//new AntiGravityRule(),
+			new AntiGravityRule(),
 
             // ========== [ CHANGE LOCATION ] ==========
             new MoveRule(),
@@ -44,18 +44,20 @@ namespace Planets.Controller
             //new CollidewithSmaller(),
             new DynamicEatRule(),
 			new ExplosionRule(),
+            new BlackHoleEatRule(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
             new ElasticCollisionRule(),
 
             // ========== [ SLOW OBJECT ] ==========
-            //new StasisRule(),
+            new StasisRule(),
 
             // ========== [ TARDIS ] ==========
             new TardisRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
-            new StayInFieldRule()
+            new StayInFieldRule(),
+            new ResetRule()
         };
 
         private Thread GameThread;
@@ -81,7 +83,7 @@ namespace Planets.Controller
             field.Size = GameView.Size;
 
             // Register keys for resetting
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.Mass = 0.0; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.Mass = 1.0; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.B) Debug.ShowWindow();};
 
             // Increase mass
