@@ -8,7 +8,7 @@ namespace Planets.Model.GameObjects
 {
     class Animation : GameObject
     {
-                public Animation(Vector location, Vector velocity, double mass)
+                public Animation(Vector location, Vector velocity, double mass, int duration, int startTijd)
             : base(location, velocity, mass, Rule.NONE)
 
         {
