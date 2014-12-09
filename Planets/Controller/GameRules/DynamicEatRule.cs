@@ -11,6 +11,7 @@ namespace Planets.Controller.PhysicsRules
     {
         protected override void DoCollision(Playfield pf, GameObject go1, GameObject go2, double ms)
         {
+            if (!go1.Traits.HasFlag(Rule.EATABLE) || !go2.Traits.HasFlag(Rule.EATABLE)) return;
             if (go1 is BlackHole || go2 is BlackHole) return;
 
             // Check distance
