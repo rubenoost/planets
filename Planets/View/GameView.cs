@@ -42,7 +42,7 @@ namespace Planets.View
         public Vector AimPoint;
 
         private SolidBrush ScorePlayerBrush = new SolidBrush(Color.White);
-        private Font ScoreFont = new Font(FontFamily.GenericSansSerif, 30.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+        private Font ScoreFont = new Font(FontFamily.GenericSansSerif, 60.0f, FontStyle.Bold, GraphicsUnit.Pixel);
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 5);
