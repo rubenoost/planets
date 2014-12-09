@@ -160,8 +160,9 @@ namespace Planets.View
 
         private void DrawAnimations(Graphics g)
         {
-            // if there are animations queued
-            // get the frame from the spritepool
+            // if there are animations queued by a gamerule
+            // get the frame from the spritepool list
+            // play the frames
         }
 
         private void DrawDebug(Graphics g)

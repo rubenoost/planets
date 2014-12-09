@@ -34,7 +34,8 @@ namespace Planets.View.Imaging
             RegisterImage(Sprite.CometTail, Resources.KomeetStaartje);
             RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
             RegisterImage(Sprite.Stars, Resources.smallStars);
-            RegisterImage(Sprite.Sprity, Resources.spritety);
+
+            RegisterImage(Sprite.Sprity, new Sprite(Resources.spritety, 4, 4, false));
             
         }
 
@@ -134,45 +135,6 @@ namespace Planets.View.Imaging
             g.RotateTransform(-angle);
             g.TranslateTransform((float)(-size / 2), (float)(-size / 2));
             g.DrawImageUnscaled(bmp, 0, 0);
-            return result;
-        }
-
-
-        private static Bitmap PickFrame(Bitmap bmp, int columns, int rows, int frame)
-        {
-            List<Bitmap> result = CutupImage(bmp, columns, rows);
-            return result[frame];
-        }
-
-        private static List<Bitmap> CutupImage(Image bitmap, int columns, int rows)
-        {
-            // Determine target
-            var s = new Size(bitmap.Width / columns, bitmap.Height / rows);
-            var targetRectangle = new Rectangle(new Point(0, 0), s);
-
-            // Create result
-            var result = new List<Bitmap>(s.Height * s.Width);
-
-            // Cut up image
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    // Create new Bitmap
-                    var subImage = new Bitmap(s.Width, s.Height);
-
-                    // Draw scaled image
-                    Graphics g = Graphics.FromImage(subImage);
-                    g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, i * s.Height), s),
-                        GraphicsUnit.Pixel);
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-
-                    // Add to result
-                    result.Add(subImage);
-                }
-            }
             return result;
         }
 
