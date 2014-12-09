@@ -51,7 +51,7 @@ namespace Planets.Controller
             new ElasticCollisionRule(),
 
             // ========== [ SLOW OBJECT ] ==========
-            //new StasisRule(),
+            new StasisRule(),
 
             // ========== [ TARDIS ] ==========
             new TardisRule(),
