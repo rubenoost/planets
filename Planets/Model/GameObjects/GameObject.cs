@@ -6,6 +6,7 @@ namespace Planets.Model
     [Flags]
     public enum Rule
     {
+        NONE = 0,
         MOVE = 1,
         EATABLE = 2,
         EATS = 4,
