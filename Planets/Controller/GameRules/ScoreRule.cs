@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Planets.Controller.PhysicsRules;
+using Planets.Model;
 
 namespace Planets.Controller.GameRules
 {
@@ -17,7 +18,7 @@ namespace Planets.Controller.GameRules
                 {
                     // first GameObject
 
-
+                    if (!go.Is(Rule.HAS_SCORE)) return;
 
                 });
 
