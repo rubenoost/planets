@@ -16,7 +16,8 @@ namespace Planets.Model
         COLLIDES = 64,
         SLOWABLE = 128,
         EXPLODES = 256,
-		AFFECTED_BY_AG = 512
+		AFFECTED_BY_AG = 512,
+        HAS_SCORE = 1024
     }
 
     public class GameObject
