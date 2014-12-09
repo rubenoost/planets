@@ -8,15 +8,13 @@ namespace Planets.Model.GameObjects
 {
     class Animation : GameObject
     {
-        private int duration;
-        private int starttijd;
+        public int duration { get; set; }
 
                 public Animation(Vector location, Vector velocity, double mass, int d, int s)
             : base(location, velocity, mass, Rule.NONE)
 
                 {
                     d = duration;
-                    s = starttijd;
                 }
     }
 }
