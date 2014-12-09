@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.Properties;
 using Planets.View.Imaging;
 

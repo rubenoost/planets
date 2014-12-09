@@ -1,7 +1,8 @@
-﻿using Planets.Model;
-using System;
+﻿using System;
+using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     class StasisRule : AbstractGameRule
     {

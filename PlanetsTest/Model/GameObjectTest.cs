@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.View;
 
 namespace PlanetsTest.Model

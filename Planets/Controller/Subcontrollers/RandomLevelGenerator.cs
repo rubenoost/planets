@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Planets.Model;
-using System.Drawing;
+﻿using Planets.Model;
+using Planets.Model.GameObjects;
 
 namespace Planets.Controller.Subcontrollers
 {

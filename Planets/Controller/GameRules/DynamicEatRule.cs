@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     class DynamicEatRule : AbstractCollisionRule
     {
         protected override void DoCollision(Playfield pf, GameObject go1, GameObject go2, double ms)
         {
-            if (!go1.Is(Rule.EATABLE) || !go2.Is(Rule.EATABLE)) return;
+            if (!go1.Is(Rule.EATABLE) && !go2.Is(Rule.EATABLE)) return;
             if (go1 is BlackHole || go2 is BlackHole) return;
 
             // Check distance
@@ -20,21 +17,21 @@ namespace Planets.Controller.PhysicsRules
             // Check for distance too large
             if (go1.Radius + go2.Radius <= L) return;
 
+            // Determine largest and smallest
+            GameObject gL, gS;
+            if (go1.Radius > go2.Radius)
+            {
+                gL = go1;
+                gS = go2;
+            }
+            else
+            {
+                gL = go2;
+                gS = go1;
+            }
+
             if ((go1 is AntiMatter || go2 is AntiMatter) && !(go1 is AntiMatter && go2 is AntiMatter))
             {
-
-                GameObject gL, gS;
-                if(go1.Radius > go2.Radius)
-                {
-                    gL = go1;
-                    gS = go2;
-                }
-                else
-                {
-                    gL = go2;
-                    gS = go1;
-                }
-
                 // gL moet zoveel kleiner worden als dat gS is. Hierna moet er worden gecheckt of
                 double LostMass = gS.Mass * 30;
 
@@ -49,23 +46,9 @@ namespace Planets.Controller.PhysicsRules
 
                 if (gS.Mass <= 0)
                     pf.BOT.Remove(gS);
-
             }
             else
             {
-                // Find largest and smallest
-                GameObject gL, gS;
-                if (go1.Mass > go2.Mass)
-                {
-                    gL = go1;
-                    gS = go2;
-                }
-                else
-                {
-                    gL = go2;
-                    gS = go1;
-                }
-
                 // Check for eat flags
                 if (!gS.Is(Rule.EATABLE)) return;
                 if (!gL.Is(gS is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;

@@ -1,6 +1,7 @@
 ﻿using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     class AntiGravityRule : AbstractGameRule
     {
@@ -12,7 +13,7 @@ namespace Planets.Controller.PhysicsRules
             // Update speed to black hole
             pf.BOT.Iterate(g =>
             {
-                if (!(g is BlackHole)) return;
+                if (!(g is Antigravity)) return;
                 pf.BOT.Iterate(g2 =>
                 {
                     if (!g2.Is(Rule.AFFECTED_BY_AG)) return;

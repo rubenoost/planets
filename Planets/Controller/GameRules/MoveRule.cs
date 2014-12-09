@@ -1,6 +1,7 @@
 ﻿using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     class MoveRule : AbstractGameRule
     {
@@ -9,9 +10,7 @@ namespace Planets.Controller.PhysicsRules
             pf.BOT.Iterate(g =>
             {
                 if (g.Is(Rule.MOVE))
-                {
                     g.UpdateLocation(ms);
-                }
             });
         }
     }

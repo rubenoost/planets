@@ -1,21 +1,15 @@
-﻿using Planets.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
 	class ExplosionRule : AbstractCollisionRule
 	{
 		protected override void DoCollision(Playfield pf, GameObject go1, GameObject go2, double ms)
 		{
 			// Check de afstand tot de objecten.
-			double L = (go1.Location - go2.Location).Length();
-
-			if (go1.Radius + go2.Radius <= L) 
-				return;
+		    if (!go1.IntersectsWith(go2)) return;
 
 			// Check for explosion flags
             if (!go1.Is(Rule.EXPLODES) && !go2.Is(Rule.EXPLODES))
