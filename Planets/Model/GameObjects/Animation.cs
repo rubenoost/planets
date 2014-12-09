@@ -4,7 +4,7 @@
     {
         public int duration { get; set; }
 
-                public Animation(Vector location, Vector velocity, double mass, int d, int s)
+                public Animation(Vector location, Vector velocity, double mass, int d)
             : base(location, velocity, mass, Rule.NONE)
 
                 {
