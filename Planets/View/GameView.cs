@@ -186,6 +186,8 @@ namespace Planets.View
             }
         }
 
+
+        private Brush HudBackgroundBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
         private void DrawHud(Graphics g)
         {
             // Draw hud background
@@ -195,10 +197,9 @@ namespace Planets.View
             // Draw hud
             int featherSize = 50;
             Rectangle target = new Rectangle(hudLocation, hudSize);
-            Brush b = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
-            g.FillPie(b, new Rectangle(target.Location, new Size(featherSize * 2, featherSize * 2)), -90.0f, -90.0f);
-            g.FillRectangle(b, new Rectangle(target.Left + featherSize - 1, target.Top, target.Width - featherSize, target.Height));
-            g.FillRectangle(b, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
+            g.FillPie(HudBackgroundBrush, new Rectangle(target.Location, new Size(featherSize * 2, featherSize * 2)), -90.0f, -90.0f);
+            g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left + featherSize - 1, target.Top, target.Width - featherSize, target.Height));
+            g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
 
             // Draw score arc
 
