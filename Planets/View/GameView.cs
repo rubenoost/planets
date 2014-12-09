@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
@@ -66,7 +67,8 @@ namespace Planets.View
             AimVecPen.CustomEndCap = bigArrow;
         }
 
-        public void ModifyScore(int Score) {
+        public void ModifyScore(int Score)
+        {
             int CurrentScore = Convert.ToInt32(ScoreLabel.Text);
             ScoreLabel.Text = Convert.ToString(CurrentScore + Score);
         }
@@ -188,12 +190,15 @@ namespace Planets.View
 
 
         private Brush HudBackgroundBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
+        private Pen HudArcPen = new Pen(Color.YellowGreen, 10.0f);
+        private Pen HudArcAccentPen = new Pen(Color.White, 2.0f);
+        private Font HudScoreFont = new Font(FontFamily.GenericMonospace, 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
         private void DrawHud(Graphics g)
         {
             // Draw hud background
             Size hudSize = new Size(500, 300);
             Point hudLocation = new Point(ClientSize.Width - hudSize.Width, ClientSize.Height - hudSize.Height);
-            
+
             // Draw hud
             int featherSize = 50;
             Rectangle target = new Rectangle(hudLocation, hudSize);
@@ -202,10 +207,26 @@ namespace Planets.View
             g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
 
             // Draw score arc
+            float progress = 0.4f;
 
+            RectangleF arcRectangle = new RectangleF(
+                (float)(hudLocation.X + hudSize.Width * 0.5),
+                (float)(hudLocation.Y + hudSize.Height * 0.2),
+                (float)(hudSize.Width * 0.5),
+                (float)(hudSize.Height * 0.5));
+
+            RectangleF arcAccentRect = new RectangleF(
+                arcRectangle.Left,
+                arcRectangle.Top + 5.0f,
+                arcRectangle.Width,
+                arcRectangle.Height);
+
+            
+            g.DrawArc(HudArcPen, arcRectangle, 225.0f, progress * 90.0f);
+            g.DrawArc(HudArcAccentPen, arcAccentRect, 225.0f, 90.0f);
 
             // Draw score text
-
+            
 
             // Draw Mass-o-meter
 
@@ -290,7 +311,7 @@ namespace Planets.View
             Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
 
             Vector pointRelativeToViewCenterGame = v - viewCenterGame;
-            Vector pointRelativeToViewCenterPixel = new Vector(pointRelativeToViewCenterGame.X * scaleX, pointRelativeToViewCenterGame.Y*scaleY);
+            Vector pointRelativeToViewCenterPixel = new Vector(pointRelativeToViewCenterGame.X * scaleX, pointRelativeToViewCenterGame.Y * scaleY);
 
             return pointRelativeToViewCenterPixel + viewCenterPixel;
         }
