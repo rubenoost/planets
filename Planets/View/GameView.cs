@@ -190,7 +190,7 @@ namespace Planets.View
 
 
         private Brush HudBackgroundBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
-        private Pen HudArcPen = new Pen(Color.YellowGreen, 10.0f);
+        private Pen HudArcPen = new Pen(Color.YellowGreen, 20.0f);
         private Pen HudArcAccentPen = new Pen(Color.White, 2.0f);
         private Font HudScoreFont = new Font(FontFamily.GenericMonospace, 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
         private void DrawHud(Graphics g)
@@ -207,17 +207,17 @@ namespace Planets.View
             g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
 
             // Draw score arc
-            float progress = 0.4f;
+            float progress = Math.Max((float) (field.CurrentPlayer.Radius / 250.0f), 1.0f);
 
             RectangleF arcRectangle = new RectangleF(
-                (float)(hudLocation.X + hudSize.Width * 0.5),
+                (float)(hudLocation.X),
                 (float)(hudLocation.Y + hudSize.Height * 0.2),
-                (float)(hudSize.Width * 0.5),
-                (float)(hudSize.Height * 0.5));
+                (float)(hudSize.Width),
+                (float)(hudSize.Height * 1.2f));
 
             RectangleF arcAccentRect = new RectangleF(
                 arcRectangle.Left,
-                arcRectangle.Top + 5.0f,
+                arcRectangle.Top + HudArcPen.Width / 2,
                 arcRectangle.Width,
                 arcRectangle.Height);
 
