@@ -9,7 +9,6 @@ namespace Planets.View.Imaging
     {
         public const int Cursor = 2;
         public const int CometTail = 4;
-        public const int Sprity = 7;
         public const int Stars = 10;
 
         public const int Background1 = 405011;
@@ -40,7 +39,7 @@ namespace Planets.View.Imaging
             else
             {
                 // No cutup
-                Columns = -1;
+                Columns = 1;
                 Rows = 1;
             }
         }
@@ -127,7 +126,7 @@ namespace Planets.View.Imaging
         /// <summary>
         ///     Gets the images of this sprite, please use sprite[index] instead of this list.
         /// </summary>
-        private List<Bitmap> Images { get; set; }
+        public List<Bitmap> Images { get; set; }
 
         /// <summary>
         ///     Create non-cyclic sprite, cut in pieces.
@@ -137,18 +136,13 @@ namespace Planets.View.Imaging
         /// <param name="countY"></param>
         public Sprite(Bitmap bm, int countX = -1, int countY = -1)
             : this(bm, countX, countY, false)
-        {
-        }
+        { }
 
 
         /// <summary>
         ///     Bitmap die wordt teruggegeven als er geen logisch alternatief is.
         /// </summary>
         public static readonly Bitmap Empty = new Bitmap(1, 1);
-
-        public int Width { get; set; }
-
-        public int Height { get; set; }
 
         /// <summary>
         ///     Gets the amount of columns in this sprite.
@@ -167,16 +161,17 @@ namespace Planets.View.Imaging
 
         public Bitmap Image;
 
-        public List<Bitmap> FrameList;
-
         public static implicit operator Sprite(Bitmap bm)
         {
-            return new Sprite() { Columns = 1, Rows = 1, Image = bm };
+            return new Sprite { Columns = 1, Rows = 1, Image = bm };
         }
 
         public static implicit operator Bitmap(Sprite s)
         {
-            return s.Image;
+            if (s.Frames == 1)
+                return s.Image;
+            else
+                return s[0.0f];
         }
     }
 }
