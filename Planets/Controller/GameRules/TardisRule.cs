@@ -12,11 +12,12 @@ namespace Planets.Controller.PhysicsRules {
                 if(!(g is Tardis))
                     return;
                 pf.BOT.Iterate(g2 => {
-                    if (!g2.Is(Rule.AFFECTED_BY_BH))
+                    if(!g2.Is(Rule.AFFECTED_BY_BH))
                         return;
 
                     if(!(g2 is Player)) {
                         if(g.IntersectsWith(g2)) {
+                            
                             g.Location = new Vector(randX.Next(0, 1920), randY.Next(0, 1080));
                         }
                     }
