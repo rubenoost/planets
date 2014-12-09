@@ -71,7 +71,7 @@ namespace Planets.Model
             }
         }
 
-        public Rule Traits { get; protected set; }
+        protected Rule Traits;
 
         private double? _propRadius;
         public double Radius
@@ -144,6 +144,11 @@ namespace Planets.Model
             }
             return (Location - go.Location).Length() <= (Radius + go.Radius);
 
+        }
+
+        public bool Is(Rule r)
+        {
+            return Traits.HasFlag(r);
         }
     }
 }

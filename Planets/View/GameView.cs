@@ -139,8 +139,8 @@ namespace Planets.View
             int objAngle = 0;
 
             // Check for BH
-            /*if (obj is BlackHole)
-                objAngle = _blackHoleAngle;*/
+            if (obj is BlackHole)
+                objAngle = _blackHoleAngle;
 
             // Draw object
             Rectangle target = GameToScreen(obj.BoundingBox);
