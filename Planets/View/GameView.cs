@@ -43,7 +43,7 @@ namespace Planets.View
 
         private SolidBrush ScorePlayerBrush = new SolidBrush(Color.White);
         private SolidBrush ScoreAIBrush = new SolidBrush(Color.Red);
-        private Font ScoreFont = new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+        private Font ScoreFont = new Font(FontFamily.GenericSansSerif, 30.0f, FontStyle.Bold, GraphicsUnit.Pixel);
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 5);
@@ -93,9 +93,12 @@ namespace Planets.View
                 DrawDebug(g);
             }
 
-            foreach(Score score in field.sb.Scores)
+            lock (field.sb.Scores)
             {
-                g.DrawString(String.Format("+{0}", score.Value), this.ScoreFont, (score.CurrentPlayer) ? this.ScorePlayerBrush : this.ScoreAIBrush, (Point) GameToScreen(score.Location));
+                foreach (Score score in field.sb.Scores)
+                {
+                    g.DrawString(String.Format("+{0}", score.Value), this.ScoreFont, (score.CurrentPlayer) ? this.ScorePlayerBrush : this.ScoreAIBrush, (Point)GameToScreen(score.Location));
+                }
             }
 
             // Debugging
