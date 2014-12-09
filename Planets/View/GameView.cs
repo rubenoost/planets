@@ -67,6 +67,11 @@ namespace Planets.View
             AimVecPen.CustomEndCap = bigArrow;
         }
 
+        public void ModifyScore(int Score) {
+            int CurrentScore = Convert.ToInt32(ScoreLabel.Text);
+            ScoreLabel.Text = Convert.ToString(CurrentScore + Score);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
