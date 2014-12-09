@@ -41,11 +41,14 @@ namespace Planets.View.Imaging
 		/// </summary>
 		public List<Bitmap> Images { get; set; }
 
+		private int spriteIndex = 0;
+
 		/// <summary>
 		///     Returns the given frame.
 		/// </summary>
 		/// <param name="index">-1.0f for static, between 0.0f (inclusive) and 1.0f (exclusive) (or higher if cyclic) for dynamic.</param>
 		/// <returns></returns>
+		/// 
 		public Bitmap this[float index]
 		{
 			get
@@ -123,6 +126,13 @@ namespace Planets.View.Imaging
         public Sprite()
         {
         }
+
+		public Bitmap animate()
+		{
+			this.spriteIndex = (this.spriteIndex < Images.Count - 1) ? this.spriteIndex + 1 : 0; 
+
+			return this[this.spriteIndex];
+		}
 
         /// <summary>
         ///     Helper method to cut up images.

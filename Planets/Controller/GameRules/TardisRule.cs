@@ -18,7 +18,7 @@ namespace Planets.Controller.GameRules {
 
                     if(!(g2 is Player)) {
                         if(g.IntersectsWith(g2)) {
-                            
+                            pf._currentPlayer.score += 50;
                             g.Location = new Vector(randX.Next(0, 1920), randY.Next(0, 1080));
                         }
                     }

@@ -77,10 +77,9 @@ namespace Planets.View
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.CompositingQuality = CompositingQuality.HighQuality;
-
             // Draw static back layer
             DrawBackLayers(g);
-
+            LabelScore.Text = field._currentPlayer.score.ToString();
             // Draw top layer
             DrawBorder(g);
             lock (field.BOT)
