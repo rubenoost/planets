@@ -10,10 +10,10 @@ namespace Planets.Controller.PhysicsRules
             pf.BOT.DoCollisions(
                 (go1, go2, dt) =>
                 {
-                    DoCollision(pf, go1, go2, dt);
+                    DoCollision(pf, pf.sb, go1, go2, dt);
                 }, ms);
         }
 
-        protected abstract void DoCollision(Playfield pf, GameObject go1, GameObject go2, double ms);
+        protected abstract void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms);
     }
 }

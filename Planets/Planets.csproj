@@ -93,6 +93,8 @@
     <Compile Include="Model\Playfield.cs" />
     <Compile Include="Model\GameObjects\Stasis.cs" />
     <Compile Include="Model\GameObjects\Tardis.cs" />
+    <Compile Include="Model\Score.cs" />
+    <Compile Include="Model\ScoreBoard.cs" />
     <Compile Include="Model\Vector.cs" />
     <Compile Include="PlanetsForm.cs">
       <SubType>Form</SubType>
