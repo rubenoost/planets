@@ -55,7 +55,7 @@ namespace Planets.Controller.GameRules
                 if (Math.Sqrt(T / Math.PI) > L)
                 {
                     gL.Mass = T;
-                    gS.Mass = 0;
+                    gS.Mass = 1.0;
                     pf.BOT.Remove(gS);
                     return;
                 }
