@@ -129,6 +129,8 @@ namespace Planets.Controller
                     double temp3 = temp2 * 1000 / 60;
                     Thread.Sleep((int)temp3);
 
+                    field.sb.CheckStamps();
+
                     // Lock BOT
                     lock (field.BOT)
                     {

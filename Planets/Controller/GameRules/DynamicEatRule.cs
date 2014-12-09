@@ -6,7 +6,7 @@ namespace Planets.Controller.GameRules
 {
     class DynamicEatRule : AbstractCollisionRule
     {
-        protected override void DoCollision(Playfield pf, GameObject go1, GameObject go2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms)
         {
             if (!go1.Is(Rule.EATABLE) && !go2.Is(Rule.EATABLE)) return;
             if (go1 is BlackHole || go2 is BlackHole) return;
@@ -30,22 +30,19 @@ namespace Planets.Controller.GameRules
                 gS = go1;
             }
 
-            if ((go1 is AntiMatter || go2 is AntiMatter) && !(go1 is AntiMatter && go2 is AntiMatter))
+            if (gS is AntiMatter && !(gL is AntiMatter) && gL.Is(Rule.EATABLE))
             {
                 // gL moet zoveel kleiner worden als dat gS is. Hierna moet er worden gecheckt of
                 double LostMass = gS.Mass * 30;
 
-                gL.Mass -= LostMass;
-
-                gS.Mass -= gS.Mass;
-
-                //pf.BOT.Remove(gS);
-
-                if (gL.Mass <= 0)
+                // Check for mass of large gameobject
+                if (LostMass >= gL.Mass)
                     pf.BOT.Remove(gL);
+                else
+                    gL.Mass -= LostMass;
 
-                if (gS.Mass <= 0)
-                    pf.BOT.Remove(gS);
+                // Remove antimatter
+                pf.BOT.Remove(gS);
             }
             else
             {
@@ -59,6 +56,14 @@ namespace Planets.Controller.GameRules
                 {
                     gL.Mass = T;
                     gS.Mass = 0;
+
+                    // Bereken score? Animeer score!
+                    if(!(gS is Player) && (gL is Player))
+                    {
+                        Player p = gL as Player;
+                        sb.AddScore(new Score(50, DateTime.Now, gL.Location));
+                    }
+
                     pf.BOT.Remove(gS);
                     return;
                 }
