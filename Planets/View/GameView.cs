@@ -92,15 +92,8 @@ namespace Planets.View
                 DrawDebug(g);
             }
 
-            lock (field.sb.Scores)
-            {
-                foreach (Score score in field.sb.Scores)
-                {
-                    this.ScorePlayerBrush.Color = score.Color;
-                    g.DrawString(String.Format("+{0}", score.Value), this.ScoreFont, this.ScorePlayerBrush, (Point)GameToScreen(score.Location));
-                    score.UpdateLocation();
-                }
-            }
+            DrawScores(g);
+            DrawHud(g);
 
             // Debugging
             _blackHoleAngle++;
@@ -179,6 +172,24 @@ namespace Planets.View
                 Point cursorPixelPoint = field.LastAutoClickGameLocation;
                 g.DrawImageUnscaled(sp.GetSprite(Sprite.Cursor, 100, 100), cursorPixelPoint.X - 4, cursorPixelPoint.Y - 10);
             }
+        }
+
+        private void DrawScores(Graphics g)
+        {
+            lock (field.sb.Scores)
+            {
+                foreach (Score score in field.sb.Scores)
+                {
+                    this.ScorePlayerBrush.Color = score.Color;
+                    g.DrawString(String.Format("+{0}", score.Value), this.ScoreFont, this.ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                    score.UpdateLocation();
+                }
+            }
+        }
+
+        private void DrawHud(Graphics g)
+        {
+            
         }
 
         private void DrawAnimations(Graphics g)
