@@ -41,7 +41,9 @@ namespace Planets.View
         public bool IsAiming;
         public Vector AimPoint;
 
-        private SolidBrush ScoreBrush = new SolidBrush(Color.White);
+        private SolidBrush ScorePlayerBrush = new SolidBrush(Color.White);
+        private SolidBrush ScoreAIBrush = new SolidBrush(Color.Red);
+        private Font ScoreFont = new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold, GraphicsUnit.Pixel);
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 5);
@@ -88,7 +90,7 @@ namespace Planets.View
 
             foreach(Score score in field.sb.Scores)
             {
-                g.DrawString(String.Format("+{0}", score.Value), new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold, GraphicsUnit.Pixel), this.ScoreBrush, (Point) GameToScreen(score.Location));
+                g.DrawString(String.Format("+{0}", score.Value), this.ScoreFont, (score.CurrentPlayer) ? this.ScorePlayerBrush : this.ScoreAIBrush, (Point) GameToScreen(score.Location));
             }
 
             // Debugging

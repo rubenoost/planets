@@ -14,11 +14,14 @@ namespace Planets.Model
 
         public Vector Location { get; private set; }
 
-        public Score(int Value, DateTime Stamp, Vector Location)
+        public bool CurrentPlayer { get; private set; }
+
+        public Score(int Value, DateTime Stamp, Vector Location, bool CurrentPlayer)
         {
             this.Value = Value;
             this.Stamp = Stamp;
             this.Location = Location;
+            this.CurrentPlayer = CurrentPlayer;
         }
 
     }

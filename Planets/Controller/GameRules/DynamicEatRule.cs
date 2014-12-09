@@ -61,7 +61,7 @@ namespace Planets.Controller.GameRules
                     if(!(gS is Player) && (gL is Player))
                     {
                         Player p = gL as Player;
-                        sb.AddScore(new Score(50, DateTime.Now, gL.Location));
+                        sb.AddScore(new Score(50, DateTime.Now, gS.Location, (gL == pf.CurrentPlayer)));
                     }
 
                     pf.BOT.Remove(gS);
