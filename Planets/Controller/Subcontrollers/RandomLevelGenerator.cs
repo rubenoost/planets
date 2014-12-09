@@ -13,7 +13,7 @@ namespace Planets.Controller.Subcontrollers
         private static Playfield pf;
         public static Playfield GenerateRandomLevel()
         {
-            pf = new Playfield(1920, 1080);
+            /*pf = new Playfield(1920, 1080);
 
             bool TARDIS = false;
             Random rnd = new Random();
@@ -107,6 +107,27 @@ namespace Planets.Controller.Subcontrollers
             }
 
             pf.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), Utils.StartMass);
+            return pf;*/
+            Playfield pf = new Playfield(1920, 1080);
+            pf.CurrentPlayer = new Player(new Vector(200, 200), new Vector(0, 0), Utils.StartMass);
+            pf.CurrentPlayer.Location = new Vector(pf.Size.Width / 2, pf.Size.Height / 2);
+
+            //pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(200, 0), new Vector(0, 0), Utils.StartMass / 2));
+            //pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(-200, 0), new Vector(0, 0), Utils.StartMass / 2));
+            //pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(0, 200), new Vector(0, 0), Utils.StartMass / 2));
+            //pf.BOT.Add(new GameObject(pf.CurrentPlayer.Location + new Vector(0, -200), new Vector(0, 0), Utils.StartMass / 2));
+            pf.BOT.Add(new Antagonist(pf.CurrentPlayer.Location + new Vector(200, 200), new Vector(0, 0), Utils.StartMass));
+            // Anti Gravity
+            pf.BOT.Add(new Mine(new Vector(500, 300), new Vector(0, 0), Utils.StartMass / 2));
+
+            // Black holes
+            pf.BOT.Add(new BlackHole(new Vector(50, 50), new Vector(0, 0), 1000000));
+            pf.BOT.Add(new BlackHole(new Vector(50, 1030), new Vector(0, 0), 1000000));
+            pf.BOT.Add(new BlackHole(new Vector(1870, 50), new Vector(0, 0), 1000000));
+            pf.BOT.Add(new BlackHole(new Vector(1870, 1030), new Vector(0, 0), 1000000));
+
+            pf.BOT.Add(new Stasis(new Vector(1200, 800), new Vector(0, 0), 800));
+            pf.BOT.Add(new Tardis(new Vector(800, 200), new Vector(0, 0), 0));
             return pf;
         }
 

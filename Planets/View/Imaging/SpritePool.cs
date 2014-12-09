@@ -25,8 +25,8 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Mine), Resources.Pluto_Red);
             RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
-            RegisterImage(typeof(GameObject), new Sprite(Resources.spritety, 2, 2));
             RegisterImage(typeof(Antagonist), Resources.KomeetStaartje);
+            RegisterImage(typeof(GameObject), Resources.Pluto);
 
             RegisterImage(Sprite.Background1, Resources.space_wallpaper);
             RegisterImage(Sprite.Background2, Resources.Para1);
