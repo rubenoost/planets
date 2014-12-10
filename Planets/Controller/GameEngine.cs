@@ -44,7 +44,7 @@ namespace Planets.Controller
             // ========== [ REMOVING OBJECTS ] ==========
             //new CollidewithSmaller(),
             new DynamicEatRule(),
-			//new ExplosionRule(),
+			new ExplosionRule(),
             new BlackHoleEatRule(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
@@ -57,7 +57,8 @@ namespace Planets.Controller
             new TardisRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
-            new StayInFieldRule()
+            new StayInFieldRule(),
+            new ResetRule()
         };
 
         private Thread GameThread;

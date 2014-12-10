@@ -33,6 +33,7 @@ namespace Planets.Controller.GameRules
 			goPlayer.Mass -= lostMass;
 
 			// TODO: We should probably create an epic explosion before removing the object.
+			pf.BOT.Add(new Explosion(goPlayer.Location, new Vector(0, 0), 500));
 			pf.BOT.Remove(goExplodes);
 
 			Random random = new Random();
@@ -42,8 +43,8 @@ namespace Planets.Controller.GameRules
 				double mass = 0.0;
 
 				// We don't want to generate more mass than is actually lost by the player.
-				if (mass <= 1000) {
-					mass = random.Next(500, (int)massPool);
+				if (massPool >= 1000) {
+					mass = random.Next(10, (int)massPool);
 				} else {
 					mass = random.Next(500, 1000);
 				}

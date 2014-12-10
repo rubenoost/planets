@@ -163,19 +163,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
-    <Content Include="Resources\explosion2.png" />
+    <None Include="Resources\explosion2.png" />
+    <None Include="Resources\Explosion.bmp" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
     <None Include="Resources\Para3.png" />
     <None Include="Resources\Para2.png" />
     <None Include="Resources\Para1.png" />
-    <None Include="Resources\stasis.png" />
     <None Include="Resources\KomeetStaartje1.png" />
-    <None Include="Resources\Pluto1.png" />
-    <None Include="Resources\pooface.png" />
-    <None Include="Resources\PLANET.png" />
-    <None Include="Resources\1796813.jpg" />
     <None Include="Resources\space-wallpaper.jpg" />
-    <None Include="Resources\Pluto.svg" />
     <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
