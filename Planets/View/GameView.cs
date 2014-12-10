@@ -190,10 +190,7 @@ namespace Planets.View
         private Size hudSize = new Size(500, 300);
 
         // Draw WhatEverMeter buff
-        private SolidBrush RedBrush = new SolidBrush(Color.Red);
-        private SolidBrush GreenBrush = new SolidBrush(Color.Green);
         private Pen WhitePen = new Pen(Color.White, 2);
-
 
         private void DrawHud(Graphics g)
         {
@@ -217,8 +214,7 @@ namespace Planets.View
                 hudSize.Width,
                 hudSize.Height * 1.2f);
 
-            Pen HudArcPen = new Pen(
-                new LinearGradientBrush(new PointF(arcRectangle.Left, arcRectangle.Top), new PointF(arcRectangle.Left + arcRectangle.Width, arcRectangle.Top), Color.GreenYellow, Color.DarkOrange), 20.0f);
+            Pen HudArcPen = new Pen(new LinearGradientBrush(new PointF(arcRectangle.Left, arcRectangle.Top), new PointF(arcRectangle.Left + arcRectangle.Width, arcRectangle.Top), Color.GreenYellow, Color.DarkOrange), 20.0f);
 
             RectangleF arcAccentRect = new RectangleF(
                 arcRectangle.Left + HudArcPen.Width / 2,
@@ -243,6 +239,7 @@ namespace Planets.View
                 );
             
             float barStart = 270.0f - barSize/2;
+
             // Draw progress
             g.DrawArc(HudArcPen, arcRectangle, barStart, progress * barSize);
 
@@ -253,6 +250,7 @@ namespace Planets.View
             g.DrawArc(HudArcAccentPen2, arcAccentRect2, barStart + barSize - 1.0f, 1.0f);
             foreach (var f in meterPoints)
                 g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
+
             // Draw score text
             
 
@@ -262,8 +260,8 @@ namespace Planets.View
             int MassDrawY = (int)(MassMeterPoint.Y + (230 - field.CurrentPlayer.Radius));
 
             Point MassDrawPoint = new Point(MassMeterPoint.X, (MassDrawY > MassMeterPoint.Y) ? MassDrawY : MassMeterPoint.Y);
-
-            g.FillRectangle(RedBrush, new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
+            Brush gradientBrush = new LinearGradientBrush(MassMeterPoint, new Point(MassMeterPoint.X, MassMeterPoint.Y + 230), Color.YellowGreen, Color.DarkOrange);
+            g.FillRectangle(gradientBrush, new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
             g.DrawRectangle(WhitePen, new Rectangle(MassMeterPoint, new Size(15, 230)));
 
             // Draw Whatever-o-meter
@@ -275,7 +273,7 @@ namespace Planets.View
 
             Point WhatEverDrawPoint = new Point(WhatEverMeterPoint.X, (WhatEverDrawY > WhatEverMeterPoint.Y) ? WhatEverDrawY : WhatEverMeterPoint.Y);
 
-            g.FillRectangle(GreenBrush, new Rectangle(WhatEverDrawPoint, new Size(15, (int)AmountObjects)));
+            g.FillRectangle(gradientBrush, new Rectangle(WhatEverDrawPoint, new Size(15, (int)AmountObjects)));
             g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
 
             // Draw something else
