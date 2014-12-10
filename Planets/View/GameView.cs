@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
@@ -52,7 +51,7 @@ namespace Planets.View
         private Pen BorderPen = new Pen(new TextureBrush(Resources.Texture), 10.0f);
 
         // Wordt gebruikt voor bewegende achtergrond
-        private int _blackHoleAngle = 0;
+        private int _blackHoleAngle;
 
         public GameView(Playfield field)
         {
@@ -183,9 +182,11 @@ namespace Planets.View
 
         // Draw Score Arc Buff
         private Brush HudBackgroundBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
-        private Pen HudArcPen = new Pen(Color.YellowGreen, 20.0f);
-        private Pen HudArcAccentPen = new Pen(Color.White, 2.0f);
+        private Pen HudArcAccentPen = new Pen(Color.White, 4.0f);
+        private Pen HudArcAccentPen2 = new Pen(Color.White, 30.0f);
+        private Pen HudArcAccentPen3 = new Pen(Color.White, 22.0f);
         private Font HudScoreFont = new Font(FontFamily.GenericMonospace, 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+        private Size hudSize = new Size(500, 300);
 
         // Draw WhatEverMeter buff
         private SolidBrush RedBrush = new SolidBrush(Color.Red);
@@ -196,7 +197,6 @@ namespace Planets.View
         private void DrawHud(Graphics g)
         {
             // Draw hud background
-            Size hudSize = new Size(500, 300);
             Point hudLocation = new Point(ClientSize.Width - hudSize.Width, ClientSize.Height - hudSize.Height);
 
             // Draw hud
@@ -208,23 +208,50 @@ namespace Planets.View
 
             // Draw score arc
             float progress = Math.Min((float) (field.CurrentPlayer.Radius / 250.0f), 1.0f);
+            float barSize = 90.0f;
 
             RectangleF arcRectangle = new RectangleF(
-                (float)(hudLocation.X),
-                (float)(hudLocation.Y + hudSize.Height * 0.2),
-                (float)(hudSize.Width),
-                (float)(hudSize.Height * 1.2f));
+                hudLocation.X,
+                (float) (hudLocation.Y + hudSize.Height * 0.2),
+                hudSize.Width,
+                hudSize.Height * 1.2f);
+
+            Pen HudArcPen = new Pen(
+                new LinearGradientBrush(new PointF(arcRectangle.Left, arcRectangle.Top), new PointF(arcRectangle.Left + arcRectangle.Width, arcRectangle.Top), Color.GreenYellow, Color.DarkOrange), 20.0f);
 
             RectangleF arcAccentRect = new RectangleF(
-                arcRectangle.Left,
+                arcRectangle.Left + HudArcPen.Width / 2,
                 arcRectangle.Top + HudArcPen.Width / 2,
-                arcRectangle.Width,
-                arcRectangle.Height);
+                arcRectangle.Width - HudArcPen.Width,
+                arcRectangle.Height - HudArcPen.Width);
 
+            float diff2 = HudArcAccentPen2.Width - HudArcPen.Width;
+            RectangleF arcAccentRect2 = new RectangleF(
+                arcRectangle.Left - diff2 / 2,
+                arcRectangle.Top - diff2 / 2,
+                arcRectangle.Width + diff2,
+                arcRectangle.Height + diff2
+                );
+
+            float diff3 = HudArcAccentPen3.Width - HudArcPen.Width;
+            RectangleF arcAccentRect3 = new RectangleF(
+                arcRectangle.Left - diff3 / 2,
+                arcRectangle.Top - diff3 / 2,
+                arcRectangle.Width + diff3,
+                arcRectangle.Height + diff3
+                );
             
-            g.DrawArc(HudArcPen, arcRectangle, 225.0f, progress * 90.0f);
-            g.DrawArc(HudArcAccentPen, arcAccentRect, 225.0f, 90.0f);
+            float barStart = 270.0f - barSize/2;
+            // Draw progress
+            g.DrawArc(HudArcPen, arcRectangle, barStart, progress * barSize);
 
+            // Draw meter
+            float[] meterPoints = {0.7f, 0.5f, 0.35f, 0.25f, 0.17f, 0.1f, 0.05f};
+            g.DrawArc(HudArcAccentPen, arcAccentRect, barStart - 1.0f, barSize + 2.0f);
+            g.DrawArc(HudArcAccentPen2, arcAccentRect2, barStart, 1.0f);
+            g.DrawArc(HudArcAccentPen2, arcAccentRect2, barStart + barSize - 1.0f, 1.0f);
+            foreach (var f in meterPoints)
+                g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
             // Draw score text
             
 
