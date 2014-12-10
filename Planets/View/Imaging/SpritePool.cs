@@ -28,6 +28,7 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
             RegisterImage(typeof(Antagonist), Resources.antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);
+			RegisterImage(typeof(Explosion), Resources.explosion2);
 
             RegisterImage(Sprite.Background1, Resources.space_wallpaper);
             RegisterImage(Sprite.Background2, Resources.Para1);

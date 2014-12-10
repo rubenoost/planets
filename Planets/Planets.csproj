@@ -163,6 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\explosion2.png" />
+    <None Include="Resources\Explosion.bmp" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
     <None Include="Resources\Para3.png" />
     <None Include="Resources\Para2.png" />

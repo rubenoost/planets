@@ -102,6 +102,7 @@ namespace Planets.Controller.Subcontrollers
             }
 
             pf.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), Utils.StartMass);
+			pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));
             return pf;
         }
 
