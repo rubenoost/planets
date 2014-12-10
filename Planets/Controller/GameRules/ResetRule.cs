@@ -17,7 +17,7 @@ namespace Planets.Controller.GameRules
 
                 PFNew.BOT.Iterate(g =>
                     {
-                        if (!(g != PFNew.CurrentPlayer))
+                        if (g != PFNew.CurrentPlayer)
                             pf.BOT.Add(g);
                     });
 
