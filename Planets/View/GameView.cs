@@ -81,7 +81,6 @@ namespace Planets.View
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
                 DrawAimVectors(g);
                 DrawDemo(g);
-                DrawAnimations(g);
                 DrawDebug(g);
             }
 
@@ -140,6 +139,8 @@ namespace Planets.View
 
         private void DrawGameObject(Graphics g, GameObject obj)
         {
+			DrawAnimations(g, obj);
+
             // Get sprite
             int objAngle = 0;
 
@@ -281,11 +282,21 @@ namespace Planets.View
 
         }
 
-        private void DrawAnimations(Graphics g)
+        private void DrawAnimations(Graphics g, GameObject obj)
         {
+			Rectangle target = GameToScreen(obj.BoundingBox);
+			Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height);
+
+			if (s.Cyclic) {
+				s.animate();
+			}
+
+			g.DrawImageUnscaled(s, target);
+
             // if there are animations queued by a gamerule
             // get the frame from the spritepool list
             // play the frames
+
         }
 
         private void DrawDebug(Graphics g)
