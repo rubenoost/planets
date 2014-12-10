@@ -57,7 +57,8 @@ namespace Planets.Controller
             new TardisRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
-            new StayInFieldRule()
+            new StayInFieldRule(),
+            new ResetRule()
         };
 
         private Thread GameThread;
