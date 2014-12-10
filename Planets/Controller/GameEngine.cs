@@ -44,7 +44,7 @@ namespace Planets.Controller
             // ========== [ REMOVING OBJECTS ] ==========
             //new CollidewithSmaller(),
             new DynamicEatRule(),
-			//new ExplosionRule(),
+			new ExplosionRule(),
             new BlackHoleEatRule(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
