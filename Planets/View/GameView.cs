@@ -181,8 +181,8 @@ namespace Planets.View
             {
                 foreach (Score score in field.sb.Scores)
                 {
-                    this.ScorePlayerBrush.Color = score.Color;
-                    g.DrawString(String.Format("+{0}", score.Value), this.ScoreFont, this.ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                    ScorePlayerBrush.Color = score.Color;
+                    g.DrawString(String.Format("+{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
                     score.UpdateLocation();
                 }
             }
@@ -207,7 +207,7 @@ namespace Planets.View
             g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
 
             // Draw score arc
-            float progress = Math.Max((float) (field.CurrentPlayer.Radius / 250.0f), 1.0f);
+            float progress = Math.Min((float) (field.CurrentPlayer.Radius / 250.0f), 1.0f);
 
             RectangleF arcRectangle = new RectangleF(
                 (float)(hudLocation.X),
