@@ -175,7 +175,10 @@ namespace Planets.View
                 foreach (Score score in field.sb.Scores)
                 {
                     ScorePlayerBrush.Color = score.Color;
-                    g.DrawString(String.Format("+{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                    if(score.Value > 0)
+                        g.DrawString(String.Format("+{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                    else
+                        g.DrawString(String.Format("{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
                     score.UpdateLocation();
                 }
             }

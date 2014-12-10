@@ -37,10 +37,11 @@ namespace Planets.Controller.GameRules
                 double LostMass = gS.Mass * 30;
 
                 // Check for mass of large gameobject
-                if (LostMass >= gL.Mass)
+                if (LostMass >= gL.Mass){
                     pf.BOT.Remove(gL);
-                else
+                } else
                     gL.Mass -= LostMass;
+                    pf.sb.AddScore(new Score(-50, DateTime.Now, gS.Location, true));
 
                 // Remove antimatter
                 pf.BOT.Remove(gS);

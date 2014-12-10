@@ -28,6 +28,7 @@ namespace Planets.Controller.GameRules
 			}
 
 			// Go boom!
+            pf.sb.AddScore(new Score(-50, DateTime.Now, go1.Location, true));
 			double lostMass = goPlayer.Mass / 2;
 			goPlayer.Mass -= lostMass;
 
