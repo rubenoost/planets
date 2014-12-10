@@ -188,11 +188,18 @@ namespace Planets.View
             }
         }
 
-
+        // Draw Score Arc Buff
         private Brush HudBackgroundBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
         private Pen HudArcPen = new Pen(Color.YellowGreen, 20.0f);
         private Pen HudArcAccentPen = new Pen(Color.White, 2.0f);
         private Font HudScoreFont = new Font(FontFamily.GenericMonospace, 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+
+        // Draw WhatEverMeter buff
+        private SolidBrush RedBrush = new SolidBrush(Color.Red);
+        private SolidBrush GreenBrush = new SolidBrush(Color.Green);
+        private Pen WhitePen = new Pen(Color.White, 2);
+
+
         private void DrawHud(Graphics g)
         {
             // Draw hud background
@@ -235,13 +242,20 @@ namespace Planets.View
 
             Point MassDrawPoint = new Point(MassMeterPoint.X, (MassDrawY > MassMeterPoint.Y) ? MassDrawY : MassMeterPoint.Y);
 
-            g.FillRectangle(new SolidBrush(Color.Red), new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
-            g.DrawRectangle(new Pen(Color.White, 2), new Rectangle(MassMeterPoint, new Size(15, 230)));
+            g.FillRectangle(RedBrush, new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
+            g.DrawRectangle(WhitePen, new Rectangle(MassMeterPoint, new Size(15, 230)));
 
             // Draw Whatever-o-meter
+            int AmountObjects = (field.BOT.Count - 6) * 4;
+
             Point WhatEverMeterPoint = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
 
-            g.DrawRectangle(new Pen(Color.White, 2), new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
+            int WhatEverDrawY = (int)(WhatEverMeterPoint.Y + (230 - AmountObjects));
+
+            Point WhatEverDrawPoint = new Point(WhatEverMeterPoint.X, (WhatEverDrawY > WhatEverMeterPoint.Y) ? WhatEverDrawY : WhatEverMeterPoint.Y);
+
+            g.FillRectangle(GreenBrush, new Rectangle(WhatEverDrawPoint, new Size(15, (int)AmountObjects)));
+            g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
 
             // Draw something else
 
