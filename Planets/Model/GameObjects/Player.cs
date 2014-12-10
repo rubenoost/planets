@@ -2,8 +2,6 @@
 {
     public class Player : GameObject
     {
-        public int score = 0;
-
         public Player(Vector location, Vector velocity, double mass)
             : base(location, velocity, mass)
         {
