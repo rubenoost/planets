@@ -30,46 +30,19 @@ namespace Planets.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.ScoreLabel = new System.Windows.Forms.Label();
-            this.LabelScore = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // ScoreLabel
-            // 
-            this.ScoreLabel.AutoSize = true;
-            this.ScoreLabel.BackColor = System.Drawing.Color.Transparent;
-            this.ScoreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScoreLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ScoreLabel.Location = new System.Drawing.Point(980, 326);
-            this.ScoreLabel.Name = "ScoreLabel";
-            this.ScoreLabel.Size = new System.Drawing.Size(0, 26);
-            this.ScoreLabel.TabIndex = 0;
-            // 
-            // LabelScore
-            // 
-            this.LabelScore.AutoSize = true;
-            this.LabelScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelScore.Location = new System.Drawing.Point(308, 523);
-            this.LabelScore.Name = "LabelScore";
-            this.LabelScore.Size = new System.Drawing.Size(0, 37);
-            this.LabelScore.TabIndex = 1;
             // 
             // GameView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.LabelScore);
-            this.Controls.Add(this.ScoreLabel);
             this.Name = "GameView";
             this.Size = new System.Drawing.Size(1869, 954);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label ScoreLabel;
-        private System.Windows.Forms.Label LabelScore;
     }
 }
