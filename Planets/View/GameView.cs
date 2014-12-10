@@ -67,12 +67,6 @@ namespace Planets.View
             AimVecPen.CustomEndCap = bigArrow;
         }
 
-        public void ModifyScore(int Score)
-        {
-            int CurrentScore = Convert.ToInt32(ScoreLabel.Text);
-            ScoreLabel.Text = Convert.ToString(CurrentScore + Score);
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -81,7 +75,6 @@ namespace Planets.View
             g.CompositingQuality = CompositingQuality.HighQuality;
             // Draw static back layer
             DrawBackLayers(g);
-            LabelScore.Text = field._currentPlayer.score.ToString();
             // Draw top layer
             DrawBorder(g);
             lock (field.BOT)
@@ -181,8 +174,8 @@ namespace Planets.View
             {
                 foreach (Score score in field.sb.Scores)
                 {
-                    this.ScorePlayerBrush.Color = score.Color;
-                    g.DrawString(String.Format("+{0}", score.Value), this.ScoreFont, this.ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                    ScorePlayerBrush.Color = score.Color;
+                    g.DrawString(String.Format("+{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
                     score.UpdateLocation();
                 }
             }
@@ -214,7 +207,7 @@ namespace Planets.View
             g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
 
             // Draw score arc
-            float progress = Math.Max((float) (field.CurrentPlayer.Radius / 250.0f), 1.0f);
+            float progress = Math.Min((float) (field.CurrentPlayer.Radius / 250.0f), 1.0f);
 
             RectangleF arcRectangle = new RectangleF(
                 (float)(hudLocation.X),
