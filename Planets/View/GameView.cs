@@ -66,12 +66,6 @@ namespace Planets.View
             AimVecPen.CustomEndCap = bigArrow;
         }
 
-        public void ModifyScore(int Score)
-        {
-            int CurrentScore = Convert.ToInt32(ScoreLabel.Text);
-            ScoreLabel.Text = Convert.ToString(CurrentScore + Score);
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -80,7 +74,6 @@ namespace Planets.View
             g.CompositingQuality = CompositingQuality.HighQuality;
             // Draw static back layer
             DrawBackLayers(g);
-            LabelScore.Text = field._currentPlayer.score.ToString();
             // Draw top layer
             DrawBorder(g);
             lock (field.BOT)
@@ -187,13 +180,20 @@ namespace Planets.View
             }
         }
 
-
+        // Draw Score Arc Buff
         private Brush HudBackgroundBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
         private Pen HudArcAccentPen = new Pen(Color.White, 4.0f);
         private Pen HudArcAccentPen2 = new Pen(Color.White, 30.0f);
         private Pen HudArcAccentPen3 = new Pen(Color.White, 22.0f);
         private Font HudScoreFont = new Font(FontFamily.GenericMonospace, 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
         private Size hudSize = new Size(500, 300);
+
+        // Draw WhatEverMeter buff
+        private SolidBrush RedBrush = new SolidBrush(Color.Red);
+        private SolidBrush GreenBrush = new SolidBrush(Color.Green);
+        private Pen WhitePen = new Pen(Color.White, 2);
+
+
         private void DrawHud(Graphics g)
         {
             // Draw hud background
@@ -240,7 +240,7 @@ namespace Planets.View
                 arcRectangle.Width + diff3,
                 arcRectangle.Height + diff3
                 );
-
+            
             float barStart = 270.0f - barSize/2;
             // Draw progress
             g.DrawArc(HudArcPen, arcRectangle, barStart, progress * barSize);
@@ -262,13 +262,20 @@ namespace Planets.View
 
             Point MassDrawPoint = new Point(MassMeterPoint.X, (MassDrawY > MassMeterPoint.Y) ? MassDrawY : MassMeterPoint.Y);
 
-            g.FillRectangle(new SolidBrush(Color.Red), new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
-            g.DrawRectangle(new Pen(Color.White, 2), new Rectangle(MassMeterPoint, new Size(15, 230)));
+            g.FillRectangle(RedBrush, new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
+            g.DrawRectangle(WhitePen, new Rectangle(MassMeterPoint, new Size(15, 230)));
 
             // Draw Whatever-o-meter
+            int AmountObjects = (field.BOT.Count - 6) * 4;
+
             Point WhatEverMeterPoint = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
 
-            g.DrawRectangle(new Pen(Color.White, 2), new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
+            int WhatEverDrawY = (int)(WhatEverMeterPoint.Y + (230 - AmountObjects));
+
+            Point WhatEverDrawPoint = new Point(WhatEverMeterPoint.X, (WhatEverDrawY > WhatEverMeterPoint.Y) ? WhatEverDrawY : WhatEverMeterPoint.Y);
+
+            g.FillRectangle(GreenBrush, new Rectangle(WhatEverDrawPoint, new Size(15, (int)AmountObjects)));
+            g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
 
             // Draw something else
 

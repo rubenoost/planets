@@ -129,7 +129,7 @@ namespace Planets.View.Imaging
 
 		public Bitmap animate()
 		{
-			this.spriteIndex = (this.spriteIndex < Images.Count - 1) ? this.spriteIndex + 1 : 0; 
+			this.spriteIndex = (this.spriteIndex < Images.Count - 1) ? this.spriteIndex + 1 : 0;
 
 			return this[this.spriteIndex];
 		}
