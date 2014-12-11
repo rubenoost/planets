@@ -7,7 +7,7 @@ namespace Planets.Controller.GameRules
     class AntiGravityRule : AbstractGameRule
     {
         // changes the speed
-        private double BartConstante = 10.0;
+        private double BartConstante = 20.0;
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
