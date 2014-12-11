@@ -151,7 +151,24 @@ namespace Planets.View
             // Draw object
             Rectangle target = GameToScreen(obj.BoundingBox);
             Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height, objAngle);
-            g.DrawImageUnscaled(s, target);
+
+            if (obj is AnimatedGameObject)
+            {
+                DateTime nu = DateTime.Now;
+                DateTime begin = ((AnimatedGameObject)obj).Begin;
+                TimeSpan duration = ((AnimatedGameObject)obj).Duration;
+
+                float p = (float)(nu - begin).TotalMilliseconds / (float)duration.TotalMilliseconds;
+
+                int frames = s.Frames;
+
+                int currentFrame = (int)(p * frames);
+                g.DrawImageUnscaled(s.GetFrame(currentFrame), target);
+            }
+            else
+            {
+                g.DrawImageUnscaled(s, target);
+            }
         }
 
         private void DrawDemo(Graphics g)
@@ -170,7 +187,7 @@ namespace Planets.View
 
         private void DrawScores(Graphics g)
         {
-            lock (field.sb.Scores)
+            lock (field.sb)
             {
                 foreach (Score score in field.sb.Scores)
                 {

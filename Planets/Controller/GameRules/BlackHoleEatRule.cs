@@ -22,7 +22,7 @@ namespace Planets.Controller.GameRules
                         {
                             if (go.Is(Rule.EAT_PLAYER))
                                 pf.BOT.Remove(go2);
-                            //pf.BOT.Add(new Explosion(new Vector(10, 10), new Vector(50, 50), 50000));
+                            //pf.BOT.Add(new AnimatedGameObject(new Vector(10, 10), new Vector(50, 50), 50000));
                         }
                         else
                         {

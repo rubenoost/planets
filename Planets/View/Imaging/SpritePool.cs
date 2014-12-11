@@ -16,8 +16,6 @@ namespace Planets.View.Imaging
 
         private readonly Dictionary<ImageRequest, Sprite> _imageBuffer = new Dictionary<ImageRequest, Sprite>();
 
-        private int counter = 0;
-
         public SpritePool()
         {
             RegisterImage(typeof(Player), Resources.Pluto);
@@ -29,7 +27,7 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
             RegisterImage(typeof(Antagonist), Resources.antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);
-            RegisterImage(typeof(Explosion), Resources.explosion2);
+            RegisterImage(typeof(AnimatedGameObject), new Sprite(Resources.explosion_awesome, 9, 9));
 
             RegisterImage(Sprite.Background1, Resources.space_wallpaper);
             RegisterImage(Sprite.Background2, Resources.Para1);

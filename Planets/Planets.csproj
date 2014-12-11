@@ -85,7 +85,7 @@
     <Compile Include="Model\BinaryObjectTree.cs" />
     <Compile Include="Model\GameObjects\BlackHole.cs" />
     <Compile Include="Model\Antagonist.cs" />
-    <Compile Include="Model\GameObjects\Explosion.cs" />
+    <Compile Include="Model\GameObjects\AnimatedGameObject.cs" />
     <Compile Include="Model\GameObjects\GameObject.cs" />
     <Compile Include="Model\GameObjects\Mine.cs" />
     <Compile Include="Model\GameObjects\Player.cs" />
@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\explosion.hasgraphics.png" />
     <None Include="Resources\explosion2.png" />
     <None Include="Resources\Explosion.bmp" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />

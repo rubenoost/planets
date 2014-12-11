@@ -30,12 +30,12 @@ namespace Planets.Controller.GameRules
             }
 
             // Go boom!
-            pf.sb.AddScore(new Score(-50, DateTime.Now, go1.Location, true));
+            //pf.sb.AddScore(new Score(-50, DateTime.Now, go1.Location, true));
             double lostMass = goPlayer.Mass / 2;
             goPlayer.Mass -= lostMass;
 
             // TODO: We should probably create an epic explosion before removing the object.
-            pf.BOT.Add(new Explosion(goPlayer.Location, new Vector(0, 0), 500));
+            pf.BOT.Add(new AnimatedGameObject(goPlayer.Location, new Vector(0, 0), 500));
             pf.BOT.Remove(goExplodes);
 
             Random random = new Random();
