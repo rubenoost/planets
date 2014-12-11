@@ -108,7 +108,7 @@ namespace Planets.Controller.Subcontrollers
             lock (InternalPlayfield.BOT)
             {
                 O.DV = CalcNewDV(O, P, gamePoint);
-                if(IsBlackhole)
+                if (IsBlackhole)
                     P.Mass = 1000000;
 
                 if (IsAntiMatter)

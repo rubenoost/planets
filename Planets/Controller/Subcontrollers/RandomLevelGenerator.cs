@@ -19,7 +19,7 @@ namespace Planets.Controller.Subcontrollers
             int[] RndObstacles = new int[AmntObstacles];
             int previous = -1;
 
-            for(int i = 0; i < AmntObstacles; i++)
+            for (int i = 0; i < AmntObstacles; i++)
             {
                 int NextObj = rnd.Next(0, 6);
 
@@ -33,7 +33,7 @@ namespace Planets.Controller.Subcontrollers
 
             bool Tardis = false;
 
-            foreach(int obj in RndObstacles)
+            foreach (int obj in RndObstacles)
             {
                 bool NotOK = false;
                 while (!NotOK)
@@ -102,7 +102,7 @@ namespace Planets.Controller.Subcontrollers
             }
 
             pf.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), Utils.StartMass);
-			pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));
+            pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));
             return pf;
         }
 
