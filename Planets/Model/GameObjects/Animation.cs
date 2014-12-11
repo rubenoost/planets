@@ -8,41 +8,42 @@ using System.Threading.Tasks;
 
 namespace Planets.Model.GameObjects
 {
-	class Animation : GameObject
+    class Animation : GameObject
     {
-		public Bitmap spriteSheet { get; set; }
+        public Bitmap spriteSheet { get; set; }
 
-		public List<Bitmap> spriteChunks = new List<Bitmap>();
+        public List<Bitmap> spriteChunks = new List<Bitmap>();
 
-		public int spriteWidth;
+        public int spriteWidth;
 
-		private int spriteIndex = 0;
+        private int spriteIndex = 0;
 
-		public int duration { get; set; }
+        public int duration { get; set; }
 
-		public bool continueus { get; set; }
+        public bool continueus { get; set; }
 
-		public Animation(Vector location, Vector velocity, double mass, int d)
-			: base(location, velocity, mass, Rule.NONE)
-		{
-			//this.spritesheet = spritesheet;
-			//this.spritewidth = spritewidth;
+        public Animation(Vector location, Vector velocity, double mass, int d)
+            : base(location, velocity, mass, Rule.NONE)
+        {
+            //this.spritesheet = spritesheet;
+            //this.spritewidth = spritewidth;
 
-			this.cutImages();
-		}
+            this.cutImages();
+        }
 
-		private void cutImages()
-		{
-			for (int i = 0; i < spriteSheet.Width / spriteWidth; i++) {
-				Rectangle currentSprite = new Rectangle(i * spriteWidth, 0, spriteWidth, spriteSheet.Height);
+        private void cutImages()
+        {
+            for (int i = 0; i < spriteSheet.Width / spriteWidth; i++)
+            {
+                Rectangle currentSprite = new Rectangle(i * spriteWidth, 0, spriteWidth, spriteSheet.Height);
 
-				spriteChunks.Add(spriteSheet.Clone(currentSprite, spriteSheet.PixelFormat));
-			}
-		}
+                spriteChunks.Add(spriteSheet.Clone(currentSprite, spriteSheet.PixelFormat));
+            }
+        }
 
-		public void animate()
-		{
-			spriteIndex = (spriteIndex < spriteChunks.Count - 1) ? spriteIndex + 1 : 0;
-		}
+        public void animate()
+        {
+            spriteIndex = (spriteIndex < spriteChunks.Count - 1) ? spriteIndex + 1 : 0;
+        }
     }
 }

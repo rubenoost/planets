@@ -23,7 +23,7 @@ namespace Planets.Model
 
         public void CheckStamps()
         {
-            for(int i = Scores.Count - 1; i >= 0; i--)
+            for (int i = Scores.Count - 1; i >= 0; i--)
             {
                 TimeSpan span = DateTime.Now - Scores[i].Stamp;
                 if (span.TotalMilliseconds >= 2000)

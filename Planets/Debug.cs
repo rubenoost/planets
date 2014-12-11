@@ -25,7 +25,7 @@ namespace Planets
                 BackColor = Color.Black,
                 ForeColor = Color.Red,
                 BorderStyle = BorderStyle.None,
-                Font = new Font(FontFamily.GenericMonospace, (float) 14.0, FontStyle.Bold)
+                Font = new Font(FontFamily.GenericMonospace, (float)14.0, FontStyle.Bold)
             };
             TextBox.TextChanged += delegate
             {

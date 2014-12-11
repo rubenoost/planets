@@ -73,7 +73,7 @@ namespace Planets.Model
         }
         public void Remove(GameObject go)
         {
-            if(go is Stasis)
+            if (go is Stasis)
                 Console.WriteLine("");
             if (t1 != null)
                 t1.Remove(go);
