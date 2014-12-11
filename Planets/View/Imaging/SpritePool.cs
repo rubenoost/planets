@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Runtime.CompilerServices;
 using Planets.Model;
 using Planets.Model.GameObjects;
 using Planets.Properties;
@@ -28,7 +29,7 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
             RegisterImage(typeof(Antagonist), Resources.antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);
-			RegisterImage(typeof(Explosion), Resources.explosion2);
+            RegisterImage(typeof(Explosion), Resources.explosion2);
 
             RegisterImage(Sprite.Background1, Resources.space_wallpaper);
             RegisterImage(Sprite.Background2, Resources.Para1);
@@ -89,12 +90,20 @@ namespace Planets.View.Imaging
         private static Sprite ResizeImg(Sprite s, int width, int height)
         {
             if (s.Frames == 1)
-                return new Sprite { Columns = 1, Image = ResizeImg(s.Image, width, height) };
+            {
+                return ResizeImg((Bitmap)s, width, height);
+            }
+            else
+            {
+                List<Bitmap> resized = new List<Bitmap>();
 
-            Sprite result = new Sprite { Columns = s.Columns, Image = s.Image, Images = new List<Bitmap>() };
-            foreach (Bitmap bm in s.Images)
-                result.Images.Add(ResizeImg(bm, width, height));
-            return result;
+                foreach (Bitmap bm in s.Images)
+                {
+                    resized.Add(ResizeImg(bm, width, height));
+                }
+
+                return new Sprite(resized,s.Columns,s.Rows,s.Cyclic);
+            }
         }
 
         private static Sprite ResizeImg(Bitmap s, int width, int height)
@@ -113,12 +122,20 @@ namespace Planets.View.Imaging
         private static Sprite RotateImg(Sprite s, int angle)
         {
             if (s.Frames == 1)
-                return new Sprite { Columns = 1, Image = RotateImg(s.Image, angle) };
+            {
+                return RotateImg((Bitmap)s, angle);
+            }
+            else
+            {
+                List<Bitmap> resized = new List<Bitmap>();
 
-            Sprite result = new Sprite { Columns = s.Columns, Image = s.Image, Images = new List<Bitmap>() };
-            foreach (Bitmap bm in s.Images)
-                result.Images.Add(RotateImg(bm, angle));
-            return result;
+                foreach (Bitmap bm in s.Images)
+                {
+                    resized.Add(RotateImg(bm, angle));
+                }
+
+                return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
+            }
         }
 
         private static Bitmap RotateImg(Bitmap bmp, int angle)

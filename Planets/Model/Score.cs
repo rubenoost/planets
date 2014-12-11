@@ -18,7 +18,7 @@ namespace Planets.Model
         public Color Color { get; private set; }
 
         private int Alpha = 255;
- 
+
         public Score(int Value, DateTime Stamp, Vector Location, bool CurrentPlayer)
         {
             this.Value = Value;
