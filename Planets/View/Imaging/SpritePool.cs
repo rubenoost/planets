@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.Properties;
 
 namespace Planets.View.Imaging
@@ -25,8 +26,9 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Mine), Resources.Pluto_Red);
             RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
-            RegisterImage(typeof(Antagonist), Resources.Pluto_Red);
+            RegisterImage(typeof(Antagonist), Resources.antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);
+			RegisterImage(typeof(Explosion), Resources.explosion2);
 
             RegisterImage(Sprite.Background1, Resources.space_wallpaper);
             RegisterImage(Sprite.Background2, Resources.Para1);
@@ -87,9 +89,9 @@ namespace Planets.View.Imaging
         private static Sprite ResizeImg(Sprite s, int width, int height)
         {
             if (s.Frames == 1)
-                return new Sprite { Columns = 1, Rows = 1, Image = ResizeImg(s.Image, width, height) };
+                return new Sprite { Columns = 1, Image = ResizeImg(s.Image, width, height) };
 
-            Sprite result = new Sprite { Columns = s.Columns, Rows = s.Rows, Image = s.Image, Images = new List<Bitmap>() };
+            Sprite result = new Sprite { Columns = s.Columns, Image = s.Image, Images = new List<Bitmap>() };
             foreach (Bitmap bm in s.Images)
                 result.Images.Add(ResizeImg(bm, width, height));
             return result;
@@ -111,9 +113,9 @@ namespace Planets.View.Imaging
         private static Sprite RotateImg(Sprite s, int angle)
         {
             if (s.Frames == 1)
-                return new Sprite { Columns = 1, Rows = 1, Image = RotateImg(s.Image, angle) };
+                return new Sprite { Columns = 1, Image = RotateImg(s.Image, angle) };
 
-            Sprite result = new Sprite { Columns = s.Columns, Rows = s.Rows, Image = s.Image, Images = new List<Bitmap>() };
+            Sprite result = new Sprite { Columns = s.Columns, Image = s.Image, Images = new List<Bitmap>() };
             foreach (Bitmap bm in s.Images)
                 result.Images.Add(RotateImg(bm, angle));
             return result;

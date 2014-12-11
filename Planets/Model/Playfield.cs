@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Planets.Model.GameObjects;
 
 namespace Planets.Model
 {
@@ -17,6 +18,7 @@ namespace Planets.Model
         {
             // Save variables
             Size = new Size(width, height);
+            this.sb = new ScoreBoard();
 
             // Create GameObject list
             BOT = new BinaryObjectTree(null, new Rectangle(0, 0, 1920, 1080), 1, 12, 0);
@@ -32,6 +34,8 @@ namespace Planets.Model
                 BOT.Add(_currentPlayer);
             }
         }
+
+        public ScoreBoard sb;
 
         public BinaryObjectTree BOT;
     }

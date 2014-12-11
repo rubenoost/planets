@@ -1,6 +1,7 @@
 ﻿using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     public class CollidewithSmaller : AbstractCollisionRule
     {
@@ -18,7 +19,7 @@ namespace Planets.Controller.PhysicsRules
         }
 
 
-        protected override void DoCollision(Playfield pf, GameObject go1, GameObject go2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard  sb, GameObject go1, GameObject go2, double ms)
         {
             if (go1.IntersectsWith(go2))
             {

@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.Properties;
 using Planets.View.Imaging;
 
@@ -40,6 +41,9 @@ namespace Planets.View
         public bool IsAiming;
         public Vector AimPoint;
 
+        private SolidBrush ScorePlayerBrush = new SolidBrush(Color.White);
+        private Font ScoreFont = new Font(FontFamily.GenericSansSerif, 60.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 5);
         private Pen NextVecPen = new Pen(Color.Green, 5);
@@ -47,7 +51,7 @@ namespace Planets.View
         private Pen BorderPen = new Pen(new TextureBrush(Resources.Texture), 10.0f);
 
         // Wordt gebruikt voor bewegende achtergrond
-        private int _blackHoleAngle = 0;
+        private int _blackHoleAngle;
 
         public GameView(Playfield field)
         {
@@ -68,10 +72,8 @@ namespace Planets.View
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.CompositingQuality = CompositingQuality.HighQuality;
-
             // Draw static back layer
             DrawBackLayers(g);
-
             // Draw top layer
             DrawBorder(g);
             lock (field.BOT)
@@ -79,9 +81,11 @@ namespace Planets.View
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
                 DrawAimVectors(g);
                 DrawDemo(g);
-                DrawAnimations(g);
                 DrawDebug(g);
             }
+
+            DrawScores(g);
+            DrawHud(g);
 
             // Debugging
             _blackHoleAngle++;
@@ -135,6 +139,8 @@ namespace Planets.View
 
         private void DrawGameObject(Graphics g, GameObject obj)
         {
+			DrawAnimations(g, obj);
+
             // Get sprite
             int objAngle = 0;
 
@@ -162,11 +168,136 @@ namespace Planets.View
             }
         }
 
-        private void DrawAnimations(Graphics g)
+        private void DrawScores(Graphics g)
         {
+            lock (field.sb.Scores)
+            {
+                foreach (Score score in field.sb.Scores)
+                {
+                    ScorePlayerBrush.Color = score.Color;
+                    if(score.Value > 0)
+                        g.DrawString(String.Format("+{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                    else
+                        g.DrawString(String.Format("{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                    score.UpdateLocation();
+                }
+            }
+        }
+
+        // Draw Score Arc Buff
+        private Brush HudBackgroundBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
+        private Pen HudArcAccentPen = new Pen(Color.White, 4.0f);
+        private Pen HudArcAccentPen2 = new Pen(Color.White, 30.0f);
+        private Pen HudArcAccentPen3 = new Pen(Color.White, 22.0f);
+        private Font HudScoreFont = new Font(FontFamily.GenericMonospace, 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+        private Size hudSize = new Size(500, 300);
+
+        // Draw WhatEverMeter buff
+        private Pen WhitePen = new Pen(Color.White, 2);
+
+        private void DrawHud(Graphics g)
+        {
+            // Draw hud background
+            Point hudLocation = new Point(ClientSize.Width - hudSize.Width, ClientSize.Height - hudSize.Height);
+
+            // Draw hud
+            int featherSize = 50;
+            Rectangle target = new Rectangle(hudLocation, hudSize);
+            g.FillPie(HudBackgroundBrush, new Rectangle(target.Location, new Size(featherSize * 2, featherSize * 2)), -90.0f, -90.0f);
+            g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left + featherSize - 1, target.Top, target.Width - featherSize, target.Height));
+            g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
+
+            // Draw score arc
+            float progress = Math.Min((float) (field.CurrentPlayer.Radius / 250.0f), 1.0f);
+            float barSize = 90.0f;
+
+            RectangleF arcRectangle = new RectangleF(
+                hudLocation.X,
+                (float) (hudLocation.Y + hudSize.Height * 0.2),
+                hudSize.Width,
+                hudSize.Height * 1.2f);
+
+            Pen HudArcPen = new Pen(new LinearGradientBrush(new PointF(arcRectangle.Left, arcRectangle.Top), new PointF(arcRectangle.Left + arcRectangle.Width, arcRectangle.Top), Color.GreenYellow, Color.DarkOrange), 20.0f);
+
+            RectangleF arcAccentRect = new RectangleF(
+                arcRectangle.Left + HudArcPen.Width / 2,
+                arcRectangle.Top + HudArcPen.Width / 2,
+                arcRectangle.Width - HudArcPen.Width,
+                arcRectangle.Height - HudArcPen.Width);
+
+            float diff2 = HudArcAccentPen2.Width - HudArcPen.Width;
+            RectangleF arcAccentRect2 = new RectangleF(
+                arcRectangle.Left - diff2 / 2,
+                arcRectangle.Top - diff2 / 2,
+                arcRectangle.Width + diff2,
+                arcRectangle.Height + diff2
+                );
+
+            float diff3 = HudArcAccentPen3.Width - HudArcPen.Width;
+            RectangleF arcAccentRect3 = new RectangleF(
+                arcRectangle.Left - diff3 / 2,
+                arcRectangle.Top - diff3 / 2,
+                arcRectangle.Width + diff3,
+                arcRectangle.Height + diff3
+                );
+            
+            float barStart = 270.0f - barSize/2;
+
+            // Draw progress
+            g.DrawArc(HudArcPen, arcRectangle, barStart, progress * barSize);
+
+            // Draw meter
+            float[] meterPoints = {0.7f, 0.5f, 0.35f, 0.25f, 0.17f, 0.1f, 0.05f};
+            g.DrawArc(HudArcAccentPen, arcAccentRect, barStart - 1.0f, barSize + 2.0f);
+            g.DrawArc(HudArcAccentPen2, arcAccentRect2, barStart, 1.0f);
+            g.DrawArc(HudArcAccentPen2, arcAccentRect2, barStart + barSize - 1.0f, 1.0f);
+            foreach (var f in meterPoints)
+                g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
+
+            // Draw score text
+            
+
+            // Draw Mass-o-meter
+            Point MassMeterPoint = new Point(hudLocation.X + 20, hudLocation.Y + 60);
+
+            int MassDrawY = (int)(MassMeterPoint.Y + (230 - field.CurrentPlayer.Radius));
+
+            Point MassDrawPoint = new Point(MassMeterPoint.X, (MassDrawY > MassMeterPoint.Y) ? MassDrawY : MassMeterPoint.Y);
+            Brush gradientBrush = new LinearGradientBrush(MassMeterPoint, new Point(MassMeterPoint.X, MassMeterPoint.Y + 230), Color.YellowGreen, Color.DarkOrange);
+            g.FillRectangle(gradientBrush, new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
+            g.DrawRectangle(WhitePen, new Rectangle(MassMeterPoint, new Size(15, 230)));
+
+            // Draw Whatever-o-meter
+            int AmountObjects = (field.BOT.Count - 6) * 4;
+
+            Point WhatEverMeterPoint = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
+
+            int WhatEverDrawY = (int)(WhatEverMeterPoint.Y + (230 - AmountObjects));
+
+            Point WhatEverDrawPoint = new Point(WhatEverMeterPoint.X, (WhatEverDrawY > WhatEverMeterPoint.Y) ? WhatEverDrawY : WhatEverMeterPoint.Y);
+
+            g.FillRectangle(gradientBrush, new Rectangle(WhatEverDrawPoint, new Size(15, (int)AmountObjects)));
+            g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
+
+            // Draw something else
+
+        }
+
+        private void DrawAnimations(Graphics g, GameObject obj)
+        {
+			Rectangle target = GameToScreen(obj.BoundingBox);
+			Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height);
+
+			if (s.Cyclic) {
+				s.animate();
+			}
+
+			g.DrawImageUnscaled(s, target);
+
             // if there are animations queued by a gamerule
             // get the frame from the spritepool list
             // play the frames
+
         }
 
         private void DrawDebug(Graphics g)
@@ -235,7 +366,7 @@ namespace Planets.View
             Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
 
             Vector pointRelativeToViewCenterGame = v - viewCenterGame;
-            Vector pointRelativeToViewCenterPixel = new Vector(pointRelativeToViewCenterGame.X * scaleX, pointRelativeToViewCenterGame.Y*scaleY);
+            Vector pointRelativeToViewCenterPixel = new Vector(pointRelativeToViewCenterGame.X * scaleX, pointRelativeToViewCenterGame.Y * scaleY);
 
             return pointRelativeToViewCenterPixel + viewCenterPixel;
         }

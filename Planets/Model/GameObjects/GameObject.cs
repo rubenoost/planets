@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Planets.Model
+namespace Planets.Model.GameObjects
 {
     [Flags]
     public enum Rule
@@ -16,7 +16,7 @@ namespace Planets.Model
         COLLIDES = 64,
         SLOWABLE = 128,
         EXPLODES = 256,
-		AFFECTED_BY_AG = 512,
+        AFFECTED_BY_AG = 512,
         HAS_SCORE = 1024
     }
 
@@ -63,6 +63,8 @@ namespace Planets.Model
             {
                 if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
                 {
+                    if (value <= 0)
+                        throw new SystemException("You can't set mass lower then zero, you freaking moron, you are the cause of the instability caused in this universe!!!!");
                     _propRadius = null;
                     _propBoundingBox = null;
                     if (Resized != null) Resized(this);

@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.View;
 
 namespace Planets.Controller.Subcontrollers
@@ -84,7 +85,7 @@ namespace Planets.Controller.Subcontrollers
             //Projectile being shot
             Random rnd = new Random();
             int rndint = rnd.Next(0, 100);
-            if (rndint == 58 || rndint == 42)
+            if (rndint == 58)
             {
                 P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
                 P.Mass = 0.05 * O.Mass;

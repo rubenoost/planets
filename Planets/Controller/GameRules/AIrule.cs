@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Planets.Controller.Subcontrollers;
 using Planets.Model;
-using Planets.Controller.Subcontrollers;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     class AIrule : AbstractGameRule
     {

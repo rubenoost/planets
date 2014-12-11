@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets.Model;
+using Planets.Model.GameObjects;
 
 namespace PlanetsTest.Model {
     [TestClass]

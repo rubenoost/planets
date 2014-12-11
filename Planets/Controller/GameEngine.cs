@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using Planets.Controller.PhysicsRules;
+using Planets.Controller.GameRules;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.View;
-using Planets.View.Imaging;
 
 namespace Planets.Controller
 {
@@ -44,7 +44,7 @@ namespace Planets.Controller
             // ========== [ REMOVING OBJECTS ] ==========
             //new CollidewithSmaller(),
             new DynamicEatRule(),
-			//new ExplosionRule(),
+			new ExplosionRule(),
             new BlackHoleEatRule(), 
 
             // ========== [ CHANGE SPEED ON COLLISION RULE ] ==========
@@ -68,9 +68,7 @@ namespace Planets.Controller
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            //field = RandomLevelGenerator.GenerateRandomLevel();
-            field = new Playfield(1920, 1080);
-            field.CurrentPlayer = new Player(new Vector(100, 100), new Vector(100, 100), 1.0);
+            field = RandomLevelGenerator.GenerateRandomLevel();
 
             // Create view
             GameView = new GameView(field);
@@ -128,6 +126,8 @@ namespace Planets.Controller
                     double temp2 = temp1 - (int)temp1;
                     double temp3 = temp2 * 1000 / 60;
                     Thread.Sleep((int)temp3);
+
+                    field.sb.CheckStamps();
 
                     // Lock BOT
                     lock (field.BOT)

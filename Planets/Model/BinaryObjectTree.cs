@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using Planets.Model.GameObjects;
+
 namespace Planets.Model
 {
     public class BinaryObjectTree
@@ -72,6 +73,8 @@ namespace Planets.Model
         }
         public void Remove(GameObject go)
         {
+            if(go is Stasis)
+                Console.WriteLine("");
             if (t1 != null)
                 t1.Remove(go);
             if (t2 != null)

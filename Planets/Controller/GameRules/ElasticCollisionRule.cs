@@ -1,10 +1,11 @@
 ﻿using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     public class ElasticCollisionRule : AbstractCollisionRule
     {
-        protected override void DoCollision(Playfield pf, GameObject c1, GameObject c2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject c1, GameObject c2, double ms)
         {
             if (!c1.Is(Rule.COLLIDES) || !c2.Is(Rule.COLLIDES)) return;
             if (c1.Mass > c2.Mass && c2.Is(Rule.EATABLE) && c1.Is(c2 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
