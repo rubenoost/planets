@@ -10,50 +10,75 @@ namespace Planets.Controller.PhysicsRules
 {
     class AIrule : AbstractGameRule
     {
+        private bool target;
+        private double dist;
+        GameObject antagonist;
+        DateTime begin;
+        
         protected override void ExecuteRule(Playfield pf, double ms)
         {
+            TimeSpan tijd = DateTime.Now - begin;
+            if (tijd.TotalMilliseconds < 1000) 
+            {
+                
+                return; 
+            }begin = DateTime.Now;
             pf.BOT.Iterate(g =>
                 {
-                    if(!(g is Antagonist)) return;
-                    pf.BOT.Iterate(g2 =>
-                        {
-                            if (g2 is GameObject && !(g2 is Player) && !(g2 is BlackHole))
-                            {
-                                if ((g.Radius < g2.Radius))
-                                {
-                                    Vector click = (g.Location - g2.Location).ScaleToLength(g.Radius + 100);
-                                    GameObject projectiel = new GameObject(new Vector(), new Vector(), 0.05 * g.Mass);
-
-                                    g.DV = ShootProjectileController.CalcNewDV(g, projectiel, click);
-                                    g.Mass -= projectiel.Mass;
-                                    pf.BOT.Add(projectiel);
-                                }
-                                else
-                                {
-                                    Vector click = (g2.Location - g.Location).ScaleToLength(g.Radius + 100);
-                                    GameObject projectiel = new GameObject(new Vector(), new Vector(), 0.05 * g.Mass);
-
-                                    g.DV = ShootProjectileController.CalcNewDV(g, projectiel, click);
-                                    g.Mass -= projectiel.Mass;
-                                    pf.BOT.Add(projectiel);
-                                }
-                            }
-                            else
-                                return;
-                                                
-                        });
-                    pf.BOT.Iterate(g3 =>
+                    if(antagonist == null && g is Antagonist)
                     {
-                        if (g3 is Player && !(g3 is Antagonist))
+                        //find and bind the antagonist
+                        antagonist = g;
+                        Console.WriteLine("Antagonist!");
+                        
+                    }
+                    else if(!(antagonist == null) && g.GetType() == typeof(GameObject))
+                    {
+                        GameObject closest = FindClosest(g, (Antagonist)antagonist, pf);
+                        if (g == closest && g.Radius > antagonist.Radius)
                         {
-                            if ((g3.Location - g.Location).Length() < 600)
+                            //Move away from bigger object
+                            antagonist.DV = (antagonist.Location - g.Location).ScaleToLength(100);
+                            //insert shoot&move logic here
+                            //
+                        }
+                        else if(g == closest)
+                        {
+                            //Move towards smaller object
+                            antagonist.DV = (g.Location - antagonist.Location).ScaleToLength(100);
+                            //insert shoot&move logic here
+                            //
+                        }
+                    }
+                    else
+                    {
+                        if (!(antagonist == null) && g is Player && g.GetType() == typeof(Player))
+                        {
+                            if ((g.Location - antagonist.Location).Length() < 1000)
                             {
-                                g.DV = (g3.Location - g.Location).ScaleToLength(100);
+                                //Move towards player if there is no other option
+                                antagonist.DV = (g.Location - antagonist.Location).ScaleToLength(100);
+                                //insert shoot&move logic here
+                                //
                             }
 
                         }
-                    });   
+                    }
                 });
+        }
+        private GameObject FindClosest(GameObject go, Antagonist a, Playfield pf)
+        {
+            //find closest gameobject
+            double workingdist = double.MaxValue;
+            GameObject closest = null;            
+            double olddist = (go.Location - a.Location).Length();
+
+            if (olddist < workingdist)
+            {
+                workingdist = olddist;
+                closest = go;
+            }
+            return closest;
         }
     }
 }
