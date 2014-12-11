@@ -7,8 +7,6 @@ namespace Planets.Controller.GameRules
 {
     class AIrule : AbstractGameRule
     {
-        private bool target;
-        private double dist;
         GameObject antagonist;
         DateTime begin;
         
