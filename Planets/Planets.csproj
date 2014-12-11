@@ -80,7 +80,6 @@
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
-    <Compile Include="Model\GameObjects\Animation.cs" />
     <Compile Include="Model\GameObjects\Antigravity.cs" />
     <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
