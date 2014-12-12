@@ -36,7 +36,7 @@ namespace Planets.Controller.GameRules
 
             // TODO: We should probably create an epic explosion before removing the object.
 
-			AnimatedGameObject explosion = new AnimatedGameObject(goPlayer.Location, new Vector(0, 0), 500);
+			AnimatedGameObject explosion = new AnimatedGameObject(goExplodes.Location, new Vector(0, 0), 500);
             pf.BOT.Add(explosion);
             
 			pf.BOT.Remove(goExplodes);
@@ -44,19 +44,10 @@ namespace Planets.Controller.GameRules
             Random random = new Random();
 
             double massPool = lostMass;
-            while (massPool > 0)
+            while (massPool > 0.1)
             {
-                double mass = 0.0;
-
                 // We don't want to generate more mass than is actually lost by the player.
-                if (massPool >= 1000)
-                {
-                    mass = random.Next(10, (int)massPool);
-                }
-                else
-                {
-                    mass = random.Next(500, 1000);
-                }
+                double mass = massPool >= 1000 ? random.Next(10, (int)massPool) : Math.Max(massPool, random.Next(500, 1000));
 
                 Vector createLocation = goExplodes.Location + new Vector(random.Next(-50, 100), random.Next(-50, 100));
                 GameObject debris = new GameObject(createLocation, new Vector(random.Next(-500, 500), random.Next(-500, 500)), mass);
