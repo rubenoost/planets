@@ -162,16 +162,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\parallax6.png" />
+    <None Include="Resources\parallax5.png" />
+    <None Include="Resources\parallax4.png" />
+    <None Include="Resources\parallax3.png" />
     <None Include="Resources\ExplosionTest.png" />
     <None Include="Resources\parallax1.png" />
     <None Include="Resources\parallax2.png" />
-    <None Include="Resources\parallax.png" />
     <None Include="Resources\background.png" />
     <None Include="Resources\explosion.hasgraphics.png" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
-    <None Include="Resources\Para3.png" />
-    <None Include="Resources\Para2.png" />
-    <None Include="Resources\Para1.png" />
     <None Include="Resources\KomeetStaartje1.png" />
     <None Include="Resources\space-wallpaper.jpg" />
     <None Include="Resources\KomeetStaartje.png" />

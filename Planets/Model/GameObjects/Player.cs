@@ -13,7 +13,7 @@ namespace Planets.Model.GameObjects
         public void ShootProjectile(Playfield pf, Vector direction)
         {
             GameObject projectile = new GameObject(new Vector(0, 0), new Vector(0, 0), Mass * 0.05);
-            Vector newSpeed = ShootProjectileController.CalcNewDV(this, projectile, Location + direction);
+            Vector newSpeed = ShootProjectileController.CalcNewDV(this, projectile, Location - direction);
             Mass -= projectile.Mass;
             DV = newSpeed;
             pf.BOT.Add(projectile);
