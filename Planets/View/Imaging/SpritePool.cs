@@ -28,7 +28,6 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(GameObject), Resources.Pluto);
             RegisterImage(typeof(AnimatedGameObject), new Sprite(Resources.explosion_awesome, 9, 9));
 
-            RegisterImage(Sprite.Background1, Resources.background);
             RegisterImage(Sprite.CometTail, Resources.KomeetStaartje);
             RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
             RegisterImage(Sprite.Stars1, Resources.parallax1);
