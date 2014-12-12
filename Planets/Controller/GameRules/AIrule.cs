@@ -32,7 +32,6 @@ namespace Planets.Controller.GameRules
                         if (g == closest && g.Radius > antagonist.Radius)
                         {
                             //Move away from bigger object
-                            antagonist.DV = (antagonist.Location - g.Location).ScaleToLength(100);
                             ((Antagonist)antagonist).ShootProjectile(pf, (g.Location - antagonist.Location));
                         }
                         else if (g == closest && !g.Ai)
