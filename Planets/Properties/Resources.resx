@@ -148,26 +148,11 @@
   <data name="Pluto_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pluto-Icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="space_wallpaper" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\space-wallpaper.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Texture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1796813.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="smallStars" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\smallStars.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="spritety" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\spritety.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Para1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Para1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Para2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Para2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Para3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Para3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="stasis" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\statis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -180,5 +165,14 @@
   </data>
   <data name="explosion_awesome" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\explosion.hasgraphics.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="parallax1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\parallax1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="parallax2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\parallax2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
