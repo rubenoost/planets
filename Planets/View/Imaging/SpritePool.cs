@@ -102,7 +102,7 @@ namespace Planets.View.Imaging
                     resized.Add(ResizeImg(bm, width, height));
                 }
 
-                return new Sprite(resized,s.Columns,s.Rows,s.Cyclic);
+                return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
             }
         }
 
