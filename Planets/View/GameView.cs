@@ -164,6 +164,10 @@ namespace Planets.View
 
                 int currentFrame = (int)(p * frames);
                 g.DrawImageUnscaled(s.GetFrame(currentFrame), target);
+
+				if (nu - begin >= duration) {
+					field.BOT.Remove(obj);
+				}
             }
             else
             {
