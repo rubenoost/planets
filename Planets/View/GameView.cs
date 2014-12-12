@@ -139,7 +139,7 @@ namespace Planets.View
 
         private void DrawGameObject(Graphics g, GameObject obj)
         {
-            DrawAnimations(g, obj);
+			DrawAnimations(g, obj);
 
             // Get sprite
             int objAngle = 0;
@@ -164,11 +164,15 @@ namespace Planets.View
 
                 int currentFrame = (int)(p * frames);
                 g.DrawImageUnscaled(s.GetFrame(currentFrame), target);
+
+				if (nu - begin >= duration) {
+					field.BOT.Remove(obj);
+				}
             }
             else
             {
-                g.DrawImageUnscaled(s, target);
-            }
+            g.DrawImageUnscaled(s, target);
+        }
         }
 
         private void DrawDemo(Graphics g)
@@ -189,14 +193,13 @@ namespace Planets.View
         {
             lock (field.sb)
             {
-                foreach (Score score in field.sb.Scores)
-                {
-                    ScorePlayerBrush.Color = score.Color;
-                    if (score.Value > 0)
-                        g.DrawString(String.Format("+{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                for(int i = 0; i < field.sb.Scores.Count; i++ ) {
+                    ScorePlayerBrush.Color = field.sb.Scores[i].Color;
+                    if(field.sb.Scores[i].Value > 0)
+                        g.DrawString(String.Format("+{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
                     else
-                        g.DrawString(String.Format("{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
-                    score.UpdateLocation();
+                        g.DrawString(String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
+                    field.sb.Scores[i].UpdateLocation();
                 }
             }
         }
@@ -257,7 +260,7 @@ namespace Planets.View
                 arcRectangle.Width + diff3,
                 arcRectangle.Height + diff3
                 );
-
+            
             float barStart = 270.0f - barSize / 2;
 
             // Draw progress
@@ -272,7 +275,7 @@ namespace Planets.View
                 g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
 
             // Draw score text
-
+            
 
             // Draw Mass-o-meter
             Point MassMeterPoint = new Point(hudLocation.X + 20, hudLocation.Y + 60);
@@ -302,10 +305,10 @@ namespace Planets.View
 
         private void DrawAnimations(Graphics g, GameObject obj)
         {
-            Rectangle target = GameToScreen(obj.BoundingBox);
-            Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height);
+			Rectangle target = GameToScreen(obj.BoundingBox);
+			Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height);
 
-            g.DrawImageUnscaled(s, target);
+			g.DrawImageUnscaled(s, target);
 
             // if there are animations queued by a gamerule
             // get the frame from the spritepool list
