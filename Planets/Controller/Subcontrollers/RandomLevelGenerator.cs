@@ -1,7 +1,7 @@
-﻿using Planets.Model;
-using Planets.Model.GameObjects;
-using System;
+﻿using System;
 using System.Drawing;
+using Planets.Model;
+using Planets.Model.GameObjects;
 
 namespace Planets.Controller.Subcontrollers
 {

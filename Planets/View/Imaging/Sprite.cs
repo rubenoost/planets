@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Printing;
-using System.Security.Authentication;
-using System.Windows.Forms;
 
 namespace Planets.View.Imaging
 {
