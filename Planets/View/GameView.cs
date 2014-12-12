@@ -172,14 +172,13 @@ namespace Planets.View
         {
             lock (field.sb.Scores)
             {
-                foreach (Score score in field.sb.Scores)
-                {
-                    ScorePlayerBrush.Color = score.Color;
-                    if(score.Value > 0)
-                        g.DrawString(String.Format("+{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
+                for(int i = 0; i < field.sb.Scores.Count; i++ ) {
+                    ScorePlayerBrush.Color = field.sb.Scores[i].Color;
+                    if(field.sb.Scores[i].Value > 0)
+                        g.DrawString(String.Format("+{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
                     else
-                        g.DrawString(String.Format("{0}", score.Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(score.Location));
-                    score.UpdateLocation();
+                        g.DrawString(String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
+                    field.sb.Scores[i].UpdateLocation();
                 }
             }
         }

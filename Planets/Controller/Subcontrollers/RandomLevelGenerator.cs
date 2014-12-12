@@ -19,9 +19,23 @@ namespace Planets.Controller.Subcontrollers
             int[] RndObstacles = new int[AmntObstacles];
             int previous = -1;
 
+            bool tardisAvbl = false;
+
             for(int i = 0; i < AmntObstacles; i++)
             {
                 int NextObj = rnd.Next(0, 6);
+                
+                while(NextObj == 5 && tardisAvbl) {
+                    NextObj = rnd.Next(0, 6);
+                }
+
+                if(NextObj == 5 && !tardisAvbl) {
+                    tardisAvbl = true;
+                }
+
+                if(i == AmntObstacles - 1 && !tardisAvbl){
+                    NextObj = 5;
+                }
 
                 RndObstacles[i] = NextObj;
 
@@ -30,8 +44,6 @@ namespace Planets.Controller.Subcontrollers
 
             Point[] UsedPoints = new Point[AmntObstacles];
             Point NextPoint = new Point(0, 0);
-
-            bool Tardis = false;
 
             foreach(int obj in RndObstacles)
             {
@@ -77,11 +89,7 @@ namespace Planets.Controller.Subcontrollers
                             NewObj = (new Stasis(NextPoint, new Vector(0, 0), 800));
                             break;
                         case 5: // Tardis
-                            if (!Tardis)
-                            {
-                                NewObj = (new Tardis(NextPoint, new Vector(0, 0), 0));
-                                Tardis = true;
-                            }
+                            NewObj = (new Tardis(NextPoint, new Vector(0, 0), 0));
                             break;
                     }
 
