@@ -26,22 +26,18 @@ namespace Planets.Controller.GameRules
                         Console.WriteLine("Antagonist!");
 
                     }
-                    else if (!(antagonist == null) && g.GetType() == typeof(GameObject))
+                    else if (!(antagonist == null) && g.GetType() == typeof(GameObject) && !g.Ai)
                     {
                         GameObject closest = FindClosest(g, (Antagonist)antagonist, pf);
                         if (g == closest && g.Radius > antagonist.Radius)
                         {
                             //Move away from bigger object
-                            antagonist.DV = (antagonist.Location - g.Location).ScaleToLength(100);
-                            //insert shoot&move logic here
-                            //
+                            ((Antagonist)antagonist).ShootProjectile(pf, (g.Location - antagonist.Location));
                         }
-                        else if (g == closest)
+                        else if (g == closest && !g.Ai)
                         {
                             //Move towards smaller object
-                            antagonist.DV = (g.Location - antagonist.Location).ScaleToLength(100);
-                            //insert shoot&move logic here
-                            //
+                            ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - g.Location));
                         }
                     }
                     else
