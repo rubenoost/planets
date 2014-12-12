@@ -135,7 +135,7 @@ namespace Planets.Model
         /// <returns></returns>
         public static implicit operator Point(Vector v)
         {
-            return new Point((int) v.X, (int)v.Y);
+            return new Point((int)v.X, (int)v.Y);
         }
 
         public override string ToString()

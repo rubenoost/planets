@@ -151,7 +151,28 @@ namespace Planets.View
             // Draw object
             Rectangle target = GameToScreen(obj.BoundingBox);
             Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height, objAngle);
+
+            if (obj is AnimatedGameObject)
+            {
+                DateTime nu = DateTime.Now;
+                DateTime begin = ((AnimatedGameObject)obj).Begin;
+                TimeSpan duration = ((AnimatedGameObject)obj).Duration;
+
+                float p = (float)(nu - begin).TotalMilliseconds / (float)duration.TotalMilliseconds;
+
+                int frames = s.Frames;
+
+                int currentFrame = (int)(p * frames);
+                g.DrawImageUnscaled(s.GetFrame(currentFrame), target);
+
+				if (nu - begin >= duration) {
+					field.BOT.Remove(obj);
+				}
+            }
+            else
+            {
             g.DrawImageUnscaled(s, target);
+        }
         }
 
         private void DrawDemo(Graphics g)
@@ -170,7 +191,7 @@ namespace Planets.View
 
         private void DrawScores(Graphics g)
         {
-            lock (field.sb.Scores)
+            lock (field.sb)
             {
                 for(int i = 0; i < field.sb.Scores.Count; i++ ) {
                     ScorePlayerBrush.Color = field.sb.Scores[i].Color;
@@ -207,12 +228,12 @@ namespace Planets.View
             g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
 
             // Draw score arc
-            float progress = Math.Min((float) (field.CurrentPlayer.Radius / 250.0f), 1.0f);
+            float progress = Math.Min((float)(field.CurrentPlayer.Radius / 250.0f), 1.0f);
             float barSize = 90.0f;
 
             RectangleF arcRectangle = new RectangleF(
                 hudLocation.X,
-                (float) (hudLocation.Y + hudSize.Height * 0.2),
+                (float)(hudLocation.Y + hudSize.Height * 0.2),
                 hudSize.Width,
                 hudSize.Height * 1.2f);
 
@@ -240,13 +261,13 @@ namespace Planets.View
                 arcRectangle.Height + diff3
                 );
             
-            float barStart = 270.0f - barSize/2;
+            float barStart = 270.0f - barSize / 2;
 
             // Draw progress
             g.DrawArc(HudArcPen, arcRectangle, barStart, progress * barSize);
 
             // Draw meter
-            float[] meterPoints = {0.7f, 0.5f, 0.35f, 0.25f, 0.17f, 0.1f, 0.05f};
+            float[] meterPoints = { 0.7f, 0.5f, 0.35f, 0.25f, 0.17f, 0.1f, 0.05f };
             g.DrawArc(HudArcAccentPen, arcAccentRect, barStart - 1.0f, barSize + 2.0f);
             g.DrawArc(HudArcAccentPen2, arcAccentRect2, barStart, 1.0f);
             g.DrawArc(HudArcAccentPen2, arcAccentRect2, barStart + barSize - 1.0f, 1.0f);
@@ -286,10 +307,6 @@ namespace Planets.View
         {
 			Rectangle target = GameToScreen(obj.BoundingBox);
 			Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height);
-
-			if (s.Cyclic) {
-				s.animate();
-			}
 
 			g.DrawImageUnscaled(s, target);
 

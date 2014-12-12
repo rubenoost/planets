@@ -13,7 +13,7 @@ namespace Planets.Controller.GameRules
 
         public void Execute(Playfield pf, double ms)
         {
-            if(Activated)
+            if (Activated)
                 ExecuteRule(pf, ms);
         }
 
