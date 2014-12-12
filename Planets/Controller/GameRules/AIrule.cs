@@ -33,14 +33,11 @@ namespace Planets.Controller.GameRules
                         {
                             //Move away from bigger object
                             antagonist.DV = (antagonist.Location - g.Location).ScaleToLength(100);
-                            //insert shoot&move logic here
-                            //
+                            ((Antagonist)antagonist).ShootProjectile(pf, (g.Location - antagonist.Location));
                         }
                         else if (g == closest && !g.Ai)
                         {
                             //Move towards smaller object
-                            
-
                             ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - g.Location));
                         }
                     }
