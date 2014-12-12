@@ -35,6 +35,8 @@ namespace Planets.View.Imaging
             RegisterImage(Sprite.Stars2, Resources.parallax2);
             RegisterImage(Sprite.Stars3, Resources.parallax3);
             RegisterImage(Sprite.Stars4, Resources.parallax4);
+            RegisterImage(Sprite.Stars5, Resources.parallax5);
+            RegisterImage(Sprite.Stars6, Resources.parallax6);
         }
 
         private void RegisterImage(Type t, Sprite s)

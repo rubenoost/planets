@@ -12,6 +12,8 @@ namespace Planets.View.Imaging
         public const int Stars2 = 20;
         public const int Stars3 = 40;
         public const int Stars4 = 80;
+        public const int Stars5 = 160;
+        public const int Stars6 = 320;
 
         public const int Background1 = 405011;
         public const int Background2 = 405012;
