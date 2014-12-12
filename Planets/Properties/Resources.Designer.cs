@@ -16,7 +16,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
-
+    
 namespace Planets.Properties {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -139,30 +139,20 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static Bitmap Para1 {
+        internal static System.Drawing.Bitmap Para1 {
             get {
                 object obj = ResourceManager.GetObject("Para1", resourceCulture);
-                return ((Bitmap)(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static Bitmap Para2 {
+        internal static System.Drawing.Bitmap parallax2 {
             get {
-                object obj = ResourceManager.GetObject("Para2", resourceCulture);
-                return ((Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static Bitmap Para3 {
-            get {
-                object obj = ResourceManager.GetObject("Para3", resourceCulture);
-                return ((Bitmap)(obj));
+                object obj = ResourceManager.GetObject("parallax2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -219,27 +209,7 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static Bitmap smallStars {
-            get {
-                object obj = ResourceManager.GetObject("smallStars", resourceCulture);
-                return ((Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static Bitmap space_wallpaper {
-            get {
-                object obj = ResourceManager.GetObject("space_wallpaper", resourceCulture);
-                return ((Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static Bitmap spritety {
+        internal static System.Drawing.Bitmap spritety {
             get {
                 object obj = ResourceManager.GetObject("spritety", resourceCulture);
                 return ((Bitmap)(obj));

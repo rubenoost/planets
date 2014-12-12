@@ -45,8 +45,6 @@ namespace Planets.Controller.Subcontrollers
             Point[] UsedPoints = new Point[AmntObstacles];
             Point NextPoint = new Point(0, 0);
 
-            bool Tardis = false;
-
             foreach(int obj in RndObstacles)
             {
                 bool NotOK = false;

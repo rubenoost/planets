@@ -162,6 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\parallax1.png" />
+    <None Include="Resources\parallax2.png" />
+    <None Include="Resources\parallax.png" />
+    <None Include="Resources\background.png" />
     <None Include="Resources\explosion.hasgraphics.png" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
     <None Include="Resources\Para3.png" />
