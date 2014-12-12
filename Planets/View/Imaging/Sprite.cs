@@ -10,6 +10,8 @@ namespace Planets.View.Imaging
         public const int CometTail = 4;
         public const int Stars1 = 10;
         public const int Stars2 = 20;
+        public const int Stars3 = 40;
+        public const int Stars4 = 80;
 
         public const int Background1 = 405011;
         public const int Background2 = 405012;
