@@ -143,9 +143,9 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Para1 {
+        internal static System.Drawing.Bitmap parallax1 {
             get {
-                object obj = ResourceManager.GetObject("Para1", resourceCulture);
+                object obj = ResourceManager.GetObject("parallax1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,19 +153,9 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Para2 {
+        internal static System.Drawing.Bitmap parallax2 {
             get {
-                object obj = ResourceManager.GetObject("Para2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Para3 {
-            get {
-                object obj = ResourceManager.GetObject("Para3", resourceCulture);
+                object obj = ResourceManager.GetObject("parallax2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -216,16 +206,6 @@ namespace Planets.Properties {
         internal static System.Drawing.Bitmap Pluto_Red {
             get {
                 object obj = ResourceManager.GetObject("Pluto_Red", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap smallStars {
-            get {
-                object obj = ResourceManager.GetObject("smallStars", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

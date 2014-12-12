@@ -30,11 +30,10 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(AnimatedGameObject), new Sprite(Resources.explosion_awesome, 9, 9));
 
             RegisterImage(Sprite.Background1, Resources.background);
-            RegisterImage(Sprite.Background2, Resources.Para1);
-            RegisterImage(Sprite.Background3, Resources.Para2);
             RegisterImage(Sprite.CometTail, Resources.KomeetStaartje);
             RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
-            RegisterImage(Sprite.Stars, Resources.smallStars);
+            RegisterImage(Sprite.Stars1, Resources.parallax1);
+            RegisterImage(Sprite.Stars2, Resources.parallax2);
         }
 
         private void RegisterImage(Type t, Sprite s)
