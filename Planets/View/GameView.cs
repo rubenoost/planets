@@ -104,8 +104,14 @@ namespace Planets.View
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.55f);
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars1, target.Width, target.Height), target);
 
-            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.85f);
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.75f);
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars2, target.Width, target.Height), target);
+
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.85f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars3, target.Width, target.Height), target);
+
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.95f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars4, target.Width, target.Height), target);
             
         }
 

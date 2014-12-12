@@ -33,6 +33,8 @@ namespace Planets.View.Imaging
             RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
             RegisterImage(Sprite.Stars1, Resources.parallax1);
             RegisterImage(Sprite.Stars2, Resources.parallax2);
+            RegisterImage(Sprite.Stars3, Resources.parallax3);
+            RegisterImage(Sprite.Stars4, Resources.parallax4);
         }
 
         private void RegisterImage(Type t, Sprite s)
