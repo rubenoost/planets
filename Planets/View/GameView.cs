@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
@@ -224,6 +225,7 @@ namespace Planets.View
         private Pen HudArcAccentPen2 = new Pen(Color.White, 30.0f);
         private Pen HudArcAccentPen3 = new Pen(Color.White, 22.0f);
         private Font HudScoreFont = new Font(FontFamily.GenericMonospace, 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+        private Brush LabelBrush = new SolidBrush(Color.White);
         private Size hudSize = new Size(500, 300);
 
         // Draw WhatEverMeter buff
@@ -289,7 +291,7 @@ namespace Planets.View
                 g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
 
             // Draw score text
-
+            g.DrawString(field.sb.Scores.Sum(s => s.Value).ToString(), HudScoreFont, LabelBrush, arcRectangle.Left + arcRectangle.Width / 2, arcRectangle.Top + arcRectangle.Height / 6);
 
             // Draw Mass-o-meter
             Point MassMeterPoint = new Point(hudLocation.X + 20, hudLocation.Y + 60);
@@ -300,18 +302,20 @@ namespace Planets.View
             Brush gradientBrush = new LinearGradientBrush(MassMeterPoint, new Point(MassMeterPoint.X, MassMeterPoint.Y + 230), Color.YellowGreen, Color.DarkOrange);
             g.FillRectangle(gradientBrush, new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
             g.DrawRectangle(WhitePen, new Rectangle(MassMeterPoint, new Size(15, 230)));
+            g.DrawString("Mass", HudScoreFont, LabelBrush, MassMeterPoint.X - 10, MassMeterPoint.Y - 30);
 
             // Draw Whatever-o-meter
             int AmountObjects = (field.BOT.Count - 6) * 4;
 
             Point WhatEverMeterPoint = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
 
-            int WhatEverDrawY = (int)(WhatEverMeterPoint.Y + (230 - AmountObjects));
+            int WhatEverDrawY = WhatEverMeterPoint.Y + (230 - AmountObjects);
 
             Point WhatEverDrawPoint = new Point(WhatEverMeterPoint.X, (WhatEverDrawY > WhatEverMeterPoint.Y) ? WhatEverDrawY : WhatEverMeterPoint.Y);
 
-            g.FillRectangle(gradientBrush, new Rectangle(WhatEverDrawPoint, new Size(15, (int)AmountObjects)));
+            g.FillRectangle(gradientBrush, new Rectangle(WhatEverDrawPoint, new Size(15, AmountObjects)));
             g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
+            g.DrawString("WoM", HudScoreFont, LabelBrush, WhatEverMeterPoint.X - 10, WhatEverMeterPoint.Y - 30);
 
             // Draw something else
 
