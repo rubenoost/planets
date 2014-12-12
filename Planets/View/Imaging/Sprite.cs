@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Printing;
+using System.Security.Authentication;
+using System.Windows.Forms;
 
 namespace Planets.View.Imaging
 {
@@ -19,159 +23,74 @@ namespace Planets.View.Imaging
         /// </summary>
         public static readonly Bitmap Empty = new Bitmap(1, 1);
 
-        /// <summary>
-        ///     Gets the amount of columns in this sprite.
-        /// </summary>
-        public int Columns { get; set; }
-
         public int Frames
         {
-            get { return Columns; }
+            get { return Columns * Rows; }
         }
 
-        public Bitmap Image;
-
-        /// <summary>
-        ///     Gets whether this sprite is cyclic.
-        /// </summary>
-        public bool Cyclic { get; private set; }
-
-        /// <summary>
-        ///     Gets the images of this sprite, please use sprite[index] instead of this list.
-        /// </summary>
+        public int Columns { get; set; }
+        public int Rows { get; set; }
         public List<Bitmap> Images { get; set; }
+        public bool Cyclic { get; set; }
 
-        private int spriteIndex = 0;
 
-        /// <summary>
-        ///     Returns the given frame.
-        /// </summary>
-        /// <param name="index">-1.0f for static, between 0.0f (inclusive) and 1.0f (exclusive) (or higher if cyclic) for dynamic.</param>
-        /// <returns></returns>
-        /// 
-        public Bitmap this[float index]
+        public Sprite(List<Bitmap> bm, int columns = 1, int rows = 1, bool cyclic = false)
         {
-            get
-            {
-                // Als index lager is dan -1 => Ongeldig
-                if (index < -1.0f)
-                {
-                    throw new ArgumentOutOfRangeException("Cannot get frame " + index);
-                }
-                // Index == -1, geef interne plaatje
-                if (Math.Abs(Frames - (-1.0f)) < 0.01f)
-                {
-                    return Image;
-                }
-                // Als niet cyclisch...
-                if (!Cyclic)
-                {
-                    // En index te groot, geef empty
-                    if (index >= 1.0f)
-                        return Empty;
-                    // Anders het correcte frame
-                    if (index < 0.0f) index = 0.0f;
-                    return Images[(int)(index * Images.Count)];
-                }
-                // Is cyclisch, dus fix index
-                index = index - (int)index;
-                // Geef correct frame terug
-                return Images[(int)(index * Images.Count)];
-            }
+            Columns = columns;
+            Rows = rows;
+            Cyclic = cyclic;
+
+            Images = bm;
+        }
+
+        public Sprite(Bitmap bm, int columns = 1, int rows = 1, bool cyclic = false)
+            : this(Cutsheet(bm, rows, columns), columns, rows, cyclic)
+        {
         }
 
         public static implicit operator Sprite(Bitmap bm)
         {
-            return new Sprite { Columns = 1, Image = bm };
+            return new Sprite(bm);
         }
 
         public static implicit operator Bitmap(Sprite s)
         {
-            if (s.Frames == 1)
-                return s.Image;
-            else
-                return s[0.0f];
+            return s.Images[0];
         }
 
-        /// <summary>
-        /// Maakt een nieuwe <c>Sprite</c> aan.
-        /// </summary>
-        /// <param name="bm">De <see cref="Bitmap" /> van deze <c>Sprite</c>.</param>
-        /// <param name="countX">Aantal stukjes om de sheet in te verdelen.</param>
-        /// <param name="cyclic">Of deze <c>Sprite</c> cyclisch moet zijn.</param>
-        public Sprite(Bitmap bm, int countX, bool cyclic)
+        private static List<Bitmap> Cutsheet(Bitmap bm, int rows, int columns)
         {
-            // Save variables
-            Image = bm;
-            Cyclic = cyclic;
+            List<Bitmap> result = new List<Bitmap>();
 
-            // Check for moving image or static image
-            if (countX > 0)
+            int widthimg = bm.Width;
+            int heightimg = bm.Height;
+            int subwidth = widthimg / columns;
+            int subheight = heightimg / rows;
+
+            for (var r = 0; r < rows; r++)
             {
-                // Has to be cut up
-                Columns = countX;
-                Images = CutupImage(bm, Columns);
-            }
-            else
-            {
-                // No cutup
-                Columns = 1;
-            }
-        }
+                for (var c = 0; c < columns; c++)
+                {
+                    Bitmap subimg = new Bitmap(subwidth, subheight, PixelFormat.Format32bppPArgb);
 
-        /// <summary>
-        ///     Create non-cyclic sprite, cut in pieces.
-        /// </summary>
-        /// <param name="bm"></param>
-        /// <param name="countX"></param>
-        /// <param name="countY"></param>
-        public Sprite(Bitmap bm, int countX = -1)
-            : this(bm, countX, false)
-        {
-        }
+                    Graphics g = Graphics.FromImage(subimg);
 
-        public Sprite()
-        {
-        }
+                    Rectangle srcRectangle = new Rectangle((c * subwidth), (r * subheight), subwidth, subheight);
 
-        public Bitmap animate()
-        {
-            this.spriteIndex = (this.spriteIndex < Images.Count - 1) ? this.spriteIndex + 1 : 0;
+                    g.DrawImage(bm, 0, 0, srcRectangle, GraphicsUnit.Pixel);
 
-            return this[this.spriteIndex];
-        }
-
-        /// <summary>
-        ///     Helper method to cut up images.
-        /// </summary>
-        /// <param name="bitmap"></param>
-        /// <param name="rows"></param>
-        /// <param name="columns"></param>
-        /// <returns></returns>
-        private static List<Bitmap> CutupImage(Image bitmap, int columns)
-        {
-            // Determine target
-            var s = new Size(bitmap.Width / columns, bitmap.Height);
-            var targetRectangle = new Rectangle(new Point(0, 0), s);
-
-            // Create result
-            var result = new List<Bitmap>(s.Height * s.Width);
-
-            // Cut up image
-            for (int j = 0; j < columns; j++)
-            {
-                // Create new Bitmap
-                var subImage = new Bitmap(s.Width, s.Height);
-
-                // Draw scaled image
-                using (Graphics g = Graphics.FromImage(subImage))
-                    g.DrawImage(bitmap, targetRectangle, new Rectangle(new Point(j * s.Width, s.Height), s),
-                        GraphicsUnit.Pixel);
-                // Add to result
-                result.Add(subImage);
+                    result.Add(subimg);
+                }
             }
 
             return result;
+        }
+
+        public Bitmap GetFrame(int frame)
+        {
+            if (frame >= this.Frames)
+                return Empty;
+            return Images[frame];
         }
     }
 }

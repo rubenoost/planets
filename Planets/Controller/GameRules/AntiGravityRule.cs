@@ -1,5 +1,4 @@
-﻿using System;
-using Planets.Model;
+﻿using Planets.Model;
 using Planets.Model.GameObjects;
 
 namespace Planets.Controller.GameRules
@@ -7,7 +6,7 @@ namespace Planets.Controller.GameRules
     class AntiGravityRule : AbstractGameRule
     {
         // changes the speed
-        private double BartConstante = 10.0;
+        private double BartConstante = 50.0;
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
@@ -19,7 +18,7 @@ namespace Planets.Controller.GameRules
                 {
                     if (!g2.Is(Rule.AFFECTED_BY_AG)) return;
 
-                    if (g != g2 && !(g2 is Player))
+                    if (g != g2)
                     {
                         Vector V = g.Location - g2.Location;
                         double Fg = BartConstante * (g.Mass / (V.Length() * V.Length()));
