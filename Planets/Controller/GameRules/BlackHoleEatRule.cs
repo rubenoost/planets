@@ -23,11 +23,15 @@ namespace Planets.Controller.GameRules
                             if (go.Is(Rule.EAT_PLAYER))
                                 pf.BOT.Remove(go2);
                             //pf.BOT.Add(new AnimatedGameObject(new Vector(10, 10), new Vector(50, 50), 50000));
+                            AnimatedGameObject explosion = new AnimatedGameObject(go2.Location, new Vector(0, 0), 500);
+                            pf.BOT.Add(explosion);
                         }
                         else
                         {
                             if (go2 is AntiMatter) return;
                             pf.BOT.Remove(go2);
+                            AnimatedGameObject explosion = new AnimatedGameObject(go2.Location, new Vector(0, 0), 500);
+                            pf.BOT.Add(explosion);
                         }
                     }
                 });
