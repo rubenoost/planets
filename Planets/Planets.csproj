@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\background.png" />
     <None Include="Resources\explosion.hasgraphics.png" />
     <None Include="Resources\explosion2.png" />
     <None Include="Resources\Explosion.bmp" />
