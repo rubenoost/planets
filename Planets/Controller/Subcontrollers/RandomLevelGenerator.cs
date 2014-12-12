@@ -21,7 +21,7 @@ namespace Planets.Controller.Subcontrollers
 
             for (int i = 0; i < AmntObstacles; i++)
             {
-                int NextObj = rnd.Next(0, 6);
+                int NextObj = rnd.Next(0, 7);
 
                 RndObstacles[i] = NextObj;
 
@@ -82,6 +82,9 @@ namespace Planets.Controller.Subcontrollers
                                 NewObj = (new Tardis(NextPoint, new Vector(0, 0), 0));
                                 Tardis = true;
                             }
+                            break;
+                        case 6: //Antagonist
+                            NewObj = (new Antagonist(NextPoint, new Vector(0, 0), 1000));
                             break;
                     }
 
