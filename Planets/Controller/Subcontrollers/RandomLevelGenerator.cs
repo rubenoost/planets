@@ -1,7 +1,7 @@
-﻿using Planets.Model;
-using Planets.Model.GameObjects;
-using System;
+﻿using System;
 using System.Drawing;
+using Planets.Model;
+using Planets.Model.GameObjects;
 
 namespace Planets.Controller.Subcontrollers
 {
@@ -20,6 +20,7 @@ namespace Planets.Controller.Subcontrollers
             int previous = -1;
 
             bool tardisAvbl = false;
+            bool AntagonistAvbl = false;
 
             for(int i = 0; i < AmntObstacles; i++)
             {
@@ -35,6 +36,24 @@ namespace Planets.Controller.Subcontrollers
 
                 if(i == AmntObstacles - 1 && !tardisAvbl){
                     NextObj = 5;
+                }
+
+                RndObstacles[i] = NextObj;
+
+                previous = RndObstacles[i];
+            }
+            for (int i = 0; i < AmntObstacles; i++)
+            {
+                int NextObj = rnd.Next(0, 7);
+
+                while (NextObj == 6 && AntagonistAvbl)
+                {
+                    NextObj = rnd.Next(0, 6);
+                }
+
+                if (NextObj == 6 && !AntagonistAvbl)
+                {
+                    AntagonistAvbl = true;
                 }
 
                 RndObstacles[i] = NextObj;

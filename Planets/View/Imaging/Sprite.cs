@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Printing;
-using System.Security.Authentication;
-using System.Windows.Forms;
 
 namespace Planets.View.Imaging
 {
@@ -12,11 +8,14 @@ namespace Planets.View.Imaging
     {
         public const int Cursor = 2;
         public const int CometTail = 4;
-        public const int Stars = 10;
+        public const int Stars1 = 10;
+        public const int Stars2 = 20;
+        public const int Stars3 = 40;
+        public const int Stars4 = 80;
+        public const int Stars5 = 160;
+        public const int Stars6 = 320;
 
         public const int Background1 = 405011;
-        public const int Background2 = 405012;
-        public const int Background3 = 405013;
 
         /// <summary>
         ///     Bitmap die wordt teruggegeven als er geen logisch alternatief is.

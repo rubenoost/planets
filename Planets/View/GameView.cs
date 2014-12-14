@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
@@ -102,11 +103,23 @@ namespace Planets.View
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.25f);
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Background1, target.Width, target.Height), target);
 
-            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.55f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.35f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars1, target.Width, target.Height), target);
 
-            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.85f);
-            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars, target.Width, target.Height), target);
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.45f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars2, target.Width, target.Height), target);
+
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.55f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars3, target.Width, target.Height), target);
+
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.65f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars4, target.Width, target.Height), target);
+
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.75f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars5, target.Width, target.Height), target);
+
+            target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.9f);
+            g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars6, target.Width, target.Height), target);
 
         }
 
@@ -140,7 +153,7 @@ namespace Planets.View
 
         private void DrawGameObject(Graphics g, GameObject obj)
         {
-			DrawAnimations(g, obj);
+            DrawAnimations(g, obj);
 
             // Get sprite
             int objAngle = 0;
@@ -166,14 +179,15 @@ namespace Planets.View
                 int currentFrame = (int)(p * frames);
                 g.DrawImageUnscaled(s.GetFrame(currentFrame), target);
 
-				if (nu - begin >= duration) {
-					field.BOT.Remove(obj);
-				}
+                if (nu - begin >= duration)
+                {
+                    field.BOT.Remove(obj);
+                }
             }
             else
             {
-            g.DrawImageUnscaled(s, target);
-        }
+                g.DrawImageUnscaled(s, target);
+            }
         }
 
         private void DrawDemo(Graphics g)
@@ -194,9 +208,10 @@ namespace Planets.View
         {
             lock (field.sb)
             {
-                for(int i = 0; i < field.sb.Scores.Count; i++ ) {
+                for (int i = 0; i < field.sb.Scores.Count; i++)
+                {
                     ScorePlayerBrush.Color = field.sb.Scores[i].Color;
-                    if(field.sb.Scores[i].Value > 0)
+                    if (field.sb.Scores[i].Value > 0)
                         g.DrawString(String.Format("+{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
                     else
                         g.DrawString(String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
@@ -215,6 +230,7 @@ namespace Planets.View
         private Pen HudArcAccentPen2 = new Pen(Color.White, 30.0f);
         private Pen HudArcAccentPen3 = new Pen(Color.White, 22.0f);
         private Font HudScoreFont = new Font(FontFamily.GenericMonospace, 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+        private Brush LabelBrush = new SolidBrush(Color.White);
         private Size hudSize = new Size(500, 300);
 
         // Draw WhatEverMeter buff
@@ -265,7 +281,7 @@ namespace Planets.View
                 arcRectangle.Width + diff3,
                 arcRectangle.Height + diff3
                 );
-            
+
             float barStart = 270.0f - barSize / 2;
 
             // Draw progress
@@ -280,7 +296,7 @@ namespace Planets.View
                 g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
 
             // Draw score text
-            
+            g.DrawString(field.sb.Scores.Sum(s => s.Value).ToString(), HudScoreFont, LabelBrush, arcRectangle.Left + arcRectangle.Width / 2, arcRectangle.Top + arcRectangle.Height / 6);
 
             // Draw Mass-o-meter
             Point MassMeterPoint = new Point(hudLocation.X + 20, hudLocation.Y + 60);
@@ -291,18 +307,20 @@ namespace Planets.View
             Brush gradientBrush = new LinearGradientBrush(MassMeterPoint, new Point(MassMeterPoint.X, MassMeterPoint.Y + 230), Color.YellowGreen, Color.DarkOrange);
             g.FillRectangle(gradientBrush, new Rectangle(MassDrawPoint, new Size(15, (int)field.CurrentPlayer.Radius)));
             g.DrawRectangle(WhitePen, new Rectangle(MassMeterPoint, new Size(15, 230)));
+            g.DrawString("Mass", HudScoreFont, LabelBrush, MassMeterPoint.X - 10, MassMeterPoint.Y - 30);
 
             // Draw Whatever-o-meter
             int AmountObjects = (field.BOT.Count - 6) * 4;
 
             Point WhatEverMeterPoint = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
 
-            int WhatEverDrawY = (int)(WhatEverMeterPoint.Y + (230 - AmountObjects));
+            int WhatEverDrawY = WhatEverMeterPoint.Y + (230 - AmountObjects);
 
             Point WhatEverDrawPoint = new Point(WhatEverMeterPoint.X, (WhatEverDrawY > WhatEverMeterPoint.Y) ? WhatEverDrawY : WhatEverMeterPoint.Y);
 
-            g.FillRectangle(gradientBrush, new Rectangle(WhatEverDrawPoint, new Size(15, (int)AmountObjects)));
+            g.FillRectangle(gradientBrush, new Rectangle(WhatEverDrawPoint, new Size(15, AmountObjects)));
             g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
+            g.DrawString("WoM", HudScoreFont, LabelBrush, WhatEverMeterPoint.X - 10, WhatEverMeterPoint.Y - 30);
 
             // Draw something else
 
@@ -310,10 +328,10 @@ namespace Planets.View
 
         private void DrawAnimations(Graphics g, GameObject obj)
         {
-			Rectangle target = GameToScreen(obj.BoundingBox);
-			Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height);
+            Rectangle target = GameToScreen(obj.BoundingBox);
+            Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height);
 
-			g.DrawImageUnscaled(s, target);
+            g.DrawImageUnscaled(s, target);
 
             // if there are animations queued by a gamerule
             // get the frame from the spritepool list

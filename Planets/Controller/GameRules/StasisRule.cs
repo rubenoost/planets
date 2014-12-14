@@ -16,14 +16,11 @@ namespace Planets.Controller.GameRules
                 {
                     if (!g2.Is(Rule.SLOWABLE)) return;
 
-                    if (g != g2 && !(g2 is Player))
+                    if (g != g2)
                     {
-                        Vector V = g.Location - g2.Location;
-                        double Fg = (g.Mass / (V.Length() * V.Length()));
-                        // Speed of projectile gets updated
-
                         if (g.IntersectsWith(g2))
                         {
+                            // Speed of projectile gets updated
                             g2.DV *= Math.Pow(0.5, ms / 1000);
                             if (g2.DV.X <= 0 && g2.DV.X >= -15)
                             {

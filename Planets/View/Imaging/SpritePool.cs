@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Runtime.CompilerServices;
 using Planets.Model;
 using Planets.Model.GameObjects;
 using Planets.Properties;
@@ -27,14 +26,17 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
             RegisterImage(typeof(Antagonist), Resources.antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);
-            RegisterImage(typeof(AnimatedGameObject), new Sprite(Resources.explosion_awesome, 9, 9));
+            RegisterImage(typeof(AnimatedGameObject), new Sprite(Resources.ExplosionTest, 8, 8));
 
-            RegisterImage(Sprite.Background1, Resources.space_wallpaper);
-            RegisterImage(Sprite.Background2, Resources.Para1);
-            RegisterImage(Sprite.Background3, Resources.Para2);
             RegisterImage(Sprite.CometTail, Resources.KomeetStaartje);
+            RegisterImage(Sprite.Background1, Resources.background);
             RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
-            RegisterImage(Sprite.Stars, Resources.smallStars);
+            RegisterImage(Sprite.Stars1, Resources.parallax1);
+            RegisterImage(Sprite.Stars2, Resources.parallax2);
+            RegisterImage(Sprite.Stars3, Resources.parallax3);
+            RegisterImage(Sprite.Stars4, Resources.parallax4);
+            RegisterImage(Sprite.Stars5, Resources.parallax5);
+            RegisterImage(Sprite.Stars6, Resources.parallax6);
         }
 
         private void RegisterImage(Type t, Sprite s)
@@ -100,7 +102,7 @@ namespace Planets.View.Imaging
                     resized.Add(ResizeImg(bm, width, height));
                 }
 
-                return new Sprite(resized,s.Columns,s.Rows,s.Cyclic);
+                return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
             }
         }
 
