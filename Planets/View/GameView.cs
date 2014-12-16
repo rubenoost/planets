@@ -319,9 +319,30 @@ namespace Planets.View
 
             // Draw Radar
             Point RadarPoint = new Point(ClientSize.Width - ((hudSize.Width / 4) * 3), hudLocation.Y + (hudSize.Height / 2) + 10);
+            Size s = new Size(hudSize.Width / 2, (hudSize.Height / 2) - 20);
 
-            g.FillRectangle(Brushes.Red, new Rectangle(RadarPoint, new Size(hudSize.Width / 2, (hudSize.Height / 2) - 20)));
+            g.FillRectangle(Brushes.Red, new Rectangle(RadarPoint, s));
+            field.BOT.Iterate(go1 => {
+                double xField = go1.Location.X / field.Size.Width;
+                double yField = go1.Location.Y / field.Size.Height;
 
+                double xRadar = s.Width * xField;
+                double yRadar = s.Height * yField;
+
+                Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                blip.X += RadarPoint.X;
+                blip.Y += RadarPoint.Y;
+
+                if(!(go1 is Player)) {
+                    if(go1 is Tardis){
+                        g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
+                    } else {
+                        g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));
+                    }
+                } else {
+                    g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
+                }
+            });
         }
 
         private void DrawAnimations(Graphics g, GameObject obj)
