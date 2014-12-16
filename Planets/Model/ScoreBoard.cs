@@ -7,6 +7,7 @@ namespace Planets.Model
     {
 
         public List<Score> Scores { get; private set; }
+        public int total = 0;
 
         public ScoreBoard()
         {
@@ -26,6 +27,14 @@ namespace Planets.Model
                 if (span.TotalMilliseconds >= 2000)
                     Scores.Remove(Scores[i]);
             }
+        }
+
+        public int Total() {
+            foreach(Score point in Scores){
+                total += point.Value;
+            }
+
+            return total;
         }
 
     }

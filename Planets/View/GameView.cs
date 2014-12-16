@@ -86,6 +86,7 @@ namespace Planets.View
             }
 
             DrawScores(g);
+            DrawTotal(g);
             DrawHud(g);
 
             // Debugging
@@ -217,6 +218,10 @@ namespace Planets.View
                     field.sb.Scores[i].UpdateLocation();
                 }
             }
+        }
+
+        private void DrawTotal(Graphics g) {
+            g.DrawString(field.sb.Total().ToString(), ScoreFont, Brushes.Red, new Point(0, 0));
         }
 
         // Draw Score Arc Buff
