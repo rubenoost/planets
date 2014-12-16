@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
 using Planets.Model;
 using Planets.Model.GameObjects;
 
@@ -25,10 +24,12 @@ namespace Planets.Controller.Subcontrollers
             bool AntagonistAvbl = false;
             bool StasisFieldAvbl = false;
 
-            for(int i = 0; i < AmntObstacles; i++) {
+            for (int i = 0; i < AmntObstacles; i++)
+            {
                 int NextObj = rnd.Next(0, 7);
 
-                while(NextObj == 5 && tardisAvbl) {
+                while (NextObj == 5 && tardisAvbl)
+                {
                     NextObj = rnd.Next(0, 7);
                 }
 
@@ -42,7 +43,7 @@ namespace Planets.Controller.Subcontrollers
                     NextObj = rnd.Next(0, 7);
                 }
 
-                if (NextObj == 4 && ! StasisFieldAvbl)
+                if (NextObj == 4 && !StasisFieldAvbl)
                 {
                     StasisFieldAvbl = true;
                 }
@@ -70,7 +71,7 @@ namespace Planets.Controller.Subcontrollers
             Point NextPoint = new Point(0, 0);
             Point NextNormalPoint = new Point(0, 0);
 
-            foreach(int obj in RndObstacles)
+            foreach (int obj in RndObstacles)
             {
                 bool NotOK = false;
                 while (!NotOK)
@@ -146,7 +147,7 @@ namespace Planets.Controller.Subcontrollers
                 pf.BOT.Add(normalObject);
             }
 
-			//pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));
+            //pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));
             return pf;
         }
 
