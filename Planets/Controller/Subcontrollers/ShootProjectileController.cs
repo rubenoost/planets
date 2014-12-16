@@ -109,7 +109,7 @@ namespace Planets.Controller.Subcontrollers
             {
                 O.DV = CalcNewDV(O, P, gamePoint);
                 if (IsBlackhole)
-                    P.Mass = 1000000;
+                    P.Mass = 100;
 
                 if (IsAntiMatter)
                     P.Mass = 100;
