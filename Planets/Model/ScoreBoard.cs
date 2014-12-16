@@ -5,17 +5,19 @@ namespace Planets.Model
 {
     public class ScoreBoard
     {
+        public int Total { get; private set; }
 
         public List<Score> Scores { get; private set; }
 
         public ScoreBoard()
         {
-            this.Scores = new List<Score>();
+            Scores = new List<Score>();
         }
 
         public void AddScore(Score score)
         {
-            this.Scores.Add(score);
+            Scores.Add(score);
+            Total += score.Value;
         }
 
         public void CheckStamps()

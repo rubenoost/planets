@@ -244,7 +244,7 @@ namespace Planets.View
             g.FillRectangle(HudBackgroundBrush, new Rectangle(target.Left, target.Top + featherSize - 1, featherSize, target.Height - featherSize));
 
             // Draw score arc
-            float progress = Math.Min((float)(field.CurrentPlayer.Radius / 250.0f), 1.0f);
+            float progress = Math.Min(field.sb.Total / 5000.0f, 1.0f);
             float barSize = 90.0f;
 
             RectangleF arcRectangle = new RectangleF(
@@ -291,7 +291,7 @@ namespace Planets.View
                 g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
 
             // Draw score text
-            g.DrawString(field.sb.Scores.Sum(s => s.Value).ToString(), HudScoreFont, LabelBrush, arcRectangle.Left + arcRectangle.Width / 2, arcRectangle.Top + arcRectangle.Height / 6);
+            g.DrawString(field.sb.Total.ToString(), HudScoreFont, LabelBrush, arcRectangle.Left + arcRectangle.Width / 2, arcRectangle.Top + arcRectangle.Height / 6);
 
             // Draw Mass-o-meter
             Point MassMeterPoint = new Point(hudLocation.X + 20, hudLocation.Y + 60);
