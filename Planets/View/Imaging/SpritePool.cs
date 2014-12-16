@@ -19,7 +19,7 @@ namespace Planets.View.Imaging
         {
             RegisterImage(typeof(Player), Resources.Pluto);
             RegisterImage(typeof(BlackHole), Resources.Hole1);
-            RegisterImage(typeof(Stasis), Resources.stasis);
+            RegisterImage(typeof(Stasis), Resources.StatieGeld);
             RegisterImage(typeof(Tardis), Resources.Tardis);
             RegisterImage(typeof(Mine), Resources.Pluto_Red);
             RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);

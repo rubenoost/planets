@@ -283,6 +283,16 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap StatieGeld {
+            get {
+                object obj = ResourceManager.GetObject("StatieGeld", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Tardis {
             get {
                 object obj = ResourceManager.GetObject("Tardis", resourceCulture);
