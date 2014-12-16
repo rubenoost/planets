@@ -317,7 +317,10 @@ namespace Planets.View
             g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
             g.DrawString("WoM", HudScoreFont, LabelBrush, WhatEverMeterPoint.X - 10, WhatEverMeterPoint.Y - 30);
 
-            // Draw something else
+            // Draw Radar
+            Point RadarPoint = new Point(ClientSize.Width - ((hudSize.Width / 4) * 3), hudLocation.Y + (hudSize.Height / 2) + 10);
+
+            g.FillRectangle(Brushes.Red, new Rectangle(RadarPoint, new Size(hudSize.Width / 2, (hudSize.Height / 2) - 20)));
 
         }
 
