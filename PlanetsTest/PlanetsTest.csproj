@@ -61,6 +61,7 @@
     <Compile Include="Model\BlackHoleTest.cs" />
     <Compile Include="Model\VectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\SpriteTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Planets\Planets.csproj">
@@ -68,9 +69,7 @@
       <Name>Planets</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
