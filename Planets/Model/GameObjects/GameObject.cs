@@ -107,6 +107,10 @@ namespace Planets.Model.GameObjects
             }
         }
 
+        public GameObject()
+            : this(new Vector(), new Vector(), Utils.StartMass)
+        { }
+
         public GameObject(Vector location, Vector velocity, double Mass)
             : this(location, velocity, Mass,
             Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS | Rule.SLOWABLE | Rule.AFFECTED_BY_AG)

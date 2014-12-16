@@ -2,6 +2,10 @@
 {
     class Tardis : GameObject
     {
+        public Tardis()
+            : this(new Vector(), new Vector(), Utils.StartMass)
+        { }
+
         public Tardis(Vector location, Vector velocity, double mass)
             : base(location, velocity, mass, Rule.COLLIDES)
         {

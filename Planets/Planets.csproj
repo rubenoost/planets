@@ -73,6 +73,7 @@
     <Compile Include="Controller\GameRules\StasisRule.cs" />
     <Compile Include="Controller\GameRules\StayInFieldRule.cs" />
     <Compile Include="Controller\GameRules\TardisRule.cs" />
+    <Compile Include="Controller\Subcontrollers\PlayfieldSerializer.cs" />
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />

@@ -2,6 +2,9 @@
 {
     public class Stasis : GameObject
     {
+        public Stasis()
+            : this(new Vector(), new Vector(), Utils.StartMass)
+        { }
         public Stasis(Vector location, Vector velocity, double mass)
             : base(location, velocity, mass, Rule.NONE)
         {

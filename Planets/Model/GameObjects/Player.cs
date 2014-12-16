@@ -4,6 +4,8 @@ namespace Planets.Model.GameObjects
 {
     public class Player : GameObject
     {
+        public Player() : this(new Vector(), new Vector(), Utils.StartMass) { }
+
         public Player(Vector location, Vector velocity, double mass)
             : base(location, velocity, mass)
         {
