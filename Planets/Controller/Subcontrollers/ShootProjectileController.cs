@@ -88,7 +88,7 @@ namespace Planets.Controller.Subcontrollers
             if (rndint == 58)
             {
                 P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
-                P.Mass = 0.05 * O.Mass;
+                P.Mass = 100;
                 IsBlackhole = true;
             }
             else if (rndint == 20 || rndint == 25 || rndint == 30 || rndint == 35 || rndint == 40 || rndint == 50 || rndint == 55 || rndint == 60)
@@ -109,7 +109,7 @@ namespace Planets.Controller.Subcontrollers
             {
                 O.DV = CalcNewDV(O, P, gamePoint);
                 if (IsBlackhole)
-                    P.Mass = 1000000;
+                    P.Mass = 100;
 
                 if (IsAntiMatter)
                     P.Mass = 100;
