@@ -21,7 +21,8 @@ namespace Planets.Controller.GameRules
                     if (g != g2)
                     {
                         Vector V = g.Location - g2.Location;
-                        double Fg = BartConstante * (g.Mass / (V.Length() * V.Length()));
+                        double L = V.Length() - g.Radius + 1.0;
+                        double Fg = BartConstante * (g.Mass / (L * L));
                         // Speed of projectile gets updated
                         g2.DV -= V.ScaleToLength(Fg * (ms / 1000.0));
                     }
