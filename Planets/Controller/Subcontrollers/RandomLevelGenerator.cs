@@ -14,37 +14,43 @@ namespace Planets.Controller.Subcontrollers
             pf = new Playfield(1920, 1080);
 
             Random rnd = new Random();
-            int AmntObstacles = rnd.Next(4, 12);
+            int AmntObstacles = rnd.Next(7, 15);
+            int normalCount = rnd.Next(10, 15);
 
             int[] RndObstacles = new int[AmntObstacles];
             int previous = -1;
 
             bool tardisAvbl = false;
             bool AntagonistAvbl = false;
+            bool StasisFieldAvbl = false;
 
-            for(int i = 0; i < AmntObstacles; i++)
+            for (int i = 0; i < AmntObstacles; i++)
             {
                 int NextObj = rnd.Next(0, 7);
 
-                while(NextObj == 5 && tardisAvbl) {
-                    NextObj = rnd.Next(0, 6);
+                while (NextObj == 5 && tardisAvbl)
+                {
+                    NextObj = rnd.Next(0, 7);
                 }
 
-                if(NextObj == 5 && !tardisAvbl) {
+                if (NextObj == 5 && !tardisAvbl)
+                {
                     tardisAvbl = true;
                 }
 
-                if(i == AmntObstacles - 1 && !tardisAvbl){
-                    NextObj = 5;
+                while (NextObj == 4 && StasisFieldAvbl)
+                {
+                    NextObj = rnd.Next(0, 7);
+                }
+
+                if (NextObj == 4 && !StasisFieldAvbl)
+                {
+                    StasisFieldAvbl = true;
                 }
 
                 RndObstacles[i] = NextObj;
 
                 previous = RndObstacles[i];
-            }
-            for (int i = 0; i < AmntObstacles; i++)
-            {
-                int NextObj = rnd.Next(0, 7);
 
                 while (NextObj == 6 && AntagonistAvbl)
                 {
@@ -63,8 +69,9 @@ namespace Planets.Controller.Subcontrollers
 
             Point[] UsedPoints = new Point[AmntObstacles];
             Point NextPoint = new Point(0, 0);
+            Point NextNormalPoint = new Point(0, 0);
 
-            foreach(int obj in RndObstacles)
+            foreach (int obj in RndObstacles)
             {
                 bool NotOK = false;
                 while (!NotOK)
@@ -93,13 +100,13 @@ namespace Planets.Controller.Subcontrollers
                     switch (obj)
                     {
                         case 0: // AntiGravity
-                            NewObj = (new Antigravity(NextPoint, new Vector(0, 0), -1000000));
+                            NewObj = (new Antigravity(NextPoint, new Vector(0, 0), 10000));
                             break;
                         case 1: // AntiMatter
                             NewObj = (new AntiMatter(NextPoint, new Vector(0, 0), 100));
                             break;
                         case 2: // BlackHole
-                            NewObj = (new BlackHole(NextPoint, new Vector(0, 0), 1000000));
+                            NewObj = (new BlackHole(NextPoint, new Vector(0, 0), 100));
                             break;
                         case 3: // Mine
                             NewObj = (new Mine(NextPoint, new Vector(0, 0), 50));
@@ -108,7 +115,7 @@ namespace Planets.Controller.Subcontrollers
                             NewObj = (new Stasis(NextPoint, new Vector(0, 0), 800));
                             break;
                         case 5: // Tardis
-                                NewObj = (new Tardis(NextPoint, new Vector(0, 0), 0));
+                            NewObj = (new Tardis(NextPoint, new Vector(0, 0), 0));
                             break;
                         case 6: //Antagonist
                             NewObj = (new Antagonist(NextPoint, new Vector(0, 0), 1000));
@@ -132,7 +139,15 @@ namespace Planets.Controller.Subcontrollers
             }
 
             pf.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), Utils.StartMass);
-			pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));
+
+            GameObject normalObject = null;
+            for (int i = 0; i < normalCount; i++)
+            {
+                normalObject = new GameObject(new Vector(rnd.Next(100, 1800), rnd.Next(100, 900)), new Vector(rnd.Next(0, 10), rnd.Next(0, 10)), rnd.Next(1000, 5000));
+                pf.BOT.Add(normalObject);
+            }
+
+            //pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));
             return pf;
         }
 

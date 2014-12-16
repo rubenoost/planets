@@ -34,8 +34,6 @@ namespace Planets.Controller.GameRules
             double lostMass = goPlayer.Mass / 2;
             goPlayer.Mass -= lostMass;
 
-            // TODO: We should probably create an epic explosion before removing the object.
-
 			AnimatedGameObject explosion = new AnimatedGameObject(goExplodes.Location, new Vector(0, 0), 500);
             pf.BOT.Add(explosion);
             

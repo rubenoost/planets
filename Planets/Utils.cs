@@ -2,6 +2,6 @@
 {
     static class Utils
     {
-        public static int StartMass = 30000;
+        public static int StartMass = 3000;
     }
 }

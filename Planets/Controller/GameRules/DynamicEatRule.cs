@@ -43,7 +43,12 @@ namespace Planets.Controller.GameRules
                 }
                 else
                     gL.Mass -= LostMass;
-                pf.sb.AddScore(new Score(-50, DateTime.Now, gS.Location, true));
+
+                if (gL is Player || gS is Player)
+                {
+                    pf.sb.AddScore(new Score(-50, DateTime.Now, gS.Location, true));
+                }
+                
 
                 // Remove antimatter
                 pf.BOT.Remove(gS);
