@@ -22,29 +22,20 @@ namespace Planets.Controller.Subcontrollers
             bool tardisAvbl = false;
             bool AntagonistAvbl = false;
 
-            for(int i = 0; i < AmntObstacles; i++)
-            {
+            for(int i = 0; i < AmntObstacles; i++) {
                 int NextObj = rnd.Next(0, 7);
 
                 while(NextObj == 5 && tardisAvbl) {
-                    NextObj = rnd.Next(0, 6);
+                    NextObj = rnd.Next(0, 7);
                 }
 
                 if(NextObj == 5 && !tardisAvbl) {
                     tardisAvbl = true;
                 }
 
-                if(i == AmntObstacles - 1 && !tardisAvbl){
-                    NextObj = 5;
-                }
-
                 RndObstacles[i] = NextObj;
 
                 previous = RndObstacles[i];
-            }
-            for (int i = 0; i < AmntObstacles; i++)
-            {
-                int NextObj = rnd.Next(0, 7);
 
                 while (NextObj == 6 && AntagonistAvbl)
                 {
@@ -108,7 +99,7 @@ namespace Planets.Controller.Subcontrollers
                             NewObj = (new Stasis(NextPoint, new Vector(0, 0), 800));
                             break;
                         case 5: // Tardis
-                                NewObj = (new Tardis(NextPoint, new Vector(0, 0), 0));
+                            NewObj = (new Tardis(NextPoint, new Vector(0, 0), 0));
                             break;
                         case 6: //Antagonist
                             NewObj = (new Antagonist(NextPoint, new Vector(0, 0), 1000));

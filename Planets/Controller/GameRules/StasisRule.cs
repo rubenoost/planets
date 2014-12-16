@@ -21,7 +21,7 @@ namespace Planets.Controller.GameRules
                         if (g.IntersectsWith(g2))
                         {
                             // Speed of projectile gets updated
-                            g2.DV *= Math.Pow(0.5, ms / 1000);
+                            g2.DV *= Math.Pow(0.55, ms / 1000);
                             if (g2.DV.X <= 0 && g2.DV.X >= -15)
                             {
                                 g2.DV = new Vector(-15, g2.DV.Y);
