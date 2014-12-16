@@ -8,7 +8,7 @@ namespace Planets.Controller.GameRules
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             // Reset if too low
-            if (pf.CurrentPlayer.Mass < 50)
+            if (pf.CurrentPlayer.Mass < 500)
             {
                 pf.BOT.Clear();
 
