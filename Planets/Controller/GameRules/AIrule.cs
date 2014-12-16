@@ -12,11 +12,8 @@ namespace Planets.Controller.GameRules
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             TimeSpan tijd = DateTime.Now - begin;
-            if (tijd.TotalMilliseconds < 1000)
-            {
-
-                return;
-            } begin = DateTime.Now;
+            if (tijd.TotalMilliseconds < 1000) return;
+            begin = DateTime.Now;
             pf.BOT.Iterate(g =>
                 {
                     if (antagonist == null && g is Antagonist)
@@ -26,7 +23,7 @@ namespace Planets.Controller.GameRules
                         Console.WriteLine("Antagonist!");
 
                     }
-                    else if (!(antagonist == null) && g.GetType() == typeof(GameObject) && !g.Ai)
+                    else if (antagonist != null && g.GetType() == typeof(GameObject) && !g.Ai)
                     {
                         GameObject closest = FindClosest(g, (Antagonist)antagonist, pf);
                         if (g == closest && g.Radius > antagonist.Radius)
@@ -42,7 +39,7 @@ namespace Planets.Controller.GameRules
                     }
                     else
                     {
-                        if (!(antagonist == null) && g is Player && g.GetType() == typeof(Player))
+                        if (antagonist != null && g is Player && g.GetType() == typeof(Player))
                         {
                             if ((g.Location - antagonist.Location).Length() < 1000)
                             {
