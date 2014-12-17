@@ -113,8 +113,8 @@ namespace PlanetsTest.Model
             var actual = v1.ScaleToLength(l);
 
             // Assert
-            Assert.AreEqual(expected.X, actual.X, 0.00001, "Scale vector to length (X)");
-            Assert.AreEqual(expected.Y, actual.Y, 0.00001, "Scale vector to length (Y)");
+            Assert.AreEqual(expected.X, actual.X, 0.00001, "Zoom vector to length (X)");
+            Assert.AreEqual(expected.Y, actual.Y, 0.00001, "Zoom vector to length (Y)");
         }
 
         [TestMethod]

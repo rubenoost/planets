@@ -40,14 +40,11 @@
     <ApplicationIcon>Pluto-Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Svg, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>library\Svg.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll</HintPath>
     </Reference>
@@ -55,30 +52,46 @@
     <Reference Include="System.Windows.Forms">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\GameRules\AntiGravityRule.cs" />
     <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
     <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\MainEngine.cs" />
-    <Compile Include="Controller\PhysicsRules\AbstractCollisionRule.cs" />
-    <Compile Include="Controller\PhysicsRules\AbstractGameRule.cs" />
-    <Compile Include="Controller\PhysicsRules\BlackHoleRule.cs" />
-    <Compile Include="Controller\PhysicsRules\CollidewithSmaller.cs" />
-    <Compile Include="Controller\PhysicsRules\BlackHoleEatRule.cs" />
-    <Compile Include="Controller\PhysicsRules\DynamicEatRule.cs" />
-    <Compile Include="Controller\PhysicsRules\ElasticCollisionRule.cs" />
-    <Compile Include="Controller\PhysicsRules\MoveRule.cs" />
-    <Compile Include="Controller\PhysicsRules\ResetRule.cs" />
-    <Compile Include="Controller\PhysicsRules\StayInFieldRule.cs" />
+    <Compile Include="Controller\GameRules\AbstractCollisionRule.cs" />
+    <Compile Include="Controller\GameRules\AbstractGameRule.cs" />
+    <Compile Include="Controller\GameRules\AIrule.cs" />
+    <Compile Include="Controller\GameRules\BlackHoleRule.cs" />
+    <Compile Include="Controller\GameRules\CollidewithSmaller.cs" />
+    <Compile Include="Controller\GameRules\BlackHoleEatRule.cs" />
+    <Compile Include="Controller\GameRules\DynamicEatRule.cs" />
+    <Compile Include="Controller\GameRules\ElasticCollisionRule.cs" />
+    <Compile Include="Controller\GameRules\ExplosionRule.cs" />
+    <Compile Include="Controller\GameRules\MoveRule.cs" />
+    <Compile Include="Controller\GameRules\ResetRule.cs" />
+    <Compile Include="Controller\GameRules\StasisRule.cs" />
+    <Compile Include="Controller\GameRules\StayInFieldRule.cs" />
+    <Compile Include="Controller\GameRules\TardisRule.cs" />
+    <Compile Include="Controller\Subcontrollers\PlayfieldSerializer.cs" />
+    <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="Model\GameObjects\Antigravity.cs" />
+    <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
-    <Compile Include="Model\BlackHole.cs" />
-    <Compile Include="Model\GameObject.cs" />
-    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\GameObjects\BlackHole.cs" />
+    <Compile Include="Model\Antagonist.cs" />
+    <Compile Include="Model\GameObjects\AnimatedGameObject.cs" />
+    <Compile Include="Model\GameObjects\GameObject.cs" />
+    <Compile Include="Model\GameObjects\Mine.cs" />
+    <Compile Include="Model\GameObjects\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
+    <Compile Include="Model\GameObjects\Stasis.cs" />
+    <Compile Include="Model\GameObjects\Tardis.cs" />
+    <Compile Include="Model\Score.cs" />
+    <Compile Include="Model\ScoreBoard.cs" />
     <Compile Include="Model\Vector.cs" />
     <Compile Include="PlanetsForm.cs">
       <SubType>Form</SubType>
@@ -88,6 +101,11 @@
     </Compile>
     <Compile Include="PlanetsLauncher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="View\GameView.cs">
       <SubType>UserControl</SubType>
@@ -95,6 +113,7 @@
     <Compile Include="View\GameView.Designer.cs">
       <DependentUpon>GameView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Imaging\ImageRequest.cs" />
     <Compile Include="View\Imaging\Sprite.cs" />
     <Compile Include="View\Imaging\SpritePool.cs" />
     <EmbeddedResource Include="PlanetsForm.resx">
@@ -102,14 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="View\GameView.resx">
       <DependentUpon>GameView.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,10 +160,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
-    <None Include="Resources\PLANET.png" />
-    <None Include="Resources\1796813.jpg" />
+    <None Include="Resources\StatieGeld.png" />
+    <None Include="Resources\parallax6.png" />
+    <None Include="Resources\parallax5.png" />
+    <None Include="Resources\parallax4.png" />
+    <None Include="Resources\parallax3.png" />
+    <None Include="Resources\ExplosionTest.png" />
+    <None Include="Resources\parallax1.png" />
+    <None Include="Resources\parallax2.png" />
+    <None Include="Resources\background.png" />
+    <None Include="Resources\explosion.hasgraphics.png" />
+    <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
+    <None Include="Resources\KomeetStaartje1.png" />
     <None Include="Resources\space-wallpaper.jpg" />
-    <None Include="Resources\Pluto.svg" />
     <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>

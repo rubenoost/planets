@@ -1,30 +1,50 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Planets.View.Imaging
 {
     public class Sprite
     {
-        public const int Player = 0;
-        public const int Background = 1;
         public const int Cursor = 2;
-        public const int BlackHole = 3;
         public const int CometTail = 4;
+        public const int Stars1 = 10;
+        public const int Stars2 = 20;
+        public const int Stars3 = 40;
+        public const int Stars4 = 80;
+        public const int Stars5 = 160;
+        public const int Stars6 = 320;
 
-        public int Width
+        public const int Background1 = 405011;
+
+        /// <summary>
+        ///     Bitmap die wordt teruggegeven als er geen logisch alternatief is.
+        /// </summary>
+        public static readonly Bitmap Empty = new Bitmap(1, 1);
+
+        public int Frames
         {
-            get { return _bm.Width; }
+            get { return Columns * Rows; }
         }
 
-        public int Height
+        public int Columns { get; set; }
+        public int Rows { get; set; }
+        public List<Bitmap> Images { get; set; }
+        public bool Cyclic { get; set; }
+
+
+        public Sprite(List<Bitmap> bm, int columns = 1, int rows = 1, bool cyclic = false)
         {
-            get { return _bm.Height; }
+            Columns = columns;
+            Rows = rows;
+            Cyclic = cyclic;
+
+            Images = bm;
         }
 
-        private readonly Bitmap _bm;
-
-        public Sprite(Bitmap bm)
+        public Sprite(Bitmap bm, int columns = 1, int rows = 1, bool cyclic = false)
+            : this(Cutsheet(bm, rows, columns), columns, rows, cyclic)
         {
-            _bm = bm;
         }
 
         public static implicit operator Sprite(Bitmap bm)
@@ -34,7 +54,42 @@ namespace Planets.View.Imaging
 
         public static implicit operator Bitmap(Sprite s)
         {
-            return s._bm;
+            return s.Images[0];
+        }
+
+        private static List<Bitmap> Cutsheet(Bitmap bm, int rows, int columns)
+        {
+            List<Bitmap> result = new List<Bitmap>();
+
+            int widthimg = bm.Width;
+            int heightimg = bm.Height;
+            int subwidth = widthimg / columns;
+            int subheight = heightimg / rows;
+
+            for (var r = 0; r < rows; r++)
+            {
+                for (var c = 0; c < columns; c++)
+                {
+                    Bitmap subimg = new Bitmap(subwidth, subheight, PixelFormat.Format32bppPArgb);
+
+                    Graphics g = Graphics.FromImage(subimg);
+
+                    Rectangle srcRectangle = new Rectangle((c * subwidth), (r * subheight), subwidth, subheight);
+
+                    g.DrawImage(bm, 0, 0, srcRectangle, GraphicsUnit.Pixel);
+
+                    result.Add(subimg);
+                }
+            }
+
+            return result;
+        }
+
+        public Bitmap GetFrame(int frame)
+        {
+            if (frame >= this.Frames)
+                return Empty;
+            return Images[frame];
         }
     }
 }

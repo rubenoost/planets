@@ -44,7 +44,7 @@ namespace Planets.Controller
             Gv = Spc.InternalControl;
 
             // Register keys for auto-demo
-            Gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if(kea.KeyData == Keys.K) StartDemo(); };
+            Gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if (kea.KeyData == Keys.K) StartDemo(); };
             Gv.KeyUp += delegate(object sender, KeyEventArgs kea)
             {
                 if (kea.KeyData == Keys.L) StopDemo();
@@ -136,9 +136,6 @@ namespace Planets.Controller
 
                 // Change lastautoclicklocation
                 Spc.InternalPlayfield.LastAutoClickMoment = DateTime.MinValue;
-
-                // Little hack
-                Spc.InternalPlayfield.CurrentPlayer.Mass = 1;
             }
         }
 

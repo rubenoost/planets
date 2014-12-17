@@ -1,17 +1,18 @@
 ﻿using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     public class ElasticCollisionRule : AbstractCollisionRule
     {
-        protected override void DoCollision(Playfield pf, GameObject c1, GameObject c2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject c1, GameObject c2, double ms)
         {
-            if (!c1.Traits.HasFlag(Rule.COLLIDES) || !c2.Traits.HasFlag(Rule.COLLIDES)) return;
-            if (c1.Mass > c2.Mass && c2.Traits.HasFlag(Rule.EATABLE) && c1.Traits.HasFlag(c2 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
-            if (c2.Mass > c1.Mass && c1.Traits.HasFlag(Rule.EATABLE) && c2.Traits.HasFlag(c1 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
+            if (!c1.Is(Rule.COLLIDES) || !c2.Is(Rule.COLLIDES)) return;
+            if (c1.Mass > c2.Mass && c2.Is(Rule.EATABLE) && c1.Is(c2 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
+            if (c2.Mass > c1.Mass && c1.Is(Rule.EATABLE) && c2.Is(c1 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
             if (!c1.IntersectsWith(c2)) return;
 
-            if (c1.Traits.HasFlag(Rule.MOVE) && c2.Traits.HasFlag(Rule.MOVE))
+            if (c1.Is(Rule.MOVE) && c2.Is(Rule.MOVE))
             {
                 var totalMass = c1.Mass + c2.Mass;
 
@@ -35,7 +36,7 @@ namespace Planets.Controller.PhysicsRules
                 c1.DV = c1.DV - (2.0 * c2.Mass / totalMass) * t3 / t2 * h1;
                 c2.DV = c2.DV - (2.0 * c1.Mass / totalMass) * t3 / t2 * h2;
             }
-            else if (c1.Traits.HasFlag(Rule.MOVE))
+            else if (c1.Is(Rule.MOVE))
             {
                 // Move back
                 c1.Location = c2.Location + (c1.Location - c2.Location).ScaleToLength(c1.Radius + c2.Radius);
@@ -50,7 +51,7 @@ namespace Planets.Controller.PhysicsRules
 
                 c1.DV = c1.DV - (2.0 * c2.Mass / t) * t3 / t2 * h1;
             }
-            else if (c2.Traits.HasFlag(Rule.MOVE))
+            else if (c2.Is(Rule.MOVE))
             {
                 // Move back
                 c2.Location = c1.Location + (c2.Location - c1.Location).ScaleToLength(c2.Radius + c1.Radius);

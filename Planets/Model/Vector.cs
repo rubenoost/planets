@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace Planets.Model
 {
-    public struct Vector
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Vector : IXmlSerializable
     {
         /// <summary>
         /// X component of this Vector.
         /// </summary>
-        public readonly double X;
+        public double X;
 
         /// <summary>
         /// Y component of this Vector.
         /// </summary>
-        public readonly double Y;
+        public double Y;
 
         /// <summary>
         /// Creates a new Vector with the given X and Y component.
@@ -28,7 +33,7 @@ namespace Planets.Model
         }
 
         /// <summary>
-        /// Scales this vector so it becomes the give length.
+        /// Scales this vector so it becomes the given length.
         /// <code>this.ScaleToLength(newLength).Length() == newLength</code>
         /// </summary>
         /// <param name="newLength">The new length of this Vector.</param>
@@ -133,12 +138,27 @@ namespace Planets.Model
         /// <returns></returns>
         public static implicit operator Point(Vector v)
         {
-            return new Point((int) v.X, (int)v.Y);
+            return new Point((int)v.X, (int)v.Y);
         }
 
         public override string ToString()
         {
             return string.Format("{0},{1}", X.ToString("0.000", new CultureInfo("en-US", false)), Y.ToString("0.000", new CultureInfo("en-US", false)));
+        }
+
+        public XmlSchema GetSchema() { return null; }
+
+        public void ReadXml(XmlReader reader)
+        {
+            reader.MoveToContent();
+            X = double.Parse(reader.GetAttribute("X"));
+            Y = double.Parse(reader.GetAttribute("Y"));
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteAttributeString("X", X.ToString(CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Y", X.ToString(CultureInfo.InvariantCulture));
         }
     }
 

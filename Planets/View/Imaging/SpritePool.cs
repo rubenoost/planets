@@ -3,45 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using Planets.Model;
+using Planets.Model.GameObjects;
 using Planets.Properties;
 
 namespace Planets.View.Imaging
 {
-    public struct ImageRequest
-    {
-        public readonly int no;
-        public readonly int w;
-        public readonly int h;
-        public readonly int r;
-        public ImageRequest(int index, int width, int height, int rotation)
-        {
-            no = index;
-            w = width;
-            h = height;
-            r = rotation;
-        }
-
-        public override int GetHashCode()
-        {
-            int i = 23;
-            i = i * 486187739 + no;
-            i = i * 486187739 + w;
-            i = i * 486187739 + h;
-            i = i * 486187739 + r;
-            return i;
-        }
-
-        public override bool Equals(object o)
-        {
-            if (!(o is ImageRequest))
-                return false;
-
-            var i = (ImageRequest)o;
-
-            return no == i.no && w == i.w && h == i.h && r == i.r;
-        }
-    }
-
     public class SpritePool
     {
         private readonly Dictionary<int, Sprite> _imageSource = new Dictionary<int, Sprite>();
@@ -50,11 +17,41 @@ namespace Planets.View.Imaging
 
         public SpritePool()
         {
-            _imageSource.Add(Sprite.Player, Resources.Pluto);
-            _imageSource.Add(Sprite.BlackHole, Resources.Hole1);
-            _imageSource.Add(Sprite.Background, Resources.space_wallpaper);
-            _imageSource.Add(Sprite.CometTail, Resources.KomeetStaartje);
-            _imageSource.Add(Sprite.Cursor, Resources.Cursors_Red);
+            RegisterImage(typeof(Player), Resources.Pluto);
+            RegisterImage(typeof(BlackHole), Resources.Hole1);
+            RegisterImage(typeof(Stasis), Resources.StatieGeld);
+            RegisterImage(typeof(Tardis), Resources.Tardis);
+            RegisterImage(typeof(Mine), Resources.Pluto_Red);
+            RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
+            RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
+            RegisterImage(typeof(Antagonist), Resources.antagonist);
+            RegisterImage(typeof(GameObject), Resources.Pluto);
+            RegisterImage(typeof(AnimatedGameObject), new Sprite(Resources.ExplosionTest, 8, 8));
+
+            RegisterImage(Sprite.CometTail, Resources.KomeetStaartje);
+            RegisterImage(Sprite.Background1, Resources.background);
+            RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
+            RegisterImage(Sprite.Stars1, Resources.parallax1);
+            RegisterImage(Sprite.Stars2, Resources.parallax2);
+            RegisterImage(Sprite.Stars3, Resources.parallax3);
+            RegisterImage(Sprite.Stars4, Resources.parallax4);
+            RegisterImage(Sprite.Stars5, Resources.parallax5);
+            RegisterImage(Sprite.Stars6, Resources.parallax6);
+        }
+
+        private void RegisterImage(Type t, Sprite s)
+        {
+            RegisterImage(t.GetHashCode(), s);
+        }
+
+        private void RegisterImage(int id, Sprite s)
+        {
+            _imageSource.Add(id, s);
+        }
+
+        public Sprite GetSprite(Type t, int width, int height, int rotation = 0)
+        {
+            return GetSprite(t.GetHashCode(), width, height, rotation);
         }
 
         public Sprite GetSprite(int imageId, int width, int height, int rotation = 0)
@@ -73,37 +70,78 @@ namespace Planets.View.Imaging
 
             s = CreateImage(i);
             _imageBuffer.Add(i, s);
+
             return s;
         }
 
         private Sprite CreateImage(ImageRequest i)
         {
-            // Check for rotation
-            if (i.r == 0)
+            if (i.r != 0)
             {
-                // Create result image
-                var result = new Bitmap(i.w, i.h, PixelFormat.Format32bppArgb);
-                Graphics g = Graphics.FromImage(result);
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                Bitmap b = _imageSource[i.no];
-                g.DrawImage(b, new Rectangle(0, 0, i.w, i.h), new Rectangle(0, 0, b.Width, b.Height),
-                    GraphicsUnit.Pixel);
-                return result;
+                return RotateImg(CreateImage(new ImageRequest(i.no, i.w, i.h, 0)), i.r);
             }
             else
             {
-                // Create result image
-                Bitmap b = GetSprite(i.no, i.w, i.h);
-                return RotateImg(b, i.r);
+                Sprite sourceSprite = _imageSource[i.no];
+                return ResizeImg(sourceSprite, i.w, i.h);
+            }
+        }
+
+        private static Sprite ResizeImg(Sprite s, int width, int height)
+        {
+            if (s.Frames == 1)
+            {
+                return ResizeImg((Bitmap)s, width, height);
+            }
+            else
+            {
+                List<Bitmap> resized = new List<Bitmap>();
+
+                foreach (Bitmap bm in s.Images)
+                {
+                    resized.Add(ResizeImg(bm, width, height));
+                }
+
+                return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
+            }
+        }
+
+        private static Sprite ResizeImg(Bitmap s, int width, int height)
+        {
+            // Create result image
+            var result = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(result);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.DrawImage(s, new Rectangle(0, 0, width, height), new Rectangle(0, 0, s.Width, s.Height),
+                GraphicsUnit.Pixel);
+            return result;
+        }
+
+        private static Sprite RotateImg(Sprite s, int angle)
+        {
+            if (s.Frames == 1)
+            {
+                return RotateImg((Bitmap)s, angle);
+            }
+            else
+            {
+                List<Bitmap> resized = new List<Bitmap>();
+
+                foreach (Bitmap bm in s.Images)
+                {
+                    resized.Add(RotateImg(bm, angle));
+                }
+
+                return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
             }
         }
 
         private static Bitmap RotateImg(Bitmap bmp, int angle)
         {
             double size = Math.Max(bmp.Width, bmp.Height);
-            Bitmap result = new Bitmap((int)size, (int)size);
+            Bitmap result = new Bitmap((int)size, (int)size, PixelFormat.Format32bppPArgb);
             Graphics g = Graphics.FromImage(result);
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.CompositingQuality = CompositingQuality.HighQuality;
@@ -115,5 +153,7 @@ namespace Planets.View.Imaging
             g.DrawImageUnscaled(bmp, 0, 0);
             return result;
         }
+
+
     }
 }

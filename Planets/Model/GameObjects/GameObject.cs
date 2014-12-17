@@ -1,20 +1,33 @@
 ﻿using System;
 using System.Drawing;
+using System.Xml.Serialization;
 
-namespace Planets.Model
+namespace Planets.Model.GameObjects
 {
     [Flags]
     public enum Rule
     {
+        NONE = 0,
         MOVE = 1,
         EATABLE = 2,
         EATS = 4,
         EAT_PLAYER = 8,
         DYNAMIC_RADIUS = 16,
         AFFECTED_BY_BH = 32,
-        COLLIDES = 64
+        COLLIDES = 64,
+        SLOWABLE = 128,
+        EXPLODES = 256,
+        AFFECTED_BY_AG = 512,
+        HAS_SCORE = 1024
     }
 
+    [XmlInclude(typeof(BlackHole))]
+    [XmlInclude(typeof(Antagonist))]
+    [XmlInclude(typeof(Antigravity))]
+    [XmlInclude(typeof(AntiMatter))]
+    [XmlInclude(typeof(Mine))]
+    [XmlInclude(typeof(Stasis))]
+    [XmlInclude(typeof(Tardis))]
     public class GameObject
     {
         // Properties
@@ -24,6 +37,9 @@ namespace Planets.Model
         public event Action<GameObject> Resized;
 
         private Vector _propLocation;
+
+        // So the Antagonist doesn't follow it's own projectiles;
+        public bool Ai = false;
         public Vector Location
         {
             get { return _propLocation; }
@@ -58,6 +74,8 @@ namespace Planets.Model
             {
                 if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
                 {
+                    if (value <= 0)
+                        throw new SystemException("You can't set mass lower then zero, you freaking moron, you are the cause of the instability caused in this universe!!!!");
                     _propRadius = null;
                     _propBoundingBox = null;
                     if (Resized != null) Resized(this);
@@ -66,7 +84,7 @@ namespace Planets.Model
             }
         }
 
-        public Rule Traits { get; protected set; }
+        protected Rule Traits;
 
         private double? _propRadius;
         public double Radius
@@ -97,9 +115,13 @@ namespace Planets.Model
             }
         }
 
+        public GameObject()
+            : this(new Vector(), new Vector(), Utils.StartMass)
+        { }
+
         public GameObject(Vector location, Vector velocity, double Mass)
             : this(location, velocity, Mass,
-            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS)
+            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS | Rule.SLOWABLE | Rule.AFFECTED_BY_AG)
         { }
 
         protected GameObject(Vector location, Vector velocity, double Mass, Rule traits)
@@ -132,21 +154,18 @@ namespace Planets.Model
 
         public bool IntersectsWith(GameObject go)
         {
-            if (!DoLinesOverlap(Location.X, Radius * 2, go.Location.X, go.Radius * 2) &&
-                !DoLinesOverlap(Location.Y, Radius * 2, go.Location.Y, go.Radius * 2))
+            if (BoundingBox.IntersectsWith(go.BoundingBox))
             {
-                return false;
+                return true;
 
             }
             return (Location - go.Location).Length() <= (Radius + go.Radius);
 
         }
 
-        public static bool DoLinesOverlap(double x1, double width1, double x2, double width2)
+        public bool Is(Rule r)
         {
-            if (x1 >= x2)
-                return (x2 + width2) > x1;
-            return (x1 + width1) > x2;
+            return Traits.HasFlag(r);
         }
     }
 }

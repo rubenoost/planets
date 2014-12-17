@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -38,15 +37,13 @@ namespace Planets
             // 
             // PlanetsForm
             // 
-            this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = AutoScaleMode.None;
             this.BackColor = SystemColors.ButtonHighlight;
             this.ClientSize = new Size(1604, 882);
             this.FormBorderStyle = FormBorderStyle.None;
             this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PlanetsForm";
             this.WindowState = FormWindowState.Maximized;
-            this.Load += new EventHandler(this.PlanetsForm_Load);
             this.ResumeLayout(false);
 
         }

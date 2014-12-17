@@ -1,6 +1,7 @@
 ﻿using Planets.Model;
+using Planets.Model.GameObjects;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
 
     class BlackHoleEatRule : AbstractGameRule
@@ -9,21 +10,27 @@ namespace Planets.Controller.PhysicsRules
         {
             pf.BOT.Iterate(go =>
             {
-                if (!(go is BlackHole) || !go.Traits.HasFlag(Rule.EATS)) return;
+                if (!(go is BlackHole)) return;
                 pf.BOT.Iterate(go2 =>
                 {
-                    if (!go2.Traits.HasFlag(Rule.EATABLE)) return;
+                    if (!go2.Is(Rule.EATABLE)) return;
+                    if (!go.Is(go2 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
+
                     if (go != go2 && go.IntersectsWith(go2))
                     {
                         if (go2 is Player)
                         {
-                            if (go.Traits.HasFlag(Rule.EAT_PLAYER))
+                            if (go.Is(Rule.EAT_PLAYER))
                                 pf.BOT.Remove(go2);
                         }
                         else
                         {
+                            if (go2 is AntiMatter) return;
                             pf.BOT.Remove(go2);
                         }
+                        AnimatedGameObject explosion = new AnimatedGameObject(go2.Location, new Vector(0, 0), 500);
+                        explosion.Radius = go2.Radius * 3.0;
+                        pf.BOT.Add(explosion);
                     }
                 });
             });

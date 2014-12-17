@@ -1,6 +1,6 @@
 ﻿using Planets.Model;
 
-namespace Planets.Controller.PhysicsRules
+namespace Planets.Controller.GameRules
 {
     public abstract class AbstractGameRule
     {
@@ -13,7 +13,7 @@ namespace Planets.Controller.PhysicsRules
 
         public void Execute(Playfield pf, double ms)
         {
-            if(Activated)
+            if (Activated)
                 ExecuteRule(pf, ms);
         }
 
