@@ -82,9 +82,6 @@ namespace Planets.Controller.Subcontrollers
             bool IsBlackhole = false;
             bool IsAntiMatter = false;
 
-            if (InternalPlayfield._currentPlayer.LostGame == false)
-            {
-
                 //Projectile being shot
                 Random rnd = new Random();
                 int rndint = rnd.Next(0, 100);
@@ -121,12 +118,6 @@ namespace Planets.Controller.Subcontrollers
                     //set the velocity of the new player
                     InternalPlayfield.BOT.Add(P);
                 }
-            }
-            if (InternalPlayfield._currentPlayer.LostGame)
-            {
-                InternalPlayfield._currentPlayer.LostGame = false;
-                InternalPlayfield._currentPlayer.Mass = 1;
-            }
         }
     }
 }
