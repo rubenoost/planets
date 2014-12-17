@@ -39,7 +39,8 @@ namespace Planets.Controller.GameRules
                 // Check for mass of large gameobject
                 if (LostMass >= gL.Mass)
                 {
-                    pf.BOT.Remove(gL);
+                    if(gL != pf.CurrentPlayer)
+                        pf.BOT.Remove(gL);
                 }
                 else
                     gL.Mass -= LostMass;
