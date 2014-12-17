@@ -1,3 +1,37 @@
-﻿<xml>
-test2
-</xml>
+﻿<?xml version="1.0"?>
+<Playfield xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Size>
+    <Width>1920</Width>
+    <Height>1080</Height>
+  </Size>
+  <CurrentPlayer>
+    <Ai>false</Ai>
+    <Location X="150" Y="150" />
+    <DV X="0" Y="0" />
+    <Mass>3000</Mass>
+    <Radius>30.901936161855168</Radius>
+  </CurrentPlayer>
+  <GameObjects>
+    <GameObject xsi:type="BlackHole">
+      <Ai>false</Ai>
+      <Location X="500" Y="500" />
+      <DV X="0" Y="0" />
+      <Mass>3000</Mass>
+      <Radius>50</Radius>
+    </GameObject>
+    <GameObject xsi:type="Antagonist">
+      <Ai>false</Ai>
+      <Location X="800" Y="800" />
+      <DV X="0" Y="0" />
+      <Mass>3000</Mass>
+      <Radius>30.901936161855168</Radius>
+    </GameObject>
+    <GameObject>
+      <Ai>false</Ai>
+      <Location X="100" Y="600" />
+      <DV X="0" Y="0" />
+      <Mass>3000</Mass>
+      <Radius>30.901936161855168</Radius>
+    </GameObject>
+  </GameObjects>
+</Playfield>

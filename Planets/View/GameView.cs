@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using Planets.Controller;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.Model.GameObjects;
@@ -30,7 +31,12 @@ namespace Planets.View
 
         #endregion
 
-        Playfield field;
+        private GameEngine ge;
+
+        private Playfield field
+        {
+            get { return ge.field; }
+        }
 
         private SpritePool sp = new SpritePool();
 
@@ -60,11 +66,11 @@ namespace Planets.View
         // Wordt gebruikt voor bewegende achtergrond
         private int _blackHoleAngle;
 
-        public GameView(Playfield field)
+        public GameView(GameEngine ge)
         {
             InitializeComponent();
             DoubleBuffered = true;
-            this.field = field;
+            this.ge = ge;
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             CurVecPen.CustomEndCap = bigArrow;
             NextVecPen.CustomEndCap = bigArrow;
@@ -89,6 +95,10 @@ namespace Planets.View
             // Draw static back layer
             DrawBackLayers(g);
             // Draw top layer
+            
+            
+            if (field._currentPlayer.LostGame == false)
+            {
             lock (field.BOT)
             {
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
@@ -99,6 +109,17 @@ namespace Planets.View
 
             DrawScores(g);
             DrawHud(g);
+            }
+
+            if (field._currentPlayer.LostGame)
+            {
+                DrawGameOver(g);
+            }
+
+            if (field._currentPlayer.WonGame)
+            {
+                DrawGameWon(g);
+            }
             DrawEndGame(g);
 
             // Debugging
@@ -234,6 +255,22 @@ namespace Planets.View
                         g.DrawString(String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
                     field.sb.Scores[i].UpdateLocation();
                 }
+            }
+            }
+
+        private void DrawGameOver(Graphics g)
+        {
+            lock (field.sb)
+            {
+                    g.DrawImageUnscaled(Resources.GameOver, 686, 504);
+            }
+        }
+
+        private void DrawGameWon(Graphics g)
+        {
+            lock (field.sb)
+            {
+                    g.DrawImageUnscaled(Resources.GameOver, 686, 504);
             }
         }
 

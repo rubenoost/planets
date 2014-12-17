@@ -82,40 +82,50 @@ namespace Planets.Controller.Subcontrollers
             bool IsBlackhole = false;
             bool IsAntiMatter = false;
 
-            //Projectile being shot
-            Random rnd = new Random();
-            int rndint = rnd.Next(0, 100);
-            if (rndint == 58)
+            if (InternalPlayfield._currentPlayer.LostGame == false)
             {
-                P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
-                P.Mass = 100;
-                IsBlackhole = true;
-            }
-            else if (rndint == 20 || rndint == 25 || rndint == 30 || rndint == 35 || rndint == 40 || rndint == 50 || rndint == 55 || rndint == 60)
-            {
-                P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0);
-                P.Mass = O.Mass * 0.05;
-                O.Mass -= (O.Mass * 0.05);
-                IsAntiMatter = true;
-            }
-            else
-            {
-                P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
-                P.Mass = 0.05 * O.Mass;
-                O.Mass = O.Mass - P.Mass;
-            }
 
-            lock (InternalPlayfield.BOT)
-            {
-                O.DV = CalcNewDV(O, P, gamePoint);
-                if (IsBlackhole)
+                //Projectile being shot
+                Random rnd = new Random();
+                int rndint = rnd.Next(0, 100);
+                if (rndint == 58)
+                {
+                    P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
                     P.Mass = 100;
+                    IsBlackhole = true;
+                }
+                else if (rndint == 20 || rndint == 25 || rndint == 30 || rndint == 35 || rndint == 40 || rndint == 50 ||
+                         rndint == 55 || rndint == 60)
+                {
+                    P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0);
+                    P.Mass = O.Mass*0.05;
+                    O.Mass -= (O.Mass*0.05);
+                    IsAntiMatter = true;
+                }
+                else
+                {
+                    P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
+                    P.Mass = 0.05*O.Mass;
+                    O.Mass = O.Mass - P.Mass;
+                }
 
-                if (IsAntiMatter)
-                    P.Mass = 100;
+                lock (InternalPlayfield.BOT)
+                {
+                    O.DV = CalcNewDV(O, P, gamePoint);
+                    if (IsBlackhole)
+                        P.Mass = 100;
 
-                //set the velocity of the new player
-                InternalPlayfield.BOT.Add(P);
+                    if (IsAntiMatter)
+                        P.Mass = 100;
+
+                    //set the velocity of the new player
+                    InternalPlayfield.BOT.Add(P);
+                }
+            }
+            if (InternalPlayfield._currentPlayer.LostGame)
+            {
+                InternalPlayfield._currentPlayer.LostGame = false;
+                InternalPlayfield._currentPlayer.Mass = 1;
             }
         }
     }

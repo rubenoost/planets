@@ -11,7 +11,7 @@ namespace Planets.Controller.Subcontrollers
             Random
         }
 
-        private string LevelFolder = "Levels/";
+        private string LevelFolder = "Data/Levels/";
 
         private Mode _propLevelMode = Mode.Random;
         public Mode LevelMode
@@ -23,7 +23,7 @@ namespace Planets.Controller.Subcontrollers
             set
             {
                 if (value != _propLevelMode)
-                    LevelNumber = 1;
+                    LevelNumber = 0;
                 _propLevelMode = value;
             }
         }
@@ -32,6 +32,7 @@ namespace Planets.Controller.Subcontrollers
 
         public Playfield GenerateLevel()
         {
+            LevelNumber++;
             return LevelMode == Mode.Random ? RandomLevelGenerator.GenerateRandomLevel() : LoadLevel(LevelNumber);
         }
 

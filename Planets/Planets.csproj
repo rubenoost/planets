@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\GameOver.png" />
     <None Include="Resources\Tardis.png" />
     <None Include="Resources\Player.png" />
     <None Include="Resources\StatieGeld.png" />
