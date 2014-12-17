@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Tardis.png" />
     <None Include="Resources\Player.png" />
     <None Include="Resources\StatieGeld.png" />
     <None Include="Resources\parallax6.png" />
@@ -170,10 +171,7 @@
     <None Include="Resources\parallax1.png" />
     <None Include="Resources\parallax2.png" />
     <None Include="Resources\background.png" />
-    <None Include="Resources\explosion.hasgraphics.png" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
-    <None Include="Resources\KomeetStaartje1.png" />
-    <None Include="Resources\space-wallpaper.jpg" />
     <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
