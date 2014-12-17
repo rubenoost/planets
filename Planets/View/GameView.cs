@@ -76,7 +76,6 @@ namespace Planets.View
             // Draw static back layer
             DrawBackLayers(g);
             // Draw top layer
-            DrawBorder(g);
             lock (field.BOT)
             {
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
@@ -120,12 +119,6 @@ namespace Planets.View
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.9f);
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars6, target.Width, target.Height), target);
 
-        }
-
-        private void DrawBorder(Graphics g)
-        {
-            Rectangle rp = GameToScreen(new Rectangle(new Point(), field.Size));
-            g.DrawRectangle(BorderPen, rp.X - BorderPen.Width / 2, rp.Y - BorderPen.Width / 2, rp.Width + BorderPen.Width, rp.Height + BorderPen.Width);
         }
 
         private void DrawAimVectors(Graphics g)
