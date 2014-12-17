@@ -85,6 +85,7 @@ namespace Planets.View
 
             DrawScores(g);
             DrawHud(g);
+            DrawEndGame(g);
 
             // Debugging
             _blackHoleAngle++;
@@ -117,7 +118,16 @@ namespace Planets.View
 
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.9f);
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars6, target.Width, target.Height), target);
+        }
 
+        private Brush EndGameBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
+
+        private void DrawEndGame(Graphics g)
+        {
+            g.FillRectangle(EndGameBrush, new Rectangle(0,0, 1920, 1080));
+
+            g.DrawString("Highscore: ", ScoreFont, new SolidBrush(Color.White), new Point(200, 200));
+            g.DrawString("Your score: ", ScoreFont, new SolidBrush(Color.Yellow), new Point(181, 300));
         }
 
         private void DrawAimVectors(Graphics g)
