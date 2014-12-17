@@ -82,6 +82,10 @@ namespace Planets.View
             // Draw static back layer
             DrawBackLayers(g);
             // Draw top layer
+            
+            
+            if (field._currentPlayer.LostGame == false)
+            {
             lock (field.BOT)
             {
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
@@ -92,6 +96,17 @@ namespace Planets.View
 
             DrawScores(g);
             DrawHud(g);
+            }
+
+            if (field._currentPlayer.LostGame)
+            {
+                DrawGameOver(g);
+            }
+
+            if (field._currentPlayer.WonGame)
+            {
+                DrawGameWon(g);
+            }
             DrawEndGame(g);
 
             // Debugging
@@ -225,6 +240,22 @@ namespace Planets.View
                         g.DrawString(String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
                     field.sb.Scores[i].UpdateLocation();
                 }
+            }
+            }
+
+        private void DrawGameOver(Graphics g)
+        {
+            lock (field.sb)
+            {
+                    g.DrawImageUnscaled(Resources.GameOver, 686, 504);
+            }
+        }
+
+        private void DrawGameWon(Graphics g)
+        {
+            lock (field.sb)
+            {
+                    g.DrawImageUnscaled(Resources.GameOver, 686, 504);
             }
         }
 
