@@ -5,8 +5,6 @@ namespace Planets.Model.GameObjects
     public class Player : GameObject
     {
         public Player() : this(new Vector(), new Vector(), Utils.StartMass) { }
-        public bool WonGame;
-        public bool LostGame;
 
         public Player(Vector location, Vector velocity, double mass)
             : base(location, velocity, mass)
