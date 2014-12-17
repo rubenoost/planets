@@ -58,7 +58,7 @@ namespace Planets.Controller
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
-            //new ResetRule()
+            new ResetRule()
         };
 
         private Thread GameThread;
