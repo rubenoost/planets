@@ -53,13 +53,18 @@ namespace Planets.Controller.Subcontrollers
 
 		public static void WriteScoreToXml(int score, string filepath)
 		{
-			// Ensure score file exists.
-			if (!File.Exists(filepath))
-				File.Create(filepath);
-			
-			// Open score document.
 			XmlDocument scoreDocument = new XmlDocument();
-			scoreDocument.Load(filepath);
+
+			// Ensure score file exists.
+			try {
+				scoreDocument.Load(filepath);
+			} catch (FileNotFoundException) {
+				XmlNode docNode = scoreDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
+				scoreDocument.AppendChild(docNode);
+				scoreDocument.Save(filepath);
+
+				scoreDocument.Load(filepath);
+			}
 
 			// Add score to the XML file.
 			XmlNode rootNode = scoreDocument.DocumentElement;
