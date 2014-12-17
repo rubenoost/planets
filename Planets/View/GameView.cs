@@ -49,7 +49,6 @@ namespace Planets.View
         private Pen CurVecPen = new Pen(Color.Red, 5);
         private Pen NextVecPen = new Pen(Color.Green, 5);
         private Pen AimVecPen = new Pen(Color.White, 5);
-        private Pen BorderPen = new Pen(new TextureBrush(Resources.Texture), 10.0f);
 
         // Wordt gebruikt voor bewegende achtergrond
         private int _blackHoleAngle;

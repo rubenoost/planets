@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Player.png" />
     <None Include="Resources\StatieGeld.png" />
     <None Include="Resources\parallax6.png" />
     <None Include="Resources\parallax5.png" />

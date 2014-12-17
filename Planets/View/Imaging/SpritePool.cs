@@ -17,7 +17,7 @@ namespace Planets.View.Imaging
 
         public SpritePool()
         {
-            RegisterImage(typeof(Player), Resources.Pluto);
+            RegisterImage(typeof(Player), Resources.Player);
             RegisterImage(typeof(BlackHole), Resources.Hole1);
             RegisterImage(typeof(Stasis), Resources.StatieGeld);
             RegisterImage(typeof(Tardis), Resources.Tardis);
