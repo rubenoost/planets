@@ -23,7 +23,7 @@ namespace Planets.Controller.Subcontrollers
             set
             {
                 if (value != _propLevelMode)
-                    LevelNumber = 1;
+                    LevelNumber = 0;
                 _propLevelMode = value;
             }
         }
@@ -39,6 +39,7 @@ namespace Planets.Controller.Subcontrollers
         {
             var pf = new Playfield();
             pf.DeserializeFromFile(LevelFolder + i + ".lvl");
+            LevelNumber++;
             return pf;
         }
 

@@ -20,6 +20,7 @@ namespace Planets.Controller
         // Controllers
         private ShootProjectileController spc;
         private Autodemo ad;
+        private LevelSupplier ls = new LevelSupplier();
 
         // Model Data
         public Playfield field;
@@ -67,7 +68,7 @@ namespace Planets.Controller
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            field = RandomLevelGenerator.GenerateRandomLevel();
+            field = ls.GenerateLevel();
 
             // Create view
             GameView = new GameView(field);
