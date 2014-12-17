@@ -120,7 +120,9 @@ namespace Planets.View
             {
                 DrawGameWon(g);
             }
-            DrawEndGame(g);
+
+            if(field.CurrentPlayer.LostGame == true)
+                DrawEndGame(g);
 
             // Debugging
             _blackHoleAngle++;
@@ -164,7 +166,7 @@ namespace Planets.View
             g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
             g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
 
-            g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", this.CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1600, 850));
+            g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", this.CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
         }
 
         private void DrawAimVectors(Graphics g)
