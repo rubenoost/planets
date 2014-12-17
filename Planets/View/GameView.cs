@@ -13,6 +13,7 @@ namespace Planets.View
 {
     public partial class GameView : UserControl
     {
+
         #region Properties
 
         private float _propZoom = 2.0f;
