@@ -74,6 +74,7 @@
     <Compile Include="Controller\GameRules\StasisRule.cs" />
     <Compile Include="Controller\GameRules\StayInFieldRule.cs" />
     <Compile Include="Controller\GameRules\TardisRule.cs" />
+    <Compile Include="Controller\Subcontrollers\LevelSupplier.cs" />
     <Compile Include="Controller\Subcontrollers\PlayfieldSerializer.cs" />
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
@@ -127,6 +128,9 @@
     <EmbeddedResource Include="View\GameView.resx">
       <DependentUpon>GameView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Data\Levels\1.lvl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
