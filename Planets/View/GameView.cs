@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using Planets.Controller;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.Model.GameObjects;
@@ -29,7 +30,12 @@ namespace Planets.View
 
         #endregion
 
-        Playfield field;
+        private GameEngine ge;
+
+        private Playfield field
+        {
+            get { return ge.field; }
+        }
 
         private SpritePool sp = new SpritePool();
 
@@ -54,11 +60,11 @@ namespace Planets.View
         // Wordt gebruikt voor bewegende achtergrond
         private int _blackHoleAngle;
 
-        public GameView(Playfield field)
+        public GameView(GameEngine ge)
         {
             InitializeComponent();
             DoubleBuffered = true;
-            this.field = field;
+            this.ge = ge;
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             CurVecPen.CustomEndCap = bigArrow;
             NextVecPen.CustomEndCap = bigArrow;
