@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Xml.Serialization;
 
 namespace Planets.Model.GameObjects
 {
@@ -20,6 +21,13 @@ namespace Planets.Model.GameObjects
         HAS_SCORE = 1024
     }
 
+    [XmlInclude(typeof(BlackHole))]
+    [XmlInclude(typeof(Antagonist))]
+    [XmlInclude(typeof(Antigravity))]
+    [XmlInclude(typeof(AntiMatter))]
+    [XmlInclude(typeof(Mine))]
+    [XmlInclude(typeof(Stasis))]
+    [XmlInclude(typeof(Tardis))]
     public class GameObject
     {
         // Properties
@@ -106,6 +114,10 @@ namespace Planets.Model.GameObjects
                 }
             }
         }
+
+        public GameObject()
+            : this(new Vector(), new Vector(), Utils.StartMass)
+        { }
 
         public GameObject(Vector location, Vector velocity, double Mass)
             : this(location, velocity, Mass,
