@@ -8,7 +8,11 @@ namespace Planets.Controller.GameRules
     {
         GameObject antagonist;
         DateTime begin;
-
+        GameObject closest;
+        GameObject player;
+        bool run;
+        bool eat;
+        bool hug;
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             TimeSpan tijd = DateTime.Now - begin;
@@ -21,37 +25,59 @@ namespace Planets.Controller.GameRules
                         //find and bind the antagonist
                         antagonist = g;
                         Console.WriteLine("Antagonist!");
-
                     }
                     else if (antagonist != null && g.GetType() == typeof(GameObject) && !g.Ai)
                     {
-                        GameObject closest = FindClosest(g, (Antagonist)antagonist, pf);
+                        closest = FindClosest(g, (Antagonist)antagonist, pf);
                         if (g == closest && g.Radius > antagonist.Radius)
                         {
                             //Move away from bigger object
-                            ((Antagonist)antagonist).ShootProjectile(pf, (g.Location - antagonist.Location));
+                            run = true;
+                            eat = false;
+                            hug = false;
                         }
                         else if (g == closest && !g.Ai)
                         {
                             //Move towards smaller object
-                            ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - g.Location));
+                            run = false;
+                            eat = true;
+                            hug = false;
                         }
                     }
                     else
                     {
                         if (antagonist != null && g is Player && g.GetType() == typeof(Player))
                         {
+                            player = g;
                             if ((g.Location - antagonist.Location).Length() < 1000)
                             {
-                                //Move towards player if there is no other option
-                                antagonist.DV = (g.Location - antagonist.Location).ScaleToLength(100);
-                                //insert shoot&move logic here
-                                //
+                                run = false;
+                                eat = false;
+                                hug = true;
+                                //Move towards player if there is no other option                                
                             }
-
                         }
                     }
                 });
+
+            if(run == true)
+            {
+                ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
+                Console.WriteLine("REN");
+                run = false;
+            }
+            else if(eat == true)
+            {
+                ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
+                Console.WriteLine("EET");
+                eat = false;
+            }
+            else if(!(player == null) && hug == true)
+            {
+                ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - player.Location));
+                Console.WriteLine("KNUFFEL");
+                hug = false;
+            }
         }
         private GameObject FindClosest(GameObject go, Antagonist a, Playfield pf)
         {
