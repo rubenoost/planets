@@ -1,6 +1,6 @@
 ﻿namespace Planets.Model.GameObjects
 {
-    class Tardis : GameObject
+    public class Tardis : GameObject
     {
         public Tardis()
             : this(new Vector(), new Vector(), Utils.StartMass)

@@ -1,6 +1,6 @@
 ﻿namespace Planets.Model.GameObjects
 {
-    class Antigravity : GameObject
+    public class Antigravity : GameObject
     {
         public Antigravity()
             : this(new Vector(), new Vector(), Utils.StartMass)
