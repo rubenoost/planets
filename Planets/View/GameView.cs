@@ -146,8 +146,6 @@ namespace Planets.View
 
         private void DrawEndGame(Graphics g)
         {
-            g.FillRectangle(EndGameBrush, new Rectangle(0,0, 1920, 1080));
-
             g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
             g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
 
