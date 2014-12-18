@@ -60,7 +60,9 @@ namespace Planets.Controller.Subcontrollers
 				scoreDocument.Load(filepath);
 			} catch (FileNotFoundException) {
 				XmlNode docNode = scoreDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
+				XmlNode root = scoreDocument.CreateElement("scores");
 				scoreDocument.AppendChild(docNode);
+				scoreDocument.AppendChild(root);
 				scoreDocument.Save(filepath);
 
 				scoreDocument.Load(filepath);
