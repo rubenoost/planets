@@ -18,7 +18,6 @@ namespace Planets.Controller.Subcontrollers
             int normalCount = rnd.Next(10, 15);
 
             int[] RndObstacles = new int[AmntObstacles];
-            int previous = -1;
 
             bool tardisAvbl = false;
             bool AntagonistAvbl = false;
@@ -50,7 +49,6 @@ namespace Planets.Controller.Subcontrollers
 
                 RndObstacles[i] = NextObj;
 
-                previous = RndObstacles[i];
 
                 while (NextObj == 6 && AntagonistAvbl)
                 {
@@ -64,12 +62,10 @@ namespace Planets.Controller.Subcontrollers
 
                 RndObstacles[i] = NextObj;
 
-                previous = RndObstacles[i];
             }
 
             Point[] UsedPoints = new Point[AmntObstacles];
             Point NextPoint = new Point(0, 0);
-            Point NextNormalPoint = new Point(0, 0);
 
             foreach (int obj in RndObstacles)
             {

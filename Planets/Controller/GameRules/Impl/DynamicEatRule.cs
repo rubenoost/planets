@@ -71,7 +71,6 @@ namespace Planets.Controller.GameRules.Impl
                     // Bereken score? Animeer score!
                     if (!(gS is Player) && (gL is Player))
                     {
-                        Player p = gL as Player;
                         sb.AddScore(new Score(50, DateTime.Now, gS.Location, (gL == pf.CurrentPlayer)));
                     }
 

@@ -39,7 +39,7 @@ namespace Planets.Model.GameObjects
         private Vector _propLocation;
 
         // So the Antagonist doesn't follow it's own projectiles;
-        public bool Ai = false;
+        public bool Ai;
         public Vector Location
         {
             get { return _propLocation; }

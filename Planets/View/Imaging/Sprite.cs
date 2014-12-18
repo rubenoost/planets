@@ -20,17 +20,17 @@ namespace Planets.View.Imaging
         /// <summary>
         ///     Bitmap die wordt teruggegeven als er geen logisch alternatief is.
         /// </summary>
-        public static readonly Bitmap Empty = new Bitmap(1, 1);
+        private static readonly Bitmap Empty = new Bitmap(1, 1);
 
         public int Frames
         {
             get { return Columns * Rows; }
         }
 
-        public int Columns { get; set; }
-        public int Rows { get; set; }
-        public List<Bitmap> Images { get; set; }
-        public bool Cyclic { get; set; }
+        private int Columns;
+        private int Rows;
+        private List<Bitmap> Images;
+        private bool Cyclic;
 
 
         public Sprite(List<Bitmap> bm, int columns = 1, int rows = 1, bool cyclic = false)
@@ -57,7 +57,7 @@ namespace Planets.View.Imaging
             return s.Images[0];
         }
 
-        public static List<Bitmap> Cutsheet(Bitmap bm, int rows, int columns)
+        private static List<Bitmap> Cutsheet(Bitmap bm, int rows, int columns)
         {
             List<Bitmap> result = new List<Bitmap>();
 
@@ -87,7 +87,7 @@ namespace Planets.View.Imaging
 
         public Bitmap GetFrame(int frame)
         {
-            if (frame >= this.Frames)
+            if (frame >= Frames)
                 return Empty;
             return Images[frame];
         }

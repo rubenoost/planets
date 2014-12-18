@@ -71,8 +71,7 @@ namespace Planets.Controller.Subcontrollers
         /// <summary>
         /// Method called when click happens in listenControl.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="gamePoint"></param>
         public void Clicked(Point gamePoint)
         {
             GameObject P;
