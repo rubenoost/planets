@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Planets.Controller.GameRules;
+using Planets.Controller.GameRules.Impl;
 using Planets.Model;
 using Planets.Model.GameObjects;
 

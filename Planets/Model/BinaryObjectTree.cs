@@ -12,6 +12,12 @@ namespace Planets.Model
         {
             get { return _objects.Count + (t1 == null ? 0 : t1.Count) + (t2 == null ? 0 : t2.Count); }
         }
+
+        public IEnumerable<GameObject> GameObjectList
+        {
+            get { return _allGameObjects; }
+        }
+
         private BinaryObjectTree t1;
         private BinaryObjectTree t2;
         private int level;
@@ -19,6 +25,9 @@ namespace Planets.Model
         private Rectangle boundingBox;
         private List<GameObject> _objects = new List<GameObject>();
         public int ColCount;
+
+        private HashSet<GameObject> _allGameObjects = new HashSet<GameObject>();
+
         public BinaryObjectTree(BinaryObjectTree parent, Rectangle r, int l, int maxlevel, int splitDirection)
         {
             boundingBox = r;
@@ -40,6 +49,7 @@ namespace Planets.Model
         }
         public void Add(GameObject go)
         {
+            _allGameObjects.Add(go);
             if (_parent != null)
             {
                 if (!IsIn(go.BoundingBox, boundingBox))
@@ -73,6 +83,7 @@ namespace Planets.Model
         }
         public void Remove(GameObject go)
         {
+            _allGameObjects.Remove(go);
             if (go is Stasis)
                 Console.WriteLine("");
             if (t1 != null)
@@ -83,6 +94,7 @@ namespace Planets.Model
         }
         public void Clear()
         {
+            _allGameObjects.Clear();
             _objects.Clear();
             if (t1 != null)
                 t1.Clear();
@@ -151,9 +163,7 @@ namespace Planets.Model
         public void Iterate(Action<GameObject> a)
         {
             for (int i = _objects.Count - 1; i >= 0; i--)
-            {
                 a(_objects[i]);
-            }
             if (t1 != null)
                 t1.Iterate(a);
             if (t2 != null)

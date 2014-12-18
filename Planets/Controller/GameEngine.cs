@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.GameRules;
+using Planets.Controller.GameRules.Abstract;
+using Planets.Controller.GameRules.Impl;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.View;
@@ -29,7 +31,7 @@ namespace Planets.Controller
         public event Action<double> GameLoopEvent;
 
         // Game rules
-        private AbstractGameRule[] _gameRules =
+        private INativeGameRule[] _gameRules =
         {
             // ========== [ ANTAGONIST BEHAVIOUR ] ==========
             new AIrule(),
@@ -54,7 +56,7 @@ namespace Planets.Controller
             new StasisRule(),
 
             // ========== [ TARDIS ] ==========
-            new TardisRule(),
+            new BonusRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
@@ -145,7 +147,7 @@ namespace Planets.Controller
                         // ExecuteRule game rules
                         foreach (var agr in _gameRules)
                         {
-                            agr.Execute(field, dt);
+                            agr.Execute(this, dt);
                         }
                     }
 
