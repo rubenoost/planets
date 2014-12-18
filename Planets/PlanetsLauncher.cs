@@ -25,19 +25,21 @@ namespace Planets
 
             // Run application
             Application.Run(HostForm);
+        }
 
-            /*var pf = new Playfield();
-
+        private static void gen()
+        {
+            var pf = new Playfield();
             // Set player
-            Player p = new Player(new Vector(pf.Size.Width / 2, pf.Size.Height / 2), new Vector(), 500);
+            Player p = new Player(new Vector(pf.Size.Width / 2, pf.Size.Height / 2), new Vector(), 1000);
             pf.CurrentPlayer = p;
 
             // Generate objects
             double MaxMass = 10000.0d;
             double MinMass = 100.0d;
-            int variance = 100;
-            int saturation = 1000;
-            double scale = 1.0d - 1.0d / (double)variance;
+            int variance = 10000;
+            int saturation = 100000;
+            double scale = 1.0d - 1.0d / variance;
 
             // Create random
             Random r = new Random();
@@ -47,14 +49,17 @@ namespace Planets
                 // Get valid gamepoint
                 int radius = (int)Math.Sqrt(CurrentMass / Math.PI);
                 int x = r.Next(radius, pf.Size.Width - radius);
-                int y = r.Next(radius, pf.Size.Width - radius);
+                int y = r.Next(radius, pf.Size.Height - radius);
                 GameObject go = new GameObject(new Vector(x, y), new Vector(), CurrentMass);
 
                 // Check if valid
                 bool intersects = false;
                 pf.BOT.Iterate(g =>
                 {
-                    if (intersects || g.IntersectsWith(go)) intersects = true;
+                    if (intersects)
+                        return;
+                    if ((g.Location - go.Location).Length() < g.Radius + go.Radius + 1)
+                        intersects = true;
                 });
 
                 // Add
@@ -66,7 +71,7 @@ namespace Planets
             }
 
             // Save playfield
-            pf.SerializeToFile("C:/DebugData/pf.lvl");*/
+            pf.SerializeToFile("C:/DebugData/2.lvl");
         }
     }
 }
