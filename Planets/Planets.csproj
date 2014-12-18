@@ -176,6 +176,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\HighScoreLogo.png" />
     <None Include="Resources\Bonus.png" />
     <None Include="Resources\Mine.png" />
     <None Include="Resources\Player.png" />
