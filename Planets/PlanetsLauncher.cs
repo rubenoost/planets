@@ -16,7 +16,7 @@ namespace Planets
         [STAThread]
         static void Main()
         {
-            /*// Setup application parameters
+            // Setup application parameters
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -24,9 +24,9 @@ namespace Planets
             HostForm = new PlanetsForm();
 
             // Run application
-            Application.Run(HostForm);*/
+            Application.Run(HostForm);
 
-            var pf = new Playfield();
+            /*var pf = new Playfield();
 
             // Set player
             Player p = new Player(new Vector(pf.Size.Width / 2, pf.Size.Height / 2), new Vector(), 500);
@@ -66,7 +66,7 @@ namespace Planets
             }
 
             // Save playfield
-            pf.SerializeToFile("C:/DebugData/pf.lvl");
+            pf.SerializeToFile("C:/DebugData/pf.lvl");*/
         }
     }
 }
