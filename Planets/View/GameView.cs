@@ -150,6 +150,9 @@ namespace Planets.View
             g.FillRectangle(EndGameBrush, new Rectangle(new Point(0,0), new Size(1920, 1080)));
 
             g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
+
+            int Highscore = ScoreBoard.getHighScore()[0];
+
             g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
 
             g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", this.CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
