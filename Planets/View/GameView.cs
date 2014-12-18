@@ -102,7 +102,6 @@ namespace Planets.View
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
                 DrawAimVectors(g);
                 DrawDemo(g);
-                DrawDebug(g);
             }
 
             DrawScores(g);
@@ -330,18 +329,18 @@ namespace Planets.View
             g.DrawRectangle(WhitePen, new Rectangle(MassMeterPoint, new Size(15, 230)));
             g.DrawString("Mass", HudScoreFont, LabelBrush, MassMeterPoint.X - 10, MassMeterPoint.Y - 30);
 
-            // Draw Whatever-o-meter
+            // Draw Objects-o-meter
             int AmountObjects = (field.BOT.Count - 6) * 4;
 
-            Point WhatEverMeterPoint = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
+            Point ObjectMeter = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
 
-            int WhatEverDrawY = WhatEverMeterPoint.Y + (230 - AmountObjects);
+            int ObjectDraw = ObjectMeter.Y + (230 - AmountObjects);
 
-            Point WhatEverDrawPoint = new Point(WhatEverMeterPoint.X, (WhatEverDrawY > WhatEverMeterPoint.Y) ? WhatEverDrawY : WhatEverMeterPoint.Y);
+            Point ObjectDrawPoint = new Point(ObjectMeter.X, (ObjectDraw > ObjectMeter.Y) ? ObjectDraw : ObjectMeter.Y);
 
-            g.FillRectangle(gradientBrush, new Rectangle(WhatEverDrawPoint, new Size(15, AmountObjects)));
-            g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
-            g.DrawString("WoM", HudScoreFont, LabelBrush, WhatEverMeterPoint.X - 10, WhatEverMeterPoint.Y - 30);
+            g.FillRectangle(gradientBrush, new Rectangle(ObjectDrawPoint, new Size(15, AmountObjects)));
+            g.DrawRectangle(WhitePen, new Rectangle(ObjectMeter, new Size(15, 230)));
+            g.DrawString("Objects", HudScoreFont, LabelBrush, ObjectMeter.X - 50, ObjectMeter.Y - 30);
 
             // Draw Radar
             Point RadarPoint = new Point(ClientSize.Width - ((hudSize.Width / 4) * 3), hudLocation.Y + (hudSize.Height / 2) + 10);
@@ -382,28 +381,6 @@ namespace Planets.View
             // get the frame from the spritepool list
             // play the frames
 
-        }
-
-        private void DrawDebug(Graphics g)
-        {
-            if (Debug.Enabled)
-            {
-                using (Pen p = new Pen(Color.OrangeRed, 2.0f))
-                {
-                    field.BOT.DoCollisions((go1, go2, ms) => g.DrawLine(p, go1.Location, go2.Location), 0);
-                }
-
-                int d = field.BOT.Count;
-                int d2 = (d - 1) * d / 2;
-
-                using (Brush b = new SolidBrush(Color.Magenta))
-                {
-                    Font f = new Font(FontFamily.GenericSansSerif, 16.0f, FontStyle.Bold);
-                    g.DrawString("Regular Collision Detection: " + d2, f, b, 100, 300);
-                    g.DrawString("Binary Tree Collision Detection: " + (field.BOT.ColCount), f, b, 100, 320);
-                    g.DrawString("Collision Detection improvement: " + (d2 - field.BOT.ColCount) * 100 / d2 + "%", f, b, 100, 340);
-                }
-            }
         }
 
         #endregion

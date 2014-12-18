@@ -1,6 +1,5 @@
 ﻿using Planets.Controller.GameRules.Abstract;
 using Planets.Controller.GameRules.GameTargets;
-using Planets.Model;
 
 namespace Planets.Controller.GameRules.Impl
 {

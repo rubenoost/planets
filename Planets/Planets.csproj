@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\GameRules\Impl\BonusRule.cs" />
     <Compile Include="Controller\GameRules\GameTargets\GameTargetGetLargest.cs" />
     <Compile Include="Controller\GameRules\GameTargets\IGameTarget.cs" />
     <Compile Include="Controller\GameRules\Impl\AntiGravityRule.cs" />
@@ -76,12 +77,10 @@
     <Compile Include="Controller\GameRules\Impl\ResetRule.cs" />
     <Compile Include="Controller\GameRules\Impl\StasisRule.cs" />
     <Compile Include="Controller\GameRules\Impl\StayInFieldRule.cs" />
-    <Compile Include="Controller\GameRules\Impl\TardisRule.cs" />
     <Compile Include="Controller\Subcontrollers\LevelSupplier.cs" />
     <Compile Include="Controller\Subcontrollers\PlayfieldSerializer.cs" />
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
-    <Compile Include="Debug.cs" />
     <Compile Include="Model\GameObjects\Antigravity.cs" />
     <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
@@ -173,8 +172,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Bonus.png" />
     <None Include="Resources\Mine.png" />
-    <None Include="Resources\Tardis.png" />
     <None Include="Resources\Player.png" />
     <None Include="Resources\StatieGeld.png" />
     <None Include="Resources\parallax6.png" />
