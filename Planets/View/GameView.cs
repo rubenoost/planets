@@ -366,20 +366,10 @@ namespace Planets.View
                 blip.X += RadarPoint.X;
                 blip.Y += RadarPoint.Y;
 
-                if (!(go1 is Player))
+                if (go1 is Player && !(go1 is Antagonist))
                 {
-                    if (go1 is Bonus)
-                    {
-                        g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
-                    }
-                    else
-                    {
-                        g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));
-                    }
-                }
-                else
-                {
-                    g.FillEllipse(Brushes.Aqua, new Rectangle(blip, new Size(10, 10)));
+                    Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
+                    g.FillEllipse(Brushes.Yellow, new Rectangle(pPlayer, new Size(10, 10)));
                 }
             });
         }
