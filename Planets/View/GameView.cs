@@ -8,6 +8,7 @@ using Planets.Model;
 using Planets.Model.GameObjects;
 using Planets.View.Imaging;
 using System.Drawing.Text;
+using System.Threading;
 
 namespace Planets.View
 {
@@ -51,10 +52,13 @@ namespace Planets.View
         /// If true, a vector will be drawn to show the current trajectory
         /// </summary>
         public bool IsAiming;
+        public bool ClickOnNextButton;
         public Vector AimPoint;
 
         private SolidBrush ScorePlayerBrush = new SolidBrush(Color.White);
         private Font ScoreFont = new Font(FontFamily.GenericSansSerif, 60.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+        private Font PlanetsFont;
+        private Font NextLevelFont;
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 5);
@@ -76,12 +80,17 @@ namespace Planets.View
             AimVecPen.DashStyle = DashStyle.Dash;
             AimVecPen.CustomEndCap = bigArrow;
 
+            this.ClickOnNextButton = false;
+
             // Custom font
             pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
             pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
+            pfc.AddFontFile(@"Data\Fonts\spacebar.ttf");
             Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
             EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
             CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
+            PlanetsFont = new Font(pfc.Families[2], 50, FontStyle.Regular);
+            NextLevelFont = new Font(pfc.Families[2], 35, FontStyle.Regular);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -156,13 +165,32 @@ namespace Planets.View
             int Highscore = ScoreBoard.GetHighScore();
             g.DrawString(Highscore.ToString(), EndGameFont, HighScoreBrush, new Point(460, 200));
 
+            // Score box
+            g.DrawLine(new Pen(Color.WhiteSmoke, 2), new Point(150, 370), new Point(630, 370));
+            g.DrawLine(new Pen(Color.WhiteSmoke, 2), new Point(630, 370), new Point(630, 170));
+
+            // Next button
+            if (this.ClickOnNextButton)
+            {
+                g.FillRectangle(new SolidBrush(Color.WhiteSmoke), new Rectangle(new Point(175, 400), new Size(430, 100)));
+            }
+            else
+            {
+                g.DrawRectangle(new Pen(Color.WhiteSmoke, 2), new Rectangle(new Point(175, 400), new Size(430, 100)));
+            }
+
+            g.DrawString("Next level", NextLevelFont, new SolidBrush((this.ClickOnNextButton) ? Color.FromArgb(230, 88, 88, 88) : Color.WhiteSmoke), new Point(185, 420));
+
+            if (this.ClickOnNextButton)
+                this.ClickOnNextButton = false;
+
             // Your score
             g.DrawString("Your score: ", EndGameFont, YourScoreBrush, new Point(176, 300));
             g.DrawString(field.sb.Total.ToString(), EndGameFont, YourScoreBrush, new Point(460, 300));
             ScoreBoard.WriteScore(field.sb.Total);
 
-            // Names
-            g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", this.CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
+            g.DrawImage(Properties.Resources.HighScoreLogo, new Point(1400, 60));
+            g.DrawString("Planets", this.PlanetsFont, HighScoreBrush, new Point(1415, 520));
         }
 
         private void DrawAimVectors(Graphics g)
@@ -355,6 +383,24 @@ namespace Planets.View
             g.DrawString("Objects", HudScoreFont, LabelBrush, ObjectMeter.X - 50, ObjectMeter.Y - 30);
 
             // Draw Radar
+            /*int RadiusRadar = 65;
+            Vector RadarCenter = hudLocation + new Vector(hudSize.Width, hudSize.Height) / 2;
+            Vector RadarSize = new Vector(RadiusRadar * 2, RadiusRadar * 2);
+            Rectangle RadarRectangle = new Rectangle(RadarCenter - RadarSize / 2, new Size((int)RadarSize.X, (int)RadarSize.Y));
+            float DotRadius = 5;
+
+            Vector playerLocation = field.CurrentPlayer.Location;
+            float scale = 0.2f;
+            
+            g.FillEllipse(Brushes.Red, RadarRectangle);
+
+            field.BOT.Iterate(go =>
+            {
+                if (((go.Location - playerLocation).Length()*scale + DotRadius) > RadiusRadar) return;
+
+                Vector drawCenter = RadarCenter + (go.Location - playerLocation)*scale;
+                g.FillEllipse(Brushes.Blue, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int) (DotRadius * 2), (int) (DotRadius * 2))));
+            });*/
             int RadiusRadar = 130;
             Size s = new Size(RadiusRadar, RadiusRadar);
             Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
@@ -371,20 +417,20 @@ namespace Planets.View
                 if(go1 is Antagonist || !(go1 is Player)) {
                     if(playerRadar.CalcDistance(go1) < 800){
                         Console.WriteLine(playerRadar.CalcDistance(go1).ToString());
-                        double xField = go1.Location.X / field.Size.Width;
-                        double yField = go1.Location.Y / field.Size.Height;
+                    double xField = go1.Location.X / field.Size.Width;
+                    double yField = go1.Location.Y / field.Size.Height;
 
-                        double xRadar = s.Width * xField;
-                        double yRadar = s.Height * yField;
+                    double xRadar = s.Width * xField;
+                    double yRadar = s.Height * yField;
 
-                        Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                        blip.X += RadarPoint.X;
-                        blip.Y += RadarPoint.Y;
+                    Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                    blip.X += RadarPoint.X;
+                    blip.Y += RadarPoint.Y;
 
                         g.FillEllipse(Brushes.Purple, new Rectangle(blip, new Size(10, 10)));
                     }
-                }
-            });
+                    }
+                });
         }
 
         private void DrawAnimations(Graphics g, GameObject obj)

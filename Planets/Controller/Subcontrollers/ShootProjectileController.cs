@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Planets.Model;
 using Planets.Model.GameObjects;
 using Planets.View;
+using System.Threading;
 
 namespace Planets.Controller.Subcontrollers
 {
@@ -12,10 +13,12 @@ namespace Planets.Controller.Subcontrollers
     /// </summary>
     public class ShootProjectileController
     {
+        private GameEngine ge;
+
         /// <summary>
         /// The playfield used by this controller to shoot projectiles.
         /// </summary>
-        public Playfield InternalPlayfield { get; private set; }
+        public Playfield InternalPlayfield { get { return ge.field; } }
 
         /// <summary>
         /// The control used by this controller to listen on for mouse clicks.
@@ -27,10 +30,10 @@ namespace Planets.Controller.Subcontrollers
         /// </summary>
         /// <param name="pf">The playfield to shoot projectiles in.</param>
         /// <param name="listenControl">The control to listen on for clicks.</param>
-        public ShootProjectileController(Playfield pf, GameView listenControl)
+        public ShootProjectileController(GameEngine ge, GameView listenControl)
         {
             // Save variables
-            InternalPlayfield = pf;
+            this.ge = ge;
             InternalControl = listenControl;
 
             // Register event handlers
@@ -42,12 +45,34 @@ namespace Planets.Controller.Subcontrollers
 
         private void MouseUpEvent(object sender, MouseEventArgs e)
         {
-            InternalControl.IsAiming = false;
+            if(InternalPlayfield.CurrentPlayer.GameOver|| InternalPlayfield.CurrentPlayer.GameWon)
+            {
+                InternalControl.ClickOnNextButton = false;
+                InternalControl.Invalidate();
+            }
+            else
+                InternalControl.IsAiming = false;
         }
 
         private void MouseDownEvent(object sender, MouseEventArgs e)
         {
-            InternalControl.IsAiming = true;
+            if (InternalPlayfield.CurrentPlayer.GameOver || InternalPlayfield.CurrentPlayer.GameWon)
+            {
+                Rectangle MouseRec = new Rectangle(new Point(e.X, e.Y), new Size(10, 10));
+                Rectangle LevelButtonRec = new Rectangle(new Point(175, 400), new Size(430, 100));
+
+                if (MouseRec.IntersectsWith(LevelButtonRec))
+                    InternalControl.ClickOnNextButton = true;
+                else
+                    InternalControl.ClickOnNextButton = false;
+
+                InternalControl.Invalidate();
+            }
+            else
+            {
+                InternalControl.IsAiming = true;
+                InternalControl.ClickOnNextButton = false;
+            }
         }
 
         public static Vector CalcNewDV(GameObject Player, GameObject Projectile, Point p)

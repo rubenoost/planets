@@ -131,10 +131,29 @@
     <EmbeddedResource Include="View\GameView.resx">
       <DependentUpon>GameView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Data\Levels\2.lvl" />
     <None Include="Data\Fonts\MicroExtend.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Fonts\Prototype.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Fonts\spacebar.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Levels\7.lvl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Levels\6.lvl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Levels\5.lvl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Levels\4.lvl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Levels\3.lvl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Levels\1.lvl">
@@ -165,6 +184,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Antagonist.png" />
     <None Include="Resources\Player.png" />
     <None Include="Resources\AntiGravity.png" />
     <None Include="Resources\AntiMatter.png" />
@@ -180,7 +200,6 @@
     <None Include="Resources\parallax1.png" />
     <None Include="Resources\parallax2.png" />
     <None Include="Resources\background.png" />
-    <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
   <ItemGroup />
