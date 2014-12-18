@@ -355,25 +355,40 @@ namespace Planets.View
             g.DrawString("Objects", HudScoreFont, LabelBrush, ObjectMeter.X - 50, ObjectMeter.Y - 30);
 
             // Draw Radar
+            /*int RadiusRadar = 65;
+            Vector RadarCenter = hudLocation + new Vector(hudSize.Width, hudSize.Height) / 2;
+            Vector RadarSize = new Vector(RadiusRadar * 2, RadiusRadar * 2);
+            Rectangle RadarRectangle = new Rectangle(RadarCenter - RadarSize / 2, new Size((int)RadarSize.X, (int)RadarSize.Y));
+            float DotRadius = 5;
+
+            Vector playerLocation = field.CurrentPlayer.Location;
+            float scale = 0.2f;
+            
+            g.FillEllipse(Brushes.Red, RadarRectangle);
+
+            field.BOT.Iterate(go =>
+            {
+                if (((go.Location - playerLocation).Length()*scale + DotRadius) > RadiusRadar) return;
+
+                Vector drawCenter = RadarCenter + (go.Location - playerLocation)*scale;
+                g.FillEllipse(Brushes.Blue, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int) (DotRadius * 2), (int) (DotRadius * 2))));
+            });*/
             int RadiusRadar = 130;
             Size s = new Size(RadiusRadar, RadiusRadar);
             Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
 
             g.FillEllipse(Brushes.Red, new Rectangle(RadarPoint, s));
-            
-            field.BOT.Iterate(go1 => {
-                if(!(go1 is Player) && go1 is Antagonist)
-                    return;
+
+            field.BOT.Iterate(go1 =>
+            {
                 Player playerRadar = go1 as Player;
 
                 Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
-                g.FillEllipse(Brushes.Yellow, new Rectangle(pPlayer, new Size(10, 10)));
+                g.FillEllipse(Brushes.Green, new Rectangle(pPlayer, new Size(10, 10)));
                 Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
 
-                field.BOT.Iterate(go2 => {
-                    if(go2 is Player && !(go2 is Antagonist))
-                        return;                    
-
+                field.BOT.Iterate(go2 =>
+                {
                     double xField = go1.Location.X / field.Size.Width;
                     double yField = go1.Location.Y / field.Size.Height;
 
@@ -383,7 +398,15 @@ namespace Planets.View
                     Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
                     blip.X += RadarPoint.X;
                     blip.Y += RadarPoint.Y;
-                    g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
+
+                    if (go2 is Player)
+                    {
+                        g.FillEllipse(Brushes.Purple, new Rectangle(blip, new Size(10, 10)));
+                    }
+                    else if (!(go2 is Player))
+                    {
+                        g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
+                    }
                 });
             });
         }
