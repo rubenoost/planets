@@ -41,7 +41,7 @@ namespace Planets.Controller.GameRules.Impl
                     }
                     if (antagonist != null && g.GetType() == typeof(GameObject) && g.Ai == false && g == closest)
                     {
-                        if ( g.Radius > antagonist.Radius)
+                        if (g.Radius > antagonist.Radius)
                         {
                             //Move away from bigger object
                             run = true;
@@ -56,7 +56,7 @@ namespace Planets.Controller.GameRules.Impl
                             hug = false;
                         }
                     }
-                    else if( g == closest)
+                    else if (g == closest)
                     {
                         if (antagonist != null && g is Player && g.GetType() == typeof(Player))
                         {
@@ -74,21 +74,21 @@ namespace Planets.Controller.GameRules.Impl
             TimeSpan tijd = DateTime.Now - begin;
             if (tijd.TotalMilliseconds < 1000) return;
             begin = DateTime.Now;
-            if(run == true)
+            if (run == true)
             {
                 //Move away from bigger object
                 ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
                 Console.WriteLine("REN");
                 run = false;
             }
-            else if(eat == true)
+            else if (eat == true)
             {
                 //Move towards smaller object
                 ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
                 Console.WriteLine("EET");
                 eat = false;
             }
-            else if(!(player == null) && hug == true)
+            else if (!(player == null) && hug == true)
             {
                 ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - player.Location));
                 Console.WriteLine("KNUFFEL");

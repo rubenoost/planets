@@ -35,10 +35,10 @@ namespace Planets.Controller.GameRules.Impl
             double lostMass = goPlayer.Mass / 2;
             goPlayer.Mass -= lostMass;
 
-			AnimatedGameObject explosion = new AnimatedGameObject(goExplodes.Location, new Vector(0, 0), 500);
+            AnimatedGameObject explosion = new AnimatedGameObject(goExplodes.Location, new Vector(0, 0), 500);
             pf.BOT.Add(explosion);
-            
-			pf.BOT.Remove(goExplodes);
+
+            pf.BOT.Remove(goExplodes);
 
             Random random = new Random();
 
@@ -50,7 +50,7 @@ namespace Planets.Controller.GameRules.Impl
 
                 Vector createLocation = goExplodes.Location + new Vector(random.Next(-50, 100), random.Next(-50, 100));
                 GameObject debris = new GameObject(createLocation, new Vector(random.Next(-500, 500), random.Next(-500, 500)), mass);
-                debris.Radius = goExplodes.Radius*3.0;
+                debris.Radius = goExplodes.Radius * 3.0;
                 pf.BOT.Add(debris);
                 massPool -= mass;
             }
