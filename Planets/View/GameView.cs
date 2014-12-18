@@ -95,8 +95,8 @@ namespace Planets.View
             // Draw static back layer
             DrawBackLayers(g);
             // Draw top layer
-            
-            
+
+
             lock (field.BOT)
             {
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
@@ -349,7 +349,8 @@ namespace Planets.View
             Size s = new Size(hudSize.Width / 2, (hudSize.Height / 2) - 20);
 
             g.FillRectangle(Brushes.Red, new Rectangle(RadarPoint, s));
-            field.BOT.Iterate(go1 => {
+            field.BOT.Iterate(go1 =>
+            {
                 double xField = go1.Location.X / field.Size.Width;
                 double yField = go1.Location.Y / field.Size.Height;
 
@@ -360,13 +361,19 @@ namespace Planets.View
                 blip.X += RadarPoint.X;
                 blip.Y += RadarPoint.Y;
 
-                if(!(go1 is Player)) {
-                    if(go1 is Bonus){
+                if (!(go1 is Player))
+                {
+                    if (go1 is Bonus)
+                    {
                         g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
-                    } else {
+                    }
+                    else
+                    {
                         g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));
                     }
-                } else {
+                }
+                else
+                {
                     g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
                 }
             });
