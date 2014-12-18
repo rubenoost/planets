@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\GameRules\Impl\BonusRule.cs" />
     <Compile Include="Controller\GameRules\GameTargets\GameTargetGetLargest.cs" />
     <Compile Include="Controller\GameRules\GameTargets\IGameTarget.cs" />
     <Compile Include="Controller\GameRules\Impl\AntiGravityRule.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="Controller\GameRules\Impl\ResetRule.cs" />
     <Compile Include="Controller\GameRules\Impl\StasisRule.cs" />
     <Compile Include="Controller\GameRules\Impl\StayInFieldRule.cs" />
-    <Compile Include="Controller\GameRules\Impl\TardisRule.cs" />
     <Compile Include="Controller\Subcontrollers\LevelSupplier.cs" />
     <Compile Include="Controller\Subcontrollers\PlayfieldSerializer.cs" />
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
