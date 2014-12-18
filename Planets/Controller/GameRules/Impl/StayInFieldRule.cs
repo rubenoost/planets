@@ -1,6 +1,7 @@
-﻿using Planets.Model;
+﻿using Planets.Controller.GameRules.Abstract;
+using Planets.Model;
 
-namespace Planets.Controller.GameRules
+namespace Planets.Controller.GameRules.Impl
 {
     class StayInFieldRule : AbstractGameRule
     {

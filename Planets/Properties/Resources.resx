@@ -148,23 +148,8 @@
   <data name="Pluto_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pluto-Icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Texture" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1796813.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="spritety" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\spritety.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="stasis" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\statis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Tardis" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\KomeetStaartje1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="antagonist" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="explosion_awesome" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\explosion.hasgraphics.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -192,5 +177,14 @@
   </data>
   <data name="StatieGeld" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StatieGeld.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Player" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Player.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mine.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bonus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bonus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

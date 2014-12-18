@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.GameRules;
+using Planets.Controller.GameRules.Abstract;
+using Planets.Controller.GameRules.Impl;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.View;
@@ -20,6 +22,7 @@ namespace Planets.Controller
         // Controllers
         private ShootProjectileController spc;
         private Autodemo ad;
+        private LevelSupplier ls = new LevelSupplier();
 
         // Model Data
         public Playfield field;
@@ -28,10 +31,10 @@ namespace Planets.Controller
         public event Action<double> GameLoopEvent;
 
         // Game rules
-        private AbstractGameRule[] _gameRules =
+        private INativeGameRule[] _gameRules =
         {
             // ========== [ ANTAGONIST BEHAVIOUR ] ==========
-            //new AIrule(),
+            new AIrule(),
 
             // ========== [ CHANGE SPEED ] ==========
             new BlackHoleRule(),
@@ -53,24 +56,24 @@ namespace Planets.Controller
             new StasisRule(),
 
             // ========== [ TARDIS ] ==========
-            new TardisRule(),
+            new BonusRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
             new ResetRule()
         };
 
-        private Thread GameThread;
-        private bool running = true;
+        public Thread GameThread;
+        public bool running = true;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
             this.HostEngine = HostEngine;
             this.HostForm = HostForm;
-            field = RandomLevelGenerator.GenerateRandomLevel();
+            field = ls.GenerateLevel();
 
             // Create view
-            GameView = new GameView(field);
+            GameView = new GameView(this);
 
             // Create controllers
             spc = new ShootProjectileController(field, GameView);
@@ -87,10 +90,15 @@ namespace Planets.Controller
 
             // Increase mass
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.Mass *= 1.2; };
+
             // Decrease mass
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.Mass /= 1.2; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Zoom *= 1.25f; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Zoom *= 0.8f; };
+
+            // Level stuff
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.N) LoadNextLevel(); };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.M) ls.LevelMode = ls.LevelMode == LevelSupplier.Mode.Random ? LevelSupplier.Mode.Campaign : LevelSupplier.Mode.Random; };
 
             // Create new GameThread
             GameThread = new Thread(GameLoop);
@@ -102,6 +110,11 @@ namespace Planets.Controller
         public void Start()
         {
             running = true;
+        }
+
+        public void LoadNextLevel()
+        {
+            field = ls.GenerateLevel();
         }
 
         public void GameLoop()
@@ -134,7 +147,7 @@ namespace Planets.Controller
                         // ExecuteRule game rules
                         foreach (var agr in _gameRules)
                         {
-                            agr.Execute(field, dt);
+                            agr.Execute(this, dt);
                         }
                     }
 

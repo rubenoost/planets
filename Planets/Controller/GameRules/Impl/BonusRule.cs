@@ -1,10 +1,11 @@
 ﻿using System;
+using Planets.Controller.GameRules.Abstract;
 using Planets.Model;
 using Planets.Model.GameObjects;
 
-namespace Planets.Controller.GameRules
+namespace Planets.Controller.GameRules.Impl
 {
-    class TardisRule : AbstractGameRule
+    class BonusRule : AbstractGameRule
     {
         private Random randX = new Random();
         private Random randY = new Random();
@@ -14,7 +15,7 @@ namespace Planets.Controller.GameRules
             // Update speed to black hole
             pf.BOT.Iterate(g =>
             {
-                if (!(g is Tardis))
+                if (!(g is Bonus))
                     return;
                 pf.BOT.Iterate(g2 =>
                 {

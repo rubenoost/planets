@@ -53,30 +53,35 @@
     <Reference Include="System.Windows.Forms">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\GameRules\AntiGravityRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\BonusRule.cs" />
+    <Compile Include="Controller\GameRules\GameTargets\GameTargetGetLargest.cs" />
+    <Compile Include="Controller\GameRules\GameTargets\IGameTarget.cs" />
+    <Compile Include="Controller\GameRules\Impl\AntiGravityRule.cs" />
     <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
+    <Compile Include="Controller\GameRules\Abstract\NativeGameRule.cs" />
     <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\MainEngine.cs" />
-    <Compile Include="Controller\GameRules\AbstractCollisionRule.cs" />
-    <Compile Include="Controller\GameRules\AbstractGameRule.cs" />
-    <Compile Include="Controller\GameRules\AIrule.cs" />
-    <Compile Include="Controller\GameRules\BlackHoleRule.cs" />
-    <Compile Include="Controller\GameRules\CollidewithSmaller.cs" />
-    <Compile Include="Controller\GameRules\BlackHoleEatRule.cs" />
-    <Compile Include="Controller\GameRules\DynamicEatRule.cs" />
-    <Compile Include="Controller\GameRules\ElasticCollisionRule.cs" />
-    <Compile Include="Controller\GameRules\ExplosionRule.cs" />
-    <Compile Include="Controller\GameRules\MoveRule.cs" />
-    <Compile Include="Controller\GameRules\ResetRule.cs" />
-    <Compile Include="Controller\GameRules\StasisRule.cs" />
-    <Compile Include="Controller\GameRules\StayInFieldRule.cs" />
-    <Compile Include="Controller\GameRules\TardisRule.cs" />
+    <Compile Include="Controller\GameRules\Abstract\AbstractCollisionRule.cs" />
+    <Compile Include="Controller\GameRules\Abstract\AbstractGameRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\AIrule.cs" />
+    <Compile Include="Controller\GameRules\Impl\BlackHoleRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\CollidewithSmaller.cs" />
+    <Compile Include="Controller\GameRules\Impl\BlackHoleEatRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\DynamicEatRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\ElasticCollisionRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\ExplosionRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\MoveRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\ResetRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\StasisRule.cs" />
+    <Compile Include="Controller\GameRules\Impl\StayInFieldRule.cs" />
+    <Compile Include="Controller\Subcontrollers\LevelSupplier.cs" />
+    <Compile Include="Controller\Subcontrollers\PlayfieldSerializer.cs" />
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
-    <Compile Include="Debug.cs" />
     <Compile Include="Model\GameObjects\Antigravity.cs" />
     <Compile Include="Model\GameObjects\AntiMatter.cs" />
     <Compile Include="Model\BinaryObjectTree.cs" />
@@ -88,7 +93,7 @@
     <Compile Include="Model\GameObjects\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
     <Compile Include="Model\GameObjects\Stasis.cs" />
-    <Compile Include="Model\GameObjects\Tardis.cs" />
+    <Compile Include="Model\GameObjects\Bonus.cs" />
     <Compile Include="Model\Score.cs" />
     <Compile Include="Model\ScoreBoard.cs" />
     <Compile Include="Model\Vector.cs" />
@@ -126,6 +131,15 @@
     <EmbeddedResource Include="View\GameView.resx">
       <DependentUpon>GameView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Data\Fonts\MicroExtend.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Fonts\Prototype.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Levels\1.lvl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -159,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Bonus.png" />
+    <None Include="Resources\Mine.png" />
+    <None Include="Resources\Player.png" />
     <None Include="Resources\StatieGeld.png" />
     <None Include="Resources\parallax6.png" />
     <None Include="Resources\parallax5.png" />
@@ -168,13 +185,11 @@
     <None Include="Resources\parallax1.png" />
     <None Include="Resources\parallax2.png" />
     <None Include="Resources\background.png" />
-    <None Include="Resources\explosion.hasgraphics.png" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
-    <None Include="Resources\KomeetStaartje1.png" />
-    <None Include="Resources\space-wallpaper.jpg" />
     <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

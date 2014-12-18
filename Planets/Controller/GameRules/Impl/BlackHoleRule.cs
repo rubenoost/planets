@@ -1,7 +1,8 @@
-﻿using Planets.Model;
+﻿using Planets.Controller.GameRules.Abstract;
+using Planets.Model;
 using Planets.Model.GameObjects;
 
-namespace Planets.Controller.GameRules
+namespace Planets.Controller.GameRules.Impl
 {
     class BlackHoleRule : AbstractGameRule
     {

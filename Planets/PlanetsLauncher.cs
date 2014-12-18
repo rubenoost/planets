@@ -13,9 +13,14 @@ namespace Planets
         [STAThread]
         static void Main()
         {
+            // Setup application parameters
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Create HostForm
             HostForm = new PlanetsForm();
+
+            // Run application
             Application.Run(HostForm);
         }
     }

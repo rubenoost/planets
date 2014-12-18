@@ -17,11 +17,11 @@ namespace Planets.View.Imaging
 
         public SpritePool()
         {
-            RegisterImage(typeof(Player), Resources.Pluto);
+            RegisterImage(typeof(Player), Resources.Player);
             RegisterImage(typeof(BlackHole), Resources.Hole1);
             RegisterImage(typeof(Stasis), Resources.StatieGeld);
-            RegisterImage(typeof(Tardis), Resources.Tardis);
-            RegisterImage(typeof(Mine), Resources.Pluto_Red);
+            RegisterImage(typeof(Bonus), Resources.Bonus);
+            RegisterImage(typeof(Mine), Resources.Mine);
             RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
             RegisterImage(typeof(Antagonist), Resources.antagonist);

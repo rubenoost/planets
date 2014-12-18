@@ -1,8 +1,9 @@
 ﻿using System;
+using Planets.Controller.GameRules.Abstract;
 using Planets.Model;
 using Planets.Model.GameObjects;
 
-namespace Planets.Controller.GameRules
+namespace Planets.Controller.GameRules.Impl
 {
     class DynamicEatRule : AbstractCollisionRule
     {
@@ -39,7 +40,8 @@ namespace Planets.Controller.GameRules
                 // Check for mass of large gameobject
                 if (LostMass >= gL.Mass)
                 {
-                    pf.BOT.Remove(gL);
+                    if(gL != pf.CurrentPlayer)
+                        pf.BOT.Remove(gL);
                 }
                 else
                     gL.Mass -= LostMass;
