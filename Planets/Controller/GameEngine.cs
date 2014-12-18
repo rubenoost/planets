@@ -73,7 +73,7 @@ namespace Planets.Controller
             GameView = new GameView(this);
 
             // Create controllers
-            spc = new ShootProjectileController(field, GameView);
+            spc = new ShootProjectileController(this, GameView);
             ad = new Autodemo(spc, this);
 
             // Set gameview

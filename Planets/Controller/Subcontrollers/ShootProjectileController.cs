@@ -12,10 +12,12 @@ namespace Planets.Controller.Subcontrollers
     /// </summary>
     public class ShootProjectileController
     {
+        private GameEngine ge;
+
         /// <summary>
         /// The playfield used by this controller to shoot projectiles.
         /// </summary>
-        public Playfield InternalPlayfield { get; private set; }
+        public Playfield InternalPlayfield { get { return ge.field; } }
 
         /// <summary>
         /// The control used by this controller to listen on for mouse clicks.
@@ -27,10 +29,10 @@ namespace Planets.Controller.Subcontrollers
         /// </summary>
         /// <param name="pf">The playfield to shoot projectiles in.</param>
         /// <param name="listenControl">The control to listen on for clicks.</param>
-        public ShootProjectileController(Playfield pf, GameView listenControl)
+        public ShootProjectileController(GameEngine ge, GameView listenControl)
         {
             // Save variables
-            InternalPlayfield = pf;
+            this.ge = ge;
             InternalControl = listenControl;
 
             // Register event handlers
