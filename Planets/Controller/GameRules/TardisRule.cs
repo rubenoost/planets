@@ -22,7 +22,12 @@ namespace Planets.Controller.GameRules
                     {
                         if (g2.IntersectsWith(g))
                         {
-                            pf.sb.AddScore(new Score(100, DateTime.Now, g.Location, true));
+                            if(g2 is Antagonist){
+                                pf.sb.AddScore(new Score(100, DateTime.Now, g.Location, false));
+                            } else {
+                                pf.sb.AddScore(new Score(100, DateTime.Now, g.Location, true));
+                            }
+
                             g.Location = new Vector(randX.Next(0, 1920), randY.Next(0, 1080));
                         }
                     }
