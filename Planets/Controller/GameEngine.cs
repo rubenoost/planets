@@ -14,7 +14,6 @@ namespace Planets.Controller
     {
         // Hosts
         private MainEngine HostEngine;
-        private PlanetsForm HostForm;
 
         // Views
         private GameView GameView;
@@ -66,10 +65,9 @@ namespace Planets.Controller
         public Thread GameThread;
         public bool running = true;
 
-        public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
+        public GameEngine(MainEngine HostEngine)
         {
             this.HostEngine = HostEngine;
-            this.HostForm = HostForm;
             field = ls.GenerateLevel();
 
             // Create view
