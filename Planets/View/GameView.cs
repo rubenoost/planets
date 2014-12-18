@@ -142,21 +142,26 @@ namespace Planets.View
         }
 
         private Brush EndGameBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
+        private Brush YourScoreBrush = new SolidBrush(Color.Yellow);
+        private Brush HighScoreBrush = new SolidBrush(Color.White);
 
         private void DrawEndGame(Graphics g)
         {
+            // Background rectangle
             g.FillRectangle(EndGameBrush, new Rectangle(new Point(0, 0), new Size(1920, 1080)));
 
-            g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
-
+            // Highscore
+            g.DrawString("Highscore: ", EndGameFont, HighScoreBrush, new Point(200, 200));
             int Highscore = ScoreBoard.GetHighScore();
+            g.DrawString(Highscore.ToString(), EndGameFont, HighScoreBrush, new Point(460, 200));
 
-            // write your score -> ScoreBoard.WriteScore();
-            g.DrawString(Highscore.ToString(), EndGameFont, new SolidBrush(Color.White), new Point(200, 210));
+            // Your score
+            g.DrawString("Your score: ", EndGameFont, YourScoreBrush, new Point(176, 300));
+            g.DrawString(field.sb.Total.ToString(), EndGameFont, YourScoreBrush, new Point(460, 300));
+            ScoreBoard.WriteScore(field.sb.Total);
 
-            g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
-
-            g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
+            // Names
+            g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", this.CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
         }
 
         private void DrawAimVectors(Graphics g)
