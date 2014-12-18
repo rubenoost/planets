@@ -113,7 +113,7 @@ namespace Planets.View
             }
 
             DrawScores(g);
-            //DrawHud(g);
+            DrawHud(g);
 
             if (field.CurrentPlayer.GameOver || field.CurrentPlayer.GameWon)
                 DrawEndGame(g);
