@@ -79,9 +79,9 @@ namespace Planets.View
             // Custom font
             pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
             pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
-            this.Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
-            this.EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
-            this.CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
+            Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
+            EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
+            CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -156,7 +156,7 @@ namespace Planets.View
 
             g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
 
-            g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", this.CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
+            g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
         }
 
         private void DrawAimVectors(Graphics g)
