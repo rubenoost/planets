@@ -63,8 +63,8 @@ namespace Planets.Controller
             new ResetRule()
         };
 
-        private Thread GameThread;
-        private bool running = true;
+        public Thread GameThread;
+        public bool running = true;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {
