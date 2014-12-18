@@ -63,9 +63,9 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap antagonist {
+        internal static System.Drawing.Bitmap Antagonist {
             get {
-                object obj = ResourceManager.GetObject("antagonist", resourceCulture);
+                object obj = ResourceManager.GetObject("Antagonist", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
