@@ -57,7 +57,7 @@ namespace Planets.View.Imaging
             return s.Images[0];
         }
 
-        private static List<Bitmap> Cutsheet(Bitmap bm, int rows, int columns)
+        public static List<Bitmap> Cutsheet(Bitmap bm, int rows, int columns)
         {
             List<Bitmap> result = new List<Bitmap>();
 
