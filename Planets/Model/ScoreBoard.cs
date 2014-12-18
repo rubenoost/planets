@@ -30,8 +30,10 @@ namespace Planets.Model
 			}
 		}
 
-		public static string[] getHighScore(string filepath)
+		public static string[] getHighScore()
 		{
+            String filepath = "scores.xml";
+
 			XmlDocument xd = new XmlDocument();
 			xd.Load(filepath);
 
