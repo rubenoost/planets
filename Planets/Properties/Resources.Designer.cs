@@ -73,6 +73,16 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AntiGravity {
+            get {
+                object obj = ResourceManager.GetObject("AntiGravity", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap AntiMatter {
             get {
                 object obj = ResourceManager.GetObject("AntiMatter", resourceCulture);

@@ -23,7 +23,7 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Bonus), Resources.Bonus);
             RegisterImage(typeof(Mine), Resources.Mine);
             RegisterImage(typeof(AntiMatter), Resources.AntiMatter);
-            RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
+            RegisterImage(typeof(Antigravity), Resources.AntiGravity);
             RegisterImage(typeof(Antagonist), Resources.antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);
             RegisterImage(typeof(AnimatedGameObject), new Sprite(Resources.ExplosionTest, 8, 8));
