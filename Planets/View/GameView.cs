@@ -417,20 +417,20 @@ namespace Planets.View
                 if(go1 is Antagonist || !(go1 is Player)) {
                     if(playerRadar.CalcDistance(go1) < 800){
                         Console.WriteLine(playerRadar.CalcDistance(go1).ToString());
-                    double xField = go1.Location.X / field.Size.Width;
-                    double yField = go1.Location.Y / field.Size.Height;
+                        double xField = go1.Location.X / field.Size.Width;
+                        double yField = go1.Location.Y / field.Size.Height;
 
-                    double xRadar = s.Width * xField;
-                    double yRadar = s.Height * yField;
+                        double xRadar = s.Width * xField;
+                        double yRadar = s.Height * yField;
 
-                    Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                    blip.X += RadarPoint.X;
+                        Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                        blip.X += RadarPoint.X;
                     blip.Y += RadarPoint.Y;
 
                         g.FillEllipse(Brushes.Purple, new Rectangle(blip, new Size(10, 10)));
                     }
-                    }
-                });
+                }
+            });
         }
 
         private void DrawAnimations(Graphics g, GameObject obj)
