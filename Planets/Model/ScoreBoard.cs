@@ -1,52 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml;
+using System.IO;
 
 namespace Planets.Model
 {
-    public class ScoreBoard
-    {
-        public int Total { get; private set; }
+	public class ScoreBoard
+	{
+		public int Total { get; private set; }
 
         public List<Score> Scores { get; private set; }
 
-        public ScoreBoard()
-        {
-            Scores = new List<Score>();
-        }
+        private static String filepath = @"Data\scores.txt";
 
-        public void AddScore(Score score)
-        {
-            Scores.Add(score);
-            Total += score.Value;
-        }
+		public ScoreBoard()
+		{
+			Scores = new List<Score>();
+		}
 
-        public void CheckStamps()
+		public void AddScore(Score score)
+		{
+			Scores.Add(score);
+			Total += score.Value;
+		}
+
+		public void CheckStamps()
+		{
+			for (int i = Scores.Count - 1; i >= 0; i--) {
+				TimeSpan span = DateTime.Now - Scores[i].Stamp;
+				if (span.TotalMilliseconds >= 2000)
+					Scores.Remove(Scores[i]);
+			}
+		}
+
+        public static int GetHighScore()
         {
-            for (int i = Scores.Count - 1; i >= 0; i--)
+            int score;
+
+            if(File.Exists(filepath))
             {
-                TimeSpan span = DateTime.Now - Scores[i].Stamp;
-                if (span.TotalMilliseconds >= 2000)
-                    Scores.Remove(Scores[i]);
+                string Stringscore = File.ReadAllText(filepath);
+                score = Convert.ToInt16(Stringscore);
+            }
+            else
+            {
+                File.Create(filepath);
+                score = 0;
+            }
+
+            return score;
+        }
+
+        public static void WriteScore(int score)
+        {
+            if(score > GetHighScore())
+            {
+                File.WriteAllText(filepath, score.ToString());
             }
         }
 
-        public static int[] getHighScore()
-        {
-            String filepath = "scores.xml";
-
-            XmlDocument xd = new XmlDocument();
-            xd.Load(filepath);
-
-            XmlNodeList nodelist = xd.SelectNodes("/scores");
-
-            List<int> scores = new List<int>();
-            for (int i = 0; i < nodelist.Count; i++)
-            {
-                scores.Add(Convert.ToInt16(nodelist[i].SelectSingleNode("score").ToString()));
-            }
-
-            return scores.ToArray();
-        }
-    }
+	}
 }

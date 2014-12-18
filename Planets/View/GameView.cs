@@ -151,7 +151,10 @@ namespace Planets.View
 
             g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
 
-            //String Highscore = ScoreBoard.getHighScore()[0];
+            int Highscore = ScoreBoard.GetHighScore();
+
+            // write your score -> ScoreBoard.WriteScore();
+            g.DrawString(Highscore.ToString(), EndGameFont, new SolidBrush(Color.White), new Point(200, 210));
 
             g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
 
