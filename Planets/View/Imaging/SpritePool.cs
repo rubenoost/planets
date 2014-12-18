@@ -22,7 +22,7 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Stasis), Resources.StatieGeld);
             RegisterImage(typeof(Bonus), Resources.Bonus);
             RegisterImage(typeof(Mine), Resources.Mine);
-            RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
+            RegisterImage(typeof(AntiMatter), Resources.AntiMatter);
             RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
             RegisterImage(typeof(Antagonist), Resources.antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);

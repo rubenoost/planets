@@ -73,6 +73,16 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AntiMatter {
+            get {
+                object obj = ResourceManager.GetObject("AntiMatter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap background {
             get {
                 object obj = ResourceManager.GetObject("background", resourceCulture);
@@ -106,6 +116,16 @@ namespace Planets.Properties {
         internal static System.Drawing.Bitmap ExplosionTest {
             get {
                 object obj = ResourceManager.GetObject("ExplosionTest", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HighScoreLogo {
+            get {
+                object obj = ResourceManager.GetObject("HighScoreLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

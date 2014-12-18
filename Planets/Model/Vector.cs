@@ -102,8 +102,7 @@ namespace Planets.Model
         /// <summary>
         /// Inner product of two vectors.
         /// </summary>
-        /// <param name="v1">First vector</param>
-        /// <param name="v2">Second vector</param>
+        /// <param name="v"></param>
         /// <returns></returns>
         public double InnerProduct(Vector v)
         {
@@ -134,7 +133,7 @@ namespace Planets.Model
         /// <summary>
         /// Converts point to Vector.
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="v"></param>
         /// <returns></returns>
         public static implicit operator Point(Vector v)
         {

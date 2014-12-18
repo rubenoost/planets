@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Windows.Forms;
 using Planets.Controller;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.Model.GameObjects;
-using Planets.Properties;
 using Planets.View.Imaging;
 using System.Drawing.Text;
 
@@ -81,9 +79,9 @@ namespace Planets.View
             // Custom font
             pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
             pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
-            this.Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
-            this.EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
-            this.CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
+            Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
+            EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
+            CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -144,20 +142,25 @@ namespace Planets.View
         }
 
         private Brush EndGameBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
+        private Brush YourScoreBrush = new SolidBrush(Color.Yellow);
+        private Brush HighScoreBrush = new SolidBrush(Color.White);
 
         private void DrawEndGame(Graphics g)
         {
+            // Background rectangle
             g.FillRectangle(EndGameBrush, new Rectangle(new Point(0, 0), new Size(1920, 1080)));
 
-            g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
-
+            // Highscore
+            g.DrawString("Highscore: ", EndGameFont, HighScoreBrush, new Point(200, 200));
             int Highscore = ScoreBoard.GetHighScore();
+            g.DrawString(Highscore.ToString(), EndGameFont, HighScoreBrush, new Point(460, 200));
 
-            // write your score -> ScoreBoard.WriteScore();
-            g.DrawString(Highscore.ToString(), EndGameFont, new SolidBrush(Color.White), new Point(200, 210));
+            // Your score
+            g.DrawString("Your score: ", EndGameFont, YourScoreBrush, new Point(176, 300));
+            g.DrawString(field.sb.Total.ToString(), EndGameFont, YourScoreBrush, new Point(460, 300));
+            ScoreBoard.WriteScore(field.sb.Total);
 
-            g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
-
+            // Names
             g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", this.CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
         }
 
@@ -356,33 +359,30 @@ namespace Planets.View
             Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
 
             g.FillEllipse(Brushes.Red, new Rectangle(RadarPoint, s));
-            field.BOT.Iterate(go1 =>
-            {
-                double xField = go1.Location.X / field.Size.Width;
-                double yField = go1.Location.Y / field.Size.Height;
+            
+            field.BOT.Iterate(go1 => {
+                if(!(go1 is Player) && go1 is Antagonist)
+                    return;
 
-                double xRadar = s.Width * xField;
-                double yRadar = s.Height * yField;
+                Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
+                g.FillEllipse(Brushes.Yellow, new Rectangle(pPlayer, new Size(10, 10)));
+                Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
 
-                Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                blip.X += RadarPoint.X;
-                blip.Y += RadarPoint.Y;
+                field.BOT.Iterate(go2 => {
+                    if(go1 is Player && !(go1 is Antagonist))
+                        return;
 
-                if (!(go1 is Player))
-                {
-                    if (go1 is Bonus)
-                    {
-                        g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
-                    }
-                    else
-                    {
-                        g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));
-                    }
-                }
-                else
-                {
-                    g.FillEllipse(Brushes.Aqua, new Rectangle(blip, new Size(10, 10)));
-                }
+                    double xField = go1.Location.X / field.Size.Width;
+                    double yField = go1.Location.Y / field.Size.Height;
+
+                    double xRadar = s.Width * xField;
+                    double yRadar = s.Height * yField;
+
+                    Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                    blip.X += RadarPoint.X;
+                    blip.Y += RadarPoint.Y;
+                    g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
+                });
             });
         }
 

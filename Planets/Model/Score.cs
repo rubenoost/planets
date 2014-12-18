@@ -29,13 +29,13 @@ namespace Planets.Model
 
         public void UpdateLocation()
         {
-            this.Location -= new Vector(0, 3);
-            Color = Color.FromArgb(this.Alpha, Color);
-            if (this.Alpha > 50)
-                this.Alpha -= 25;
+            Location -= new Vector(0, 3);
+            Color = Color.FromArgb(Alpha, Color);
+            if (Alpha > 50)
+                Alpha -= 25;
             else
-                if (this.Alpha > 0)
-                    this.Alpha -= 5;
+                if (Alpha > 0)
+                    Alpha -= 5;
         }
 
     }
