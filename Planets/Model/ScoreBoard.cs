@@ -30,7 +30,7 @@ namespace Planets.Model
 			}
 		}
 
-		public static string[] getHighScore()
+		public static int[] getHighScore()
 		{
             String filepath = "scores.xml";
 
@@ -39,12 +39,12 @@ namespace Planets.Model
 
 			XmlNodeList nodelist = xd.SelectNodes("/scores");
 
-			string[] scores = new string[nodelist.Count];
+			List<int> scores = new List<int>();
 			for (int i = 0; i < nodelist.Count; i++) {
-				scores[0] = nodelist[i].SelectSingleNode("score").InnerText.ToString();
+				scores.Add(Convert.ToInt16(nodelist[i].SelectSingleNode("score").ToString()));
 			}
 
-			return scores;
+			return scores.ToArray();
 		}
 	}
 }
