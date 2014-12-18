@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using Planets.Controller.GameRules;
 using Planets.Controller.GameRules.Abstract;
 using Planets.Controller.GameRules.Impl;
 using Planets.Controller.Subcontrollers;

@@ -18,7 +18,7 @@ namespace Planets.View
 
         #region Properties
 
-        private float _propZoom = 2.0f;
+        private float _propZoom = 1.0f;
         public float Zoom
         {
             get { return _propZoom; }
