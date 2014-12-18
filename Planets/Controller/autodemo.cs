@@ -74,11 +74,7 @@ namespace Planets.Controller
         /// <summary>
         /// Whether this autodemo is running
         /// </summary>
-        public bool Running
-        {
-            get;
-            private set;
-        }
+        private bool Running;
 
         /// <summary>
         /// Run the autodemo
@@ -140,7 +136,7 @@ namespace Planets.Controller
         /// <summary>
         /// Start the demo
         /// </summary>
-        public void StartDemo()
+        private void StartDemo()
         {
             // If keys ok
             if (!Running)
