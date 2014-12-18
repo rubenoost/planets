@@ -366,12 +366,12 @@ namespace Planets.View
 
                 if(!(go1 is Player)) {
                     if(go1 is Bonus){
-                        g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
+                        g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
                     } else {
                         g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));
                     }
                 } else {
-                    g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
+                    g.FillEllipse(Brushes.Aqua, new Rectangle(blip, new Size(10, 10)));
                 }
             });
         }
