@@ -157,7 +157,7 @@ namespace Planets.Model
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString("X", X.ToString(CultureInfo.InvariantCulture));
-            writer.WriteAttributeString("Y", X.ToString(CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Y", Y.ToString(CultureInfo.InvariantCulture));
         }
     }
 
