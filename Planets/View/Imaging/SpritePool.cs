@@ -22,13 +22,12 @@ namespace Planets.View.Imaging
             RegisterImage(typeof(Stasis), Resources.StatieGeld);
             RegisterImage(typeof(Bonus), Resources.Bonus);
             RegisterImage(typeof(Mine), Resources.Mine);
-            RegisterImage(typeof(AntiMatter), Resources.Pluto_Blue);
-            RegisterImage(typeof(Antigravity), Resources.Pluto_Green);
-            RegisterImage(typeof(Antagonist), Resources.antagonist);
+            RegisterImage(typeof(AntiMatter), Resources.AntiMatter);
+            RegisterImage(typeof(Antigravity), Resources.AntiGravity);
+            RegisterImage(typeof(Antagonist), Resources.Antagonist);
             RegisterImage(typeof(GameObject), Resources.Pluto);
             RegisterImage(typeof(AnimatedGameObject), new Sprite(Resources.ExplosionTest, 8, 8));
 
-            RegisterImage(Sprite.CometTail, Resources.KomeetStaartje);
             RegisterImage(Sprite.Background1, Resources.background);
             RegisterImage(Sprite.Cursor, Resources.Cursors_Red);
             RegisterImage(Sprite.Stars1, Resources.parallax1);
@@ -110,12 +109,21 @@ namespace Planets.View.Imaging
         {
             // Create result image
             var result = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(result);
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.CompositingQuality = CompositingQuality.HighQuality;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.DrawImage(s, new Rectangle(0, 0, width, height), new Rectangle(0, 0, s.Width, s.Height),
-                GraphicsUnit.Pixel);
+            using (var g = Graphics.FromImage(result))
+            {
+
+                g.CompositingMode = CompositingMode.SourceCopy;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    g.DrawImage(s, new Rectangle(0, 0, width, height), 0, 0, s.Width, s.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
             return result;
         }
 
