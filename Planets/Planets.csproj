@@ -154,8 +154,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\LogoFinal.jpg" />
-    <None Include="Resources\LogoFinal-Inv.jpg" />
     <None Include="Resources\Cursors-Red.png" />
     <None Include="Resources\Hole1.png" />
   </ItemGroup>
@@ -163,25 +161,16 @@
     <None Include="Resources\Pluto.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Pluto-Red.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pluto-Blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pluto-Green.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Data\scores.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Player.png" />
     <None Include="Resources\AntiGravity.png" />
     <None Include="Resources\AntiMatter.png" />
     <None Include="Resources\HighScoreLogo.png" />
     <None Include="Resources\Bonus.png" />
     <None Include="Resources\Mine.png" />
-    <None Include="Resources\Player.png" />
     <None Include="Resources\StatieGeld.png" />
     <None Include="Resources\parallax6.png" />
     <None Include="Resources\parallax5.png" />
@@ -192,7 +181,6 @@
     <None Include="Resources\parallax2.png" />
     <None Include="Resources\background.png" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
-    <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
   <ItemGroup />
