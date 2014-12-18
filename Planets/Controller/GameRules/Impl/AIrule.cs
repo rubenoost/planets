@@ -23,7 +23,6 @@ namespace Planets.Controller.GameRules.Impl
                     {
                         //find and bind the antagonist
                         antagonist = g;
-                        Console.WriteLine("Antagonist!");
                     }
                     else if (g is Antagonist)
                     {
