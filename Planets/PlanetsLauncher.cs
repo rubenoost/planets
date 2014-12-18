@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using Planets.Controller.Subcontrollers;
-using Planets.Model;
-using Planets.Model.GameObjects;
 
 namespace Planets
 {
@@ -16,10 +13,14 @@ namespace Planets
         [STAThread]
         static void Main()
         {
+            // Setup application parameters
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Create HostForm
             HostForm = new PlanetsForm();
 
+            // Run application
             Application.Run(HostForm);
         }
     }

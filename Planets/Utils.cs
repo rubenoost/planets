@@ -1,5 +1,4 @@
-﻿using System.Xml;
-namespace Planets
+﻿namespace Planets
 {
     static class Utils
     {
