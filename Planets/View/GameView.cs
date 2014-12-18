@@ -107,7 +107,7 @@ namespace Planets.View
             DrawScores(g);
             DrawHud(g);
 
-            if(field.CurrentPlayer.GameOver)
+            if(field.CurrentPlayer.GameOver || field.CurrentPlayer.GameWon)
                 DrawEndGame(g);
 
             // Debugging
@@ -147,6 +147,8 @@ namespace Planets.View
 
         private void DrawEndGame(Graphics g)
         {
+            g.FillRectangle(EndGameBrush, new Rectangle(new Point(0,0), new Size(1920, 1080)));
+
             g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
             g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
 
