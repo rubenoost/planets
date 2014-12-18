@@ -363,7 +363,7 @@ namespace Planets.View
 
             Vector playerLocation = field.CurrentPlayer.Location;
             float scale = 0.2f;
-
+            
             g.FillEllipse(Brushes.Red, RadarRectangle);
 
             field.BOT.Iterate(go =>
@@ -373,6 +373,42 @@ namespace Planets.View
                 Vector drawCenter = RadarCenter + (go.Location - playerLocation)*scale;
                 g.FillEllipse(Brushes.Blue, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int) (DotRadius * 2), (int) (DotRadius * 2))));
             });*/
+            int RadiusRadar = 130;
+            Size s = new Size(RadiusRadar, RadiusRadar);
+            Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
+
+            g.FillEllipse(Brushes.Red, new Rectangle(RadarPoint, s));
+
+            field.BOT.Iterate(go1 =>
+            {
+                Player playerRadar = go1 as Player;
+
+                Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
+                g.FillEllipse(Brushes.Green, new Rectangle(pPlayer, new Size(10, 10)));
+                Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
+
+                field.BOT.Iterate(go2 =>
+                {
+                    double xField = go1.Location.X / field.Size.Width;
+                    double yField = go1.Location.Y / field.Size.Height;
+
+                    double xRadar = s.Width * xField;
+                    double yRadar = s.Height * yField;
+
+                    Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                    blip.X += RadarPoint.X;
+                    blip.Y += RadarPoint.Y;
+
+                    if (go2 is Player)
+                    {
+                        g.FillEllipse(Brushes.Purple, new Rectangle(blip, new Size(10, 10)));
+                    }
+                    else if (!(go2 is Player))
+                    {
+                        g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
+                    }
+                });
+            });
         }
 
         private void DrawAnimations(Graphics g, GameObject obj)
