@@ -63,9 +63,29 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap antagonist {
+        internal static System.Drawing.Bitmap Antagonist {
             get {
-                object obj = ResourceManager.GetObject("antagonist", resourceCulture);
+                object obj = ResourceManager.GetObject("Antagonist", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AntiGravity {
+            get {
+                object obj = ResourceManager.GetObject("AntiGravity", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AntiMatter {
+            get {
+                object obj = ResourceManager.GetObject("AntiMatter", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,39 +133,19 @@ namespace Planets.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap HighScoreLogo {
+            get {
+                object obj = ResourceManager.GetObject("HighScoreLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Hole1 {
             get {
                 object obj = ResourceManager.GetObject("Hole1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap KomeetStaartje {
-            get {
-                object obj = ResourceManager.GetObject("KomeetStaartje", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap LogoFinal {
-            get {
-                object obj = ResourceManager.GetObject("LogoFinal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap LogoFinal_Inv {
-            get {
-                object obj = ResourceManager.GetObject("LogoFinal_Inv", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -241,42 +241,12 @@ namespace Planets.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Pluto_Blue {
-            get {
-                object obj = ResourceManager.GetObject("Pluto_Blue", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Pluto_Green {
-            get {
-                object obj = ResourceManager.GetObject("Pluto_Green", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Pluto_Icon {
             get {
                 object obj = ResourceManager.GetObject("Pluto_Icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Pluto_Red {
-            get {
-                object obj = ResourceManager.GetObject("Pluto_Red", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

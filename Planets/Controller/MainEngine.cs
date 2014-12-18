@@ -12,7 +12,7 @@ namespace Planets.Controller
         public MainEngine(PlanetsForm host)
         {
             this.host = host;
-            GameEngine = new GameEngine(this, this.host);
+            GameEngine = new GameEngine(this);
 
             GameEngine.Start();
         }

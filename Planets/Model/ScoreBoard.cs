@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml;
+using System.IO;
 
 namespace Planets.Model
 {
@@ -8,7 +8,9 @@ namespace Planets.Model
 	{
 		public int Total { get; private set; }
 
-		public List<Score> Scores { get; private set; }
+        public List<Score> Scores { get; private set; }
+
+        private static String filepath = @"Data\scores.txt";
 
 		public ScoreBoard()
 		{
@@ -30,19 +32,32 @@ namespace Planets.Model
 			}
 		}
 
-		public static string[] getHighScore(string filepath)
-		{
-			XmlDocument xd = new XmlDocument();
-			xd.Load(filepath);
+        public static int GetHighScore()
+        {
+            int score;
 
-			XmlNodeList nodelist = xd.SelectNodes("/scores");
+            if(File.Exists(filepath))
+            {
+                string Stringscore = File.ReadAllText(filepath);
+                score = Convert.ToInt16(Stringscore);
+            }
+            else
+            {
+                File.Create(filepath);
+                File.WriteAllText(filepath, "0");
+                score = 0;
+            }
 
-			string[] scores = new string[nodelist.Count];
-			for (int i = 0; i < nodelist.Count; i++) {
-				scores[0] = nodelist[i].SelectSingleNode("score").InnerText.ToString();
-			}
+            return score;
+        }
 
-			return scores;
-		}
+        public static void WriteScore(int score)
+        {
+            if(score > GetHighScore())
+            {
+                File.WriteAllText(filepath, score.ToString());
+            }
+        }
+
 	}
 }

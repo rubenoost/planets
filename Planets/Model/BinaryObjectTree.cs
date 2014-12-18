@@ -24,7 +24,7 @@ namespace Planets.Model
         private BinaryObjectTree _parent;
         private Rectangle boundingBox;
         private List<GameObject> _objects = new List<GameObject>();
-        public int ColCount;
+        private int ColCount;
 
         private HashSet<GameObject> _allGameObjects = new HashSet<GameObject>();
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using Planets.Controller.GameRules;
 using Planets.Controller.GameRules.Abstract;
 using Planets.Controller.GameRules.Impl;
 using Planets.Controller.Subcontrollers;
@@ -14,7 +13,6 @@ namespace Planets.Controller
     {
         // Hosts
         private MainEngine HostEngine;
-        private PlanetsForm HostForm;
 
         // Views
         private GameView GameView;
@@ -63,20 +61,19 @@ namespace Planets.Controller
             new ResetRule()
         };
 
-        private Thread GameThread;
-        private bool running = true;
+        public Thread GameThread;
+        public bool running = true;
 
-        public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
+        public GameEngine(MainEngine HostEngine)
         {
             this.HostEngine = HostEngine;
-            this.HostForm = HostForm;
             field = ls.GenerateLevel();
 
             // Create view
             GameView = new GameView(this);
 
             // Create controllers
-            spc = new ShootProjectileController(field, GameView);
+            spc = new ShootProjectileController(this, GameView);
             ad = new Autodemo(spc, this);
 
             // Set gameview

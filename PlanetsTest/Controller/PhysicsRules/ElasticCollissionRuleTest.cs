@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Planets.Controller.GameRules;
 using Planets.Controller.GameRules.Impl;
 using Planets.Model;
 using Planets.Model.GameObjects;
@@ -23,7 +22,6 @@ namespace PlanetsTest.Controller.PhysicsRules
 
             // Save old DeltaV's
             var OldDV1 = go1.DV;
-            var OldDV2 = go2.DV;
 
             // Execute Collission Rule
             var ElasticRule = new ElasticCollisionRule();
