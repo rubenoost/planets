@@ -328,18 +328,18 @@ namespace Planets.View
             g.DrawRectangle(WhitePen, new Rectangle(MassMeterPoint, new Size(15, 230)));
             g.DrawString("Mass", HudScoreFont, LabelBrush, MassMeterPoint.X - 10, MassMeterPoint.Y - 30);
 
-            // Draw Whatever-o-meter
+            // Draw Objects-o-meter
             int AmountObjects = (field.BOT.Count - 6) * 4;
 
-            Point WhatEverMeterPoint = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
+            Point ObjectMeter = new Point(ClientSize.Width - 35, hudLocation.Y + 60);
 
-            int WhatEverDrawY = WhatEverMeterPoint.Y + (230 - AmountObjects);
+            int ObjectDraw = ObjectMeter.Y + (230 - AmountObjects);
 
-            Point WhatEverDrawPoint = new Point(WhatEverMeterPoint.X, (WhatEverDrawY > WhatEverMeterPoint.Y) ? WhatEverDrawY : WhatEverMeterPoint.Y);
+            Point ObjectDrawPoint = new Point(ObjectMeter.X, (ObjectDraw > ObjectMeter.Y) ? ObjectDraw : ObjectMeter.Y);
 
-            g.FillRectangle(gradientBrush, new Rectangle(WhatEverDrawPoint, new Size(15, AmountObjects)));
-            g.DrawRectangle(WhitePen, new Rectangle(WhatEverMeterPoint, new Size(15, 230)));
-            g.DrawString("WoM", HudScoreFont, LabelBrush, WhatEverMeterPoint.X - 10, WhatEverMeterPoint.Y - 30);
+            g.FillRectangle(gradientBrush, new Rectangle(ObjectDrawPoint, new Size(15, AmountObjects)));
+            g.DrawRectangle(WhitePen, new Rectangle(ObjectMeter, new Size(15, 230)));
+            g.DrawString("Objects", HudScoreFont, LabelBrush, ObjectMeter.X - 50, ObjectMeter.Y - 30);
 
             // Draw Radar
             Point RadarPoint = new Point(ClientSize.Width - ((hudSize.Width / 4) * 3), hudLocation.Y + (hudSize.Height / 2) + 10);
