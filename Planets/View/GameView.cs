@@ -350,9 +350,9 @@ namespace Planets.View
             // Draw Radar
             int RadiusRadar = 130;
             Size s = new Size(RadiusRadar, RadiusRadar);
-            Point radarLoc = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
+            Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
 
-            g.FillRectangle(Brushes.Red, new Rectangle(RadarPoint, s));
+            g.FillEllipse(Brushes.Red, new Rectangle(RadarPoint, s));
             field.BOT.Iterate(go1 =>
             {
                 double xField = go1.Location.X / field.Size.Width;
