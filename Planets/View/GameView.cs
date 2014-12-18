@@ -362,29 +362,28 @@ namespace Planets.View
             g.FillEllipse(Brushes.Red, new Rectangle(RadarPoint, s));
             
             field.BOT.Iterate(go1 => {
-                Player playerRadar = go1 as Player;
+                Player playerRadar = field.CurrentPlayer;
 
                 Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
                 g.FillEllipse(Brushes.Green, new Rectangle(pPlayer, new Size(10, 10)));
                 Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
 
-                field.BOT.Iterate(go2 => {
-                    double xField = go1.Location.X / field.Size.Width;
-                    double yField = go1.Location.Y / field.Size.Height;
+                if(go1 is Antagonist || !(go1 is Player)) {
+                    if(playerRadar.CalcDistance(go1) < 800){
+                        Console.WriteLine(playerRadar.CalcDistance(go1).ToString());
+                        double xField = go1.Location.X / field.Size.Width;
+                        double yField = go1.Location.Y / field.Size.Height;
 
-                    double xRadar = s.Width * xField;
-                    double yRadar = s.Height * yField;
+                        double xRadar = s.Width * xField;
+                        double yRadar = s.Height * yField;
 
-                    Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                    blip.X += RadarPoint.X;
-                    blip.Y += RadarPoint.Y;
+                        Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                        blip.X += RadarPoint.X;
+                        blip.Y += RadarPoint.Y;
 
-                    if(go2 is Player) {
                         g.FillEllipse(Brushes.Purple, new Rectangle(blip, new Size(10, 10)));
-                    } else if(!(go2 is Player)){
-                        g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
                     }
-                });
+                }
             });
         }
 
