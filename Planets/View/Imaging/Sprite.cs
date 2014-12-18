@@ -27,10 +27,10 @@ namespace Planets.View.Imaging
             get { return Columns * Rows; }
         }
 
-        private int Columns;
-        private int Rows;
-        private List<Bitmap> Images;
-        private bool Cyclic;
+        public int Columns;
+        public int Rows;
+        public List<Bitmap> Images;
+        public bool Cyclic;
 
 
         public Sprite(List<Bitmap> bm, int columns = 1, int rows = 1, bool cyclic = false)
