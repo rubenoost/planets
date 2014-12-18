@@ -107,7 +107,9 @@ namespace Planets.View
 
             DrawScores(g);
             DrawHud(g);
-            DrawEndGame(g);
+
+            if(field.CurrentPlayer.GameOver)
+                DrawEndGame(g);
 
             // Debugging
             _blackHoleAngle++;
