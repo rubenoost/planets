@@ -95,8 +95,8 @@ namespace Planets.View
             // Draw static back layer
             DrawBackLayers(g);
             // Draw top layer
-            
-            
+
+
             lock (field.BOT)
             {
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
@@ -107,8 +107,8 @@ namespace Planets.View
             DrawScores(g);
             DrawHud(g);
 
-            if(field.CurrentPlayer.GameOver || field.CurrentPlayer.GameWon)
-            DrawEndGame(g);
+            if (field.CurrentPlayer.GameOver || field.CurrentPlayer.GameWon)
+                DrawEndGame(g);
 
             // Debugging
             _blackHoleAngle++;
@@ -147,7 +147,7 @@ namespace Planets.View
 
         private void DrawEndGame(Graphics g)
         {
-            g.FillRectangle(EndGameBrush, new Rectangle(new Point(0,0), new Size(1920, 1080)));
+            g.FillRectangle(EndGameBrush, new Rectangle(new Point(0, 0), new Size(1920, 1080)));
 
             g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
 
@@ -365,13 +365,19 @@ namespace Planets.View
                 blip.X += RadarPoint.X;
                 blip.Y += RadarPoint.Y;
 
-                if(!(go1 is Player)) {
-                    if(go1 is Bonus){
+                if (!(go1 is Player))
+                {
+                    if (go1 is Bonus)
+                    {
                         g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
-                    } else {
+                    }
+                    else
+                    {
                         g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));
                     }
-                } else {
+                }
+                else
+                {
                     g.FillEllipse(Brushes.Aqua, new Rectangle(blip, new Size(10, 10)));
                 }
             });
