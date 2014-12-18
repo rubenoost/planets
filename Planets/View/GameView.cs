@@ -358,7 +358,7 @@ namespace Planets.View
                 blip.Y += RadarPoint.Y;
 
                 if(!(go1 is Player)) {
-                    if(go1 is Tardis){
+                    if(go1 is Bonus){
                         g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
                     } else {
                         g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));

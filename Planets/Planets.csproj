@@ -93,7 +93,7 @@
     <Compile Include="Model\GameObjects\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
     <Compile Include="Model\GameObjects\Stasis.cs" />
-    <Compile Include="Model\GameObjects\Tardis.cs" />
+    <Compile Include="Model\GameObjects\Bonus.cs" />
     <Compile Include="Model\Score.cs" />
     <Compile Include="Model\ScoreBoard.cs" />
     <Compile Include="Model\Vector.cs" />
@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Mine.png" />
     <None Include="Resources\Tardis.png" />
     <None Include="Resources\Player.png" />
     <None Include="Resources\StatieGeld.png" />
