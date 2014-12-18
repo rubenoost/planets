@@ -44,6 +44,7 @@ namespace Planets.Model
             else
             {
                 File.Create(filepath);
+                File.WriteAllText(filepath, "0");
                 score = 0;
             }
 

@@ -173,7 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\scores.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Pluto-Icon.ico" />
     <None Include="Resources\Bonus.png" />
