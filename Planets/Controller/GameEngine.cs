@@ -54,7 +54,7 @@ namespace Planets.Controller
             new StasisRule(),
 
             // ========== [ TARDIS ] ==========
-            new TardisRule(),
+            new BonusRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),

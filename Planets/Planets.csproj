@@ -73,7 +73,7 @@
     <Compile Include="Controller\GameRules\ResetRule.cs" />
     <Compile Include="Controller\GameRules\StasisRule.cs" />
     <Compile Include="Controller\GameRules\StayInFieldRule.cs" />
-    <Compile Include="Controller\GameRules\TardisRule.cs" />
+    <Compile Include="Controller\GameRules\BonusRule.cs" />
     <Compile Include="Controller\Subcontrollers\LevelSupplier.cs" />
     <Compile Include="Controller\Subcontrollers\PlayfieldSerializer.cs" />
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="Model\GameObjects\Player.cs" />
     <Compile Include="Model\Playfield.cs" />
     <Compile Include="Model\GameObjects\Stasis.cs" />
-    <Compile Include="Model\GameObjects\Tardis.cs" />
+    <Compile Include="Model\GameObjects\Bonus.cs" />
     <Compile Include="Model\Score.cs" />
     <Compile Include="Model\ScoreBoard.cs" />
     <Compile Include="Model\Vector.cs" />

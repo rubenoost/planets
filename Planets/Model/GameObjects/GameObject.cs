@@ -27,7 +27,7 @@ namespace Planets.Model.GameObjects
     [XmlInclude(typeof(AntiMatter))]
     [XmlInclude(typeof(Mine))]
     [XmlInclude(typeof(Stasis))]
-    [XmlInclude(typeof(Tardis))]
+    [XmlInclude(typeof(Bonus))]
     public class GameObject
     {
         // Properties
