@@ -363,14 +363,15 @@ namespace Planets.View
             field.BOT.Iterate(go1 => {
                 if(!(go1 is Player) && go1 is Antagonist)
                     return;
+                Player playerRadar = go1 as Player;
 
                 Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
                 g.FillEllipse(Brushes.Yellow, new Rectangle(pPlayer, new Size(10, 10)));
                 Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
 
                 field.BOT.Iterate(go2 => {
-                    if(go1 is Player && !(go1 is Antagonist))
-                        return;
+                    if(go2 is Player && !(go2 is Antagonist))
+                        return;                    
 
                     double xField = go1.Location.X / field.Size.Width;
                     double yField = go1.Location.Y / field.Size.Height;
