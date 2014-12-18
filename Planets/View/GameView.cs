@@ -102,11 +102,12 @@ namespace Planets.View
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
                 DrawAimVectors(g);
                 DrawDemo(g);
-                DrawDebug(g);
             }
 
             DrawScores(g);
             DrawHud(g);
+
+            if(field.CurrentPlayer.GameOver || field.CurrentPlayer.GameWon)
             DrawEndGame(g);
 
             // Debugging
@@ -146,6 +147,8 @@ namespace Planets.View
 
         private void DrawEndGame(Graphics g)
         {
+            g.FillRectangle(EndGameBrush, new Rectangle(new Point(0,0), new Size(1920, 1080)));
+
             g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
 
             String Highscore = ScoreBoard.getHighScore()[0];
@@ -349,7 +352,8 @@ namespace Planets.View
             Size s = new Size(hudSize.Width / 2, (hudSize.Height / 2) - 20);
 
             g.FillRectangle(Brushes.Red, new Rectangle(RadarPoint, s));
-            field.BOT.Iterate(go1 => {
+            field.BOT.Iterate(go1 =>
+            {
                 double xField = go1.Location.X / field.Size.Width;
                 double yField = go1.Location.Y / field.Size.Height;
 
@@ -362,12 +366,12 @@ namespace Planets.View
 
                 if(!(go1 is Player)) {
                     if(go1 is Bonus){
-                        g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
+                        g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
                     } else {
                         g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));
                     }
                 } else {
-                    g.FillEllipse(Brushes.Aqua, new Rectangle(blip, new Size(10, 10)));
+                    g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
                 }
             });
         }
@@ -383,28 +387,6 @@ namespace Planets.View
             // get the frame from the spritepool list
             // play the frames
 
-        }
-
-        private void DrawDebug(Graphics g)
-        {
-            if (Debug.Enabled)
-            {
-                using (Pen p = new Pen(Color.OrangeRed, 2.0f))
-                {
-                    field.BOT.DoCollisions((go1, go2, ms) => g.DrawLine(p, go1.Location, go2.Location), 0);
-                }
-
-                int d = field.BOT.Count;
-                int d2 = (d - 1) * d / 2;
-
-                using (Brush b = new SolidBrush(Color.Magenta))
-                {
-                    Font f = new Font(FontFamily.GenericSansSerif, 16.0f, FontStyle.Bold);
-                    g.DrawString("Regular Collision Detection: " + d2, f, b, 100, 300);
-                    g.DrawString("Binary Tree Collision Detection: " + (field.BOT.ColCount), f, b, 100, 320);
-                    g.DrawString("Collision Detection improvement: " + (d2 - field.BOT.ColCount) * 100 / d2 + "%", f, b, 100, 340);
-                }
-            }
         }
 
         #endregion
