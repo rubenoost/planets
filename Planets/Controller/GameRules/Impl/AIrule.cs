@@ -74,21 +74,21 @@ namespace Planets.Controller.GameRules.Impl
             TimeSpan tijd = DateTime.Now - begin;
             if (tijd.TotalMilliseconds < 1000) return;
             begin = DateTime.Now;
-            if (run == true)
+            if (run)
             {
                 //Move away from bigger object
                 ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
                 Console.WriteLine("REN");
                 run = false;
             }
-            else if (eat == true)
+            else if (eat)
             {
                 //Move towards smaller object
                 ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
                 Console.WriteLine("EET");
                 eat = false;
             }
-            else if (!(player == null) && hug == true)
+            else if (!(player == null) && hug)
             {
                 ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - player.Location));
                 Console.WriteLine("KNUFFEL");

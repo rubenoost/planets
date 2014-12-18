@@ -87,7 +87,7 @@ namespace Planets.View.Imaging
 
         public Bitmap GetFrame(int frame)
         {
-            if (frame >= this.Frames)
+            if (frame >= Frames)
                 return Empty;
             return Images[frame];
         }
