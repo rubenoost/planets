@@ -17,36 +17,19 @@ namespace Planets.Controller.GameRules.Impl
         bool run;
         bool eat;
         bool hug;
+
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            if(pfcopy == null)
-            {
-                pfcopy = pf;
-            }
-            else if(pf != pfcopy)
-            {
-                antagonist = null;
-                player = null;
-                distance = 0.0;
-                run = false;
-                eat = false;
-                hug = false;
-                pfcopy = pf;
-            }
+            // Check for playfield change
+            CheckPlayfieldChange(pf);
+
+            // Find antagonist
+            if(antagonist == null) antagonist = FindAntagonist(pf);
+
+            // Iterate through all gameobjects
             pf.BOT.Iterate(g =>
                 {
-                    if(antagonist == null && g is Antagonist)
-                    {
-                        //Find and bind our friendly neighborhood antagonist
-                        antagonist = g;
-                        Console.WriteLine("Antagonist!");
-                    }
-                    else if(antagonist == null)
-                    {
-                        //We Can't continue before we get the antagonist on board!
-                        return;
-                    }
-                    else if(g.GetType() == typeof(GameObject))
+                    if(g.GetType() == typeof(GameObject))
                     {
                         //Let's find the closest Gameobject
                         if(g == FindClosest((GameObject)g, (Antagonist)antagonist))
@@ -146,6 +129,37 @@ namespace Planets.Controller.GameRules.Impl
                 distance = 0.0;
             }
         }
+
+        #region Helper Methods
+
+        private void CheckPlayfieldChange(Playfield pf)
+        {
+            // Code for keeping track of the playfield
+            if (pfcopy == null)
+            {
+                pfcopy = pf;
+            }
+            else if (pf != pfcopy)
+            {
+                antagonist = null;
+                player = null;
+                distance = 0.0;
+                run = false;
+                eat = false;
+                hug = false;
+                pfcopy = pf;
+            }
+        }
+
+        private GameObject FindAntagonist(Playfield pf)
+        {
+            GameObject anta = null;
+            pf.BOT.Iterate(g => { if (g is Antagonist) anta = g; });
+            return anta;
+        }
+
+        #endregion
+
         private GameObject FindClosest(GameObject go, Antagonist a)
         {
             if(distance == 0.0)
