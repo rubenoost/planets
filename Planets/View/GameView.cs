@@ -348,8 +348,9 @@ namespace Planets.View
             g.DrawString("Objects", HudScoreFont, LabelBrush, ObjectMeter.X - 50, ObjectMeter.Y - 30);
 
             // Draw Radar
-            Point RadarPoint = new Point(ClientSize.Width - ((hudSize.Width / 4) * 3), hudLocation.Y + (hudSize.Height / 2) + 10);
-            Size s = new Size(hudSize.Width / 2, (hudSize.Height / 2) - 20);
+            int RadiusRadar = 130;
+            Size s = new Size(RadiusRadar, RadiusRadar);
+            Point radarLoc = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
 
             g.FillRectangle(Brushes.Red, new Rectangle(RadarPoint, s));
             field.BOT.Iterate(go1 =>
