@@ -40,7 +40,7 @@ namespace Planets.Controller.GameRules.Impl
                 // Check for mass of large gameobject
                 if (LostMass >= gL.Mass)
                 {
-                    if(gL != pf.CurrentPlayer)
+                    if (gL != pf.CurrentPlayer)
                         pf.BOT.Remove(gL);
                 }
                 else
@@ -50,7 +50,7 @@ namespace Planets.Controller.GameRules.Impl
                 {
                     pf.sb.AddScore(new Score(-50, DateTime.Now, gS.Location, true));
                 }
-                
+
 
                 // Remove antimatter
                 pf.BOT.Remove(gS);
@@ -71,7 +71,6 @@ namespace Planets.Controller.GameRules.Impl
                     // Bereken score? Animeer score!
                     if (!(gS is Player) && (gL is Player))
                     {
-                        Player p = gL as Player;
                         sb.AddScore(new Score(50, DateTime.Now, gS.Location, (gL == pf.CurrentPlayer)));
                     }
 
