@@ -171,6 +171,9 @@
     <None Include="Resources\Pluto-Green.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\scores.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Pluto-Icon.ico" />
     <None Include="Resources\Bonus.png" />
     <None Include="Resources\Mine.png" />
