@@ -370,6 +370,8 @@ namespace Planets.View
                 {
                     Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
                     g.FillEllipse(Brushes.Yellow, new Rectangle(pPlayer, new Size(10, 10)));
+
+                    Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
                 }
             });
         }
