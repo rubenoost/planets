@@ -36,8 +36,8 @@ namespace Planets.Controller
         /// <summary>
         /// Create new autodemo on given playfield that uses given ShootProjectileController
         /// </summary>
-        /// <param name="p"></param>
         /// <param name="s"></param>
+        /// <param name="ge"></param>
         public Autodemo(ShootProjectileController s, GameEngine ge)
         {
             Spc = s;
@@ -123,8 +123,6 @@ namespace Planets.Controller
         /// <summary>
         /// Stop the auto-demo
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         public void StopDemo()
         {
             lastActivityTime = DateTime.Now;
@@ -142,8 +140,6 @@ namespace Planets.Controller
         /// <summary>
         /// Start the demo
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         public void StartDemo()
         {
             // If keys ok
