@@ -33,11 +33,11 @@ namespace Planets.Controller.GameRules.Impl
                     else if (antagonist == null) return;
                     if (closest == null)
                     {
-                        closest = FindClosest(g, (Antagonist)antagonist, pf);
+                        closest = FindClosest(g, (Antagonist)antagonist);
                     }
                     else
                     {
-                        closest = FindClosest(g, (Antagonist)antagonist, pf);
+                        closest = FindClosest(g, (Antagonist)antagonist);
                     }
                     if (antagonist != null && g.GetType() == typeof(GameObject) && g.Ai == false && g == closest)
                     {
@@ -96,7 +96,7 @@ namespace Planets.Controller.GameRules.Impl
                 //Move towards player if there is no other option 
             }
         }
-        private GameObject FindClosest(GameObject go, Antagonist a, Playfield pf)
+        private GameObject FindClosest(GameObject go, Antagonist a)
         {
             //find closest gameobject
             GameObject closest = null;
