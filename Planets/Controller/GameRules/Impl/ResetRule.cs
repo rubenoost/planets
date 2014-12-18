@@ -14,7 +14,8 @@ namespace Planets.Controller.GameRules.Impl
             // Check if player is too small
             if (ge.field.CurrentPlayer.Mass < MassTreshold)
             {
-                // Show death screen
+                ge.field.CurrentPlayer.GameOver = true;
+                ge.running = false;
                 return;
             }
 

@@ -56,15 +56,15 @@ namespace Planets.Controller
             new StasisRule(),
 
             // ========== [ TARDIS ] ==========
-            new BonusRule(),
+            //new BonusRule(),
 
             // ========== [ DO NOT TOUCH NEXT RULES ] ==========
             new StayInFieldRule(),
             new ResetRule()
         };
 
-        private Thread GameThread;
-        private bool running = true;
+        public Thread GameThread;
+        public bool running = true;
 
         public GameEngine(MainEngine HostEngine, PlanetsForm HostForm)
         {

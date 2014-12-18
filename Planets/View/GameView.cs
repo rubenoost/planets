@@ -102,12 +102,13 @@ namespace Planets.View
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
                 DrawAimVectors(g);
                 DrawDemo(g);
-                DrawDebug(g);
             }
 
             DrawScores(g);
             DrawHud(g);
-            DrawEndGame(g);
+
+            if(field.CurrentPlayer.GameOver)
+                DrawEndGame(g);
 
             // Debugging
             _blackHoleAngle++;
@@ -387,28 +388,6 @@ namespace Planets.View
             // get the frame from the spritepool list
             // play the frames
 
-        }
-
-        private void DrawDebug(Graphics g)
-        {
-            if (Debug.Enabled)
-            {
-                using (Pen p = new Pen(Color.OrangeRed, 2.0f))
-                {
-                    field.BOT.DoCollisions((go1, go2, ms) => g.DrawLine(p, go1.Location, go2.Location), 0);
-                }
-
-                int d = field.BOT.Count;
-                int d2 = (d - 1) * d / 2;
-
-                using (Brush b = new SolidBrush(Color.Magenta))
-                {
-                    Font f = new Font(FontFamily.GenericSansSerif, 16.0f, FontStyle.Bold);
-                    g.DrawString("Regular Collision Detection: " + d2, f, b, 100, 300);
-                    g.DrawString("Binary Tree Collision Detection: " + (field.BOT.ColCount), f, b, 100, 320);
-                    g.DrawString("Collision Detection improvement: " + (d2 - field.BOT.ColCount) * 100 / d2 + "%", f, b, 100, 340);
-                }
-            }
         }
 
         #endregion
