@@ -354,25 +354,30 @@ namespace Planets.View
             Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
 
             g.FillEllipse(Brushes.Red, new Rectangle(RadarPoint, s));
-            field.BOT.Iterate(go1 =>
-            {
-                double xField = go1.Location.X / field.Size.Width;
-                double yField = go1.Location.Y / field.Size.Height;
+            
+            field.BOT.Iterate(go1 => {
+                if(!(go1 is Player) && go1 is Antagonist)
+                    return;
 
-                double xRadar = s.Width * xField;
-                double yRadar = s.Height * yField;
+                Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
+                g.FillEllipse(Brushes.Yellow, new Rectangle(pPlayer, new Size(10, 10)));
+                Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
 
-                Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                blip.X += RadarPoint.X;
-                blip.Y += RadarPoint.Y;
+                field.BOT.Iterate(go2 => {
+                    if(go1 is Player && !(go1 is Antagonist))
+                        return;
 
-                if (go1 is Player && !(go1 is Antagonist))
-                {
-                    Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
-                    g.FillEllipse(Brushes.Yellow, new Rectangle(pPlayer, new Size(10, 10)));
+                    double xField = go1.Location.X / field.Size.Width;
+                    double yField = go1.Location.Y / field.Size.Height;
 
-                    Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
-                }
+                    double xRadar = s.Width * xField;
+                    double yRadar = s.Height * yField;
+
+                    Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                    blip.X += RadarPoint.X;
+                    blip.Y += RadarPoint.Y;
+                    g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
+                });
             });
         }
 
