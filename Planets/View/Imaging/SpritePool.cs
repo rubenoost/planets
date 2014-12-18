@@ -110,12 +110,21 @@ namespace Planets.View.Imaging
         {
             // Create result image
             var result = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(result);
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.CompositingQuality = CompositingQuality.HighQuality;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.DrawImage(s, new Rectangle(0, 0, width, height), new Rectangle(0, 0, s.Width, s.Height),
-                GraphicsUnit.Pixel);
+            using (var g = Graphics.FromImage(result))
+            {
+
+                g.CompositingMode = CompositingMode.SourceCopy;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    g.DrawImage(s, new Rectangle(0, 0, width, height), 0, 0, s.Width, s.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
             return result;
         }
 
