@@ -22,7 +22,6 @@ namespace PlanetsTest.Controller.PhysicsRules
             pf.BOT.Add(go2);
 
             var Old_go1Mass = go1.Mass;
-            var Old_go2Mass = go2.Mass;
 
             cws.change(go1, go2, pf);
 
