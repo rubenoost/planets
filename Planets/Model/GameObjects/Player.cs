@@ -6,7 +6,6 @@ namespace Planets.Model.GameObjects
     {
         public bool GameOver;
         public bool GameWon;
-        private Vector Location;
 
         public Player() : this(new Vector(), new Vector(), Utils.StartMass) { }
 
@@ -16,7 +15,6 @@ namespace Planets.Model.GameObjects
             Traits = Traits & ~Rule.AFFECTED_BY_BH & ~Rule.EAT_PLAYER;
             GameOver = false;
             GameWon = false;
-            Location = location;
         }
 
         public void ShootProjectile(Playfield pf, Vector direction)
