@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Windows.Forms;
 using Planets.Controller;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.Model.GameObjects;
-using Planets.Properties;
 using Planets.View.Imaging;
 using System.Drawing.Text;
 
@@ -81,9 +79,9 @@ namespace Planets.View
             // Custom font
             pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
             pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
-            this.Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
-            this.EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
-            this.CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
+            Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
+            EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
+            CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -373,20 +371,12 @@ namespace Planets.View
                 blip.X += RadarPoint.X;
                 blip.Y += RadarPoint.Y;
 
-                if (!(go1 is Player))
+                if (go1 is Player && !(go1 is Antagonist))
                 {
-                    if (go1 is Bonus)
-                    {
-                        g.FillEllipse(Brushes.Yellow, new Rectangle(blip, new Size(10, 10)));
-                    }
-                    else
-                    {
-                        g.FillEllipse(Brushes.Green, new Rectangle(blip, new Size(10, 10)));
-                    }
-                }
-                else
-                {
-                    g.FillEllipse(Brushes.Aqua, new Rectangle(blip, new Size(10, 10)));
+                    Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
+                    g.FillEllipse(Brushes.Yellow, new Rectangle(pPlayer, new Size(10, 10)));
+
+                    Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
                 }
             });
         }
