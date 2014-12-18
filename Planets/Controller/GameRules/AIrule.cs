@@ -10,14 +10,12 @@ namespace Planets.Controller.GameRules
         DateTime begin;
         GameObject closest;
         GameObject player;
+        double workingdist = double.MaxValue;
         bool run;
         bool eat;
         bool hug;
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            TimeSpan tijd = DateTime.Now - begin;
-            if (tijd.TotalMilliseconds < 1000) return;
-            begin = DateTime.Now;
             pf.BOT.Iterate(g =>
                 {
                     if (antagonist == null && g is Antagonist)
@@ -26,17 +24,30 @@ namespace Planets.Controller.GameRules
                         antagonist = g;
                         Console.WriteLine("Antagonist!");
                     }
-                    else if (antagonist != null && g.GetType() == typeof(GameObject) && !g.Ai)
+                    else if (g is Antagonist)
+                    {
+                        //find and bind new antagonist location
+                        antagonist = g;
+                    }
+                    else if (antagonist == null) return;
+                    if (closest == null)
                     {
                         closest = FindClosest(g, (Antagonist)antagonist, pf);
-                        if (g == closest && g.Radius > antagonist.Radius)
+                    }
+                    else
+                    {
+                        closest = FindClosest(g, (Antagonist)antagonist, pf);
+                    }
+                    if (antagonist != null && g.GetType() == typeof(GameObject) && g.Ai == false && g == closest)
+                    {
+                        if ( g.Radius > antagonist.Radius)
                         {
                             //Move away from bigger object
                             run = true;
                             eat = false;
                             hug = false;
                         }
-                        else if (g == closest && !g.Ai)
+                        else if (g.Ai == false)
                         {
                             //Move towards smaller object
                             run = false;
@@ -44,7 +55,7 @@ namespace Planets.Controller.GameRules
                             hug = false;
                         }
                     }
-                    else
+                    else if( g == closest)
                     {
                         if (antagonist != null && g is Player && g.GetType() == typeof(Player))
                         {
@@ -59,15 +70,19 @@ namespace Planets.Controller.GameRules
                         }
                     }
                 });
-
+            TimeSpan tijd = DateTime.Now - begin;
+            if (tijd.TotalMilliseconds < 1000) return;
+            begin = DateTime.Now;
             if(run == true)
             {
+                //Move away from bigger object
                 ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
                 Console.WriteLine("REN");
                 run = false;
             }
             else if(eat == true)
             {
+                //Move towards smaller object
                 ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
                 Console.WriteLine("EET");
                 eat = false;
@@ -77,18 +92,18 @@ namespace Planets.Controller.GameRules
                 ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - player.Location));
                 Console.WriteLine("KNUFFEL");
                 hug = false;
+                //Move towards player if there is no other option 
             }
         }
         private GameObject FindClosest(GameObject go, Antagonist a, Playfield pf)
         {
             //find closest gameobject
-            double workingdist = double.MaxValue;
             GameObject closest = null;
-            double olddist = (go.Location - a.Location).Length();
+            double dist = (go.Location - a.Location).Length();
 
-            if (olddist < workingdist)
+            if (dist < workingdist)
             {
-                workingdist = olddist;
+                workingdist = dist;
                 closest = go;
             }
             return closest;
