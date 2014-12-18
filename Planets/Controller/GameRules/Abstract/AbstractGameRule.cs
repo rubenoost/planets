@@ -1,8 +1,8 @@
 ﻿using Planets.Model;
 
-namespace Planets.Controller.GameRules
+namespace Planets.Controller.GameRules.Abstract
 {
-    public abstract class AbstractGameRule
+    public abstract class AbstractGameRule : INativeGameRule
     {
         internal bool Activated { get; set; }
 
@@ -11,10 +11,10 @@ namespace Planets.Controller.GameRules
             Activated = true;
         }
 
-        public void Execute(Playfield pf, double ms)
+        public void Execute(GameEngine ge, double ms)
         {
             if (Activated)
-                ExecuteRule(pf, ms);
+                ExecuteRule(ge.field, ms);
         }
 
         protected abstract void ExecuteRule(Playfield pf, double ms);
