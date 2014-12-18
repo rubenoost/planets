@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 using Planets.Model;
+using System.Xml;
 
 namespace Planets.Controller.Subcontrollers
 {
@@ -49,5 +50,30 @@ namespace Planets.Controller.Subcontrollers
                 throw new ArgumentException("File does not exist");
             }
         }
+
+		public static void WriteScoreToXml(int score, string filepath)
+		{
+			XmlDocument scoreDocument = new XmlDocument();
+
+			// Ensure score file exists.
+			try {
+				scoreDocument.Load(filepath);
+			} catch (FileNotFoundException) {
+				XmlNode docNode = scoreDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
+				scoreDocument.AppendChild(docNode);
+				scoreDocument.Save(filepath);
+
+				scoreDocument.Load(filepath);
+			}
+
+			// Add score to the XML file.
+			XmlNode rootNode = scoreDocument.DocumentElement;
+			XmlNode scoreNode = scoreDocument.CreateElement("score");
+
+			scoreNode.InnerText = score.ToString();
+			rootNode.AppendChild(scoreNode);
+
+			scoreDocument.Save(filepath);
+		}
     }
 }

@@ -3,16 +3,19 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using Planets.Controller;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.Model.GameObjects;
 using Planets.Properties;
 using Planets.View.Imaging;
+using System.Drawing.Text;
 
 namespace Planets.View
 {
     public partial class GameView : UserControl
     {
+
         #region Properties
 
         private float _propZoom = 2.0f;
@@ -28,12 +31,22 @@ namespace Planets.View
 
         #endregion
 
-        Playfield field;
+        private GameEngine ge;
+
+        private Playfield field
+        {
+            get { return ge.field; }
+        }
 
         private SpritePool sp = new SpritePool();
 
         private static readonly double MaxArrowSize = 150;
         private static readonly double MinArrowSize = 50;
+
+        // Custom Font!
+        private static PrivateFontCollection pfc = new PrivateFontCollection();
+        private Font EndGameFont;
+        private Font CustomNameFont;
 
         // Aiming Settings
         /// <summary>
@@ -49,22 +62,28 @@ namespace Planets.View
         private Pen CurVecPen = new Pen(Color.Red, 5);
         private Pen NextVecPen = new Pen(Color.Green, 5);
         private Pen AimVecPen = new Pen(Color.White, 5);
-        private Pen BorderPen = new Pen(new TextureBrush(Resources.Texture), 10.0f);
 
         // Wordt gebruikt voor bewegende achtergrond
         private int _blackHoleAngle;
 
-        public GameView(Playfield field)
+        public GameView(GameEngine ge)
         {
             InitializeComponent();
             DoubleBuffered = true;
-            this.field = field;
+            this.ge = ge;
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             CurVecPen.CustomEndCap = bigArrow;
             NextVecPen.CustomEndCap = bigArrow;
             AimVecPen.DashPattern = new float[] { 10 };
             AimVecPen.DashStyle = DashStyle.Dash;
             AimVecPen.CustomEndCap = bigArrow;
+
+            // Custom font
+            pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
+            pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
+            this.Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
+            this.EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
+            this.CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -76,7 +95,8 @@ namespace Planets.View
             // Draw static back layer
             DrawBackLayers(g);
             // Draw top layer
-            DrawBorder(g);
+            
+            
             lock (field.BOT)
             {
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
@@ -87,6 +107,7 @@ namespace Planets.View
 
             DrawScores(g);
             DrawHud(g);
+            DrawEndGame(g);
 
             // Debugging
             _blackHoleAngle++;
@@ -119,13 +140,16 @@ namespace Planets.View
 
             target = GameToScreen(new Rectangle(new Point(0, 0), ClientSize), 0.9f);
             g.DrawImageUnscaled(sp.GetSprite(Sprite.Stars6, target.Width, target.Height), target);
-
         }
 
-        private void DrawBorder(Graphics g)
+        private Brush EndGameBrush = new SolidBrush(Color.FromArgb(230, 88, 88, 88));
+
+        private void DrawEndGame(Graphics g)
         {
-            Rectangle rp = GameToScreen(new Rectangle(new Point(), field.Size));
-            g.DrawRectangle(BorderPen, rp.X - BorderPen.Width / 2, rp.Y - BorderPen.Width / 2, rp.Width + BorderPen.Width, rp.Height + BorderPen.Width);
+            g.DrawString("Highscore: ", EndGameFont, new SolidBrush(Color.White), new Point(200, 200));
+            g.DrawString("Your score: ", EndGameFont, new SolidBrush(Color.Yellow), new Point(176, 300));
+
+            g.DrawString("Ruben Oost\nRobert Oost\nRick Vaarkamp\nBart Willemsen\nMartijn Rondeel\nStan Swanborn", this.CustomNameFont, new SolidBrush(Color.WhiteSmoke), new Point(1640, 880));
         }
 
         private void DrawAimVectors(Graphics g)

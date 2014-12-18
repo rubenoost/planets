@@ -74,6 +74,7 @@
     <Compile Include="Controller\GameRules\StasisRule.cs" />
     <Compile Include="Controller\GameRules\StayInFieldRule.cs" />
     <Compile Include="Controller\GameRules\TardisRule.cs" />
+    <Compile Include="Controller\Subcontrollers\LevelSupplier.cs" />
     <Compile Include="Controller\Subcontrollers\PlayfieldSerializer.cs" />
     <Compile Include="Controller\Subcontrollers\RandomLevelGenerator.cs" />
     <Compile Include="Controller\Subcontrollers\ShootProjectileController.cs" />
@@ -127,6 +128,15 @@
     <EmbeddedResource Include="View\GameView.resx">
       <DependentUpon>GameView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Data\Fonts\MicroExtend.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Fonts\Prototype.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Levels\1.lvl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -160,6 +170,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pluto-Icon.ico" />
+    <None Include="Resources\Mine.png" />
+    <None Include="Resources\Tardis.png" />
+    <None Include="Resources\Player.png" />
     <None Include="Resources\StatieGeld.png" />
     <None Include="Resources\parallax6.png" />
     <None Include="Resources\parallax5.png" />
@@ -169,13 +182,11 @@
     <None Include="Resources\parallax1.png" />
     <None Include="Resources\parallax2.png" />
     <None Include="Resources\background.png" />
-    <None Include="Resources\explosion.hasgraphics.png" />
     <None Include="Resources\pixel_art__the_eye_of_sauron_by_totalpickle-d6qfhfg.png" />
-    <None Include="Resources\KomeetStaartje1.png" />
-    <None Include="Resources\space-wallpaper.jpg" />
     <None Include="Resources\KomeetStaartje.png" />
     <None Include="Resources\Pluto-Icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
