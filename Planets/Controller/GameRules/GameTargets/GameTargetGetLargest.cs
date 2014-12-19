@@ -19,7 +19,13 @@ namespace Planets.Controller.GameRules.GameTargets
             double playerMass = ge.Field.CurrentPlayer.Mass;
 
             // Check if largest
-            return ge.Field.BOT.GameObjectList.All(g => g is BlackHole || g is Antigravity || g.Mass < playerMass);
+            bool reached = true;
+            ge.Field.BOT.Iterate(g =>
+            {
+                if (g.GetType() == typeof(GameObject))
+                    reached = reached && (g.Mass < playerMass);
+            });
+            return reached;
         }
     }
 }
