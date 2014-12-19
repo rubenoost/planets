@@ -11,8 +11,6 @@ namespace Planets.Controller.GameRules.Impl
         DateTime begin;
         GameObject closest = null;
         Playfield pfcopy;
-        int AI = 0;
-
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             // Check for playfield change
