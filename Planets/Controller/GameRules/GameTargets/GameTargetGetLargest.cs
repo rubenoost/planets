@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Planets.Model.GameObjects;
 
 namespace Planets.Controller.GameRules.GameTargets
 {
@@ -18,7 +19,7 @@ namespace Planets.Controller.GameRules.GameTargets
             double playerMass = ge.Field.CurrentPlayer.Mass;
 
             // Check if largest
-            return ge.Field.BOT.GameObjectList.All(g => g.Mass < playerMass);
+            return ge.Field.BOT.GameObjectList.All(g => g is BlackHole || g is Antigravity || g.Mass < playerMass);
         }
     }
 }
