@@ -7,19 +7,19 @@ namespace Planets.Controller.GameRules.Impl
 {
     class ExplosionRule : AbstractCollisionRule
     {
-        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2)
         {
             // Check de afstand tot de objecten.
             if (!go1.IntersectsWith(go2)) return;
 
             // Check for explosion flags
-            if (!go1.Is(Rule.EXPLODES) && !go2.Is(Rule.EXPLODES))
+            if (!go1.Is(Rule.Explodes) && !go2.Is(Rule.Explodes))
                 return;
 
             GameObject goExplodes, goPlayer;
 
             // Determine which object is the exploding object.
-            if (go1.Is(Rule.EXPLODES))
+            if (go1.Is(Rule.Explodes))
             {
                 goExplodes = go1;
                 goPlayer = go2;

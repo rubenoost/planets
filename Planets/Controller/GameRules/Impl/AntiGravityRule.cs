@@ -17,15 +17,15 @@ namespace Planets.Controller.GameRules.Impl
                 if (!(g is Antigravity)) return;
                 pf.BOT.Iterate(g2 =>
                 {
-                    if (!g2.Is(Rule.AFFECTED_BY_AG)) return;
+                    if (!g2.Is(Rule.AffectedByAg)) return;
 
                     if (g != g2)
                     {
-                        Vector V = g.Location - g2.Location;
-                        double L = V.Length() - g.Radius + 1.0;
-                        double Fg = BartConstante * (g.Mass / (L * L));
+                        Vector v = g.Location - g2.Location;
+                        double l = v.Length() - g.Radius + 1.0;
+                        double fg = BartConstante * (g.Mass / (l * l));
                         // Speed of projectile gets updated
-                        g2.DV -= V.ScaleToLength(Fg * (ms / 1000.0));
+                        g2.DV -= v.ScaleToLength(fg * (ms / 1000.0));
                     }
                 });
             });

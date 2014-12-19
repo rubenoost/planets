@@ -1,37 +1,27 @@
-using System;
-
 namespace Planets.View.Imaging
 {
     public struct ImageRequest
     {
-        public readonly int no;
-        public readonly int w;
-        public readonly int h;
-        public readonly int r;
+        public readonly int No;
+        public readonly int W;
+        public readonly int H;
+        public readonly int R;
 
         public ImageRequest(int index, int width, int height, int rotation)
         {
-            no = index;
-            w = width;
-            h = height;
-            r = rotation;
-        }
-
-        public ImageRequest(Type type, int width, int height, int rotation)
-        {
-            no = type.GetHashCode();
-            w = width;
-            h = height;
-            r = rotation;
+            No = index;
+            W = width;
+            H = height;
+            R = rotation;
         }
 
         public override int GetHashCode()
         {
             int i = 23;
-            i = i * 486187739 + no;
-            i = i * 486187739 + w;
-            i = i * 486187739 + h;
-            i = i * 486187739 + r;
+            i = i * 486187739 + No;
+            i = i * 486187739 + W;
+            i = i * 486187739 + H;
+            i = i * 486187739 + R;
             return i;
         }
 
@@ -42,7 +32,7 @@ namespace Planets.View.Imaging
 
             var i = (ImageRequest)o;
 
-            return no == i.no && w == i.w && h == i.h && r == i.r;
+            return No == i.No && W == i.W && H == i.H && R == i.R;
         }
     }
 }

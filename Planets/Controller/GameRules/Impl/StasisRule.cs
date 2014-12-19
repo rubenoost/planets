@@ -15,7 +15,7 @@ namespace Planets.Controller.GameRules.Impl
                 if (!(g is Stasis)) return;
                 pf.BOT.Iterate(g2 =>
                 {
-                    if (!g2.Is(Rule.SLOWABLE)) return;
+                    if (!g2.Is(Rule.Slowable)) return;
 
                     if (g != g2)
                     {

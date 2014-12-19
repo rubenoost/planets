@@ -7,7 +7,7 @@ namespace Planets.Controller.GameRules.Impl
     public class CollidewithSmaller : AbstractCollisionRule
     {
 
-        public void change(GameObject go1, GameObject go2, Playfield pf)
+        public static void Change(GameObject go1, GameObject go2, Playfield pf)
         {
             if (!(go2 is Player))
             {
@@ -20,17 +20,17 @@ namespace Planets.Controller.GameRules.Impl
         }
 
 
-        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2)
         {
             if (go1.IntersectsWith(go2))
             {
                 if (go1.Mass >= go2.Mass)
                 {
-                    change(go1, go2, pf);
+                    Change(go1, go2, pf);
                 }
                 else if (go2.Mass > go1.Mass)
                 {
-                    change(go2, go1, pf);
+                    Change(go2, go1, pf);
                 }
             }
         }

@@ -12,7 +12,7 @@ namespace Planets.Model.GameObjects
         public Player(Vector location, Vector velocity, double mass)
             : base(location, velocity, mass)
         {
-            Traits = Traits & ~Rule.AFFECTED_BY_BH & ~Rule.EAT_PLAYER;
+            Traits = Traits & ~Rule.AffectedByBh & ~Rule.EatPlayer;
             GameOver = false;
             GameWon = false;
         }

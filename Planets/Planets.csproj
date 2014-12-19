@@ -131,7 +131,7 @@
     <EmbeddedResource Include="View\GameView.resx">
       <DependentUpon>GameView.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Data\Levels\2.lvl">
+    <None Include="Data\Fonts\game_over.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Fonts\MicroExtend.ttf">

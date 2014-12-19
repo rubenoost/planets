@@ -27,11 +27,12 @@ namespace Planets
             Application.Run(HostForm);
         }
 
+        // ReSharper disable once UnusedMember.Local
         private static void gen()
         {
             var pf = new Playfield();
             // Set player
-            Player p = new Player(new Vector(pf.Size.Width / 2, pf.Size.Height / 2), new Vector(), 1000);
+            Player p = new Player(new Vector((double)pf.Size.Width / 2, (double)pf.Size.Height / 2), new Vector(), 1000);
             pf.CurrentPlayer = p;
 
             // Generate objects

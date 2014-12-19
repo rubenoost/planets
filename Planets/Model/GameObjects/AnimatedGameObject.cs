@@ -13,7 +13,7 @@ namespace Planets.Model.GameObjects
         { }
 
         public AnimatedGameObject(Vector location, Vector velocity, double mass)
-            : base(location, velocity, mass, Rule.NONE)
+            : base(location, velocity, mass, Rule.None)
         {
         }
     }

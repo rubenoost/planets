@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
-using Planets.View;
 
 namespace Planets.Controller
 {
@@ -15,19 +14,9 @@ namespace Planets.Controller
         public readonly ShootProjectileController Spc;
 
         /// <summary>
-        /// The GameView
-        /// </summary>
-        private readonly GameView Gv;
-
-        /// <summary>
-        /// Thread for the autodemo
-        /// </summary>
-        private Thread adthread;
-
-        /// <summary>
         /// Time of last activity
         /// </summary>
-        private DateTime lastActivityTime = DateTime.MinValue;
+        private DateTime _lastActivityTime = DateTime.MinValue;
 
         public int WaitTimeBetweenClick = 400;
 
@@ -41,15 +30,15 @@ namespace Planets.Controller
         public Autodemo(ShootProjectileController s, GameEngine ge)
         {
             Spc = s;
-            Gv = Spc.InternalControl;
+            var gv = Spc.InternalControl;
 
             // Register keys for auto-demo
-            Gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if (kea.KeyData == Keys.K) StartDemo(); };
-            Gv.KeyUp += delegate(object sender, KeyEventArgs kea)
+            gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if (kea.KeyData == Keys.K) StartDemo(); };
+            gv.KeyUp += delegate(object sender, KeyEventArgs kea)
             {
                 if (kea.KeyData == Keys.L) StopDemo();
             };
-            Gv.Click += delegate
+            gv.Click += delegate
             {
                 StopDemo();
             };
@@ -57,14 +46,14 @@ namespace Planets.Controller
             // Register gamehookloop
             ge.GameLoopEvent += delegate
             {
-                if ((DateTime.Now - lastActivityTime).TotalSeconds > 60)
+                if ((DateTime.Now - _lastActivityTime).TotalSeconds > 60)
                 {
                     StartDemo();
                 }
             };
 
             // Create thread
-            adthread = new Thread(Run);
+            var adthread = new Thread(Run);
             adthread.Start();
 
             // Start autodemo
@@ -74,7 +63,7 @@ namespace Planets.Controller
         /// <summary>
         /// Whether this autodemo is running
         /// </summary>
-        private bool Running;
+        private bool _running;
 
         /// <summary>
         /// Run the autodemo
@@ -87,7 +76,7 @@ namespace Planets.Controller
             while (true)
             {
                 // While key is pressed
-                while (Running)
+                while (_running)
                 {
                     Spc.InternalControl.IsAiming = true;
                     // Determine next click
@@ -97,7 +86,7 @@ namespace Planets.Controller
                     for (int i = 0; i < 3; i++)
                     {
                         // Click
-                        if (Running)
+                        if (_running)
                         {
                             Spc.Clicked(p);
                             Spc.InternalPlayfield.LastAutoClickGameLocation = p;
@@ -110,7 +99,7 @@ namespace Planets.Controller
                 }
 
                 // Set running to false
-                Running = false;
+                _running = false;
 
                 Thread.Sleep(100);
             }
@@ -121,12 +110,12 @@ namespace Planets.Controller
         /// </summary>
         public void StopDemo()
         {
-            lastActivityTime = DateTime.Now;
+            _lastActivityTime = DateTime.Now;
             // If keys ok
-            if (Running)
+            if (_running)
             {
                 // Stop demo
-                Running = false;
+                _running = false;
 
                 // Change lastautoclicklocation
                 Spc.InternalPlayfield.LastAutoClickMoment = DateTime.MinValue;
@@ -139,10 +128,10 @@ namespace Planets.Controller
         private void StartDemo()
         {
             // If keys ok
-            if (!Running)
+            if (!_running)
             {
                 // Start demo
-                Running = true;
+                _running = true;
             }
         }
 

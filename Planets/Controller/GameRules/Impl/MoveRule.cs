@@ -10,7 +10,7 @@ namespace Planets.Controller.GameRules.Impl
         {
             pf.BOT.Iterate(g =>
             {
-                if (g.Is(Rule.MOVE))
+                if (g.Is(Rule.Move))
                     g.UpdateLocation(ms);
             });
         }

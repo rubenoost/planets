@@ -17,7 +17,7 @@ namespace Planets.Controller.Subcontrollers
         /// <summary>
         /// The playfield used by this controller to shoot projectiles.
         /// </summary>
-        public Playfield InternalPlayfield { get { return ge.field; } }
+        public Playfield InternalPlayfield { get { return ge.Field; } }
 
         /// <summary>
         /// The control used by this controller to listen on for mouse clicks.
@@ -46,8 +46,13 @@ namespace Planets.Controller.Subcontrollers
         {
             if (InternalPlayfield.CurrentPlayer.GameOver || InternalPlayfield.CurrentPlayer.GameWon)
             {
-                InternalControl.ClickOnNextButton = false;
-                InternalControl.Invalidate();
+                if (InternalControl.PrevClickNext)
+                {
+                    InternalControl.PrevClickNext = false;
+                    InternalControl.ClickOnNextButton = false;
+                    ge.LoadNextLevel();
+                    InternalControl.Invalidate();
+                }
             }
             else
                 InternalControl.IsAiming = false;

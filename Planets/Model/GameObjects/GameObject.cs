@@ -7,18 +7,18 @@ namespace Planets.Model.GameObjects
     [Flags]
     public enum Rule
     {
-        NONE = 0,
-        MOVE = 1,
-        EATABLE = 2,
-        EATS = 4,
-        EAT_PLAYER = 8,
-        DYNAMIC_RADIUS = 16,
-        AFFECTED_BY_BH = 32,
-        COLLIDES = 64,
-        SLOWABLE = 128,
-        EXPLODES = 256,
-        AFFECTED_BY_AG = 512,
-        HAS_SCORE = 1024
+        None = 0,
+        Move = 1,
+        Eatable = 2,
+        Eats = 4,
+        EatPlayer = 8,
+        DynamicRadius = 16,
+        AffectedByBh = 32,
+        Collides = 64,
+        Slowable = 128,
+        Explodes = 256,
+        AffectedByAg = 512,
+        HasScore = 1024
     }
 
     [XmlInclude(typeof(BlackHole))]
@@ -72,7 +72,7 @@ namespace Planets.Model.GameObjects
             get { return _propMass; }
             set
             {
-                if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
+                if (Traits.HasFlag(Rule.DynamicRadius))
                 {
                     if (value <= 0)
                         throw new SystemException("You can't set mass lower then zero, you freaking moron, you are the cause of the instability caused in this universe!!!!");
@@ -93,7 +93,7 @@ namespace Planets.Model.GameObjects
             {
                 if (!_propRadius.HasValue)
                 {
-                    if (Traits.HasFlag(Rule.DYNAMIC_RADIUS))
+                    if (Traits.HasFlag(Rule.DynamicRadius))
                     {
                         _propRadius = Math.Sqrt(Mass / Math.PI);
                     }
@@ -107,7 +107,7 @@ namespace Planets.Model.GameObjects
             }
             set
             {
-                if (!Traits.HasFlag(Rule.DYNAMIC_RADIUS))
+                if (!Traits.HasFlag(Rule.DynamicRadius))
                 {
                     _propRadius = value;
                     _propBoundingBox = null;
@@ -115,20 +115,21 @@ namespace Planets.Model.GameObjects
             }
         }
 
+        // ReSharper disable once UnusedMember.Global
         public GameObject()
             : this(new Vector(), new Vector(), Utils.StartMass)
         { }
 
-        public GameObject(Vector location, Vector velocity, double Mass)
-            : this(location, velocity, Mass,
-            Rule.AFFECTED_BY_BH | Rule.COLLIDES | Rule.DYNAMIC_RADIUS | Rule.EATABLE | Rule.MOVE | Rule.EATS | Rule.SLOWABLE | Rule.AFFECTED_BY_AG)
+        public GameObject(Vector location, Vector velocity, double mass)
+            : this(location, velocity, mass,
+            Rule.AffectedByBh | Rule.Collides | Rule.DynamicRadius | Rule.Eatable | Rule.Move | Rule.Eats | Rule.Slowable | Rule.AffectedByAg)
         { }
 
-        protected GameObject(Vector location, Vector velocity, double Mass, Rule traits)
+        protected GameObject(Vector location, Vector velocity, double mass, Rule traits)
         {
             Location = location;
             DV = velocity;
-            this.Mass = Mass;
+            this.Mass = mass;
             Traits = traits;
         }
 

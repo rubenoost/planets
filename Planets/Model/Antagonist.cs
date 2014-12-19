@@ -10,7 +10,7 @@ namespace Planets.Model
         public Antagonist(Vector location, Vector velocity, double mass)
             : base(location, velocity, mass)
         {
-            Traits = Traits & ~Rule.AFFECTED_BY_BH;
+            Traits = Traits & ~Rule.AffectedByBh;
         }
     }
 }

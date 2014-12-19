@@ -16,7 +16,7 @@ namespace Planets.Controller.GameRules.Abstract
         public void Execute(GameEngine ge, double ms)
         {
             // Execute rule
-            ExecuteRule(ge.field, ms);
+            ExecuteRule(ge.Field, ms);
         }
 
         /// <summary>
