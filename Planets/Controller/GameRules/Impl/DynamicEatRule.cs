@@ -7,7 +7,7 @@ namespace Planets.Controller.GameRules.Impl
 {
     class DynamicEatRule : AbstractCollisionRule
     {
-        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2)
         {
             if (!go1.Is(Rule.EATABLE) && !go2.Is(Rule.EATABLE)) return;
             if (!go1.Is(Rule.DYNAMIC_RADIUS) && !go2.Is(Rule.DYNAMIC_RADIUS)) return;

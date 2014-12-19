@@ -9,9 +9,9 @@ namespace Planets.Controller.GameRules.Impl
     {
         GameObject antagonist;
         DateTime begin;
-        GameObject closest = null;
+        GameObject closest;
         Playfield pfcopy;
-        int AI = 0;
+        int AI;
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
