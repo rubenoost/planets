@@ -67,8 +67,6 @@ namespace Planets.Controller.GameRules.Impl
             return anta;
         }
 
-        #endregion
-
         private GameObject FindClosest(Playfield pf, Antagonist antagonist)
         {
             double distance = double.MaxValue;
@@ -86,5 +84,6 @@ namespace Planets.Controller.GameRules.Impl
             });
             return newclosest;
         }
+        #endregion
     }
 }
