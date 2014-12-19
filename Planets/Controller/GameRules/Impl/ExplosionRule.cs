@@ -49,8 +49,8 @@ namespace Planets.Controller.GameRules.Impl
                 double mass = massPool >= 1000 ? random.Next(10, (int)massPool) : Math.Min(massPool, random.Next(500, 1000));
 
                 Vector createLocation = goExplodes.Location + new Vector(random.Next(-50, 100), random.Next(-50, 100));
-                GameObject debris = new GameObject(createLocation, new Vector(random.Next(-500, 500), random.Next(-500, 500)), mass);
-                debris.Radius = goExplodes.Radius * 3.0;
+                GameObject debris = new GameObject(createLocation,
+                    new Vector(random.Next(-500, 500), random.Next(-500, 500)), mass) { Radius = goExplodes.Radius * 3.0 };
                 pf.BOT.Add(debris);
                 massPool -= mass;
             }

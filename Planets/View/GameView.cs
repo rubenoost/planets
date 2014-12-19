@@ -275,10 +275,11 @@ namespace Planets.View
                 for (int i = 0; i < field.sb.Scores.Count; i++)
                 {
                     ScorePlayerBrush.Color = field.sb.Scores[i].Color;
-                    if (field.sb.Scores[i].Value > 0)
-                        g.DrawString(String.Format("+{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
-                    else
-                        g.DrawString(String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
+                    g.DrawString(
+                        field.sb.Scores[i].Value > 0
+                            ? String.Format("+{0}", field.sb.Scores[i].Value)
+                            : String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush,
+                        (Point) GameToScreen(field.sb.Scores[i].Location));
                     field.sb.Scores[i].UpdateLocation();
                 }
             }
