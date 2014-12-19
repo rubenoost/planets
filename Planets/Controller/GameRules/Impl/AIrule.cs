@@ -10,7 +10,6 @@ namespace Planets.Controller.GameRules.Impl
         GameObject antagonist;
         DateTime begin;
         GameObject closest = null;
-        GameObject player;
         Playfield pfcopy;
         int AI = 0;
 
@@ -26,19 +25,21 @@ namespace Planets.Controller.GameRules.Impl
             TimeSpan tijd = DateTime.Now - begin;
             if (tijd.TotalMilliseconds < 1000) return;
             begin = DateTime.Now;
-            /*if (closest.Radius > antagonist.Radius && closest.Ai == false)
+            if (closest.Radius > antagonist.Radius && closest.Ai == false)
             {
                 //Move away from bigger object
-                GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
+                GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
+                antagonist.DV = antagonist.DV * 1.2;
                 projectiel.Ai = true;
                 Console.WriteLine("REN");
             }
-            else */if (closest.Ai == false)
+            else if (closest.Ai == false)
             {
                 //Move towards smaller object
                 GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
                 AI++;
                 Console.WriteLine(AI);
+                antagonist.DV = antagonist.DV * 1.2;
                 projectiel.Ai = true;
             }
         }

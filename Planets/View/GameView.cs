@@ -429,7 +429,6 @@ namespace Planets.View
                 {
                     if (playerRadar.CalcDistance(go1) < 800)
                     {
-                        Console.WriteLine(playerRadar.CalcDistance(go1).ToString());
                         double xField = go1.Location.X / field.Size.Width;
                         double yField = go1.Location.Y / field.Size.Height;
 
