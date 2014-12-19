@@ -325,7 +325,7 @@ namespace Planets.View
 
             RectangleF arcRectangle = new RectangleF(
                 hudLocation.X,
-                (float)(hudLocation.Y + hudSize.Height * 0.2),
+                (float)(hudLocation.Y + hudSize.Height * 0.1),
                 hudSize.Width,
                 hudSize.Height * 1.2f);
 
