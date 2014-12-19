@@ -279,7 +279,7 @@ namespace Planets.View
                         field.sb.Scores[i].Value > 0
                             ? String.Format("+{0}", field.sb.Scores[i].Value)
                             : String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush,
-                        (Point) GameToScreen(field.sb.Scores[i].Location));
+                        (Point)GameToScreen(field.sb.Scores[i].Location));
                     field.sb.Scores[i].UpdateLocation();
                 }
             }
@@ -417,15 +417,15 @@ namespace Planets.View
 
             field.BOT.Iterate(go1 =>
             {
-                        double xField = go1.Location.X / field.Size.Width;
-                        double yField = go1.Location.Y / field.Size.Height;
+                double xField = go1.Location.X / field.Size.Width;
+                double yField = go1.Location.Y / field.Size.Height;
 
-                        double xRadar = s.Width * xField;
-                        double yRadar = s.Height * yField;
+                double xRadar = s.Width * xField;
+                double yRadar = s.Height * yField;
 
-                        Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                        blip.X += RadarPoint.X;
-                        blip.Y += RadarPoint.Y;
+                Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                blip.X += RadarPoint.X;
+                blip.Y += RadarPoint.Y;
 
                 //if antagonist than draw blue circle
                 if (go1 is Antagonist)
@@ -447,8 +447,8 @@ namespace Planets.View
                 //if gameobject then draw green circle 
                 else
                 {
-                        g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
-                    }
+                    g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
+                }
             });
         }
 
