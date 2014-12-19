@@ -47,8 +47,13 @@ namespace Planets.Controller.Subcontrollers
         {
             if(InternalPlayfield.CurrentPlayer.GameOver|| InternalPlayfield.CurrentPlayer.GameWon)
             {
-                InternalControl.ClickOnNextButton = false;
-                InternalControl.Invalidate();
+                if (InternalControl.PrevClickNext)
+                {
+                    InternalControl.PrevClickNext = false;
+                    InternalControl.ClickOnNextButton = false;
+                    ge.LoadNextLevel();
+                    InternalControl.Invalidate();
+                }
             }
             else
                 InternalControl.IsAiming = false;

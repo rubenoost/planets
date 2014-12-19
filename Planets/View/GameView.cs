@@ -53,12 +53,14 @@ namespace Planets.View
         /// </summary>
         public bool IsAiming;
         public bool ClickOnNextButton;
+        public bool PrevClickNext;
         public Vector AimPoint;
 
         private SolidBrush ScorePlayerBrush = new SolidBrush(Color.White);
         private Font ScoreFont = new Font(FontFamily.GenericSansSerif, 60.0f, FontStyle.Bold, GraphicsUnit.Pixel);
         private Font PlanetsFont;
         private Font NextLevelFont;
+        private Font GameStatusFont;
 
         // Aiming pen buffer
         private Pen CurVecPen = new Pen(Color.Red, 5);
@@ -81,16 +83,18 @@ namespace Planets.View
             AimVecPen.CustomEndCap = bigArrow;
 
             this.ClickOnNextButton = false;
+            this.PrevClickNext = false;
 
             // Custom font
             pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
             pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
             pfc.AddFontFile(@"Data\Fonts\spacebar.ttf");
+            pfc.AddFontFile(@"Data\Fonts\game_over.ttf");
             Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
-            EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
-            CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
-            PlanetsFont = new Font(pfc.Families[2], 50, FontStyle.Regular);
-            NextLevelFont = new Font(pfc.Families[2], 35, FontStyle.Regular);
+            EndGameFont = new Font(pfc.Families[2], 40, FontStyle.Regular);
+            PlanetsFont = new Font(pfc.Families[3], 50, FontStyle.Regular);
+            NextLevelFont = new Font(pfc.Families[3], 35, FontStyle.Regular);
+            this.GameStatusFont = new Font(pfc.Families[0], 140, FontStyle.Regular);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -161,9 +165,12 @@ namespace Planets.View
             g.FillRectangle(EndGameBrush, new Rectangle(new Point(0, 0), new Size(1920, 1080)));
 
             // Highscore
-            g.DrawString("Highscore: ", EndGameFont, HighScoreBrush, new Point(200, 200));
+            g.DrawString("Highscore: ", EndGameFont, HighScoreBrush, new Point(175, 200));
             int Highscore = ScoreBoard.GetHighScore();
-            g.DrawString(Highscore.ToString(), EndGameFont, HighScoreBrush, new Point(460, 200));
+            g.DrawString(Highscore.ToString(), EndGameFont, HighScoreBrush, new Point(640 - TextRenderer.MeasureText(Highscore.ToString(), EndGameFont).Width, 200));
+
+            // Win or Lose
+            g.DrawString((field.CurrentPlayer.GameOver) ? "GameOver" : "Level Completed", this.GameStatusFont, new SolidBrush((field.CurrentPlayer.GameOver) ? Color.Red : Color.Green), new Point(180, 60));
 
             // Score box
             g.DrawLine(new Pen(Color.WhiteSmoke, 2), new Point(150, 370), new Point(630, 370));
@@ -181,16 +188,18 @@ namespace Planets.View
 
             g.DrawString("Next level", NextLevelFont, new SolidBrush((this.ClickOnNextButton) ? Color.FromArgb(230, 88, 88, 88) : Color.WhiteSmoke), new Point(185, 420));
 
+            PrevClickNext = ClickOnNextButton;
+
             if (this.ClickOnNextButton)
                 this.ClickOnNextButton = false;
 
             // Your score
-            g.DrawString("Your score: ", EndGameFont, YourScoreBrush, new Point(176, 300));
-            g.DrawString(field.sb.Total.ToString(), EndGameFont, YourScoreBrush, new Point(460, 300));
+            g.DrawString("Gamescore: ", EndGameFont, YourScoreBrush, new Point(176, 300));
+            g.DrawString(field.sb.Total.ToString(), EndGameFont, YourScoreBrush, new Point(640 - TextRenderer.MeasureText(field.sb.Total.ToString(), EndGameFont).Width, 300));
             ScoreBoard.WriteScore(field.sb.Total);
 
-            g.DrawImage(Properties.Resources.HighScoreLogo, new Point(1400, 60));
-            g.DrawString("Planets", this.PlanetsFont, HighScoreBrush, new Point(1415, 520));
+            g.DrawImage(Properties.Resources.HighScoreLogo, new Point(1350, 40));
+            g.DrawString("Planets", this.PlanetsFont, HighScoreBrush, new Point(1365, 500));
         }
 
         private void DrawAimVectors(Graphics g)

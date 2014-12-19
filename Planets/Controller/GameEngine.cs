@@ -112,6 +112,7 @@ namespace Planets.Controller
         public void LoadNextLevel()
         {
             field = ls.GenerateLevel();
+            this.running = true;
         }
 
         public void GameLoop()
