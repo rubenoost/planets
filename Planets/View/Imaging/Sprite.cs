@@ -7,7 +7,6 @@ namespace Planets.View.Imaging
     public class Sprite
     {
         public const int Cursor = 2;
-        public const int CometTail = 4;
         public const int Stars1 = 10;
         public const int Stars2 = 20;
         public const int Stars3 = 40;

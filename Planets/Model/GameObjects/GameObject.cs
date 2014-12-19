@@ -115,6 +115,7 @@ namespace Planets.Model.GameObjects
             }
         }
 
+        // ReSharper disable once UnusedMember.Global
         public GameObject()
             : this(new Vector(), new Vector(), Utils.StartMass)
         { }

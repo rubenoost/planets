@@ -2,6 +2,7 @@
 {
     public class Bonus : GameObject
     {
+        // ReSharper disable once UnusedMember.Global
         public Bonus()
             : this(new Vector(), new Vector(), Utils.StartMass)
         { }

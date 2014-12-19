@@ -27,6 +27,7 @@ namespace Planets
             Application.Run(HostForm);
         }
 
+        // ReSharper disable once UnusedMember.Local
         private static void gen()
         {
             var pf = new Playfield();
