@@ -43,10 +43,10 @@ namespace Planets.Controller.GameRules.Impl
             Random random = new Random();
 
             double massPool = lostMass;
-            while (massPool > 0.1)
+            while (massPool > 1.0)
             {
                 // We don't want to generate more mass than is actually lost by the player.
-                double mass = massPool >= 1000 ? random.Next(10, (int)massPool) : Math.Max(massPool, random.Next(500, 1000));
+                double mass = massPool >= 1000 ? random.Next(10, (int)massPool) : Math.Min(massPool, random.Next(500, 1000));
 
                 Vector createLocation = goExplodes.Location + new Vector(random.Next(-50, 100), random.Next(-50, 100));
                 GameObject debris = new GameObject(createLocation, new Vector(random.Next(-500, 500), random.Next(-500, 500)), mass);
