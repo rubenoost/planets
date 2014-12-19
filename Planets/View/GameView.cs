@@ -356,7 +356,7 @@ namespace Planets.View
                 g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
 
             // Draw score text
-            g.DrawString(field.sb.Total.ToString(), HudScoreFont, LabelBrush, arcRectangle.Left + arcRectangle.Width / 2, arcRectangle.Top + arcRectangle.Height / 6);
+            g.DrawString(field.sb.Total.ToString(), HudScoreFont, LabelBrush, arcRectangle.Left + arcRectangle.Width / 2, arcRectangle.Top + arcRectangle.Height / 11);
 
             // Draw Mass-o-meter
             Point MassMeterPoint = new Point(hudLocation.X + 20, hudLocation.Y + 60);
@@ -402,20 +402,27 @@ namespace Planets.View
                 g.FillEllipse(Brushes.Blue, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int) (DotRadius * 2), (int) (DotRadius * 2))));
             });*/
 
-            int RadiusRadar = 130;
+            int RadiusRadar = 180;
             Size s = new Size(RadiusRadar, RadiusRadar);
             Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
 
-            g.FillEllipse(Brushes.Red, new Rectangle(RadarPoint, s));
+            Brush radarbackgroundbrush = new SolidBrush(Color.FromArgb(230, 23, 23, 23));
+            Brush gameobjectbrush = new SolidBrush(Color.FromArgb(255, 0, 198, 0));
+            Brush playerBrush = new SolidBrush(Color.Red);
 
-            var a = new
+            g.FillEllipse(radarbackgroundbrush, new Rectangle(RadarPoint, s));
 
             field.BOT.Iterate(go1 =>
             {
+                if (go1 is Player)
+                {
+
+                }
+
                 Player playerRadar = field.CurrentPlayer;
 
                 Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
-                g.FillEllipse(Brushes.Green, new Rectangle(pPlayer, new Size(10, 10)));
+                g.FillEllipse(playerBrush, new Rectangle(pPlayer, new Size(10, 10)));
                 Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
 
                 if (go1 is Antagonist || !(go1 is Player))
@@ -433,7 +440,7 @@ namespace Planets.View
                         blip.X += RadarPoint.X;
                         blip.Y += RadarPoint.Y;
 
-                        g.FillEllipse(Brushes.Purple, new Rectangle(blip, new Size(10, 10)));
+                        g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
                     }
                 }
             });
