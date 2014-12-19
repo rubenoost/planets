@@ -394,7 +394,7 @@ namespace Planets.View
             g.DrawString("Objects", HudScoreFont, LabelBrush, ObjectMeter.X - 50, ObjectMeter.Y - 30);
 
             // Draw Radar
-            /*int RadiusRadar = 65;
+            int RadiusRadar = 65;
             Vector RadarCenter = hudLocation + new Vector(hudSize.Width, hudSize.Height) / 2;
             Vector RadarSize = new Vector(RadiusRadar * 2, RadiusRadar * 2);
             Rectangle RadarRectangle = new Rectangle(RadarCenter - RadarSize / 2, new Size((int)RadarSize.X, (int)RadarSize.Y));
@@ -411,12 +411,13 @@ namespace Planets.View
 
                 Vector drawCenter = RadarCenter + (go.Location - playerLocation)*scale;
                 g.FillEllipse(Brushes.Blue, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int) (DotRadius * 2), (int) (DotRadius * 2))));
-            });*/
-
+            });
+            /*
             int RadiusRadar = 180;
             Size s = new Size(RadiusRadar, RadiusRadar);
             Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
 
+            //all brushes for the radar
             Brush radarbackgroundbrush = new SolidBrush(Color.FromArgb(230, 23, 23, 23));
             Brush gameobjectbrush = new SolidBrush(Color.FromArgb(255, 0, 198, 0));
             Brush playerBrush = new SolidBrush(Color.Red);
@@ -427,15 +428,15 @@ namespace Planets.View
 
             field.BOT.Iterate(go1 =>
             {
-                    double xField = go1.Location.X / field.Size.Width;
-                    double yField = go1.Location.Y / field.Size.Height;
+                double xField = go1.Location.X / field.Size.Width;
+                double yField = go1.Location.Y / field.Size.Height;
 
-                    double xRadar = s.Width * xField;
-                    double yRadar = s.Height * yField;
+                double xRadar = s.Width * xField;
+                double yRadar = s.Height * yField;
 
-                    Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                    blip.X += RadarPoint.X;
-                    blip.Y += RadarPoint.Y;
+                Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                blip.X += RadarPoint.X;
+                blip.Y += RadarPoint.Y;
 
                 //if antagonist than draw blue circle
                 if (go1 is Antagonist)
@@ -450,16 +451,17 @@ namespace Planets.View
                 }
 
                 else if (go1 is Bonus)
-                    {
+                {
                     g.FillEllipse(bonusbrush, new Rectangle(blip, new Size(10, 10)));
-                    }
+                }
 
                 //if gameobject then draw green circle 
                 else
-                    {
+                {
                     g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
-                    }
-                });
+                }
+            });
+             */
         }
 
         private void DrawAnimations(Graphics g, GameObject obj)
