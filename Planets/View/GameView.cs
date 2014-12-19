@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 using Planets.Controller;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.Model.GameObjects;
+using Planets.Properties;
 using Planets.View.Imaging;
-using System.Drawing.Text;
-using System.Threading;
 
 namespace Planets.View
 {
@@ -80,7 +80,7 @@ namespace Planets.View
             AimVecPen.DashStyle = DashStyle.Dash;
             AimVecPen.CustomEndCap = bigArrow;
 
-            this.ClickOnNextButton = false;
+            ClickOnNextButton = false;
 
             // Custom font
             pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
@@ -170,7 +170,7 @@ namespace Planets.View
             g.DrawLine(new Pen(Color.WhiteSmoke, 2), new Point(630, 370), new Point(630, 170));
 
             // Next button
-            if (this.ClickOnNextButton)
+            if (ClickOnNextButton)
             {
                 g.FillRectangle(new SolidBrush(Color.WhiteSmoke), new Rectangle(new Point(175, 400), new Size(430, 100)));
             }
@@ -179,18 +179,18 @@ namespace Planets.View
                 g.DrawRectangle(new Pen(Color.WhiteSmoke, 2), new Rectangle(new Point(175, 400), new Size(430, 100)));
             }
 
-            g.DrawString("Next level", NextLevelFont, new SolidBrush((this.ClickOnNextButton) ? Color.FromArgb(230, 88, 88, 88) : Color.WhiteSmoke), new Point(185, 420));
+            g.DrawString("Next level", NextLevelFont, new SolidBrush((ClickOnNextButton) ? Color.FromArgb(230, 88, 88, 88) : Color.WhiteSmoke), new Point(185, 420));
 
-            if (this.ClickOnNextButton)
-                this.ClickOnNextButton = false;
+            if (ClickOnNextButton)
+                ClickOnNextButton = false;
 
             // Your score
             g.DrawString("Your score: ", EndGameFont, YourScoreBrush, new Point(176, 300));
             g.DrawString(field.sb.Total.ToString(), EndGameFont, YourScoreBrush, new Point(460, 300));
             ScoreBoard.WriteScore(field.sb.Total);
 
-            g.DrawImage(Properties.Resources.HighScoreLogo, new Point(1400, 60));
-            g.DrawString("Planets", this.PlanetsFont, HighScoreBrush, new Point(1415, 520));
+            g.DrawImage(Resources.HighScoreLogo, new Point(1400, 60));
+            g.DrawString("Planets", PlanetsFont, HighScoreBrush, new Point(1415, 520));
         }
 
         private void DrawAimVectors(Graphics g)
@@ -275,10 +275,11 @@ namespace Planets.View
                 for (int i = 0; i < field.sb.Scores.Count; i++)
                 {
                     ScorePlayerBrush.Color = field.sb.Scores[i].Color;
-                    if (field.sb.Scores[i].Value > 0)
-                        g.DrawString(String.Format("+{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
-                    else
-                        g.DrawString(String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
+                    g.DrawString(
+                        field.sb.Scores[i].Value > 0
+                            ? String.Format("+{0}", field.sb.Scores[i].Value)
+                            : String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush,
+                        (Point) GameToScreen(field.sb.Scores[i].Location));
                     field.sb.Scores[i].UpdateLocation();
                 }
             }
@@ -416,15 +417,15 @@ namespace Planets.View
 
             field.BOT.Iterate(go1 =>
             {
-                double xField = go1.Location.X / field.Size.Width;
-                double yField = go1.Location.Y / field.Size.Height;
+                        double xField = go1.Location.X / field.Size.Width;
+                        double yField = go1.Location.Y / field.Size.Height;
 
-                double xRadar = s.Width * xField;
-                double yRadar = s.Height * yField;
+                        double xRadar = s.Width * xField;
+                        double yRadar = s.Height * yField;
 
-                Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                blip.X += RadarPoint.X;
-                blip.Y += RadarPoint.Y;
+                        Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                        blip.X += RadarPoint.X;
+                        blip.Y += RadarPoint.Y;
 
                 //if antagonist than draw blue circle
                 if (go1 is Antagonist)
@@ -446,8 +447,8 @@ namespace Planets.View
                 //if gameobject then draw green circle 
                 else
                 {
-                    g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
-                }
+                        g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
+                    }
             });
         }
 

@@ -11,6 +11,9 @@ namespace Planets.Model
         [XmlIgnore]
         internal Player _currentPlayer;
 
+        [XmlIgnore]
+        internal Antagonist _currentAntagonist;
+
         public Size Size { get; set; }
 
         [XmlIgnore]
@@ -41,6 +44,17 @@ namespace Planets.Model
                 BOT.Remove(_currentPlayer);
                 _currentPlayer = value;
                 BOT.Add(_currentPlayer);
+            }
+        }
+
+        public Antagonist CurrentAntagonist
+        {
+            get { return _currentAntagonist; }
+            set
+            {
+                BOT.Remove(_currentAntagonist);
+                _currentAntagonist = value;
+                BOT.Add(_currentAntagonist);
             }
         }
 

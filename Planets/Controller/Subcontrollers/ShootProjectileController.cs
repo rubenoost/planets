@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using Planets.Model;
 using Planets.Model.GameObjects;
 using Planets.View;
-using System.Threading;
 
 namespace Planets.Controller.Subcontrollers
 {
@@ -28,7 +27,7 @@ namespace Planets.Controller.Subcontrollers
         /// <summary>
         /// Create new ShootProjectileController.
         /// </summary>
-        /// <param name="pf">The playfield to shoot projectiles in.</param>
+        /// <param name="ge">The gameengine to shoot projectiles in.</param>
         /// <param name="listenControl">The control to listen on for clicks.</param>
         public ShootProjectileController(GameEngine ge, GameView listenControl)
         {
@@ -45,7 +44,7 @@ namespace Planets.Controller.Subcontrollers
 
         private void MouseUpEvent(object sender, MouseEventArgs e)
         {
-            if(InternalPlayfield.CurrentPlayer.GameOver|| InternalPlayfield.CurrentPlayer.GameWon)
+            if (InternalPlayfield.CurrentPlayer.GameOver || InternalPlayfield.CurrentPlayer.GameWon)
             {
                 InternalControl.ClickOnNextButton = false;
                 InternalControl.Invalidate();
@@ -61,10 +60,7 @@ namespace Planets.Controller.Subcontrollers
                 Rectangle MouseRec = new Rectangle(new Point(e.X, e.Y), new Size(10, 10));
                 Rectangle LevelButtonRec = new Rectangle(new Point(175, 400), new Size(430, 100));
 
-                if (MouseRec.IntersectsWith(LevelButtonRec))
-                    InternalControl.ClickOnNextButton = true;
-                else
-                    InternalControl.ClickOnNextButton = false;
+                InternalControl.ClickOnNextButton = MouseRec.IntersectsWith(LevelButtonRec);
 
                 InternalControl.Invalidate();
             }
@@ -111,21 +107,18 @@ namespace Planets.Controller.Subcontrollers
             int rndint = rnd.Next(0, 100);
             if (rndint == 58)
             {
-                P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0);
-                P.Mass = 100;
+                P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0) { Mass = 100 };
                 IsBlackhole = true;
             }
             else if (rndint == 20 || rndint == 25 || rndint == 30 || rndint == 35 || rndint == 40 || rndint == 50 || rndint == 55 || rndint == 60)
             {
-                P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0);
-                P.Mass = O.Mass * 0.05;
-                O.Mass -= (O.Mass * 0.05);
+                P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0) { Mass = O.Mass * 0.05 };
+                O.Mass -= P.Mass;
                 IsAntiMatter = true;
             }
             else
             {
-                P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0);
-                P.Mass = 0.05 * O.Mass;
+                P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0) { Mass = 0.05 * O.Mass };
                 O.Mass = O.Mass - P.Mass;
             }
 

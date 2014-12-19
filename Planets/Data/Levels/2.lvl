@@ -9723,7 +9723,7 @@
       <Mass>100</Mass>
       <Radius>5.6418958354775626</Radius>
     </GameObject>
-    <GameObject>
+    <GameObject xsi:type="Antagonist">
       <Ai>false</Ai>
       <Location X="1901" Y="866" />
       <DV X="0" Y="0" />
