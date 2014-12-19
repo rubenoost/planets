@@ -7,7 +7,7 @@ namespace Planets.Controller.GameRules.Impl
 {
     class ExplosionRule : AbstractCollisionRule
     {
-        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2)
         {
             // Check de afstand tot de objecten.
             if (!go1.IntersectsWith(go2)) return;

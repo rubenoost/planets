@@ -18,7 +18,7 @@ namespace Planets.Controller.GameRules.Abstract
             pf.BOT.DoCollisions(
                 (go1, go2, dt) =>
                 {
-                    DoCollision(pf, pf.sb, go1, go2, dt);
+                    DoCollision(pf, pf.sb, go1, go2);
                 }, ms);
         }
 
@@ -29,7 +29,6 @@ namespace Planets.Controller.GameRules.Abstract
         /// <param name="sb">The scoreboard scores can be added to on this collision.</param>
         /// <param name="go1">The first GameObject to collide.</param>
         /// <param name="go2">The second GameObjct to collide.</param>
-        /// <param name="ms">The amount of milliseconds that elapsed since last call.</param>
-        protected abstract void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms);
+        protected abstract void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2);
     }
 }

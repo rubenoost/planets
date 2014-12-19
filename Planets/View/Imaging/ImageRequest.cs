@@ -1,5 +1,3 @@
-using System;
-
 namespace Planets.View.Imaging
 {
     public struct ImageRequest
@@ -12,14 +10,6 @@ namespace Planets.View.Imaging
         public ImageRequest(int index, int width, int height, int rotation)
         {
             no = index;
-            w = width;
-            h = height;
-            r = rotation;
-        }
-
-        public ImageRequest(Type type, int width, int height, int rotation)
-        {
-            no = type.GetHashCode();
             w = width;
             h = height;
             r = rotation;

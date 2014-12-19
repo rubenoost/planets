@@ -9,16 +9,16 @@ namespace Planets.Controller.GameRules.Impl
     {
         GameObject antagonist;
         DateTime begin;
-        GameObject closest = null;
+        GameObject closest;
         Playfield pfcopy;
-        int AI = 0;
+        int AI;
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             // Check for playfield change
             CheckPlayfieldChange(pf);
 
-            // Find antagonist
+            // Find anta
             if (antagonist == null) antagonist = FindAntagonist(pf);
             closest = FindClosest(pf, (Antagonist)antagonist);
 
@@ -67,15 +67,17 @@ namespace Planets.Controller.GameRules.Impl
             return anta;
         }
 
-        private GameObject FindClosest(Playfield pf, Antagonist antagonist)
+        #endregion
+
+        private GameObject FindClosest(Playfield pf, Antagonist anta)
         {
             double distance = double.MaxValue;
             double newdistance;
             GameObject newclosest = null;
             pf.BOT.Iterate(go => 
             {
-                newdistance = (go.Location - antagonist.Location).Length();
-                if (go.Ai == true) Console.WriteLine("AI FOUND");
+                newdistance = (go.Location - anta.Location).Length();
+                if (go.Ai) Console.WriteLine("AI FOUND");
                 if(distance > newdistance && go.GetType() == typeof(GameObject))//HIER ZIT DE SHIT
                 {
                     distance = newdistance;
@@ -84,6 +86,5 @@ namespace Planets.Controller.GameRules.Impl
             });
             return newclosest;
         }
-        #endregion
     }
 }
