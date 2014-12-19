@@ -29,17 +29,12 @@ namespace Planets.Controller.GameRules.Impl
             {
                 //Move away from bigger object
                 GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
-                antagonist.DV = antagonist.DV * 1.2;
                 projectiel.Ai = true;
-                Console.WriteLine("REN");
             }
             else if (closest.Ai == false)
             {
                 //Move towards smaller object
                 GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
-                AI++;
-                Console.WriteLine(AI);
-                antagonist.DV = antagonist.DV * 1.2;
                 projectiel.Ai = true;
             }
         }
@@ -75,7 +70,7 @@ namespace Planets.Controller.GameRules.Impl
             pf.BOT.Iterate(go => 
             {
                 newdistance = (go.Location - antagonist.Location).Length();
-                if (go.Ai == true) Console.WriteLine("AI FOUND");
+                if (go.Ai == true) return;
                 if(distance > newdistance && go.GetType() == typeof(GameObject))//HIER ZIT DE SHIT
                 {
                     distance = newdistance;
