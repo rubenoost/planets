@@ -18,7 +18,7 @@ namespace Planets.Controller.GameRules.Impl
             // Check for playfield change
             CheckPlayfieldChange(pf);
 
-            // Find antagonist
+            // Find anta
             if (antagonist == null) antagonist = FindAntagonist(pf);
             closest = FindClosest(pf, (Antagonist)antagonist);
 
@@ -69,15 +69,15 @@ namespace Planets.Controller.GameRules.Impl
 
         #endregion
 
-        private GameObject FindClosest(Playfield pf, Antagonist antagonist)
+        private GameObject FindClosest(Playfield pf, Antagonist anta)
         {
             double distance = double.MaxValue;
             double newdistance;
             GameObject newclosest = null;
             pf.BOT.Iterate(go => 
             {
-                newdistance = (go.Location - antagonist.Location).Length();
-                if (go.Ai == true) Console.WriteLine("AI FOUND");
+                newdistance = (go.Location - anta.Location).Length();
+                if (go.Ai) Console.WriteLine("AI FOUND");
                 if(distance > newdistance && go.GetType() == typeof(GameObject))//HIER ZIT DE SHIT
                 {
                     distance = newdistance;

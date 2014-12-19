@@ -46,7 +46,7 @@ namespace Planets.Controller.GameRules.Impl
                 else
                     gL.Mass -= LostMass;
 
-                if (gL is Player || gS is Player)
+                if (gL is Player)
                 {
                     pf.sb.AddScore(new Score(-50, DateTime.Now, gS.Location, true));
                 }

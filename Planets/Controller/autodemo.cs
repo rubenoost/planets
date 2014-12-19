@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Planets.Controller.Subcontrollers;
-using Planets.View;
 
 namespace Planets.Controller
 {
@@ -15,19 +14,9 @@ namespace Planets.Controller
         public readonly ShootProjectileController Spc;
 
         /// <summary>
-        /// The GameView
-        /// </summary>
-        private readonly GameView Gv;
-
-        /// <summary>
-        /// Thread for the autodemo
-        /// </summary>
-        private Thread adthread;
-
-        /// <summary>
         /// Time of last activity
         /// </summary>
-        private DateTime lastActivityTime = DateTime.MinValue;
+        private DateTime _lastActivityTime = DateTime.MinValue;
 
         public int WaitTimeBetweenClick = 400;
 
@@ -41,15 +30,15 @@ namespace Planets.Controller
         public Autodemo(ShootProjectileController s, GameEngine ge)
         {
             Spc = s;
-            Gv = Spc.InternalControl;
+            var gv = Spc.InternalControl;
 
             // Register keys for auto-demo
-            Gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if (kea.KeyData == Keys.K) StartDemo(); };
-            Gv.KeyUp += delegate(object sender, KeyEventArgs kea)
+            gv.KeyUp += delegate(object sender, KeyEventArgs kea) { if (kea.KeyData == Keys.K) StartDemo(); };
+            gv.KeyUp += delegate(object sender, KeyEventArgs kea)
             {
                 if (kea.KeyData == Keys.L) StopDemo();
             };
-            Gv.Click += delegate
+            gv.Click += delegate
             {
                 StopDemo();
             };
@@ -57,14 +46,14 @@ namespace Planets.Controller
             // Register gamehookloop
             ge.GameLoopEvent += delegate
             {
-                if ((DateTime.Now - lastActivityTime).TotalSeconds > 60)
+                if ((DateTime.Now - _lastActivityTime).TotalSeconds > 60)
                 {
                     StartDemo();
                 }
             };
 
             // Create thread
-            adthread = new Thread(Run);
+            var adthread = new Thread(Run);
             adthread.Start();
 
             // Start autodemo
@@ -121,7 +110,7 @@ namespace Planets.Controller
         /// </summary>
         public void StopDemo()
         {
-            lastActivityTime = DateTime.Now;
+            _lastActivityTime = DateTime.Now;
             // If keys ok
             if (Running)
             {

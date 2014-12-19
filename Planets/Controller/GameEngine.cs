@@ -19,7 +19,6 @@ namespace Planets.Controller
 
         // Controllers
         private ShootProjectileController spc;
-        private Autodemo ad;
         private LevelSupplier ls = new LevelSupplier();
 
         // Model Data
@@ -74,7 +73,7 @@ namespace Planets.Controller
 
             // Create controllers
             spc = new ShootProjectileController(this, GameView);
-            ad = new Autodemo(spc, this);
+            new Autodemo(spc, this);
 
             // Set gameview
             this.HostEngine.SetView(GameView);

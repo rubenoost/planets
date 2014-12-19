@@ -45,7 +45,6 @@ namespace Planets.View
         // Custom Font!
         private static PrivateFontCollection pfc = new PrivateFontCollection();
         private Font EndGameFont;
-        private Font CustomNameFont;
 
         // Aiming Settings
         /// <summary>
@@ -88,7 +87,7 @@ namespace Planets.View
             pfc.AddFontFile(@"Data\Fonts\spacebar.ttf");
             Font = new Font(pfc.Families[1], 28, FontStyle.Regular);
             EndGameFont = new Font(pfc.Families[1], 40, FontStyle.Regular);
-            CustomNameFont = new Font(pfc.Families[0], 20, FontStyle.Italic);
+            new Font(pfc.Families[0], 20, FontStyle.Italic);
             PlanetsFont = new Font(pfc.Families[2], 50, FontStyle.Regular);
             NextLevelFont = new Font(pfc.Families[2], 35, FontStyle.Regular);
         }
@@ -230,11 +229,12 @@ namespace Planets.View
             Rectangle target = GameToScreen(obj.BoundingBox);
             Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height, objAngle);
 
-            if (obj is AnimatedGameObject)
+            var o = obj as AnimatedGameObject;
+            if (o != null)
             {
                 DateTime nu = DateTime.Now;
-                DateTime begin = ((AnimatedGameObject)obj).Begin;
-                TimeSpan duration = ((AnimatedGameObject)obj).Duration;
+                DateTime begin = o.Begin;
+                TimeSpan duration = o.Duration;
 
                 float p = (float)(nu - begin).TotalMilliseconds / (float)duration.TotalMilliseconds;
 
@@ -245,7 +245,7 @@ namespace Planets.View
 
                 if (nu - begin >= duration)
                 {
-                    field.BOT.Remove(obj);
+                    field.BOT.Remove(o);
                 }
             }
             else
@@ -279,7 +279,7 @@ namespace Planets.View
                         field.sb.Scores[i].Value > 0
                             ? String.Format("+{0}", field.sb.Scores[i].Value)
                             : String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush,
-                        (Point) GameToScreen(field.sb.Scores[i].Location));
+                        (Point)GameToScreen(field.sb.Scores[i].Location));
                     field.sb.Scores[i].UpdateLocation();
                 }
             }
@@ -500,7 +500,7 @@ namespace Planets.View
             double scaleX = ClientSize.Width / viewSizeGame.X;
             double scaleY = ClientSize.Height / viewSizeGame.Y;
 
-            Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+            Vector viewCenterPixel = new Vector((double)ClientSize.Width / 2, (double)ClientSize.Height / 2);
 
             Vector pointRelativeToViewCenterGame = v - viewCenterGame;
             Vector pointRelativeToViewCenterPixel = new Vector(pointRelativeToViewCenterGame.X * scaleX, pointRelativeToViewCenterGame.Y * scaleY);
@@ -541,7 +541,7 @@ namespace Planets.View
             viewCenterGame = new Vector(Math.Min(viewCenterGame.X, layerGameSize.X - viewSizeGame.X / 2), Math.Min(viewCenterGame.Y, layerGameSize.Y - viewSizeGame.Y / 2));
 
             //=================================== [ Scale to pixels ] =============================
-            Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+            Vector viewCenterPixel = new Vector((double)ClientSize.Width / 2, (double)ClientSize.Height / 2);
             Vector pointRelativeToViewCenterPixel = v - viewCenterPixel;
 
             double scaleX = ClientSize.Width / viewSizeGame.X;
@@ -591,7 +591,7 @@ namespace Planets.View
             double scaleX = ClientSize.Width / viewSizeGame.X;
             double scaleY = ClientSize.Height / viewSizeGame.Y;
 
-            Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+            Vector viewCenterPixel = new Vector((double)ClientSize.Width / 2, (double)ClientSize.Height / 2);
 
             Vector rectangleSizeGame = new Vector(gameRectangle.Width, gameRectangle.Height);
             Vector rectangleCenterGame = gameRectangle.Location + rectangleSizeGame / 2;
