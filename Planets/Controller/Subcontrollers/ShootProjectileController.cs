@@ -115,8 +115,7 @@ namespace Planets.Controller.Subcontrollers
                 P.Mass = 100;
                 IsBlackhole = true;
             }
-            else if (rndint == 20 || rndint == 25 || rndint == 30 || rndint == 35 || rndint == 40 || rndint == 50 ||
-                     rndint == 55 || rndint == 60)
+            else if (rndint == 20 || rndint == 25 || rndint == 30 || rndint == 35 || rndint == 40 || rndint == 50 || rndint == 55 || rndint == 60)
             {
                 P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0);
                 P.Mass = O.Mass * 0.05;
