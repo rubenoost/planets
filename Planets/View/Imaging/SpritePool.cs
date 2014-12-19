@@ -76,12 +76,12 @@ namespace Planets.View.Imaging
 
         private Sprite CreateImage(ImageRequest i)
         {
-            if (i.r != 0)
+            if (i.R != 0)
             {
-                return RotateImg(CreateImage(new ImageRequest(i.no, i.w, i.h, 0)), i.r);
+                return RotateImg(CreateImage(new ImageRequest(i.No, i.W, i.H, 0)), i.R);
             }
-            Sprite sourceSprite = _imageSource[i.no];
-            return ResizeImg(sourceSprite, i.w, i.h);
+            Sprite sourceSprite = _imageSource[i.No];
+            return ResizeImg(sourceSprite, i.W, i.H);
         }
 
         private static Sprite ResizeImg(Sprite s, int width, int height)

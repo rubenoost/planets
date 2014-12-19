@@ -17,14 +17,14 @@ namespace Planets.Controller.GameRules.Impl
                 if (!(g is BlackHole)) return;
                 pf.BOT.Iterate(g2 =>
                 {
-                    if (!g2.Is(Rule.AFFECTED_BY_BH)) return;
+                    if (!g2.Is(Rule.AffectedByBh)) return;
 
                     if (g != g2 && !(g2 is Player))
                     {
-                        Vector V = g.Location - g2.Location;
-                        double Fg = JoelConstante * (g.Mass / (V.Length() * V.Length()));
+                        Vector v = g.Location - g2.Location;
+                        double fg = JoelConstante * (g.Mass / (v.Length() * v.Length()));
                         // Speed of projectile gets updated
-                        g2.DV += V.ScaleToLength(Fg * (ms / 1000.0));
+                        g2.DV += v.ScaleToLength(fg * (ms / 1000.0));
                     }
                 });
             });

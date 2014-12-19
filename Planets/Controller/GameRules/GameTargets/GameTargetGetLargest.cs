@@ -15,10 +15,10 @@ namespace Planets.Controller.GameRules.GameTargets
         public bool IsTargetReached(GameEngine ge)
         {
             // Get player mass, buffered for performance
-            double playerMass = ge.field.CurrentPlayer.Mass;
+            double playerMass = ge.Field.CurrentPlayer.Mass;
 
             // Check if largest
-            return ge.field.BOT.GameObjectList.All(g => g.Mass < playerMass);
+            return ge.Field.BOT.GameObjectList.All(g => g.Mass < playerMass);
         }
     }
 }

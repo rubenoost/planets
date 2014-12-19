@@ -10,7 +10,7 @@ namespace Planets.Controller.Subcontrollers
             Random
         }
 
-        private string LevelFolder = "Data/Levels/";
+        private const string LevelFolder = "Data/Levels/";
 
         private Mode _propLevelMode = Mode.Random;
         public Mode LevelMode

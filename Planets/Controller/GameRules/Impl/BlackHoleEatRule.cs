@@ -14,14 +14,14 @@ namespace Planets.Controller.GameRules.Impl
                 if (!(go is BlackHole)) return;
                 pf.BOT.Iterate(go2 =>
                 {
-                    if (!go2.Is(Rule.EATABLE)) return;
-                    if (!go.Is(go2 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
+                    if (!go2.Is(Rule.Eatable)) return;
+                    if (!go.Is(go2 is Player ? Rule.EatPlayer : Rule.Eats)) return;
 
                     if (go != go2 && go.IntersectsWith(go2))
                     {
                         if (go2 is Player)
                         {
-                            if (go.Is(Rule.EAT_PLAYER))
+                            if (go.Is(Rule.EatPlayer))
                                 pf.BOT.Remove(go2);
                         }
                         else

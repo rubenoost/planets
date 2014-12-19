@@ -6,7 +6,7 @@
             : this(new Vector(), new Vector(), Utils.StartMass)
         { }
         public AntiMatter(Vector location, Vector velocity, double mass)
-            : base(location, velocity, mass, Rule.COLLIDES | Rule.EATABLE | Rule.MOVE | Rule.EATS | Rule.DYNAMIC_RADIUS)
+            : base(location, velocity, mass, Rule.Collides | Rule.Eatable | Rule.Move | Rule.Eats | Rule.DynamicRadius)
         { }
 
     }

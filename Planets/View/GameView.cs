@@ -34,7 +34,7 @@ namespace Planets.View
 
         private Playfield field
         {
-            get { return ge.field; }
+            get { return ge.Field; }
         }
 
         private SpritePool sp = new SpritePool();

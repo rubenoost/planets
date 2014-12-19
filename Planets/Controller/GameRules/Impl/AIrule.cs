@@ -7,11 +7,11 @@ namespace Planets.Controller.GameRules.Impl
 {
     class AIrule : AbstractGameRule
     {
-        GameObject antagonist;
-        DateTime begin;
-        GameObject closest;
-        Playfield pfcopy;
-        int AI;
+        GameObject _antagonist;
+        DateTime _begin;
+        GameObject _closest;
+        Playfield _pfcopy;
+        int _ai;
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
@@ -19,27 +19,27 @@ namespace Planets.Controller.GameRules.Impl
             CheckPlayfieldChange(pf);
 
             // Find anta
-            if (antagonist == null) antagonist = FindAntagonist(pf);
-            closest = FindClosest(pf, (Antagonist)antagonist);
+            if (_antagonist == null) _antagonist = FindAntagonist(pf);
+            _closest = FindClosest(pf, (Antagonist)_antagonist);
 
-            TimeSpan tijd = DateTime.Now - begin;
+            TimeSpan tijd = DateTime.Now - _begin;
             if (tijd.TotalMilliseconds < 1000) return;
-            begin = DateTime.Now;
-            if (closest.Radius > antagonist.Radius && closest.Ai == false)
+            _begin = DateTime.Now;
+            if (_closest.Radius > _antagonist.Radius && _closest.Ai == false)
             {
                 //Move away from bigger object
-                GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
-                antagonist.DV = antagonist.DV * 1.2;
+                GameObject projectiel = ((Antagonist)_antagonist).ShootProjectile(pf, (_antagonist.Location - _closest.Location));
+                _antagonist.DV = _antagonist.DV * 1.2;
                 projectiel.Ai = true;
                 Console.WriteLine("REN");
             }
-            else if (closest.Ai == false)
+            else if (_closest.Ai == false)
             {
                 //Move towards smaller object
-                GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
-                AI++;
-                Console.WriteLine(AI);
-                antagonist.DV = antagonist.DV * 1.2;
+                GameObject projectiel = ((Antagonist)_antagonist).ShootProjectile(pf, (_closest.Location - _antagonist.Location));
+                _ai++;
+                Console.WriteLine(_ai);
+                _antagonist.DV = _antagonist.DV * 1.2;
                 projectiel.Ai = true;
             }
         }
@@ -49,14 +49,14 @@ namespace Planets.Controller.GameRules.Impl
         private void CheckPlayfieldChange(Playfield pf)
         {
             // Code for keeping track of the playfield
-            if (pfcopy == null)
+            if (_pfcopy == null)
             {
-                pfcopy = pf;
+                _pfcopy = pf;
             }
-            else if (pf != pfcopy)
+            else if (pf != _pfcopy)
             {
-                antagonist = null;
-                pfcopy = pf;
+                _antagonist = null;
+                _pfcopy = pf;
             }
         }
 

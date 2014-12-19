@@ -63,7 +63,7 @@ namespace Planets.Controller
         /// <summary>
         /// Whether this autodemo is running
         /// </summary>
-        private bool Running;
+        private bool _running;
 
         /// <summary>
         /// Run the autodemo
@@ -76,7 +76,7 @@ namespace Planets.Controller
             while (true)
             {
                 // While key is pressed
-                while (Running)
+                while (_running)
                 {
                     Spc.InternalControl.IsAiming = true;
                     // Determine next click
@@ -86,7 +86,7 @@ namespace Planets.Controller
                     for (int i = 0; i < 3; i++)
                     {
                         // Click
-                        if (Running)
+                        if (_running)
                         {
                             Spc.Clicked(p);
                             Spc.InternalPlayfield.LastAutoClickGameLocation = p;
@@ -99,7 +99,7 @@ namespace Planets.Controller
                 }
 
                 // Set running to false
-                Running = false;
+                _running = false;
 
                 Thread.Sleep(100);
             }
@@ -112,10 +112,10 @@ namespace Planets.Controller
         {
             _lastActivityTime = DateTime.Now;
             // If keys ok
-            if (Running)
+            if (_running)
             {
                 // Stop demo
-                Running = false;
+                _running = false;
 
                 // Change lastautoclicklocation
                 Spc.InternalPlayfield.LastAutoClickMoment = DateTime.MinValue;
@@ -128,10 +128,10 @@ namespace Planets.Controller
         private void StartDemo()
         {
             // If keys ok
-            if (!Running)
+            if (!_running)
             {
                 // Start demo
-                Running = true;
+                _running = true;
             }
         }
 

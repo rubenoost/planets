@@ -13,13 +13,13 @@ namespace Planets.Controller.GameRules.Impl
             if (!go1.IntersectsWith(go2)) return;
 
             // Check for explosion flags
-            if (!go1.Is(Rule.EXPLODES) && !go2.Is(Rule.EXPLODES))
+            if (!go1.Is(Rule.Explodes) && !go2.Is(Rule.Explodes))
                 return;
 
             GameObject goExplodes, goPlayer;
 
             // Determine which object is the exploding object.
-            if (go1.Is(Rule.EXPLODES))
+            if (go1.Is(Rule.Explodes))
             {
                 goExplodes = go1;
                 goPlayer = go2;

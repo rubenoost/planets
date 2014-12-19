@@ -8,9 +8,9 @@
         { }
 
         public Bonus(Vector location, Vector velocity, double mass)
-            : base(location, velocity, mass, Rule.COLLIDES)
+            : base(location, velocity, mass, Rule.Collides)
         {
-            Traits = Traits & ~Rule.COLLIDES & ~Rule.HAS_SCORE;
+            Traits = Traits & ~Rule.Collides & ~Rule.HasScore;
         }
     }
 }

@@ -12,10 +12,10 @@ namespace Planets.Controller.GameRules.Impl
         public void Execute(GameEngine ge, double ms)
         {
             // Check if player is too small
-            if (ge.field.CurrentPlayer.Mass < MassTreshold)
+            if (ge.Field.CurrentPlayer.Mass < MassTreshold)
             {
-                ge.field.CurrentPlayer.GameOver = true;
-                ge.running = false;
+                ge.Field.CurrentPlayer.GameOver = true;
+                ge.Running = false;
                 return;
             }
 

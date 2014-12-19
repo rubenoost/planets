@@ -8,12 +8,12 @@ namespace Planets.Controller.GameRules.Impl
     {
         protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject c1, GameObject c2)
         {
-            if (!c1.Is(Rule.COLLIDES) || !c2.Is(Rule.COLLIDES)) return;
-            if (c1.Mass > c2.Mass && c2.Is(Rule.EATABLE) && c1.Is(c2 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
-            if (c2.Mass > c1.Mass && c1.Is(Rule.EATABLE) && c2.Is(c1 is Player ? Rule.EAT_PLAYER : Rule.EATS)) return;
+            if (!c1.Is(Rule.Collides) || !c2.Is(Rule.Collides)) return;
+            if (c1.Mass > c2.Mass && c2.Is(Rule.Eatable) && c1.Is(c2 is Player ? Rule.EatPlayer : Rule.Eats)) return;
+            if (c2.Mass > c1.Mass && c1.Is(Rule.Eatable) && c2.Is(c1 is Player ? Rule.EatPlayer : Rule.Eats)) return;
             if (!c1.IntersectsWith(c2)) return;
 
-            if (c1.Is(Rule.MOVE) && c2.Is(Rule.MOVE))
+            if (c1.Is(Rule.Move) && c2.Is(Rule.Move))
             {
                 var totalMass = c1.Mass + c2.Mass;
 
@@ -37,7 +37,7 @@ namespace Planets.Controller.GameRules.Impl
                 c1.DV = c1.DV - (2.0 * c2.Mass / totalMass) * t3 / t2 * h1;
                 c2.DV = c2.DV - (2.0 * c1.Mass / totalMass) * t3 / t2 * h2;
             }
-            else if (c1.Is(Rule.MOVE))
+            else if (c1.Is(Rule.Move))
             {
                 // Move back
                 c1.Location = c2.Location + (c1.Location - c2.Location).ScaleToLength(c1.Radius + c2.Radius);
@@ -52,7 +52,7 @@ namespace Planets.Controller.GameRules.Impl
 
                 c1.DV = c1.DV - (2.0 * c2.Mass / t) * t3 / t2 * h1;
             }
-            else if (c2.Is(Rule.MOVE))
+            else if (c2.Is(Rule.Move))
             {
                 // Move back
                 c2.Location = c1.Location + (c2.Location - c1.Location).ScaleToLength(c2.Radius + c1.Radius);

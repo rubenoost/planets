@@ -6,7 +6,7 @@
             : this(new Vector(), new Vector(), Utils.StartMass)
         { }
         public Mine(Vector location, Vector velocity, double mass)
-            : base(location, velocity, mass, Rule.EXPLODES | Rule.COLLIDES)
+            : base(location, velocity, mass, Rule.Explodes | Rule.Collides)
         {
             Radius = 50;
         }

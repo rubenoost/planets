@@ -22,7 +22,7 @@ namespace Planets.Controller
         private LevelSupplier ls = new LevelSupplier();
 
         // Model Data
-        public Playfield field;
+        public Playfield Field;
 
         // Events
         public event Action<double> GameLoopEvent;
@@ -61,12 +61,12 @@ namespace Planets.Controller
         };
 
         public Thread GameThread;
-        public bool running = true;
+        public bool Running = true;
 
-        public GameEngine(MainEngine HostEngine)
+        public GameEngine(MainEngine hostEngine)
         {
-            this.HostEngine = HostEngine;
-            field = ls.GenerateLevel();
+            HostEngine = hostEngine;
+            Field = ls.GenerateLevel();
 
             // Create view
             GameView = new GameView(this);
@@ -76,19 +76,19 @@ namespace Planets.Controller
             new Autodemo(spc, this);
 
             // Set gameview
-            this.HostEngine.SetView(GameView);
+            HostEngine.SetView(GameView);
 
             // Adjust playfield
-            field.Size = GameView.Size;
+            Field.Size = GameView.Size;
 
             // Register keys for resetting
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) field.CurrentPlayer.Mass = 1.0; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) Field.CurrentPlayer.Mass = 1.0; };
 
             // Increase mass
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) field.CurrentPlayer.Mass *= 1.2; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) Field.CurrentPlayer.Mass *= 1.2; };
 
             // Decrease mass
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) field.CurrentPlayer.Mass /= 1.2; };
+            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) Field.CurrentPlayer.Mass /= 1.2; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Zoom *= 1.25f; };
             GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Zoom *= 0.8f; };
 
@@ -105,26 +105,26 @@ namespace Planets.Controller
 
         public void Start()
         {
-            running = true;
+            Running = true;
         }
 
         public void LoadNextLevel()
         {
-            field = ls.GenerateLevel();
+            Field = ls.GenerateLevel();
         }
 
         public void GameLoop()
         {
-            DateTime LoopBegin = DateTime.Now;
+            DateTime loopBegin = DateTime.Now;
             TimeSpan DeltaT;
 
             while (true)
             {
-                while (running)
+                while (Running)
                 {
                     // Bereken DeltaT
-                    DeltaT = DateTime.Now - LoopBegin;
-                    LoopBegin = DateTime.Now;
+                    DeltaT = DateTime.Now - loopBegin;
+                    loopBegin = DateTime.Now;
 
                     // Converteer DeltaT naar ms
                     double dt = DeltaT.TotalMilliseconds;
@@ -135,10 +135,10 @@ namespace Planets.Controller
                     double temp3 = temp2 * 1000 / 60;
                     Thread.Sleep((int)temp3);
 
-                    field.sb.CheckStamps();
+                    Field.sb.CheckStamps();
 
                     // Lock BOT
-                    lock (field.BOT)
+                    lock (Field.BOT)
                     {
                         // ExecuteRule game rules
                         foreach (var agr in _gameRules)

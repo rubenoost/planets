@@ -7,7 +7,7 @@
         { }
 
         public BlackHole(Vector location, Vector velocity, double mass)
-            : base(location, velocity, mass, Rule.EATS)
+            : base(location, velocity, mass, Rule.Eats)
         {
             // Radius of the hole is always 50
             Radius = 50;
