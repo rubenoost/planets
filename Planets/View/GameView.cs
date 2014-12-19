@@ -409,39 +409,44 @@ namespace Planets.View
             Brush radarbackgroundbrush = new SolidBrush(Color.FromArgb(230, 23, 23, 23));
             Brush gameobjectbrush = new SolidBrush(Color.FromArgb(255, 0, 198, 0));
             Brush playerBrush = new SolidBrush(Color.Red);
+            Brush antagonistbrush = new SolidBrush(Color.Blue);
+            Brush bonusbrush = new SolidBrush(Color.Yellow);
 
             g.FillEllipse(radarbackgroundbrush, new Rectangle(RadarPoint, s));
 
             field.BOT.Iterate(go1 =>
             {
-                if (go1 is Player)
-                {
+                double xField = go1.Location.X / field.Size.Width;
+                double yField = go1.Location.Y / field.Size.Height;
 
+                double xRadar = s.Width * xField;
+                double yRadar = s.Height * yField;
+
+                Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
+                blip.X += RadarPoint.X;
+                blip.Y += RadarPoint.Y;
+
+                //if antagonist than draw blue circle
+                if (go1 is Antagonist)
+                {
+                    g.FillEllipse(antagonistbrush, new Rectangle(blip, new Size(10, 10)));
                 }
 
-                Player playerRadar = field.CurrentPlayer;
-
-                Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
-                g.FillEllipse(playerBrush, new Rectangle(pPlayer, new Size(10, 10)));
-                Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
-
-                if (go1 is Antagonist || !(go1 is Player))
+                //If player than draw a red circle
+                else if (go1 is Player)
                 {
-                    if (playerRadar.CalcDistance(go1) < 800)
-                    {
-                        Console.WriteLine(playerRadar.CalcDistance(go1).ToString());
-                        double xField = go1.Location.X / field.Size.Width;
-                        double yField = go1.Location.Y / field.Size.Height;
+                    g.FillEllipse(playerBrush, new Rectangle(blip, new Size(10, 10)));
+                }
 
-                        double xRadar = s.Width * xField;
-                        double yRadar = s.Height * yField;
+                else if (go1 is Bonus)
+                {
+                    g.FillEllipse(bonusbrush, new Rectangle(blip, new Size(10, 10)));
+                }
 
-                        Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                        blip.X += RadarPoint.X;
-                        blip.Y += RadarPoint.Y;
-
-                        g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
-                    }
+                //if gameobject then draw green circle 
+                else
+                {
+                    g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
                 }
             });
         }
