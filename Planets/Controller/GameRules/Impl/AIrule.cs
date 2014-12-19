@@ -68,7 +68,7 @@ namespace Planets.Controller.GameRules.Impl
             {
                 newdistance = (go.Location - antagonist.Location).Length();
                 if (go.Ai == true) return;
-                if(distance > newdistance && go.GetType() == typeof(GameObject))//HIER ZIT DE SHIT
+                if(distance > newdistance && go.GetType() == typeof(GameObject))
                 {
                     distance = newdistance;
                     newclosest = go;
