@@ -15,7 +15,6 @@ namespace Planets.Model.GameObjects
             Traits = Traits & ~Rule.AFFECTED_BY_BH & ~Rule.EAT_PLAYER;
             GameOver = false;
             GameWon = false;
-            this.Location = location;
         }
 
         public GameObject ShootProjectile(Playfield pf, Vector direction)
@@ -29,7 +28,7 @@ namespace Planets.Model.GameObjects
         }
         public double CalcDistance(GameObject g) {
             double distance;
-            distance = (this.Location - g.Location).Length();
+            distance = (Location - g.Location).Length();
             return distance;
         }
     }

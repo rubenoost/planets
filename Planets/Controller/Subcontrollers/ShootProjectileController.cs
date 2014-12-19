@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using Planets.Model;
 using Planets.Model.GameObjects;
 using Planets.View;
-using System.Threading;
 
 namespace Planets.Controller.Subcontrollers
 {
