@@ -161,7 +161,7 @@ namespace Planets.View
         private void DrawEndGame(Graphics g)
         {
             // Background rectangle
-            g.FillRectangle(EndGameBrush, new Rectangle(new Point(0, 0), new Size(1920, 1080)));
+            g.FillRectangle(EndGameBrush, new Rectangle(new Point(0, 0), new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height)));
 
             // Highscore
             g.DrawString("Highscore: ", EndGameFont, HighScoreBrush, new Point(175, 200));
@@ -196,9 +196,10 @@ namespace Planets.View
             g.DrawString("Gamescore: ", EndGameFont, YourScoreBrush, new Point(176, 300));
             g.DrawString(field.sb.Total.ToString(), EndGameFont, YourScoreBrush, new Point(640 - TextRenderer.MeasureText(field.sb.Total.ToString(), EndGameFont).Width, 300));
             ScoreBoard.WriteScore(field.sb.Total);
-
-            g.DrawImage(Properties.Resources.HighScoreLogo, new Point(1350, 40));
-            g.DrawString("Planets", this.PlanetsFont, HighScoreBrush, new Point(1365, 500));
+            
+            // Draw icon
+            g.DrawImage(Properties.Resources.HighScoreLogo, new Point(Screen.PrimaryScreen.Bounds.Width - 570, 40));
+            g.DrawString("Planets", this.PlanetsFont, HighScoreBrush, new Point(Screen.PrimaryScreen.Bounds.Width - 555, 500));
         }
 
         private void DrawAimVectors(Graphics g)
