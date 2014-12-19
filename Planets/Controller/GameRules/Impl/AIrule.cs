@@ -12,11 +12,7 @@ namespace Planets.Controller.GameRules.Impl
         GameObject closest = null;
         GameObject player;
         Playfield pfcopy;
-        double distance = 0.0;
-        double newdistance;
-        bool run;
-        bool eat;
-        bool hug;
+        int AI = 0;
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
@@ -24,109 +20,26 @@ namespace Planets.Controller.GameRules.Impl
             CheckPlayfieldChange(pf);
 
             // Find antagonist
-            if(antagonist == null) antagonist = FindAntagonist(pf);
+            if (antagonist == null) antagonist = FindAntagonist(pf);
+            closest = FindClosest(pf, (Antagonist)antagonist);
 
-            // Iterate through all gameobjects
-            pf.BOT.Iterate(g =>
-                {
-                    if(g.GetType() == typeof(GameObject))
-                    {
-                        //Let's find the closest Gameobject
-                        if(g == FindClosest((GameObject)g, (Antagonist)antagonist))
-                        {
-                            if(g.Radius > antagonist.Radius)
-                            {
-                                //if the closest Gameobject is bigger
-                                run = true;
-                            }
-                            else if(closest.Ai == false)
-                            {
-                                //if the closest Gameobject is smaller
-                                eat = true;
-                            }
-                        }
-                    }
-                    else if(g.GetType() == typeof(Player) && g == FindClosest(g, (Antagonist)antagonist))
-                    {
-                        //If the closest gameobject is a player ANNOY HIM!!!
-                        eat = true;
-                    }
-
-                    /*
-                    if (antagonist == null && g is Antagonist)
-                    {
-                        //find and bind the antagonist
-                        antagonist = g;
-                        Console.WriteLine("Antagonist!");
-                        return;
-                    }
-                    else if (g is Antagonist)
-                    {
-                        //find and bind new antagonist location
-                        antagonist = g;
-                        return;
-                    }
-                    else if (antagonist == null) return;
-                    if (closest == null)
-                    {
-                        closest = FindClosest(g, (Antagonist)antagonist, pf);
-                    }
-                    else
-                    {
-                        closest = FindClosest(g, (Antagonist)antagonist, pf);
-                    }
-                    if (antagonist != null && g.GetType() == typeof(GameObject) && g.Ai == false && g == closest)
-                    {
-                        if ( g.Radius > antagonist.Radius)
-                        {
-                            //Move away from bigger object
-                            run = true;
-                            eat = false;
-                            hug = false;
-                        }
-                        else
-                        {
-                            //Move towards smaller object
-                            run = false;
-                            eat = true;
-                            hug = false;
-                        }
-                    }
-                    else if( g == closest)
-                    {
-                        if (antagonist != null && g is Player && g.GetType() == typeof(Player))
-                        {
-                            player = g;
-                            if ((g.Location - antagonist.Location).Length() < 1000)
-                            {
-                                run = false;
-                                eat = false;
-                                hug = true;
-                                //Move towards player if there is no other option                                
-                            }
-                        }
-                    }
-                     */
-
-                });
             TimeSpan tijd = DateTime.Now - begin;
             if (tijd.TotalMilliseconds < 1000) return;
             begin = DateTime.Now;
-            if(run == true)
+            /*if (closest.Radius > antagonist.Radius && closest.Ai == false)
             {
                 //Move away from bigger object
-                ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
+                GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
+                projectiel.Ai = true;
                 Console.WriteLine("REN");
-                run = false;
-                distance = 0.0;
             }
-            else if(eat == true)
+            else */if (closest.Ai == false)
             {
-                //Move towards smaller object or player
-                ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
-                Console.WriteLine(closest.Ai);
-                eat = false;
-                distance = 0.0;
+                //Move towards smaller object
+                GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
+                AI++;
+                Console.WriteLine(AI);
+                projectiel.Ai = true;
             }
         }
 
@@ -142,11 +55,6 @@ namespace Planets.Controller.GameRules.Impl
             else if (pf != pfcopy)
             {
                 antagonist = null;
-                player = null;
-                distance = 0.0;
-                run = false;
-                eat = false;
-                hug = false;
                 pfcopy = pf;
             }
         }
@@ -160,24 +68,22 @@ namespace Planets.Controller.GameRules.Impl
 
         #endregion
 
-        private GameObject FindClosest(GameObject go, Antagonist a)
+        private GameObject FindClosest(Playfield pf, Antagonist antagonist)
         {
-            if(distance == 0.0)
+            double distance = double.MaxValue;
+            double newdistance;
+            GameObject newclosest = null;
+            pf.BOT.Iterate(go => 
             {
-                distance = (go.Location - a.Location).Length();
-                closest = go;
-                return closest;
-            }
-            else if(distance > (go.Location - a.Location).Length())
-            {
-                distance = (go.Location - a.Location).Length();
-                closest = go;
-                return closest;
-            }
-            else
-            {
-                return closest;
-            }
+                newdistance = (go.Location - antagonist.Location).Length();
+                if (go.Ai == true) Console.WriteLine("AI FOUND");
+                if(distance > newdistance && go.GetType() == typeof(GameObject))//HIER ZIT DE SHIT
+                {
+                    distance = newdistance;
+                    newclosest = go;
+                }
+            });
+            return newclosest;
         }
     }
 }
