@@ -20,7 +20,7 @@ namespace Planets.Controller.GameRules.Impl
         }
 
 
-        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2, double ms)
+        protected override void DoCollision(Playfield pf, ScoreBoard sb, GameObject go1, GameObject go2)
         {
             if (go1.IntersectsWith(go2))
             {

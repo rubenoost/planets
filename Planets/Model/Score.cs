@@ -21,10 +21,7 @@ namespace Planets.Model
             this.Stamp = Stamp;
             this.Location = Location;
 
-            if (CurrentPlayer)
-                Color = Color.White;
-            else
-                Color = Color.Red;
+            Color = CurrentPlayer ? Color.White : Color.Red;
         }
 
         public void UpdateLocation()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Linq;
 using Planets.Model;
 using Planets.Model.GameObjects;
 using Planets.Properties;
@@ -79,11 +80,8 @@ namespace Planets.View.Imaging
             {
                 return RotateImg(CreateImage(new ImageRequest(i.no, i.w, i.h, 0)), i.r);
             }
-            else
-            {
-                Sprite sourceSprite = _imageSource[i.no];
-                return ResizeImg(sourceSprite, i.w, i.h);
-            }
+            Sprite sourceSprite = _imageSource[i.no];
+            return ResizeImg(sourceSprite, i.w, i.h);
         }
 
         private static Sprite ResizeImg(Sprite s, int width, int height)
@@ -92,17 +90,9 @@ namespace Planets.View.Imaging
             {
                 return ResizeImg((Bitmap)s, width, height);
             }
-            else
-            {
-                List<Bitmap> resized = new List<Bitmap>();
+            var resized = s.Images.Select(bm => ResizeImg(bm, width, height)).Select(dummy => (Bitmap)dummy).ToList();
 
-                foreach (Bitmap bm in s.Images)
-                {
-                    resized.Add(ResizeImg(bm, width, height));
-                }
-
-                return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
-            }
+            return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
         }
 
         private static Sprite ResizeImg(Bitmap s, int width, int height)
@@ -133,17 +123,9 @@ namespace Planets.View.Imaging
             {
                 return RotateImg((Bitmap)s, angle);
             }
-            else
-            {
-                List<Bitmap> resized = new List<Bitmap>();
+            var resized = s.Images.Select(bm => RotateImg(bm, angle)).ToList();
 
-                foreach (Bitmap bm in s.Images)
-                {
-                    resized.Add(RotateImg(bm, angle));
-                }
-
-                return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
-            }
+            return new Sprite(resized, s.Columns, s.Rows, s.Cyclic);
         }
 
         private static Bitmap RotateImg(Bitmap bmp, int angle)

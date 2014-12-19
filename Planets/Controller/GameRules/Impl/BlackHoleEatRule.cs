@@ -29,8 +29,7 @@ namespace Planets.Controller.GameRules.Impl
                             if (go2 is AntiMatter) return;
                             pf.BOT.Remove(go2);
                         }
-                        AnimatedGameObject explosion = new AnimatedGameObject(go2.Location, new Vector(0, 0), 500);
-                        explosion.Radius = go2.Radius * 3.0;
+                        var explosion = new AnimatedGameObject(go2.Location, new Vector(0, 0), 500) { Radius = go2.Radius * 3.0 };
                         pf.BOT.Add(explosion);
                     }
                 });

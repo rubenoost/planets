@@ -113,9 +113,9 @@ namespace Planets.Controller.Subcontrollers
                         case 5: // Tardis
                             NewObj = (new Bonus(NextPoint, new Vector(0, 0), 0));
                             break;
-                        case 6: //Antagonist
-                            NewObj = (new Antagonist(NextPoint, new Vector(0, 0), 10000));
-                            break;
+                        //case 6: //Antagonist
+                        //    NewObj = (new Antagonist(NextPoint, new Vector(0, 0), 10000));
+                        //    break;
                     }
 
                     bool FoundIntersect = false;
@@ -135,11 +135,11 @@ namespace Planets.Controller.Subcontrollers
             }
 
             pf.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), Utils.StartMass);
+            pf.CurrentAntagonist = new Antagonist(new Vector(600, 500), new Vector(0,0), Utils.StartMass);
 
-            GameObject normalObject = null;
             for (int i = 0; i < normalCount; i++)
             {
-                normalObject = new GameObject(new Vector(rnd.Next(100, 1800), rnd.Next(100, 900)), new Vector(rnd.Next(0, 10), rnd.Next(0, 10)), rnd.Next(1000, 5000));
+                var normalObject = new GameObject(new Vector(rnd.Next(100, 1800), rnd.Next(100, 900)), new Vector(rnd.Next(0, 10), rnd.Next(0, 10)), rnd.Next(1000, 5000));
                 pf.BOT.Add(normalObject);
             }
 

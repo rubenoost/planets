@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 using Planets.Controller;
 using Planets.Controller.Subcontrollers;
 using Planets.Model;
 using Planets.Model.GameObjects;
+using Planets.Properties;
 using Planets.View.Imaging;
-using System.Drawing.Text;
-using System.Threading;
 
 namespace Planets.View
 {
@@ -45,7 +45,6 @@ namespace Planets.View
         // Custom Font!
         private static PrivateFontCollection pfc = new PrivateFontCollection();
         private Font EndGameFont;
-        private Font CustomNameFont;
 
         // Aiming Settings
         /// <summary>
@@ -177,7 +176,7 @@ namespace Planets.View
             g.DrawLine(new Pen(Color.WhiteSmoke, 2), new Point(630, 370), new Point(630, 170));
 
             // Next button
-            if (this.ClickOnNextButton)
+            if (ClickOnNextButton)
             {
                 g.FillRectangle(new SolidBrush(Color.WhiteSmoke), new Rectangle(new Point(175, 400), new Size(430, 100)));
             }
@@ -186,7 +185,7 @@ namespace Planets.View
                 g.DrawRectangle(new Pen(Color.WhiteSmoke, 2), new Rectangle(new Point(175, 400), new Size(430, 100)));
             }
 
-            g.DrawString("Next level", NextLevelFont, new SolidBrush((this.ClickOnNextButton) ? Color.FromArgb(230, 88, 88, 88) : Color.WhiteSmoke), new Point(185, 420));
+            g.DrawString("Next level", NextLevelFont, new SolidBrush((ClickOnNextButton) ? Color.FromArgb(230, 88, 88, 88) : Color.WhiteSmoke), new Point(185, 420));
 
             PrevClickNext = ClickOnNextButton;
 
@@ -239,11 +238,12 @@ namespace Planets.View
             Rectangle target = GameToScreen(obj.BoundingBox);
             Sprite s = sp.GetSprite(obj.GetType(), target.Width, target.Height, objAngle);
 
-            if (obj is AnimatedGameObject)
+            var o = obj as AnimatedGameObject;
+            if (o != null)
             {
                 DateTime nu = DateTime.Now;
-                DateTime begin = ((AnimatedGameObject)obj).Begin;
-                TimeSpan duration = ((AnimatedGameObject)obj).Duration;
+                DateTime begin = o.Begin;
+                TimeSpan duration = o.Duration;
 
                 float p = (float)(nu - begin).TotalMilliseconds / (float)duration.TotalMilliseconds;
 
@@ -254,7 +254,7 @@ namespace Planets.View
 
                 if (nu - begin >= duration)
                 {
-                    field.BOT.Remove(obj);
+                    field.BOT.Remove(o);
                 }
             }
             else
@@ -284,10 +284,11 @@ namespace Planets.View
                 for (int i = 0; i < field.sb.Scores.Count; i++)
                 {
                     ScorePlayerBrush.Color = field.sb.Scores[i].Color;
-                    if (field.sb.Scores[i].Value > 0)
-                        g.DrawString(String.Format("+{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
-                    else
-                        g.DrawString(String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush, (Point)GameToScreen(field.sb.Scores[i].Location));
+                    g.DrawString(
+                        field.sb.Scores[i].Value > 0
+                            ? String.Format("+{0}", field.sb.Scores[i].Value)
+                            : String.Format("{0}", field.sb.Scores[i].Value), ScoreFont, ScorePlayerBrush,
+                        (Point)GameToScreen(field.sb.Scores[i].Location));
                     field.sb.Scores[i].UpdateLocation();
                 }
             }
@@ -365,7 +366,7 @@ namespace Planets.View
                 g.DrawArc(HudArcAccentPen3, arcAccentRect3, barStart + barSize * f - 0.25f, 0.5f);
 
             // Draw score text
-            g.DrawString(field.sb.Total.ToString(), HudScoreFont, LabelBrush, arcRectangle.Left + arcRectangle.Width / 2, arcRectangle.Top + arcRectangle.Height / 6);
+            g.DrawString(field.sb.Total.ToString(), HudScoreFont, LabelBrush, arcRectangle.Left + arcRectangle.Width / 2, arcRectangle.Top + arcRectangle.Height / 11);
 
             // Draw Mass-o-meter
             Point MassMeterPoint = new Point(hudLocation.X + 20, hudLocation.Y + 60);
@@ -410,22 +411,21 @@ namespace Planets.View
                 Vector drawCenter = RadarCenter + (go.Location - playerLocation)*scale;
                 g.FillEllipse(Brushes.Blue, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int) (DotRadius * 2), (int) (DotRadius * 2))));
             });*/
-            int RadiusRadar = 130;
+
+            int RadiusRadar = 180;
             Size s = new Size(RadiusRadar, RadiusRadar);
             Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
 
-            g.FillEllipse(Brushes.Red, new Rectangle(RadarPoint, s));
+            Brush radarbackgroundbrush = new SolidBrush(Color.FromArgb(230, 23, 23, 23));
+            Brush gameobjectbrush = new SolidBrush(Color.FromArgb(255, 0, 198, 0));
+            Brush playerBrush = new SolidBrush(Color.Red);
+            Brush antagonistbrush = new SolidBrush(Color.Blue);
+            Brush bonusbrush = new SolidBrush(Color.Yellow);
+
+            g.FillEllipse(radarbackgroundbrush, new Rectangle(RadarPoint, s));
 
             field.BOT.Iterate(go1 =>
             {
-                Player playerRadar = go1 as Player;
-
-                Point pPlayer = new Point(field.Size.Width - (hudSize.Width / 2) - 5, (field.Size.Height - (hudSize.Height / 2)) + 55);
-                g.FillEllipse(Brushes.Green, new Rectangle(pPlayer, new Size(10, 10)));
-                Point pCalc = new Point(pPlayer.X + 5, pPlayer.Y + 5);
-
-                field.BOT.Iterate(go2 =>
-                {
                     double xField = go1.Location.X / field.Size.Width;
                     double yField = go1.Location.Y / field.Size.Height;
 
@@ -436,16 +436,29 @@ namespace Planets.View
                     blip.X += RadarPoint.X;
                     blip.Y += RadarPoint.Y;
 
-                    if (go2 is Player)
+                //if antagonist than draw blue circle
+                if (go1 is Antagonist)
+                {
+                    g.FillEllipse(antagonistbrush, new Rectangle(blip, new Size(10, 10)));
+                }
+
+                //If player than draw a red circle
+                else if (go1 is Player)
+                {
+                    g.FillEllipse(playerBrush, new Rectangle(blip, new Size(10, 10)));
+                }
+
+                else if (go1 is Bonus)
                     {
-                        g.FillEllipse(Brushes.Purple, new Rectangle(blip, new Size(10, 10)));
+                    g.FillEllipse(bonusbrush, new Rectangle(blip, new Size(10, 10)));
                     }
-                    else if (!(go2 is Player))
+
+                //if gameobject then draw green circle 
+                else
                     {
-                        g.FillEllipse(Brushes.Blue, new Rectangle(blip, new Size(10, 10)));
+                    g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
                     }
                 });
-            });
         }
 
         private void DrawAnimations(Graphics g, GameObject obj)
@@ -502,7 +515,7 @@ namespace Planets.View
             double scaleX = ClientSize.Width / viewSizeGame.X;
             double scaleY = ClientSize.Height / viewSizeGame.Y;
 
-            Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+            Vector viewCenterPixel = new Vector((double)ClientSize.Width / 2, (double)ClientSize.Height / 2);
 
             Vector pointRelativeToViewCenterGame = v - viewCenterGame;
             Vector pointRelativeToViewCenterPixel = new Vector(pointRelativeToViewCenterGame.X * scaleX, pointRelativeToViewCenterGame.Y * scaleY);
@@ -543,7 +556,7 @@ namespace Planets.View
             viewCenterGame = new Vector(Math.Min(viewCenterGame.X, layerGameSize.X - viewSizeGame.X / 2), Math.Min(viewCenterGame.Y, layerGameSize.Y - viewSizeGame.Y / 2));
 
             //=================================== [ Scale to pixels ] =============================
-            Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+            Vector viewCenterPixel = new Vector((double)ClientSize.Width / 2, (double)ClientSize.Height / 2);
             Vector pointRelativeToViewCenterPixel = v - viewCenterPixel;
 
             double scaleX = ClientSize.Width / viewSizeGame.X;
@@ -593,7 +606,7 @@ namespace Planets.View
             double scaleX = ClientSize.Width / viewSizeGame.X;
             double scaleY = ClientSize.Height / viewSizeGame.Y;
 
-            Vector viewCenterPixel = new Vector(ClientSize.Width / 2, ClientSize.Height / 2);
+            Vector viewCenterPixel = new Vector((double)ClientSize.Width / 2, (double)ClientSize.Height / 2);
 
             Vector rectangleSizeGame = new Vector(gameRectangle.Width, gameRectangle.Height);
             Vector rectangleCenterGame = gameRectangle.Location + rectangleSizeGame / 2;

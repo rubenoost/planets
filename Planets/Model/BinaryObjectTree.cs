@@ -20,18 +20,17 @@ namespace Planets.Model
 
         private BinaryObjectTree t1;
         private BinaryObjectTree t2;
-        private int level;
         private BinaryObjectTree _parent;
         private Rectangle boundingBox;
         private List<GameObject> _objects = new List<GameObject>();
-        private int ColCount;
+        private int _colCount;
 
         private HashSet<GameObject> _allGameObjects = new HashSet<GameObject>();
 
         public BinaryObjectTree(BinaryObjectTree parent, Rectangle r, int l, int maxlevel, int splitDirection)
         {
             boundingBox = r;
-            level = l;
+            var level = l;
             _parent = parent;
             if (level != maxlevel)
             {
@@ -103,7 +102,7 @@ namespace Planets.Model
         }
         public void DoCollisions(Action<GameObject, GameObject, double> a, double ms)
         {
-            ColCount = 0;
+            _colCount = 0;
             List<GameObject> temp = _objects.ToList();
             for (int i = temp.Count - 1; i >= 0; i--)
             {
@@ -111,26 +110,26 @@ namespace Planets.Model
                 for (int j = i - 1; j >= 0; j--)
                 {
                     a(go1, temp[j], ms);
-                    ColCount++;
+                    _colCount++;
                 }
                 if (t1 != null)
                 {
-                    ColCount += t1.DoCollisions(a, go1, ms);
+                    _colCount += t1.DoCollisions(a, go1, ms);
                 }
                 if (t2 != null)
                 {
-                    ColCount += t2.DoCollisions(a, go1, ms);
+                    _colCount += t2.DoCollisions(a, go1, ms);
                 }
             }
             if (t1 != null)
             {
                 t1.DoCollisions(a, ms);
-                ColCount += t1.ColCount;
+                _colCount += t1._colCount;
             }
             if (t2 != null)
             {
                 t2.DoCollisions(a, ms);
-                ColCount += t2.ColCount;
+                _colCount += t2._colCount;
             }
         }
         protected int DoCollisions(Action<GameObject, GameObject, double> a, GameObject go, double ms)
@@ -152,7 +151,7 @@ namespace Planets.Model
             }
             if (go.BoundingBox.IntersectsWith(boundingBox))
             {
-                for (int i = 0; i < _objects.Count; i++)
+                for (var i = 0; i < _objects.Count; i++)
                 {
                     a(_objects[i], go, ms);
                     colCount++;
