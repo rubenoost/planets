@@ -196,7 +196,7 @@ namespace Planets.View
             g.DrawString("Gamescore: ", EndGameFont, YourScoreBrush, new Point(176, 300));
             g.DrawString(field.sb.Total.ToString(), EndGameFont, YourScoreBrush, new Point(640 - TextRenderer.MeasureText(field.sb.Total.ToString(), EndGameFont).Width, 300));
             ScoreBoard.WriteScore(field.sb.Total);
-            
+
             // Draw icon
             g.DrawImage(Properties.Resources.HighScoreLogo, new Point(Screen.PrimaryScreen.Bounds.Width - 570, 40));
             g.DrawString("Planets", this.PlanetsFont, HighScoreBrush, new Point(Screen.PrimaryScreen.Bounds.Width - 555, 500));
@@ -393,29 +393,18 @@ namespace Planets.View
             g.DrawRectangle(WhitePen, new Rectangle(ObjectMeter, new Size(15, 230)));
             g.DrawString("Objects", HudScoreFont, LabelBrush, ObjectMeter.X - 50, ObjectMeter.Y - 30);
 
+
+            #region Radar
+
             // Draw Radar
-            int RadiusRadar = 65;
-            Vector RadarCenter = hudLocation + new Vector(hudSize.Width, hudSize.Height) / 2;
+            int RadiusRadar = 105;
+            Vector RadarCenter = hudLocation + new Vector(hudSize.Width, (hudSize.Height + 80)) / 2;
             Vector RadarSize = new Vector(RadiusRadar * 2, RadiusRadar * 2);
             Rectangle RadarRectangle = new Rectangle(RadarCenter - RadarSize / 2, new Size((int)RadarSize.X, (int)RadarSize.Y));
             float DotRadius = 5;
 
             Vector playerLocation = field.CurrentPlayer.Location;
-            float scale = 0.2f;
-            
-            g.FillEllipse(Brushes.Red, RadarRectangle);
-
-            field.BOT.Iterate(go =>
-            {
-                if (((go.Location - playerLocation).Length()*scale + DotRadius) > RadiusRadar) return;
-
-                Vector drawCenter = RadarCenter + (go.Location - playerLocation)*scale;
-                g.FillEllipse(Brushes.Blue, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int) (DotRadius * 2), (int) (DotRadius * 2))));
-            });
-            /*
-            int RadiusRadar = 180;
-            Size s = new Size(RadiusRadar, RadiusRadar);
-            Point RadarPoint = new Point((hudLocation.X + ((hudSize.Width / 2) - (RadiusRadar / 2))), (hudLocation.Y + ((hudSize.Height / 2) - (RadiusRadar / 2))) + 60);
+            float scale = 0.05f;
 
             //all brushes for the radar
             Brush radarbackgroundbrush = new SolidBrush(Color.FromArgb(230, 23, 23, 23));
@@ -424,45 +413,47 @@ namespace Planets.View
             Brush antagonistbrush = new SolidBrush(Color.Blue);
             Brush bonusbrush = new SolidBrush(Color.Yellow);
 
-            g.FillEllipse(radarbackgroundbrush, new Rectangle(RadarPoint, s));
+            //The brush that is going to be used to draw the object
+            Brush b;
 
-            field.BOT.Iterate(go1 =>
+            //Draw the circle for the background of the radar
+            g.FillEllipse(radarbackgroundbrush, RadarRectangle);
+
+            //Go through the bot and do something with every object
+            field.BOT.Iterate(go =>
             {
-                double xField = go1.Location.X / field.Size.Width;
-                double yField = go1.Location.Y / field.Size.Height;
+                //If gameobject is outside of the range of the radar than don't draw it
+                if (((go.Location - playerLocation).Length() * scale + DotRadius) > RadiusRadar) return;
 
-                double xRadar = s.Width * xField;
-                double yRadar = s.Height * yField;
-
-                Point blip = new Point(Convert.ToInt32(xRadar), Convert.ToInt32(yRadar));
-                blip.X += RadarPoint.X;
-                blip.Y += RadarPoint.Y;
-
-                //if antagonist than draw blue circle
-                if (go1 is Antagonist)
+                //if antagonist then draw a blue circle
+                if (go is Antagonist)
                 {
-                    g.FillEllipse(antagonistbrush, new Rectangle(blip, new Size(10, 10)));
+                    b = antagonistbrush;
                 }
 
-                //If player than draw a red circle
-                else if (go1 is Player)
+                //If player then draw a red circle
+                else if (go is Player)
                 {
-                    g.FillEllipse(playerBrush, new Rectangle(blip, new Size(10, 10)));
+                    b = playerBrush;
                 }
 
-                else if (go1 is Bonus)
+                 //
+                else if (go is Bonus)
                 {
-                    g.FillEllipse(bonusbrush, new Rectangle(blip, new Size(10, 10)));
+                    b = bonusbrush;
                 }
 
                 //if gameobject then draw green circle 
                 else
                 {
-                    g.FillEllipse(gameobjectbrush, new Rectangle(blip, new Size(10, 10)));
+                    b = gameobjectbrush;
                 }
+
+                Vector drawCenter = RadarCenter + (go.Location - playerLocation) * scale;
+                g.FillEllipse(b, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int)(DotRadius * 2), (int)(DotRadius * 2))));
             });
-             */
         }
+            #endregion
 
         private void DrawAnimations(Graphics g, GameObject obj)
         {
