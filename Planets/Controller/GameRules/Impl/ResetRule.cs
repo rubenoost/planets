@@ -22,7 +22,8 @@ namespace Planets.Controller.GameRules.Impl
             // Check if target is reached
             if (_currentGameTarget.IsTargetReached(ge))
             {
-                // Show level won screen
+                ge.Field.CurrentPlayer.GameWon = true;
+                ge.Running = false;
                 return;
             }
 
