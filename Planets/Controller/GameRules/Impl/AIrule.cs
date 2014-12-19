@@ -19,17 +19,16 @@ namespace Planets.Controller.GameRules.Impl
             // Find antagonist
             if (antagonist == null) antagonist = FindAntagonist(pf);
             closest = FindClosest(pf, (Antagonist)antagonist);
-
             TimeSpan tijd = DateTime.Now - begin;
             if (tijd.TotalMilliseconds < 1000) return;
             begin = DateTime.Now;
-            if (closest.Radius > antagonist.Radius && closest.Ai == false)
+            if (!(closest == null) && closest.Radius > antagonist.Radius && closest.Ai == false)
             {
                 //Move away from bigger object
                 GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (antagonist.Location - closest.Location));
                 projectiel.Ai = true;
             }
-            else if (closest.Ai == false)
+            else if (!(closest == null) && closest.Ai == false)
             {
                 //Move towards smaller object
                 GameObject projectiel = ((Antagonist)antagonist).ShootProjectile(pf, (closest.Location - antagonist.Location));
