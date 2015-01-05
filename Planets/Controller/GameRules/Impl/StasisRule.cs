@@ -10,10 +10,10 @@ namespace Planets.Controller.GameRules.Impl
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             // Update speed to black hole
-            pf.BOT.Iterate(g =>
+            pf.GameObjects.Iterate(g =>
             {
                 if (!(g is Stasis)) return;
-                pf.BOT.Iterate(g2 =>
+                pf.GameObjects.Iterate(g2 =>
                 {
                     if (!g2.Is(Rule.Slowable)) return;
 
@@ -22,23 +22,23 @@ namespace Planets.Controller.GameRules.Impl
                         if (g.IntersectsWith(g2))
                         {
                             // Speed of projectile gets updated
-                            g2.DV *= Math.Pow(0.55, ms / 1000);
-                            if (g2.DV.X <= 0 && g2.DV.X >= -15)
+                            g2.Dv *= Math.Pow(0.55, ms / 1000);
+                            if (g2.Dv.X <= 0 && g2.Dv.X >= -15)
                             {
-                                g2.DV = new Vector(-15, g2.DV.Y);
+                                g2.Dv = new Vector(-15, g2.Dv.Y);
                             }
-                            else if (g2.DV.X >= 0 && g2.DV.X <= 15)
+                            else if (g2.Dv.X >= 0 && g2.Dv.X <= 15)
                             {
-                                g2.DV = new Vector(15, g2.DV.Y);
+                                g2.Dv = new Vector(15, g2.Dv.Y);
                             }
 
-                            if (g2.DV.Y <= 0 && g2.DV.Y >= -15)
+                            if (g2.Dv.Y <= 0 && g2.Dv.Y >= -15)
                             {
-                                g2.DV = new Vector(g2.DV.X, -15);
+                                g2.Dv = new Vector(g2.Dv.X, -15);
                             }
-                            else if (g2.DV.Y >= 0 && g2.DV.Y <= 15)
+                            else if (g2.Dv.Y >= 0 && g2.Dv.Y <= 15)
                             {
-                                g2.DV = new Vector(g2.DV.X, 15);
+                                g2.Dv = new Vector(g2.Dv.X, 15);
                             }
                         }
                     }

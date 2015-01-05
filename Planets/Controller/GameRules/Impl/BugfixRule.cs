@@ -10,12 +10,12 @@ namespace Planets.Controller.GameRules.Impl
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            pf.BOT.Iterate(g =>
+            pf.GameObjects.Iterate(g =>
             {
                 if(g.Mass < MinMass)
-                    pf.BOT.Remove(g);
-                if (g.DV.Length() > MaxSpeed)
-                    g.DV = g.DV.ScaleToLength(MaxSpeed);
+                    pf.GameObjects.Remove(g);
+                if (g.Dv.Length() > MaxSpeed)
+                    g.Dv = g.Dv.ScaleToLength(MaxSpeed);
             });
         }
     }

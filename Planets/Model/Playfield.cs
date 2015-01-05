@@ -8,11 +8,9 @@ namespace Planets.Model
 {
     public class Playfield
     {
-        [XmlIgnore]
-        internal Player _currentPlayer;
+        [XmlIgnore] private Player _currentPlayer;
 
-        [XmlIgnore]
-        internal Antagonist _currentAntagonist;
+        [XmlIgnore] private Antagonist _currentAntagonist;
 
         public Size Size { get; set; }
 
@@ -30,10 +28,10 @@ namespace Planets.Model
         {
             // Save variables
             Size = new Size(width, height);
-            sb = new ScoreBoard();
+            ScoreBoard = new ScoreBoard();
 
             // Create GameObject list
-            BOT = new BinaryObjectTree(null, new Rectangle(0, 0, 1920, 1080), 1, 12, 0);
+            GameObjects = new BinaryObjectTree(null, new Rectangle(0, 0, 1920, 1080), 1, 12, 0);
         }
 
         public Player CurrentPlayer
@@ -41,9 +39,9 @@ namespace Planets.Model
             get { return _currentPlayer; }
             set
             {
-                BOT.Remove(_currentPlayer);
+                GameObjects.Remove(_currentPlayer);
                 _currentPlayer = value;
-                BOT.Add(_currentPlayer);
+                GameObjects.Add(_currentPlayer);
             }
         }
 
@@ -52,17 +50,17 @@ namespace Planets.Model
             get { return _currentAntagonist; }
             set
             {
-                BOT.Remove(_currentAntagonist);
+                GameObjects.Remove(_currentAntagonist);
                 _currentAntagonist = value;
-                BOT.Add(_currentAntagonist);
+                GameObjects.Add(_currentAntagonist);
             }
         }
 
         [XmlIgnore]
-        public ScoreBoard sb;
+        public readonly ScoreBoard ScoreBoard;
 
         [XmlIgnore]
-        public BinaryObjectTree BOT;
+        public readonly BinaryObjectTree GameObjects;
 
         [XmlArray("GameObjects")]
         public GameObject[]
@@ -71,14 +69,14 @@ namespace Planets.Model
             get
             {
                 List<GameObject> result = new List<GameObject>();
-                BOT.Iterate(g => { if (g != CurrentPlayer) result.Add(g); });
+                GameObjects.Iterate(g => { if (g != CurrentPlayer) result.Add(g); });
                 return result.ToArray();
             }
             set
             {
-                BOT.Clear();
+                GameObjects.Clear();
                 foreach (var go in value)
-                    BOT.Add(go);
+                    GameObjects.Add(go);
             }
         }
     }

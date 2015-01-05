@@ -28,7 +28,7 @@ namespace Planets
         }
 
         // ReSharper disable once UnusedMember.Local
-        private static void gen()
+        private static void Gen()
         {
             var pf = new Playfield();
             // Set player
@@ -36,26 +36,26 @@ namespace Planets
             pf.CurrentPlayer = p;
 
             // Generate objects
-            double MaxMass = 10000.0d;
-            double MinMass = 100.0d;
+            double maxMass = 10000.0d;
+            double minMass = 100.0d;
             int variance = 10000;
             int saturation = 100000;
             double scale = 1.0d - 1.0d / variance;
 
             // Create random
             Random r = new Random();
-            double CurrentMass = MaxMass;
+            double currentMass = maxMass;
             for (int i = 0; i < saturation; i++)
             {
                 // Get valid gamepoint
-                int radius = (int)Math.Sqrt(CurrentMass / Math.PI);
+                int radius = (int)Math.Sqrt(currentMass / Math.PI);
                 int x = r.Next(radius, pf.Size.Width - radius);
                 int y = r.Next(radius, pf.Size.Height - radius);
-                GameObject go = new GameObject(new Vector(x, y), new Vector(), CurrentMass);
+                GameObject go = new GameObject(new Vector(x, y), new Vector(), currentMass);
 
                 // Check if valid
                 bool intersects = false;
-                pf.BOT.Iterate(g =>
+                pf.GameObjects.Iterate(g =>
                 {
                     if (intersects)
                         return;
@@ -65,10 +65,10 @@ namespace Planets
 
                 // Add
                 if (!intersects)
-                    pf.BOT.Add(go);
+                    pf.GameObjects.Add(go);
 
                 // Change mass
-                CurrentMass = Math.Max(MinMass, CurrentMass * scale);
+                currentMass = Math.Max(minMass, currentMass * scale);
             }
 
             // Save playfield

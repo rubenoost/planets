@@ -8,7 +8,7 @@ namespace Planets.Controller.GameRules.Impl
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            pf.BOT.Iterate(g =>
+            pf.GameObjects.Iterate(g =>
             {
                 if (g.Is(Rule.Move))
                     g.UpdateLocation(ms);

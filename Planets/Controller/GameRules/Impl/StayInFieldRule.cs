@@ -7,7 +7,7 @@ namespace Planets.Controller.GameRules.Impl
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            pf.BOT.Iterate(obj =>
+            pf.GameObjects.Iterate(obj =>
             {
                 if (obj.Location.X < obj.Radius)
                 {

@@ -13,26 +13,26 @@ namespace Planets.Model
 
         public Color Color { get; private set; }
 
-        private int Alpha = 255;
+        private int _alpha = 255;
 
-        public Score(int Value, DateTime Stamp, Vector Location, bool CurrentPlayer)
+        public Score(int value, DateTime stamp, Vector location, bool currentPlayer)
         {
-            this.Value = Value;
-            this.Stamp = Stamp;
-            this.Location = Location;
+            this.Value = value;
+            this.Stamp = stamp;
+            this.Location = location;
 
-            Color = CurrentPlayer ? Color.White : Color.Red;
+            Color = currentPlayer ? Color.White : Color.Red;
         }
 
         public void UpdateLocation()
         {
             Location -= new Vector(0, 3);
-            Color = Color.FromArgb(Alpha, Color);
-            if (Alpha > 50)
-                Alpha -= 25;
+            Color = Color.FromArgb(_alpha, Color);
+            if (_alpha > 50)
+                _alpha -= 25;
             else
-                if (Alpha > 0)
-                    Alpha -= 5;
+                if (_alpha > 0)
+                    _alpha -= 5;
         }
 
     }

@@ -150,8 +150,8 @@ namespace Planets.Model
         public void ReadXml(XmlReader reader)
         {
             reader.MoveToContent();
-            X = double.Parse(reader.GetAttribute("X"));
-            Y = double.Parse(reader.GetAttribute("Y"));
+            X = double.Parse(reader.GetAttribute("X") ?? "0");
+            Y = double.Parse(reader.GetAttribute("Y") ?? "0");
         }
 
         public void WriteXml(XmlWriter writer)

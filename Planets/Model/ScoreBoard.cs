@@ -10,7 +10,7 @@ namespace Planets.Model
 
         public List<Score> Scores { get; private set; }
 
-        private static String filepath = @"Data\scores.txt";
+        private static readonly String Filepath = @"Data\scores.txt";
 
 		public ScoreBoard()
 		{
@@ -36,15 +36,15 @@ namespace Planets.Model
         {
             int score;
 
-            if(File.Exists(filepath))
+            if(File.Exists(Filepath))
             {
-                string Stringscore = File.ReadAllText(filepath);
-                score = Convert.ToInt16(Stringscore);
+                string stringscore = File.ReadAllText(Filepath);
+                score = Convert.ToInt16(stringscore);
             }
             else
             {
-                File.Create(filepath);
-                File.WriteAllText(filepath, "0");
+                File.Create(Filepath);
+                File.WriteAllText(Filepath, "0");
                 score = 0;
             }
 
@@ -55,7 +55,7 @@ namespace Planets.Model
         {
             if(score > GetHighScore())
             {
-                File.WriteAllText(filepath, score.ToString());
+                File.WriteAllText(Filepath, score.ToString());
             }
         }
 

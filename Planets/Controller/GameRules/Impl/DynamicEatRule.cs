@@ -41,19 +41,19 @@ namespace Planets.Controller.GameRules.Impl
                 if (lostMass >= gL.Mass)
                 {
                     if (gL != pf.CurrentPlayer)
-                        pf.BOT.Remove(gL);
+                        pf.GameObjects.Remove(gL);
                 }
                 else
                     gL.Mass -= lostMass;
 
                 if (gL is Player)
                 {
-                    pf.sb.AddScore(new Score(-50, DateTime.Now, gS.Location, true));
+                    pf.ScoreBoard.AddScore(new Score(-50, DateTime.Now, gS.Location, true));
                 }
 
 
                 // Remove antimatter
-                pf.BOT.Remove(gS);
+                pf.GameObjects.Remove(gS);
             }
             else
             {
@@ -74,7 +74,7 @@ namespace Planets.Controller.GameRules.Impl
                         sb.AddScore(new Score(50, DateTime.Now, gS.Location, (gL == pf.CurrentPlayer)));
                     }
 
-                    pf.BOT.Remove(gS);
+                    pf.GameObjects.Remove(gS);
                     return;
                 }
 
@@ -88,7 +88,7 @@ namespace Planets.Controller.GameRules.Impl
                 double glM = (b + d) / 2;
 
                 // Set new velocity
-                gL.DV = (gL.DV * gL.Mass + gS.DV * (glM - gL.Mass)) / glM;
+                gL.Dv = (gL.Dv * gL.Mass + gS.Dv * (glM - gL.Mass)) / glM;
 
                 // Set new masses
                 gL.Mass = glM;

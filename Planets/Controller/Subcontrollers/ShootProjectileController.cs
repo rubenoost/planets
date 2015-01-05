@@ -12,12 +12,12 @@ namespace Planets.Controller.Subcontrollers
     /// </summary>
     public class ShootProjectileController
     {
-        private GameEngine ge;
+        private readonly GameEngine _ge;
 
         /// <summary>
         /// The playfield used by this controller to shoot projectiles.
         /// </summary>
-        public Playfield InternalPlayfield { get { return ge.Field; } }
+        public Playfield InternalPlayfield { get { return _ge.Field; } }
 
         /// <summary>
         /// The control used by this controller to listen on for mouse clicks.
@@ -32,7 +32,7 @@ namespace Planets.Controller.Subcontrollers
         public ShootProjectileController(GameEngine ge, GameView listenControl)
         {
             // Save variables
-            this.ge = ge;
+            this._ge = ge;
             InternalControl = listenControl;
 
             // Register event handlers
@@ -50,7 +50,7 @@ namespace Planets.Controller.Subcontrollers
                 {
                     InternalControl.PrevClickNext = false;
                     InternalControl.ClickOnNextButton = false;
-                    ge.LoadNextLevel();
+                    _ge.LoadNextLevel();
                     InternalControl.Invalidate();
                 }
             }
@@ -62,10 +62,10 @@ namespace Planets.Controller.Subcontrollers
         {
             if (InternalPlayfield.CurrentPlayer.GameOver || InternalPlayfield.CurrentPlayer.GameWon)
             {
-                Rectangle MouseRec = new Rectangle(new Point(e.X, e.Y), new Size(10, 10));
-                Rectangle LevelButtonRec = new Rectangle(new Point(175, 400), new Size(430, 100));
+                Rectangle mouseRec = new Rectangle(new Point(e.X, e.Y), new Size(10, 10));
+                Rectangle levelButtonRec = new Rectangle(new Point(175, 400), new Size(430, 100));
 
-                InternalControl.ClickOnNextButton = MouseRec.IntersectsWith(LevelButtonRec);
+                InternalControl.ClickOnNextButton = mouseRec.IntersectsWith(levelButtonRec);
 
                 InternalControl.Invalidate();
             }
@@ -76,22 +76,22 @@ namespace Planets.Controller.Subcontrollers
             }
         }
 
-        public static Vector CalcNewDV(GameObject Player, GameObject Projectile, Point p)
+        public static Vector CalcNewDv(GameObject player, GameObject projectile, Point p)
         {
             //Projectile being shot
-            GameObject P = Projectile;
-            GameObject O = Player;
+            GameObject proj = projectile;
+            GameObject o = player;
 
             //set velocity projectile
-            Vector temp1 = p - O.Location;
+            Vector temp1 = p - o.Location;
             temp1 = temp1.ScaleToLength(100.0);
-            P.DV = O.DV + temp1;
+            proj.Dv = o.Dv + temp1;
 
             //Set projectile location
-            P.Location = O.Location + temp1.ScaleToLength(O.Radius + P.Radius + 1);
+            proj.Location = o.Location + temp1.ScaleToLength(o.Radius + proj.Radius + 1);
 
             //set the velocity of the new player
-            return O.DV - temp1 * Math.Sqrt(P.Mass / O.Mass);
+            return o.Dv - temp1 * Math.Sqrt(proj.Mass / o.Mass);
         }
 
         /// <summary>
@@ -100,44 +100,44 @@ namespace Planets.Controller.Subcontrollers
         /// <param name="gamePoint"></param>
         public void Clicked(Point gamePoint)
         {
-            GameObject P;
+            GameObject p;
             //Player
-            GameObject O = InternalPlayfield.CurrentPlayer;
+            GameObject o = InternalPlayfield.CurrentPlayer;
 
-            bool IsBlackhole = false;
-            bool IsAntiMatter = false;
+            bool isBlackhole = false;
+            bool isAntiMatter = false;
 
             //Projectile being shot
             Random rnd = new Random();
             int rndint = rnd.Next(0, 100);
             if (rndint == 58)
             {
-                P = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0) { Mass = 100 };
-                IsBlackhole = true;
+                p = new BlackHole(new Vector(0, 0), new Vector(0, 0), 0) { Mass = 100 };
+                isBlackhole = true;
             }
             else if (rndint == 20 || rndint == 25 || rndint == 30 || rndint == 35 || rndint == 40 || rndint == 50 || rndint == 55 || rndint == 60)
             {
-                P = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0) { Mass = O.Mass * 0.05 };
-                O.Mass -= P.Mass;
-                IsAntiMatter = true;
+                p = new AntiMatter(new Vector(0, 0), new Vector(0, 0), 0) { Mass = o.Mass * 0.05 };
+                o.Mass -= p.Mass;
+                isAntiMatter = true;
             }
             else
             {
-                P = new GameObject(new Vector(0, 0), new Vector(0, 0), 0) { Mass = 0.05 * O.Mass };
-                O.Mass = O.Mass - P.Mass;
+                p = new GameObject(new Vector(0, 0), new Vector(0, 0), 0) { Mass = 0.05 * o.Mass };
+                o.Mass = o.Mass - p.Mass;
             }
 
-            lock (InternalPlayfield.BOT)
+            lock (InternalPlayfield.GameObjects)
             {
-                O.DV = CalcNewDV(O, P, gamePoint);
-                if (IsBlackhole)
-                    P.Mass = 100;
+                o.Dv = CalcNewDv(o, p, gamePoint);
+                if (isBlackhole)
+                    p.Mass = 100;
 
-                if (IsAntiMatter)
-                    P.Mass = 100;
+                if (isAntiMatter)
+                    p.Mass = 100;
 
                 //set the velocity of the new player
-                InternalPlayfield.BOT.Add(P);
+                InternalPlayfield.GameObjects.Add(p);
             }
         }
     }

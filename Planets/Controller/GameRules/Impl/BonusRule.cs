@@ -7,29 +7,29 @@ namespace Planets.Controller.GameRules.Impl
 {
     class BonusRule : AbstractGameRule
     {
-        private Random randX = new Random();
-        private Random randY = new Random();
+        private readonly Random _randX = new Random();
+        private readonly Random _randY = new Random();
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
             // Update speed to black hole
-            pf.BOT.Iterate(g =>
+            pf.GameObjects.Iterate(g =>
             {
                 if (!(g is Bonus))
                     return;
-                pf.BOT.Iterate(g2 =>
+                pf.GameObjects.Iterate(g2 =>
                 {
                     if (g2 is Player)
                     {
                         if (g2.IntersectsWith(g))
                         {
                             if(g2 is Antagonist){
-                                pf.sb.AddScore(new Score(100, DateTime.Now, g.Location, false));
+                                pf.ScoreBoard.AddScore(new Score(100, DateTime.Now, g.Location, false));
                             } else {
-                                pf.sb.AddScore(new Score(100, DateTime.Now, g.Location, true));
+                                pf.ScoreBoard.AddScore(new Score(100, DateTime.Now, g.Location, true));
                             }
 
-                            g.Location = new Vector(randX.Next(0, 1920), randY.Next(0, 1080));
+                            g.Location = new Vector(_randX.Next(0, 1920), _randY.Next(0, 1080));
                         }
                     }
                 });

@@ -12,14 +12,14 @@ namespace Planets.Controller
     public class GameEngine
     {
         // Hosts
-        private MainEngine HostEngine;
+        private readonly MainEngine _hostEngine;
 
         // Views
-        private GameView GameView;
+        private readonly GameView _gameView;
 
         // Controllers
-        private ShootProjectileController spc;
-        private LevelSupplier ls = new LevelSupplier();
+        private readonly ShootProjectileController _spc;
+        private readonly LevelSupplier _ls = new LevelSupplier();
 
         // Model Data
         public Playfield Field;
@@ -28,7 +28,7 @@ namespace Planets.Controller
         public event Action<double> GameLoopEvent;
 
         // Game rules
-        private INativeGameRule[] _gameRules =
+        private readonly INativeGameRule[] _gameRules =
         {
             // ========== [ ANTAGONIST BEHAVIOUR ] ==========
             new AIrule(),
@@ -66,36 +66,36 @@ namespace Planets.Controller
 
         public GameEngine(MainEngine hostEngine)
         {
-            HostEngine = hostEngine;
-            Field = ls.GenerateLevel();
+            _hostEngine = hostEngine;
+            Field = _ls.GenerateLevel();
 
             // Create view
-            GameView = new GameView(this);
+            _gameView = new GameView(this);
 
             // Create controllers
-            spc = new ShootProjectileController(this, GameView);
-            new Autodemo(spc, this);
+            _spc = new ShootProjectileController(this, _gameView);
+            new Autodemo(_spc, this);
 
             // Set gameview
-            HostEngine.SetView(GameView);
+            _hostEngine.SetView(_gameView);
 
             // Adjust playfield
-            Field.Size = GameView.Size;
+            Field.Size = _gameView.Size;
 
             // Register keys for resetting
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) Field.CurrentPlayer.Mass = 1.0; };
+            _gameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.R) Field.CurrentPlayer.Mass = 1.0; };
 
             // Increase mass
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) Field.CurrentPlayer.Mass *= 1.2; };
+            _gameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.T) Field.CurrentPlayer.Mass *= 1.2; };
 
             // Decrease mass
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) Field.CurrentPlayer.Mass /= 1.2; };
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) GameView.Zoom *= 1.25f; };
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) GameView.Zoom *= 0.8f; };
+            _gameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.G) Field.CurrentPlayer.Mass /= 1.2; };
+            _gameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.Z) _gameView.Zoom *= 1.25f; };
+            _gameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.X) _gameView.Zoom *= 0.8f; };
 
             // Level stuff
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.N) LoadNextLevel(); };
-            GameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.M) ls.LevelMode = ls.LevelMode == LevelSupplier.Mode.Random ? LevelSupplier.Mode.Campaign : LevelSupplier.Mode.Random; };
+            _gameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.N) LoadNextLevel(); };
+            _gameView.KeyDown += delegate(object sender, KeyEventArgs args) { if (args.KeyData == Keys.M) _ls.LevelMode = _ls.LevelMode == LevelSupplier.Mode.Random ? LevelSupplier.Mode.Campaign : LevelSupplier.Mode.Random; };
 
             // Create new GameThread
             GameThread = new Thread(GameLoop);
@@ -111,25 +111,25 @@ namespace Planets.Controller
 
         public void LoadNextLevel()
         {
-            Field = ls.GenerateLevel();
+            Field = _ls.GenerateLevel();
             Running = true;
         }
 
         public void GameLoop()
         {
             DateTime loopBegin = DateTime.Now;
-            TimeSpan DeltaT;
+            TimeSpan deltaT;
 
             while (true)
             {
                 while (Running)
                 {
                     // Bereken DeltaT
-                    DeltaT = DateTime.Now - loopBegin;
+                    deltaT = DateTime.Now - loopBegin;
                     loopBegin = DateTime.Now;
 
                     // Converteer DeltaT naar ms
-                    double dt = DeltaT.TotalMilliseconds;
+                    double dt = deltaT.TotalMilliseconds;
 
                     // MOCHT GAMELOOP SNELLER ZIJN DAN +- 17MS -> DAN WACHTEN MET UPDATEN TOT 17MS is bereikt! ANDERS MEER DAN 60 FPS!!
                     double temp1 = dt * 60 / 1000;
@@ -137,10 +137,10 @@ namespace Planets.Controller
                     double temp3 = temp2 * 1000 / 60;
                     Thread.Sleep((int)temp3);
 
-                    Field.sb.CheckStamps();
+                    Field.ScoreBoard.CheckStamps();
 
                     // Lock BOT
-                    lock (Field.BOT)
+                    lock (Field.GameObjects)
                     {
                         // ExecuteRule game rules
                         foreach (var agr in _gameRules)
@@ -154,7 +154,7 @@ namespace Planets.Controller
                         GameLoopEvent(dt);
 
                     // Update shizzle hier.
-                    GameView.Invalidate();
+                    _gameView.Invalidate();
                 }
             }
         }

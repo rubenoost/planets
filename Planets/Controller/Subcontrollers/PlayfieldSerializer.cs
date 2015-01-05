@@ -41,7 +41,7 @@ namespace Planets.Controller.Subcontrollers
             var read = obj as Playfield;
             if (read != null)
             {
-                read.BOT.Iterate(pf.BOT.Add);
+                read.GameObjects.Iterate(pf.GameObjects.Add);
                 pf.CurrentPlayer = read.CurrentPlayer;
             }
             else

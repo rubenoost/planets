@@ -14,8 +14,8 @@ namespace Planets.Controller.GameRules.Impl
                 go1.Mass += go2.Mass;
                 go2.Mass = 1;
                 go1.Location += ((go2.Location - go1.Location) * (go2.Mass / (go1.Mass + go2.Mass)));
-                go1.DV = ((go1.Mass * go1.DV) + (go2.Mass * go2.DV)) / (go1.Mass + go2.Mass);
-                pf.BOT.Remove(go2);
+                go1.Dv = ((go1.Mass * go1.Dv) + (go2.Mass * go2.Dv)) / (go1.Mass + go2.Mass);
+                pf.GameObjects.Remove(go2);
             }
         }
 

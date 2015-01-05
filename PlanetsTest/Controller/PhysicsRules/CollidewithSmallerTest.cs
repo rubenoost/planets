@@ -15,14 +15,14 @@ namespace PlanetsTest.Controller.PhysicsRules
             var go2 = new GameObject(new Vector(110, 110), new Vector(-5, -5), 300);
             var pf = new Playfield(300, 300);
 
-            pf.BOT.Add(go1);
-            pf.BOT.Add(go2);
+            pf.GameObjects.Add(go1);
+            pf.GameObjects.Add(go2);
 
-            var Old_go1Mass = go1.Mass;
+            var oldGo1Mass = go1.Mass;
 
             CollidewithSmaller.Change(go1, go2, pf);
 
-            Assert.AreEqual(Old_go1Mass + 300.00, go1.Mass, "Collided right");
+            Assert.AreEqual(oldGo1Mass + 300.00, go1.Mass, "Collided right");
         }
     }
 }

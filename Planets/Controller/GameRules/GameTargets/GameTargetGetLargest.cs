@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Planets.Model.GameObjects;
+﻿using Planets.Model.GameObjects;
 
 namespace Planets.Controller.GameRules.GameTargets
 {
@@ -20,7 +19,7 @@ namespace Planets.Controller.GameRules.GameTargets
 
             // Check if largest
             bool reached = true;
-            ge.Field.BOT.Iterate(g =>
+            ge.Field.GameObjects.Iterate(g =>
             {
                 if (g.GetType() == typeof(GameObject))
                     reached = reached && (g.Mass < playerMass);

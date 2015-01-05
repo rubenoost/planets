@@ -119,7 +119,7 @@ namespace Planets.Controller.Subcontrollers
                     }
 
                     bool foundIntersect = false;
-                    _pf.BOT.Iterate(g =>
+                    _pf.GameObjects.Iterate(g =>
                         {
                             if (g.IntersectsWith(newObj))
                                 foundIntersect = true;
@@ -128,7 +128,7 @@ namespace Planets.Controller.Subcontrollers
                     if (!foundIntersect)
                     {
                         usedPoints[usedPointCount] = nextPoint;
-                        _pf.BOT.Add(newObj);
+                        _pf.GameObjects.Add(newObj);
                         notOk = true;
                     }
                 }
@@ -140,7 +140,7 @@ namespace Planets.Controller.Subcontrollers
             for (int i = 0; i < normalCount; i++)
             {
                 var normalObject = new GameObject(new Vector(rnd.Next(100, 1800), rnd.Next(100, 900)), new Vector(rnd.Next(0, 10), rnd.Next(0, 10)), rnd.Next(1000, 5000));
-                _pf.BOT.Add(normalObject);
+                _pf.GameObjects.Add(normalObject);
             }
 
             //pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));

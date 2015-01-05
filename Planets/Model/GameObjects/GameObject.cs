@@ -51,7 +51,7 @@ namespace Planets.Model.GameObjects
             }
         }
 
-        public Vector DV { get; set; }
+        public Vector Dv { get; set; }
 
         private Rectangle? _propBoundingBox;
         public Rectangle BoundingBox
@@ -128,19 +128,19 @@ namespace Planets.Model.GameObjects
         protected GameObject(Vector location, Vector velocity, double mass, Rule traits)
         {
             Location = location;
-            DV = velocity;
-            this.Mass = mass;
+            Dv = velocity;
+            Mass = mass;
             Traits = traits;
         }
 
         public void InvertObjectX()
         {
-            DV = new Vector(DV.X * -1, DV.Y);
+            Dv = new Vector(Dv.X * -1, Dv.Y);
         }
 
         public void InvertObjectY()
         {
-            DV = new Vector(DV.X, DV.Y * -1);
+            Dv = new Vector(Dv.X, Dv.Y * -1);
         }
 
         public void UpdateLocation(double ms)
@@ -150,7 +150,7 @@ namespace Planets.Model.GameObjects
 
         public Vector CalcNewLocation(double ms)
         {
-            return Location + DV * ms / 1000.0f;
+            return Location + Dv * ms / 1000.0f;
         }
 
         public bool IntersectsWith(GameObject go)

@@ -15,10 +15,10 @@ namespace Planets.Controller.GameRules.Abstract
         /// <param name="ms">The amount of milliseconds that elapsed since last call.</param>
         protected override void ExecuteRule(Playfield pf, double ms)
         {
-            pf.BOT.DoCollisions(
+            pf.GameObjects.DoCollisions(
                 (go1, go2, dt) =>
                 {
-                    DoCollision(pf, pf.sb, go1, go2);
+                    DoCollision(pf, pf.ScoreBoard, go1, go2);
                 }, ms);
         }
 

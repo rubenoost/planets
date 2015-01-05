@@ -32,10 +32,10 @@ namespace Planets.Controller.GameRules.Impl
                 var h2 = c2.Location - c1.Location;
 
                 var t2 = h1.Length() * h1.Length();
-                var t3 = (c1.DV - c2.DV).InnerProduct(h1);
+                var t3 = (c1.Dv - c2.Dv).InnerProduct(h1);
 
-                c1.DV = c1.DV - (2.0 * c2.Mass / totalMass) * t3 / t2 * h1;
-                c2.DV = c2.DV - (2.0 * c1.Mass / totalMass) * t3 / t2 * h2;
+                c1.Dv = c1.Dv - (2.0 * c2.Mass / totalMass) * t3 / t2 * h1;
+                c2.Dv = c2.Dv - (2.0 * c1.Mass / totalMass) * t3 / t2 * h2;
             }
             else if (c1.Is(Rule.Move))
             {
@@ -48,9 +48,9 @@ namespace Planets.Controller.GameRules.Impl
                 var h1 = c1.Location - c2.Location;
 
                 var t2 = h1.Length() * h1.Length();
-                var t3 = (c1.DV - c2.DV).InnerProduct(h1);
+                var t3 = (c1.Dv - c2.Dv).InnerProduct(h1);
 
-                c1.DV = c1.DV - (2.0 * c2.Mass / t) * t3 / t2 * h1;
+                c1.Dv = c1.Dv - (2.0 * c2.Mass / t) * t3 / t2 * h1;
             }
             else if (c2.Is(Rule.Move))
             {
@@ -63,9 +63,9 @@ namespace Planets.Controller.GameRules.Impl
                 var h2 = c2.Location - c1.Location;
 
                 var t2 = h2.Length() * h2.Length();
-                var t3 = (c2.DV - c1.DV).InnerProduct(h2);
+                var t3 = (c2.Dv - c1.Dv).InnerProduct(h2);
 
-                c2.DV = c2.DV - (2.0 * c1.Mass / t) * t3 / t2 * h2;
+                c2.Dv = c2.Dv - (2.0 * c1.Mass / t) * t3 / t2 * h2;
             }
         }
     }

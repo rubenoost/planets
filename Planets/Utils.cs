@@ -2,6 +2,6 @@
 {
     static class Utils
     {
-        public static int StartMass = 3000;
+        public const int StartMass = 3000;
     }
 }

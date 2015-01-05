@@ -6,22 +6,22 @@ namespace Planets.Controller
     public class MainEngine
     {
 
-        private PlanetsForm host;
-        private GameEngine GameEngine;
+        private readonly PlanetsForm _host;
+        private readonly GameEngine _gameEngine;
 
         public MainEngine(PlanetsForm host)
         {
-            this.host = host;
-            GameEngine = new GameEngine(this);
+            this._host = host;
+            _gameEngine = new GameEngine(this);
 
-            GameEngine.Start();
+            _gameEngine.Start();
         }
 
         public void SetView(UserControl uc)
         {
             uc.Size = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-            host.Controls.Clear();
-            host.Controls.Add(uc);
+            _host.Controls.Clear();
+            _host.Controls.Add(uc);
         }
     }
 }

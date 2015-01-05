@@ -7,7 +7,7 @@ namespace Planets.Controller.GameRules.Impl
     {
         private static readonly double MassTreshold = 500.0d;
 
-        private IGameTarget _currentGameTarget = new GameTargetGetLargest();
+        private readonly IGameTarget _currentGameTarget = new GameTargetGetLargest();
 
         public void Execute(GameEngine ge, double ms)
         {

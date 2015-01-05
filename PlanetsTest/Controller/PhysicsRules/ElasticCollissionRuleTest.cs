@@ -17,18 +17,18 @@ namespace PlanetsTest.Controller.PhysicsRules
 
             // Playfield with the new two BOT
             var field = new Playfield(300, 300);
-            field.BOT.Add(go1);
-            field.BOT.Add(go2);
+            field.GameObjects.Add(go1);
+            field.GameObjects.Add(go2);
 
             // Save old DeltaV's
-            var OldDV1 = go1.DV;
+            var oldDv1 = go1.Dv;
 
             // Execute Collission Rule
-            var ElasticRule = new ElasticCollisionRule();
-            ElasticRule.Execute(field, 17);
+            var elasticRule = new ElasticCollisionRule();
+            elasticRule.Execute(field, 17);
 
             // Check if old Delta V is not equal to new Delta V, if so they have collided
-            Assert.AreNotEqual(OldDV1.X, go1.DV.X, 0.001);
+            Assert.AreNotEqual(oldDv1.X, go1.Dv.X, 0.001);
         }
     }
 }

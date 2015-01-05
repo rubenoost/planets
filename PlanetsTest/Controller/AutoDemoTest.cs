@@ -43,13 +43,13 @@ namespace PlanetsTest.Controller
                 WaitTimeBetweenClick = 1,
                 WaitTimeBetweenClicks = 1
             };
-            int startCount = pf.BOT.Count;
+            int startCount = pf.GameObjects.Count;
 
             // Act
             Thread.Sleep(10);
 
             // Assert
-            Assert.IsTrue(ad.Spc.InternalPlayfield.BOT.Count > startCount, "BOT spawned");
+            Assert.IsTrue(ad.Spc.InternalPlayfield.GameObjects.Count > startCount, "BOT spawned");
         }
 
         [TestMethod]
@@ -71,11 +71,11 @@ namespace PlanetsTest.Controller
             Thread.Sleep(10);
             ad.StopDemo();
             Thread.Sleep(10);
-            int startCount = pf.BOT.Count;
+            int startCount = pf.GameObjects.Count;
             Thread.Sleep(10);
 
             // Assert
-            Assert.AreEqual(startCount, ad.Spc.InternalPlayfield.BOT.Count, "BOT spawned");
+            Assert.AreEqual(startCount, ad.Spc.InternalPlayfield.GameObjects.Count, "BOT spawned");
         }
     }
 }

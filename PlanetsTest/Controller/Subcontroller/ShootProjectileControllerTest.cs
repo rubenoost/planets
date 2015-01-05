@@ -39,13 +39,13 @@ namespace PlanetsTest.Controller.Subcontroller
             var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 100)};
             var gv = new GameView(pf);
             var spc = new ShootProjectileController(pf, gv);
-            var objectCount = pf.BOT.Count;
+            var objectCount = pf.GameObjects.Count;
 
             // Act
             spc.Clicked(new Point());
 
             // Assert
-            Assert.AreEqual(objectCount + 1, pf.BOT.Count, "Shooting once");
+            Assert.AreEqual(objectCount + 1, pf.GameObjects.Count, "Shooting once");
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace PlanetsTest.Controller.Subcontroller
             var pf = new Playfield(1920, 1080) {CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), 100)};
             var gv = new GameView(pf);
             var spc = new ShootProjectileController(pf, gv);
-            var objectCount = pf.BOT.Count;
+            var objectCount = pf.GameObjects.Count;
             var count = new Random().Next(20);
 
             // Act
@@ -66,7 +66,7 @@ namespace PlanetsTest.Controller.Subcontroller
                 spc.Clicked(new Point());
 
             // Assert
-            Assert.AreEqual(objectCount + count, pf.BOT.Count, "Shooting " + count + " times");
+            Assert.AreEqual(objectCount + count, pf.GameObjects.Count, "Shooting " + count + " times");
         }
     }
 }
