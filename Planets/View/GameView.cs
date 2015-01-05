@@ -96,12 +96,18 @@ namespace Planets.View
             this.GameStatusFont = new Font(pfc.Families[0], 140, FontStyle.Regular);
         }
 
+        private void Set(Graphics g, bool highness)
+        {
+            g.SmoothingMode = highness ? SmoothingMode.HighQuality : SmoothingMode.HighSpeed;
+            g.InterpolationMode = InterpolationMode.Low;
+            g.CompositingQuality = CompositingQuality.HighSpeed;
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.CompositingQuality = CompositingQuality.HighQuality;
+
+            Set(g, false);
 
             // Draw static back layer
             DrawBackLayers(g);
@@ -111,10 +117,11 @@ namespace Planets.View
             lock (field.BOT)
             {
                 field.BOT.Iterate(obj => DrawGameObject(g, obj));
-                DrawAimVectors(g);
                 DrawDemo(g);
             }
 
+            Set(g, true);
+            DrawAimVectors(g);
             DrawScores(g);
             DrawHud(g);
 
@@ -306,6 +313,7 @@ namespace Planets.View
 
         // Draw WhatEverMeter buff
         private Pen WhitePen = new Pen(Color.White, 2);
+        private readonly DateTime start = DateTime.Now;
 
         private void DrawHud(Graphics g)
         {
@@ -412,6 +420,7 @@ namespace Planets.View
             Brush playerBrush = new SolidBrush(Color.Red);
             Brush antagonistbrush = new SolidBrush(Color.Blue);
             Brush bonusbrush = new SolidBrush(Color.Yellow);
+            Pen radarPen = new Pen(Color.GreenYellow, 2.0f);
 
             //The brush that is going to be used to draw the object
             Brush b;
@@ -452,6 +461,14 @@ namespace Planets.View
                 Vector drawCenter = RadarCenter + (go.Location - playerLocation) * scale;
                 g.FillEllipse(b, new Rectangle(drawCenter - new Vector(DotRadius, DotRadius), new Size((int)(DotRadius * 2), (int)(DotRadius * 2))));
             });
+
+            // Draw fancy line
+            double rotationspeed = 5.0d;
+            double phase = (DateTime.Now - start).TotalSeconds % rotationspeed;
+            double angle = phase / rotationspeed * Math.PI * 2.0d;
+            Vector dir = new Vector(Math.Cos(angle), Math.Sin(angle));
+
+            g.DrawLine(radarPen, RadarCenter, RadarCenter + dir.ScaleToLength(RadiusRadar));
         }
             #endregion
 
