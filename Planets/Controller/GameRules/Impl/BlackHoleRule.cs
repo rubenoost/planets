@@ -7,7 +7,7 @@ namespace Planets.Controller.GameRules.Impl
     class BlackHoleRule : AbstractGameRule
     {
         // changes the speed
-        private readonly double _joelConstante = 10.0;
+        private readonly double _joelConstante = 3000.0;
 
         protected override void ExecuteRule(Playfield pf, double ms)
         {
