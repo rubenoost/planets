@@ -7,6 +7,7 @@ namespace Planets.Controller.GameRules.Impl
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
+            // Check for every object if it is still inside the GameField.
             pf.GameObjects.Iterate(obj =>
             {
                 if (obj.Location.X < obj.Radius)
