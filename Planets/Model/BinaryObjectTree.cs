@@ -219,8 +219,13 @@ namespace Planets.Model
         
         public void Iterate(Action<GameObject> a)
         {
-            for (int i = _objects.Count - 1; i >= 0; i--)
-                a(_objects[i]);
+            var objects = _objects.ToArray();
+            for (int i = objects.Count() - 1; i >= 0; i--)
+            {
+                GameObject go = objects[i];
+                if (go != null)
+                    a(go);
+            }
             if (_t1 != null)
                 _t1.Iterate(a);
             if (_t2 != null)
