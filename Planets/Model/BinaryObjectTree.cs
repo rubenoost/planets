@@ -188,8 +188,8 @@ namespace Planets.Model
                 _colCount += _t2._colCount;
             }
         }
-        
-        protected int DoCollisions(Action<GameObject, GameObject, double> a, GameObject go, double ms)
+
+        private int DoCollisions(Action<GameObject, GameObject, double> a, GameObject go, double ms)
         {
             int colCount = 0;
             if (_t1 != null)
