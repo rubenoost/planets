@@ -9,6 +9,7 @@ namespace Planets.Controller.GameRules.Impl
     {
         protected override void ExecuteRule(Playfield pf, double ms)
         {
+            // for every object check where it is and if it collides with the blackhole, delete the object
             pf.GameObjects.Iterate(go =>
             {
                 if (!(go is BlackHole)) return;
@@ -17,6 +18,7 @@ namespace Planets.Controller.GameRules.Impl
                     if (!go2.Is(Rule.Eatable)) return;
                     if (!go.Is(go2 is Player ? Rule.EatPlayer : Rule.Eats)) return;
 
+                    // when intersects with blackhole and isn't a player, DELETE!
                     if (go != go2 && go.IntersectsWith(go2))
                     {
                         if (go2 is Player)
