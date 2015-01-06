@@ -89,7 +89,7 @@ namespace Planets.View
             Pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
             Pfc.AddFontFile(@"Data\Fonts\spacebar.ttf");
             Pfc.AddFontFile(@"Data\Fonts\game_over.ttf");
-            Font = new Font(Pfc.Families[1], 28);
+            Font = new Font(Pfc.Families[1], 28, FontStyle.Italic);
             _endGameFont = new Font(Pfc.Families[2], 40);
             _planetsFont = new Font(Pfc.Families[3], 50);
             _nextLevelFont = new Font(Pfc.Families[3], 35);
