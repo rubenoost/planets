@@ -7,14 +7,17 @@ namespace Planets.Controller.Subcontrollers
 {
     static class RandomLevelGenerator
     {
+        // Playfield to fill and return.
         private static Playfield _pf;
 
         public static Playfield GenerateRandomLevel()
         {
             _pf = new Playfield(1920, 1080);
 
+            // Spawn between 7 and 14 obstacles
             Random rnd = new Random();
             int amntObstacles = rnd.Next(7, 15);
+            // Spawn between 10 and 14 GameObjects that can be eaten to gain mass.
             int normalCount = rnd.Next(10, 15);
 
             int[] rndObstacles = new int[amntObstacles];
@@ -23,47 +26,37 @@ namespace Planets.Controller.Subcontrollers
             bool antagonistAvbl = false;
             bool stasisFieldAvbl = false;
 
+            // Check if some obstacles that can only occur once are already in the game
             for (int i = 0; i < amntObstacles; i++)
             {
                 int nextObj = rnd.Next(0, 7);
 
                 while (nextObj == 5 && tardisAvbl)
-                {
                     nextObj = rnd.Next(0, 7);
-                }
 
                 if (nextObj == 5 && !tardisAvbl)
-                {
                     tardisAvbl = true;
-                }
 
                 while (nextObj == 4 && stasisFieldAvbl)
-                {
                     nextObj = rnd.Next(0, 7);
-                }
 
                 if (nextObj == 4 && !stasisFieldAvbl)
-                {
                     stasisFieldAvbl = true;
-                }
 
                 rndObstacles[i] = nextObj;
 
 
                 while (nextObj == 6 && antagonistAvbl)
-                {
                     nextObj = rnd.Next(0, 6);
-                }
 
                 if (nextObj == 6 && !antagonistAvbl)
-                {
                     antagonistAvbl = true;
-                }
 
                 rndObstacles[i] = nextObj;
 
             }
 
+            // Check for usedpoints, gameobjects are not allowed to overlap.
             Point[] usedPoints = new Point[amntObstacles];
             Point nextPoint = new Point(0, 0);
 
@@ -113,9 +106,6 @@ namespace Planets.Controller.Subcontrollers
                         case 5: // Tardis
                             newObj = (new Bonus(nextPoint, new Vector(0, 0), 0));
                             break;
-                        //case 6: //Antagonist
-                        //    NewObj = (new Antagonist(NextPoint, new Vector(0, 0), 10000));
-                        //    break;
                     }
 
                     bool foundIntersect = false;
@@ -143,7 +133,6 @@ namespace Planets.Controller.Subcontrollers
                 _pf.GameObjects.Add(normalObject);
             }
 
-            //pf.BOT.Add(new Mine(new Vector(50, 50), new Vector(0, 0), Utils.StartMass / 2));
             return _pf;
         }
 

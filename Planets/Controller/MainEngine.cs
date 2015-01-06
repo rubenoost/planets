@@ -17,6 +17,7 @@ namespace Planets.Controller
             _gameEngine.Start();
         }
 
+        // Set the Form view to a new UserControl
         public void SetView(UserControl uc)
         {
             uc.Size = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
