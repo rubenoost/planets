@@ -89,11 +89,11 @@ namespace Planets.View
             Pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
             Pfc.AddFontFile(@"Data\Fonts\spacebar.ttf");
             Pfc.AddFontFile(@"Data\Fonts\game_over.ttf");
-            Font = new Font(Pfc.Families[1], 28, FontStyle.Regular);
-            _endGameFont = new Font(Pfc.Families[2], 40, FontStyle.Regular);
-            _planetsFont = new Font(Pfc.Families[3], 50, FontStyle.Regular);
-            _nextLevelFont = new Font(Pfc.Families[3], 35, FontStyle.Regular);
-            _gameStatusFont = new Font(Pfc.Families[0], 140, FontStyle.Regular);
+            Font = new Font(Pfc.Families[1], 28);
+            _endGameFont = new Font(Pfc.Families[2], 40);
+            _planetsFont = new Font(Pfc.Families[3], 50);
+            _nextLevelFont = new Font(Pfc.Families[3], 35);
+            _gameStatusFont = new Font(Pfc.Families[0], 140);
         }
 
         private void Set(Graphics g, bool highness)
