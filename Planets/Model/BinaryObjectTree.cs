@@ -9,7 +9,7 @@ namespace Planets.Model
     public class BinaryObjectTree
     {
         // An empty list that is returned when no objects of a given type are found
-        private static readonly IEnumerable<GameObject> _emptyList = new List<GameObject>();
+        private static readonly List<GameObject> _emptyList = new List<GameObject>();
         
         // The amount of objects in this BOT
         public int Count
@@ -17,7 +17,7 @@ namespace Planets.Model
             get { return _objects.Count + (_t1 == null ? 0 : _t1.Count) + (_t2 == null ? 0 : _t2.Count); }
         }
 
-        public IEnumerable<GameObject> GameObjectList
+        public IEnumerable<GameObject> All
         {
             get { return _allGameObjects; }
         }
@@ -30,7 +30,7 @@ namespace Planets.Model
         private int _colCount;
 
         private readonly HashSet<GameObject> _allGameObjects;
-        private Dictionary<Type, IEnumerable<GameObject>> _typeDictionary;
+        private Dictionary<Type, List<GameObject>> _typeDictionary;
 
         private BinaryObjectTree(BinaryObjectTree parent, Rectangle r, int level, int maxlevel, int splitDirection)
         {
@@ -56,7 +56,7 @@ namespace Planets.Model
             : this(null, r, 0, 8, 0)
         {
             // Create Type dictionary
-            _typeDictionary = new Dictionary<Type, IEnumerable<GameObject>>();
+            _typeDictionary = new Dictionary<Type, List<GameObject>>();
             
             // Create list of all GameObjects
             _allGameObjects = new HashSet<GameObject>();
@@ -71,7 +71,7 @@ namespace Planets.Model
             // Add GameObject to type-specific storage
             if(_typeDictionary != null)
             {
-                IEnumerable<GameObject> typeOnly;
+                List<GameObject> result;
                 _typeDictionary.TryGetValue(go.GetType(), out result);
                 if(result == null) {
                     result = new List<GameObject>();
@@ -229,7 +229,7 @@ namespace Planets.Model
         
         public IEnumerable<GameObject> this[Type t] {
             get {
-                IEnumerable<GameObject> result;
+                List<GameObject> result;
                 _typeDictionary.TryGetValue(t, out result);
                 return result ?? _emptyList;
             }

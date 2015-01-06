@@ -31,7 +31,7 @@ namespace Planets.Model
             ScoreBoard = new ScoreBoard();
 
             // Create GameObject list
-            GameObjects = new BinaryObjectTree(null, new Rectangle(0, 0, 1920, 1080), 1, 12, 0);
+            GameObjects = new BinaryObjectTree(new Rectangle(0, 0, 1920, 1080));
         }
 
         public Player CurrentPlayer
