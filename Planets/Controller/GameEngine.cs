@@ -20,6 +20,7 @@ namespace Planets.Controller
         // Controllers
         private readonly ShootProjectileController _spc;
         private readonly LevelSupplier _ls = new LevelSupplier();
+        public readonly Autodemo Autodemo;
 
         // Model Data
         public Playfield Field;
@@ -74,7 +75,7 @@ namespace Planets.Controller
 
             // Create controllers
             _spc = new ShootProjectileController(this, _gameView);
-            new Autodemo(_spc, this);
+            Autodemo = new Autodemo(_spc, this);
 
             // Set gameview
             _hostEngine.SetView(_gameView);

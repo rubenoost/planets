@@ -18,6 +18,11 @@ namespace Planets.Controller
         /// </summary>
         private DateTime _lastActivityTime = DateTime.MinValue;
 
+        public bool Running
+        {
+            get { return _running; }
+        }
+
         public int WaitTimeBetweenClick = 400;
 
         public int WaitTimeBetweenClicks = 1500;
