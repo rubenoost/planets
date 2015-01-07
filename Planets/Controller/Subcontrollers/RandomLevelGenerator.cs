@@ -124,7 +124,7 @@ namespace Planets.Controller.Subcontrollers
                 }
             }
 
-            _pf.CurrentPlayer = new Player(new Vector(0, 0), new Vector(0, 0), Utils.StartMass);
+            _pf.CurrentPlayer = new Player(new Vector(_pf.Size.Width / 2, _pf.Size.Height / 2), new Vector(0, 0), Utils.StartMass);
             _pf.CurrentAntagonist = new Antagonist(new Vector(600, 500), new Vector(0,0), Utils.StartMass);
 
             for (int i = 0; i < normalCount; i++)
