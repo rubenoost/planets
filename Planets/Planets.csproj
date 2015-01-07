@@ -91,7 +91,7 @@
     <Compile Include="Controller\GameRules\Impl\AntiGravityRule.cs" />
     <Compile Include="Controller\AutoDemo.cs" />
     <Compile Include="Controller\GameEngine.cs" />
-    <Compile Include="Controller\GameRules\Abstract\NativeGameRule.cs" />
+    <Compile Include="Controller\GameRules\Abstract\INativeGameRule.cs" />
     <Compile Include="Controller\GameRules\Impl\BugfixRule.cs" />
     <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\MainEngine.cs" />
