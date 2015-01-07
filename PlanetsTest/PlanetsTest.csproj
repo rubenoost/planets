@@ -61,6 +61,7 @@
     <Compile Include="Controller\Subcontroller\ShootProjectileControllerTest.cs" />
     <Compile Include="Model\GameObjectTest.cs" />
     <Compile Include="Model\BlackHoleTest.cs" />
+    <Compile Include="Model\ScoreTest.cs" />
     <Compile Include="Model\VectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\SpriteTest.cs" />
