@@ -161,6 +161,7 @@
     <EmbeddedResource Include="View\GameView.resx">
       <DependentUpon>GameView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram2.cd" />
     <None Include="Data\Fonts\game_over.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

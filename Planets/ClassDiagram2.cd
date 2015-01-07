@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Planets.Controller.GameRules.Abstract.AbstractCollisionRule" Collapsed="true">
+    <Position X="2.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Abstract\AbstractCollisionRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Abstract.AbstractGameRule" Collapsed="true">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Abstract\AbstractGameRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.AIrule" Collapsed="true">
+    <Position X="1" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGAAAAgAAAgAAAAgAAAAAAAAAAAAACBAAAAAAAAAACA=</HashCode>
+      <FileName>Controller\GameRules\Impl\AIrule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.AntiGravityRule" Collapsed="true">
+    <Position X="1" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\AntiGravityRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.BlackHoleEatRule" Collapsed="true">
+    <Position X="1" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\BlackHoleEatRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.BlackHoleRule" Collapsed="true">
+    <Position X="1" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\BlackHoleRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.BonusRule" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\BonusRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.BugfixRule" Collapsed="true">
+    <Position X="4.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAEAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\BugfixRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.CollidewithSmaller" Collapsed="true">
+    <Position X="1" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\CollidewithSmaller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.DynamicEatRule" Collapsed="true">
+    <Position X="4" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\DynamicEatRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.ElasticCollisionRule" Collapsed="true">
+    <Position X="1" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\ElasticCollisionRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.ExplosionRule" Collapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\ExplosionRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.MoveRule" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\MoveRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.StasisRule" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\StasisRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Controller.GameRules.Impl.StayInFieldRule" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\GameRules\Impl\StayInFieldRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.Antagonist" Collapsed="true">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Antagonist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.AnimatedGameObject" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\GameObjects\AnimatedGameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.Antigravity" Collapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\GameObjects\Antigravity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.AntiMatter" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\GameObjects\AntiMatter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.BlackHole" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\GameObjects\BlackHole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.Bonus" Collapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\GameObjects\Bonus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.GameObject" Collapsed="true">
+    <Position X="8" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAIAAAAAAAACgAAgQMMEAAAACBQAAAAAQAAAAGAAEg=</HashCode>
+      <FileName>Model\GameObjects\GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.Mine" Collapsed="true">
+    <Position X="9" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\GameObjects\Mine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.Player" Collapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAACAAAAAAAAAAAAAAAAAAAAAEAABAAAAA=</HashCode>
+      <FileName>Model\GameObjects\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planets.Model.GameObjects.Stasis" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\GameObjects\Stasis.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
