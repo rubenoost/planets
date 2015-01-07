@@ -13,7 +13,7 @@ namespace Planets.Model
         public List<Score> Scores { get; private set; }
 
         // Scores path
-        private static readonly String Filepath = @"Data\scores.txt";
+        public static readonly String Filepath = @"Data\scores.txt";
 
         // Constructor
 		public ScoreBoard()
