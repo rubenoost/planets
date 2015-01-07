@@ -43,8 +43,11 @@ namespace Planets.View
         private static readonly double MinArrowSize = 50;
 
         // Custom Font!
-        private static PrivateFontCollection Pfc;
-        private readonly Font _endGameFont;
+        PrivateFontCollection pfc = new PrivateFontCollection(); //prototype
+        PrivateFontCollection pfc1 = new PrivateFontCollection(); //microextend
+        PrivateFontCollection pfc2 = new PrivateFontCollection(); //spacebar
+        PrivateFontCollection pfc3 = new PrivateFontCollection(); //gameover
+        private Font _endGameFont;
 
         // Aiming Settings
         /// <summary>
@@ -56,10 +59,10 @@ namespace Planets.View
         public Vector AimPoint;
 
         private readonly SolidBrush _scorePlayerBrush = new SolidBrush(Color.White);
-        private readonly Font _scoreFont = new Font(FontFamily.GenericSansSerif, 60.0f, FontStyle.Bold, GraphicsUnit.Pixel);
-        private readonly Font _planetsFont;
-        private readonly Font _nextLevelFont;
-        private readonly Font _gameStatusFont;
+        private Font _scoreFont = new Font(FontFamily.GenericSansSerif, 60.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+        private Font _planetsFont;
+        private Font _nextLevelFont;
+        private Font _gameStatusFont;
 
         // Aiming pen buffer
         private readonly Pen _curVecPen = new Pen(Color.Red, 5);
@@ -84,22 +87,16 @@ namespace Planets.View
             ClickOnNextButton = false;
             PrevClickNext = false;
 
-            Pfc = new PrivateFontCollection();
-
             // Custom font
-            Pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
-            Pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
-            Pfc.AddFontFile(@"Data\Fonts\spacebar.ttf");
-            Pfc.AddFontFile(@"Data\Fonts\game_over.ttf");
-            Font = new Font(Pfc.Families[1], 28, FontStyle.Italic);
-            _endGameFont = new Font(Pfc.Families[2], 40);
-            _planetsFont = new Font(Pfc.Families[3], 50);
-            _nextLevelFont = new Font(Pfc.Families[3], 35);
-            _gameStatusFont = new Font(Pfc.Families[0], 140);
-            //_endGameFont = Font;
-            //_planetsFont = Font;
-            //_nextLevelFont = Font;
-            //_gameStatusFont = Font;
+            pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
+            pfc1.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
+            pfc2.AddFontFile(@"Data\Fonts\spacebar.ttf");
+            pfc3.AddFontFile(@"Data\Fonts\game_over.ttf");
+            Font = new Font(pfc1.Families[0], 28, FontStyle.Italic);
+            _endGameFont = new Font(pfc.Families[0], 40);
+            _planetsFont = new Font(pfc2.Families[0], 50);
+            _nextLevelFont = new Font(pfc2.Families[0], 35);
+            _gameStatusFont = new Font(pfc3.Families[0], 140);
         }
 
         private void Set(Graphics g, bool highness)
