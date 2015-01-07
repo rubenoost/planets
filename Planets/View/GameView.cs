@@ -43,7 +43,7 @@ namespace Planets.View
         private static readonly double MinArrowSize = 50;
 
         // Custom Font!
-        private static readonly PrivateFontCollection Pfc = new PrivateFontCollection();
+        private static PrivateFontCollection Pfc;
         private readonly Font _endGameFont;
 
         // Aiming Settings
@@ -84,8 +84,10 @@ namespace Planets.View
             ClickOnNextButton = false;
             PrevClickNext = false;
 
+            Pfc = new PrivateFontCollection();
+
             // Custom font
-            /*Pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
+            Pfc.AddFontFile(@"Data\Fonts\Prototype.ttf");
             Pfc.AddFontFile(@"Data\Fonts\MicroExtend.ttf");
             Pfc.AddFontFile(@"Data\Fonts\spacebar.ttf");
             Pfc.AddFontFile(@"Data\Fonts\game_over.ttf");
@@ -93,11 +95,11 @@ namespace Planets.View
             _endGameFont = new Font(Pfc.Families[2], 40);
             _planetsFont = new Font(Pfc.Families[3], 50);
             _nextLevelFont = new Font(Pfc.Families[3], 35);
-            _gameStatusFont = new Font(Pfc.Families[0], 140);*/
-            _endGameFont = Font;
-            _planetsFont = Font;
-            _nextLevelFont = Font;
-            _gameStatusFont = Font;
+            _gameStatusFont = new Font(Pfc.Families[0], 140);
+            //_endGameFont = Font;
+            //_planetsFont = Font;
+            //_nextLevelFont = Font;
+            //_gameStatusFont = Font;
         }
 
         private void Set(Graphics g, bool highness)
