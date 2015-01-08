@@ -18,6 +18,8 @@ namespace Planets.Controller
         /// </summary>
         private DateTime _lastActivityTime = DateTime.MinValue;
 
+        private readonly GameEngine _ge;
+
         public bool Running
         {
             get { return _running; }
@@ -34,6 +36,7 @@ namespace Planets.Controller
         /// <param name="ge"></param>
         public Autodemo(ShootProjectileController s, GameEngine ge)
         {
+            _ge = ge;
             Spc = s;
             var gv = Spc.InternalControl;
 
@@ -51,7 +54,7 @@ namespace Planets.Controller
             // Register gamehookloop
             ge.GameLoopEvent += delegate
             {
-                if ((DateTime.Now - _lastActivityTime).TotalSeconds > 60)
+                if ((DateTime.Now - _lastActivityTime).TotalSeconds > 30)
                 {
                     StartDemo();
                 }

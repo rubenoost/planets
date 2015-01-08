@@ -15,7 +15,7 @@ namespace Planets.Controller
         private readonly MainEngine _hostEngine;
 
         // Views
-        private readonly GameView _gameView;
+        public readonly GameView _gameView;
 
         // Controllers
         private readonly ShootProjectileController _spc;
